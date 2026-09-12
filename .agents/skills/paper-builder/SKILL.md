@@ -19,18 +19,24 @@ Use this skill when tasked with writing, refining, formatting, or updating a pub
 
 ---
 
-### Phase 1: Deep Codebase Ground-Truth Extraction
+### Phase 1: Deep Codebase Ground-Truth Extraction (Any Repository Layout)
 
-Never invent theoretical claims, extrapolate unverifiable capabilities, or rely solely on high-level documentation. Extract the paper's foundations directly from code reality:
+Never invent theoretical claims, extrapolate unverifiable capabilities, or rely solely on high-level documentation. Repositories will not always follow clean `src/` conventions; they may be flat root directories, monorepos (`packages/*`, `apps/*`, `libs/*`), data science projects centered around exploratory notebooks (`notebooks/`, `experiments/`), or legacy, cluttered directories with mixed files and scripts.
 
-1. **Algorithmic Core:**
-   - Inspect production implementations in `src/` to uncover objective functions, loss formulations, statistical regularizations (e.g. Ledoit-Wolf shrinkage, Kalman filters, GMM clustering, HRP bisection), constraint formulations, and execution algorithms (e.g. integer programming, greedy deficit allocation).
+Extract the paper's foundations directly from code reality using this triage hierarchy:
+
+1. **Agnostic Structure & Manifest Triage:**
+   - Inspect build manifests and dependency files (`pyproject.toml`, `setup.py`, `package.json`, `Cargo.toml`, `go.mod`, `CMakeLists.txt`, `Makefile`, `Dockerfile`) to identify project name, dependencies, entry points, and module hierarchies.
+   - If a knowledge graph or community map exists (e.g. `graphify-out/`), query high-centrality "god nodes" and key concepts first to cut through repository noise.
+   - If the repo is flat or cluttered, use pattern search across code extensions (`*.py`, `*.ts`, `*.cpp`, `*.rs`, `*.go`, `*.jl`, `*.ipynb`) to locate core logic, algorithms, and evaluation scripts.
+2. **Algorithmic Core Discovery:**
+   - Locate and inspect production implementations wherever they live to uncover objective functions, loss formulations, statistical regularizations (e.g. shrinkage, Kalman filters, clustering, convex/discrete optimization), and constraints.
    - Transcribe mathematical formulations into clean, standard academic notation.
-2. **Empirical Validation & Metrics:**
-   - Extract real backtest figures, simulation metrics (CAGR, Annualized Volatility, Sharpe Ratio, Sortino Ratio, Maximum Drawdown, Calmar Ratio, Alpha, Beta), and out-of-sample datasets directly from code, logs, notebooks, or test fixtures.
-   - Benchmark against standard industry baselines (e.g. Markowitz MVO, 1/N Equal Weight, Benchmark Indices).
-3. **End-to-End Architecture Mapping:**
-   - Identify discrete pipeline stages (e.g. Stage 1: Market Regime Detection → Stage 2: Multi-Factor Quantile Engine → Stage 3: Robust Portfolio Optimization → Stage 4: Discrete Share Sizing & Brokerage Execution → Cross-Cutting XAI / Trust Architecture).
+3. **Empirical Validation & Evidence Triangulation:**
+   - In cluttered or data-science codebases, ground-truth metrics may reside in evaluation scripts (`eval_*.py`), Jupyter notebook outputs (`.ipynb`), benchmark logs, or artifact files (`results/`, `logs/`, `outputs/`, `metrics.json`, `.csv`, `.parquet`).
+   - Extract real empirical numbers (e.g. CAGR, Sharpe, Sortino, MaxDD, Accuracy, F1, Loss, Latency, Memory) directly from these sources. Never guess or hallucinate performance figures.
+4. **End-to-End Pipeline Architecture:**
+   - Synthesize the disparate scripts and modules into a coherent multi-stage architectural pipeline (e.g., Ingestion/Regime Detection → Feature/Quantile Engine → Optimization/Allocation → Execution/Inference → Governance/XAI).
 
 ---
 
@@ -179,7 +185,8 @@ Never declare a paper complete based purely on zero compiler errors. Always visu
    ```
 2. **Clean Temporary Previews:**
    Delete temporary render files (`page_out-*.png`).
-3. **Commit Clean Assets:**
-   Stage and commit only permanent assets: `.tex` source, `.bib` library, `IEEEtran.cls`, `figures/`, `scripts/paper_figures/`, and the camera-ready `.pdf`.
-4. **Preserve Production Codebase:**
-   Strictly avoid touching production code in `src/`.
+3. **Isolate Paper Assets & Clean Commits:**
+   - Always isolate paper files into a dedicated directory (e.g. `docs/research_paper/` or `paper/`) and reproduction scripts into a dedicated folder (e.g. `scripts/paper_figures/`).
+   - Stage and commit only permanent paper assets: `.tex` source, `.bib` library, document class (`IEEEtran.cls`), generated `figures/`, reproduction scripts, and the camera-ready `.pdf`.
+4. **Universal Non-Destructive Invariant:**
+   - Strictly NEVER modify any existing project code, configuration, scripts, notebooks, or data files—regardless of how cluttered, legacy, or unstructured the repository is. The paper builder operates strictly as a read-only analyst of the project code, writing only to its designated publication and figure script directories.
