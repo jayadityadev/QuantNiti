@@ -8,6 +8,7 @@ import { useAppStore } from "../store/useAppStore";
 import { ProToolsBacktester } from "../components/explore/ProToolsBacktester";
 import { abortRegistry } from "../services/abortRegistry";
 import { ChipButton } from "../components/ui/ChipButton";
+import { apiUrl } from "../config";
 
 const SECTORS = [
   "All",
@@ -173,7 +174,7 @@ export const ExplorePage: React.FC = () => {
   useEffect(() => {
     const signal = abortRegistry.register("explore-stocks");
 
-    fetch("/api/explore/stocks", { signal })
+    fetch(apiUrl("/api/explore/stocks"), { signal })
       .then((res) => {
         if (!res.ok) throw new Error("Explore stocks API failed");
         return res.json();
