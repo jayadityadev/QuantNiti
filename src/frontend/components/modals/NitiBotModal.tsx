@@ -38,7 +38,23 @@ export const NitiBotModal: React.FC<NitiBotModalProps> = ({ isOpen, onClose }) =
   ]);
   const [input, setInput] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isOnline, setIsOnline] = useState<boolean>(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetch("/api/chat/status")
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data && typeof data.available === "boolean") {
+            setIsOnline(data.available);
+          }
+        })
+        .catch(() => {
+          // Keep resilient
+        });
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (typeof messagesEndRef.current?.scrollIntoView === "function") {
@@ -88,7 +104,7 @@ export const NitiBotModal: React.FC<NitiBotModalProps> = ({ isOpen, onClose }) =
       }
     } catch (err: any) {
       if (err?.name !== "AbortError") {
-        setErrorMessage("Unable to connect to NitiBot right now. Please verify API key configuration.");
+        setErrorMessage("Unable to connect to NitiBot right now. Please verify GEMINI_API_KEY is configured in your environment.");
       }
     }
   };
@@ -105,9 +121,15 @@ export const NitiBotModal: React.FC<NitiBotModalProps> = ({ isOpen, onClose }) =
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-bold text-[var(--text-main)] text-base">NitiBot AI</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-bold border border-emerald-500/30">
-                Online
-              </span>
+              {isOnline ? (
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-bold border border-emerald-500/30">
+                  Online
+                </span>
+              ) : (
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold border border-amber-500/30">
+                  Key Required
+                </span>
+              )}
             </div>
             <p className="text-[11px] text-[var(--text-muted)]">Real-time Grounded Quantitative Assistant</p>
           </div>

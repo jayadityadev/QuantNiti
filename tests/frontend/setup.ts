@@ -6,6 +6,56 @@ afterEach(() => {
   cleanup();
 });
 
+// Polyfill Storage (localStorage and sessionStorage) for environments like Node 22+ / 26 where globalThis.localStorage is undefined
+const createStorageMock = () => {
+  let store: Record<string, string> = {};
+  return {
+    getItem: (key: string): string | null => store[key] ?? null,
+    setItem: (key: string, value: string): void => {
+      store[key] = String(value);
+    },
+    removeItem: (key: string): void => {
+      delete store[key];
+    },
+    clear: (): void => {
+      store = {};
+    },
+    key: (index: number): string | null => Object.keys(store)[index] ?? null,
+    get length(): number {
+      return Object.keys(store).length;
+    },
+  };
+};
+
+const localStorageMock = createStorageMock();
+const sessionStorageMock = createStorageMock();
+
+Object.defineProperty(globalThis, "localStorage", {
+  value: localStorageMock,
+  writable: true,
+  configurable: true,
+});
+
+Object.defineProperty(globalThis, "sessionStorage", {
+  value: sessionStorageMock,
+  writable: true,
+  configurable: true,
+});
+
+if (typeof window !== "undefined") {
+  Object.defineProperty(window, "localStorage", {
+    value: localStorageMock,
+    writable: true,
+    configurable: true,
+  });
+  Object.defineProperty(window, "sessionStorage", {
+    value: sessionStorageMock,
+    writable: true,
+    configurable: true,
+  });
+}
+
+
 // Polyfill window.matchMedia if needed
 if (typeof window !== "undefined") {
   Object.defineProperty(window, "matchMedia", {

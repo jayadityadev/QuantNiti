@@ -17,18 +17,25 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
     if (!activeRegime) {
       const fetchRegime = async () => {
         try {
-          const data = await request<any>("home-regime", "/api/v1/regime/current");
+          const data = await request<any>("home-regime", "/api/regime/current");
           if (data) {
             setActiveRegime(data);
           }
         } catch {
-          // Store default fallback
-          setActiveRegime({
-            regime: "BULL",
-            probabilities: { BULL: 0.65, SIDEWAYS: 0.25, BEAR: 0.1 },
-            confidence: 0.82,
-            description: "Macro momentum strong with sustained institutional buying.",
-          });
+          try {
+            const dataV1 = await request<any>("home-regime-v1", "/api/v1/regime/current");
+            if (dataV1) {
+              setActiveRegime(dataV1);
+            }
+          } catch {
+            // Store default fallback
+            setActiveRegime({
+              regime: "BULL",
+              probabilities: { bull: 0.65, sideways: 0.25, bear: 0.1 },
+              confidence: 0.82,
+              description: "Macro momentum strong with sustained institutional buying.",
+            });
+          }
         }
       };
       fetchRegime();
@@ -36,10 +43,13 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
   }, [activeRegime, setActiveRegime, request]);
 
   const regimeName = activeRegime?.regime || "BULL";
-  const probs = activeRegime?.probabilities || { BULL: 0.65, SIDEWAYS: 0.25, BEAR: 0.1 };
-  const bullPct = Math.round((probs.BULL || 0.65) * 100);
-  const sidewaysPct = Math.round((probs.SIDEWAYS || 0.25) * 100);
-  const bearPct = Math.round((probs.BEAR || 0.1) * 100);
+  const probs: any = activeRegime?.probabilities || {};
+  const bullVal = typeof probs.bull === "number" ? probs.bull : (typeof probs.BULL === "number" ? probs.BULL : 0.65);
+  const sidewaysVal = typeof probs.sideways === "number" ? probs.sideways : (typeof probs.SIDEWAYS === "number" ? probs.SIDEWAYS : 0.25);
+  const bearVal = typeof probs.bear === "number" ? probs.bear : (typeof probs.BEAR === "number" ? probs.BEAR : 0.10);
+  const bullPct = Math.round(bullVal * 100);
+  const sidewaysPct = Math.round(sidewaysVal * 100);
+  const bearPct = Math.round(bearVal * 100);
   const description =
     activeRegime?.description ||
     "Algorithmic classifier identifies active expansion regime. High growth probability with controlled macro volatility.";
@@ -56,7 +66,7 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
               Market Regime Radar
             </h3>
             <span className="text-[10px] text-[var(--text-muted)] font-medium">
-              4-State Machine Learning Classifier
+              3-State Gaussian Mixture Model (GMM)
             </span>
           </div>
         </div>

@@ -4,7 +4,7 @@
  * Auto-generated with Vite production asset bundle
  */
 
-const CACHE_VERSION = "quantniti-v1789192355150";
+const CACHE_VERSION = "quantniti-v1791526541468";
 const PRECACHE_ASSETS = [
   "/",
   "/app",
@@ -18,9 +18,9 @@ const PRECACHE_ASSETS = [
   "/static/icons/icon-maskable-192.png",
   "/static/icons/icon-maskable-512.png",
   "/static/icons/icon.svg",
-  "/static/dist/assets/index-DGLByapO.js",
+  "/static/dist/assets/index-BogbjeFW.js",
   "/static/dist/assets/index-NLuffSK_.css",
-  "/static/dist/assets/PortfolioReportCard-CYJHjTwu.js",
+  "/static/dist/assets/PortfolioReportCard-CLewNkrU.js",
   "/static/dist/assets/vendor-charts-ufhugd8P.js",
   "/static/dist/assets/vendor-icons-RQ9Igy_Q.js",
   "/static/dist/assets/vendor-motion-DIP2Jlov.js",

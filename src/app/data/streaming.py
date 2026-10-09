@@ -11,24 +11,40 @@ from app.data.service import MarketDataService
 from app.universe import get_universe_symbols, normalize_symbol
 
 
-# Default baseline prices for key assets if offline or cache uninitialized
+# Default baseline prices calibrated from current live market levels
 _BASELINE_PRICES: Dict[str, float] = {
-    "^NSEI": 24850.30,
-    "^INDIAVIX": 13.45,
-    "RELIANCE": 2980.50,
-    "TCS": 4180.20,
-    "HDFCBANK": 1640.75,
-    "INFY": 1865.40,
+    "^NSEI": 22511.80,
+    "^INDIAVIX": 14.65,
+    "RELIANCE": 1173.00,
+    "TCS": 2181.80,
+    "HDFCBANK": 704.60,
+    "INFY": 1021.90,
     "ICICIBANK": 1210.30,
     "BHARTIARTL": 1425.60,
     "SBIN": 820.10,
-    "ITC": 495.25,
+    "ITC": 505.25,
     "LT": 3650.00,
     "HINDUNILVR": 2680.90,
     "GOLDBEES": 62.40,
     "SILVERBEES": 85.10,
     "NIFTYBEES": 265.80,
 }
+
+
+def is_indian_market_open() -> bool:
+    """Check if Indian National Stock Exchange (NSE/BSE) is open.
+    Trading hours: Monday to Friday, 09:15 to 15:30 IST.
+    """
+    try:
+        from datetime import time, timedelta
+        ist = timezone(timedelta(hours=5, minutes=30))
+        now = datetime.now(ist)
+        if now.weekday() >= 5:  # Saturday or Sunday
+            return False
+        current_time = now.time()
+        return time(9, 15) <= current_time <= time(15, 30)
+    except Exception:
+        return False
 
 
 class MarketTickGenerator:
@@ -51,6 +67,22 @@ class MarketTickGenerator:
     def _seed_data(self) -> None:
         """Seed initial price, high, low, and volume states."""
         for sym, price in _BASELINE_PRICES.items():
+            if self.market_service:
+                try:
+                    quote = self.market_service.get_latest_quote(sym)
+                    if quote and quote.current_price > 0:
+                        self._init_symbol_state(sym, quote.current_price)
+                        if quote.previous_close:
+                            self._prev_closes[sym] = quote.previous_close
+                        if quote.day_high:
+                            self._highs[sym] = quote.day_high
+                        if quote.day_low:
+                            self._lows[sym] = quote.day_low
+                        if quote.volume:
+                            self._volumes[sym] = quote.volume
+                        continue
+                except Exception:
+                    pass
             self._init_symbol_state(sym, price)
 
     def _init_symbol_state(self, symbol: str, base_price: float) -> None:
@@ -113,17 +145,22 @@ class MarketTickGenerator:
                 # Fall through to synthetic generation on broker network failure or off-market
                 pass
 
-        # 2. Synthetic tick generation via micro-Brownian step
+        # 2. Synthetic tick generation via micro-Brownian step (active only during market hours)
         curr_price = self._current_prices.get(canonical) or self._get_base_price(canonical)
         prev_close = self._prev_closes.get(canonical, curr_price)
 
-        # Micro-step bounded to +-0.25%
-        step_pct = random.gauss(0.0, 0.0012)
-        step_pct = max(-0.0035, min(0.0035, step_pct))
-
-        new_price = round(curr_price * (1.0 + step_pct), 2)
-        if new_price <= 0.01:
+        if is_indian_market_open():
+            # Micro-step bounded to +-0.25%
+            step_pct = random.gauss(0.0, 0.0012)
+            step_pct = max(-0.0035, min(0.0035, step_pct))
+            new_price = round(curr_price * (1.0 + step_pct), 2)
+            if new_price <= 0.01:
+                new_price = curr_price
+            added_vol = float(random.randint(5, 250))
+        else:
+            # Indian markets closed outside 09:15-15:30 IST and weekends: keep steady closing price
             new_price = curr_price
+            added_vol = 0.0
 
         self._current_prices[canonical] = new_price
 
@@ -133,7 +170,6 @@ class MarketTickGenerator:
         self._highs[canonical] = curr_high
         self._lows[canonical] = curr_low
 
-        added_vol = float(random.randint(5, 250))
         new_vol = self._volumes.get(canonical, 10000.0) + added_vol
         self._volumes[canonical] = new_vol
 

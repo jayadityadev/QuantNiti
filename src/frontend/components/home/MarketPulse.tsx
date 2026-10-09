@@ -3,33 +3,76 @@ import { Activity, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { GlassCard, AnimatedNumber } from "../ui";
 import { marketStream, MarketTick } from "../../services/marketStream";
 import { useAbortableRequest } from "../../hooks/useAbortableRequest";
+import { apiUrl } from "../../config";
 
 export interface MarketPulseProps {
   className?: string;
 }
 
+/** Check if Indian National Stock Exchange (NSE/BSE) is currently open: Mon-Fri 09:15-15:30 IST */
+export function isIndianMarketOpen(): boolean {
+  try {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Kolkata",
+      weekday: "short",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: false,
+    });
+    const parts = formatter.formatToParts(new Date());
+    const day = parts.find((p) => p.type === "weekday")?.value;
+    const hour = parseInt(parts.find((p) => p.type === "hour")?.value || "0", 10);
+    const minute = parseInt(parts.find((p) => p.type === "minute")?.value || "0", 10);
+
+    if (day === "Sat" || day === "Sun") return false;
+
+    const currentMin = hour * 60 + minute;
+    // Normal trading session: 09:15 to 15:30 IST
+    return currentMin >= 9 * 60 + 15 && currentMin <= 15 * 60 + 30;
+  } catch {
+    return false;
+  }
+}
+
 export const MarketPulse: React.FC<MarketPulseProps> = ({ className = "" }) => {
-  const [niftyPrice, setNiftyPrice] = useState(24852.4);
-  const [niftyChange, setNiftyChange] = useState(142.6);
-  const [niftyChangePct, setNiftyChangePct] = useState(0.58);
+  const [niftyPrice, setNiftyPrice] = useState(22511.8);
+  const [niftyChange, setNiftyChange] = useState(280.0);
+  const [niftyChangePct, setNiftyChangePct] = useState(1.26);
   const [lastUpdated, setLastUpdated] = useState<string>("Live");
+  const [isMarketOpen, setIsMarketOpen] = useState<boolean>(isIndianMarketOpen());
   const { request } = useAbortableRequest();
 
   useEffect(() => {
-    // Initial fetch for NIFTY 50 index snapshot
+    // Initial fetch for NIFTY 50 live quote snapshot
     const fetchSnapshot = async () => {
       try {
-        const data = await request<any>("market-pulse-init", "/api/v1/stream/ticks");
-        if (data && typeof data.price === "number") {
-          setNiftyPrice(data.price);
-          setNiftyChange(data.change || 0);
-          setNiftyChangePct(data.change_pct || 0);
+        const data = await request<any>("market-pulse-init", apiUrl("/api/market/quote/^NSEI"));
+        if (data && typeof data.current_price === "number") {
+          setNiftyPrice(data.current_price);
+          setNiftyChange(data.day_change || 0);
+          setNiftyChangePct(data.day_change_pct || 0);
+          setLastUpdated(new Date().toLocaleTimeString("en-IN", { hour12: false }));
         }
       } catch {
-        // Keep resilient fallback
+        // Fallback to alternative quote path or retain state
+        try {
+          const fallbackData = await request<any>("market-pulse-fallback", apiUrl("/api/v1/market/quote/^NSEI"));
+          if (fallbackData && typeof fallbackData.current_price === "number") {
+            setNiftyPrice(fallbackData.current_price);
+            setNiftyChange(fallbackData.day_change || 0);
+            setNiftyChangePct(fallbackData.day_change_pct || 0);
+          }
+        } catch {
+          // Keep resilient fallback
+        }
       }
     };
     fetchSnapshot();
+
+    // Check market hours periodically
+    const timer = setInterval(() => {
+      setIsMarketOpen(isIndianMarketOpen());
+    }, 30000);
 
     // Connect to SSE stream
     const unsubscribe = marketStream.subscribe((tick: MarketTick) => {
@@ -40,7 +83,10 @@ export const MarketPulse: React.FC<MarketPulseProps> = ({ className = "" }) => {
         tick.symbol === "NIFTY50"
       ) {
         setNiftyPrice(tick.price);
-        if (typeof tick.priceDelta === "number") {
+        if (typeof tick.change === "number") {
+          setNiftyChange(tick.change);
+          setNiftyChangePct(typeof tick.change_pct === "number" ? tick.change_pct : (tick.change / (tick.price - tick.change || 1)) * 100);
+        } else if (typeof tick.priceDelta === "number") {
           setNiftyChange(tick.priceDelta);
           const pct = (tick.priceDelta / (tick.price - tick.priceDelta || 1)) * 100;
           setNiftyChangePct(pct);
@@ -52,6 +98,7 @@ export const MarketPulse: React.FC<MarketPulseProps> = ({ className = "" }) => {
     marketStream.connect();
 
     return () => {
+      clearInterval(timer);
       unsubscribe();
     };
   }, [request]);
@@ -78,10 +125,17 @@ export const MarketPulse: React.FC<MarketPulseProps> = ({ className = "" }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-sm bg-accent/5 border-accent/20 text-accent">
-          <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-          <span>Market Open</span>
-        </div>
+        {isMarketOpen ? (
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-sm bg-accent/5 border-accent/20 text-accent">
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            <span>Market Open</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-sm bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400">
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            <span>Market Closed</span>
+          </div>
+        )}
       </div>
 
       <div className="flex items-baseline justify-between pt-1">

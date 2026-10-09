@@ -16,7 +16,7 @@ const VIDEO_EXPLAINERS: VideoFacadeItem[] = [
     title: "How Regime Alpha Protects Your Capital",
     duration: "2:45",
     thumbnail: "from-violet-600 to-indigo-700",
-    summary: "Discover how QuantNiti's 4-state Hidden Markov Model switches between bull and bear stances to reduce drawdown without timing tops and bottoms.",
+    summary: "Discover how QuantNiti's 3-state Gaussian Mixture Model (GMM) switches between bull and bear stances to reduce drawdown without timing tops and bottoms.",
   },
   {
     id: "vid_2",
