@@ -26,8 +26,7 @@ async def test_root_serves_html(test_app):
         assert "text/html" in response.headers.get("content-type", "")
         content = response.text
         assert "QuantNiti" in content
-        # Modern SPA uses root mount; legacy uses explicit tab names
-        assert ('id="root"' in content) or ("Grow" in content and "Explore" in content)
+        assert 'id="root"' in content
 
 
 @pytest.mark.asyncio
@@ -38,21 +37,22 @@ async def test_app_route_serves_html(test_app):
         assert response.status_code == 200
         assert "text/html" in response.headers.get("content-type", "")
         assert "QuantNiti" in response.text
+        assert 'id="root"' in response.text
 
 
 @pytest.mark.asyncio
 async def test_static_assets_served(test_app):
     transport = ASGITransport(app=test_app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
-        # Check static CSS
-        css_resp = await client.get("/static/styles.css")
-        assert css_resp.status_code == 200
-        assert len(css_resp.text) > 0
+        # Check manifest endpoint
+        manifest_resp = await client.get("/manifest.json")
+        assert manifest_resp.status_code == 200
+        assert "application/manifest+json" in manifest_resp.headers.get("content-type", "")
 
-        # Check static JS
-        js_resp = await client.get("/static/app.js")
-        assert js_resp.status_code == 200
-        assert len(js_resp.text) > 0
+        # Check static icon
+        icon_resp = await client.get("/static/icons/icon-192.png")
+        assert icon_resp.status_code == 200
+        assert len(icon_resp.content) > 0
 
 
 @pytest.mark.asyncio
@@ -73,43 +73,11 @@ async def test_vite_build_assets_served(test_app):
 
 
 @pytest.mark.asyncio
-async def test_competitor_benchmark_drawer_served(test_app):
-    """Verify that the in-app competitor benchmark drawer, triggers, and 10 dimensions are rendered."""
+async def test_competitor_benchmark_assets_served(test_app):
+    """Verify that the SPA bundle serves root shell with linked Vite assets."""
     transport = ASGITransport(app=test_app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         response = await client.get("/")
         assert response.status_code == 200
-        html = response.text
-
-        # 1. Trigger Buttons
-        assert "openCompareHeaderBtn" in html
-        assert "openCompareTrustBtn" in html
-        assert "Compare Platforms" in html or "Compare vs Existing Platforms" in html
-
-        # 2. Drawer Modal Container & Controls
-        assert "competitorBenchmarkModal" in html
-        assert "closeCompetitorBenchmarkModal" in html
-
-        # 3. Competitor Platforms Listed
-        assert "MoneyControl" in html
-        assert "Zerodha" in html
-        assert "Groww" in html
-        assert "INDmoney" in html
-        assert "Smallcase" in html
-
-        # 4. Verified 10 Comparison Dimensions
-        assert "Forward Growth Forecasting" in html
-        assert "Market Regime Classification" in html
-        assert "Portfolio-Level Optimization" in html
-        assert "Discrete Integer Share Sizing" in html
-        assert "Explainable AI Trust Card" in html
-        assert "Strategy Backtesting" in html or "Technical Strategy Backtesting" in html
-        assert "Dynamic Regime Rebalance" in html or "Regime Rebalance Alerts" in html
-        assert "Virtual Paper Portfolio" in html
-        assert "Cost & Middleman Fees" in html or "0% Commission" in html
-        assert "Audience Accessibility" in html or "Dual Experience" in html
-
-        # 5. Academic Defense Grounding & Key Takeaways
-        assert "Why Not Groww" in html or "Why Not Groww or INDmoney" in html
-        assert "Why Not Zerodha" in html or "Why Not Zerodha Streak" in html
-        assert "Why Not Smallcase" in html
+        assert 'id="root"' in response.text
+        assert "/static/dist/assets/index-" in response.text

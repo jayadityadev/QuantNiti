@@ -11,7 +11,9 @@ from start_all import (
     get_lan_ip,
     get_python_exe,
     get_running_devices,
+    has_visible_emulator_window,
     is_server_ready,
+    kill_process_on_port,
 )
 
 
@@ -46,3 +48,14 @@ def test_get_running_devices_parsing():
     with patch("subprocess.run", return_value=mock_res):
         devices = get_running_devices(Path("fake_adb"))
         assert devices == ["emulator-5554"]
+
+
+def test_has_visible_emulator_window():
+    # Calling has_visible_emulator_window should return a bool without exception
+    result = has_visible_emulator_window()
+    assert isinstance(result, bool)
+
+
+def test_kill_process_on_port_safely():
+    # Calling on an unused port should not throw
+    kill_process_on_port(port=59998)

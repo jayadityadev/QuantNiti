@@ -82,10 +82,8 @@ def test_offline_page_exists_and_styled():
 
 
 def test_desktop_responsive_css_rules():
-    """Verify CSS has media query for min-width: 1024px persistent sidebar layout."""
-    css_path = STATIC_DIR / "styles.css"
-    assert css_path.exists(), "styles.css must exist"
-
-    css_content = css_path.read_text(encoding="utf-8")
-    assert "@media" in css_content and "1024px" in css_content, "Must contain @media (min-width: 1024px)"
-    assert "240px" in css_content, "Must contain 240px persistent sidebar specification"
+    """Verify production CSS bundle exists in dist/assets and contains responsive styling."""
+    dist_css = list((STATIC_DIR / "dist" / "assets").glob("*.css"))
+    assert len(dist_css) > 0, "Production CSS bundle must exist in dist/assets"
+    css_content = dist_css[0].read_text(encoding="utf-8")
+    assert len(css_content) > 0

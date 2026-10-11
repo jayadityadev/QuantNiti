@@ -103,36 +103,20 @@ def create_app(
     app.state.alert_service = alert_svc
     app.state.review_service = review_svc
 
-    # Static assets directory
+    # Static assets directory - Vite React SPA bundle
     static_dir = Path(__file__).resolve().parent.parent / "static"
     dist_dir = static_dir / "dist"
-    use_vite = os.getenv("QUANTNITI_USE_VITE", "0") == "1"
     vite_index = dist_dir / "index.html"
-    legacy_index = static_dir / "index.html"
-    default_index = (vite_index) if (use_vite and vite_index.exists()) else legacy_index
 
     if static_dir.exists():
         app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
         @app.get("/", response_class=FileResponse, include_in_schema=False)
-        async def serve_root():
-            return FileResponse(default_index)
-
         @app.get("/app", response_class=FileResponse, include_in_schema=False)
-        async def serve_app_shell():
-            return FileResponse(default_index)
-
         @app.get("/client", response_class=FileResponse, include_in_schema=False)
-        async def serve_client_alias():
-            return FileResponse(default_index)
-
         @app.get("/vite", response_class=FileResponse, include_in_schema=False)
-        async def serve_vite_shell():
-            return FileResponse(vite_index if vite_index.exists() else default_index)
-
-        @app.get("/legacy", response_class=FileResponse, include_in_schema=False)
-        async def serve_legacy_shell():
-            return FileResponse(legacy_index)
+        async def serve_app():
+            return FileResponse(vite_index)
 
         @app.get("/manifest.json", response_class=FileResponse, include_in_schema=False)
         async def serve_manifest():

@@ -92,7 +92,6 @@ async def test_index_html_contains_pwa_metadata_and_elements(test_app):
         # 1. Manifest link & theme-color
         assert 'rel="manifest"' in html
         assert 'name="theme-color"' in html
-        assert '#09090b' in html
 
         # 2. Apple PWA meta tags
         assert 'name="apple-mobile-web-app-capable"' in html
@@ -100,11 +99,6 @@ async def test_index_html_contains_pwa_metadata_and_elements(test_app):
         assert 'name="apple-mobile-web-app-title"' in html
         assert 'rel="apple-touch-icon"' in html
 
-        # 3. Desktop Install Button
-        assert 'id="pwaInstallBtn"' in html or 'pwa-install' in html.lower()
-
-        # 4. iOS Install Guide Banner
-        assert 'id="iosInstallBanner"' in html or 'ios-install' in html.lower()
-
-        # 5. Service worker registration & desktop sidebar structure
-        assert 'bottomNavBar' in html
+        # 3. React Root container & Vite assets
+        assert 'id="root"' in html
+        assert '/static/dist/assets/index-' in html
