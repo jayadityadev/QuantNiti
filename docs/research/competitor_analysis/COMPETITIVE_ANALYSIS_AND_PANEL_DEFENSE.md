@@ -1,8 +1,7 @@
 # QuantNiti (क्वान्टनीति) — Comprehensive Competitor Teardown & Panel Defense Dossier
 **Author:** Jayaditya Dev  
 **Project:** QuantNiti — AI-Driven Regime-Adaptive Portfolio Intelligence & Quantitative Decision Support System  
-**Date:** October 2026  
-**Directory of Visual Assets:** `competitor_analysis/screenshots/`
+**Directory of Visual Assets:** `docs/research/competitor_analysis/screenshots/` (or relative `screenshots/`)
 
 ---
 

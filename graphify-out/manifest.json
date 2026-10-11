@@ -114,10 +114,10 @@
     "semantic_hash": "a4dab76d43d15bfc1666e46f38789710"
   },
   "src/app/api/app.py": {
-    "mtime": 1791726622.5610032,
-    "seen": 1791727289.1627798,
-    "ast_hash": "775bee6174c71048c3e8abd21f36cef5",
-    "semantic_hash": "775bee6174c71048c3e8abd21f36cef5"
+    "mtime": 1791736519.9888363,
+    "seen": 1791736839.9328365,
+    "ast_hash": "50e56ac848b5769dc48e4ad60afa7b0f",
+    "semantic_hash": ""
   },
   "src/app/api/routes/__init__.py": {
     "mtime": 1791216240.0362096,
@@ -264,10 +264,10 @@
     "semantic_hash": "1e52cef0b4bfd5352c45d46d62e8d17b"
   },
   "src/app/data/storage.py": {
-    "mtime": 1791216240.0466852,
-    "seen": 1791727289.1628044,
-    "ast_hash": "fa75f125652c203b3a6fe7d8a718958d",
-    "semantic_hash": "fa75f125652c203b3a6fe7d8a718958d"
+    "mtime": 1791736506.9785466,
+    "seen": 1791736839.9328706,
+    "ast_hash": "9ca46a824d7245a16550baa6574610d0",
+    "semantic_hash": ""
   },
   "src/app/data/streaming.py": {
     "mtime": 1791526270.8280075,
@@ -360,10 +360,10 @@
     "semantic_hash": "37be549e4944dc71dc0f6b5e05067d03"
   },
   "src/app/ml/forecasting/factors.py": {
-    "mtime": 1791216240.0527928,
-    "seen": 1791727289.162819,
-    "ast_hash": "bdc3c1c25d1d37757f26102b7831c4c9",
-    "semantic_hash": "bdc3c1c25d1d37757f26102b7831c4c9"
+    "mtime": 1791736466.849339,
+    "seen": 1791736839.932891,
+    "ast_hash": "687187e9ebf648f87ccb71a09f557495",
+    "semantic_hash": ""
   },
   "src/app/ml/forecasting/forecaster.py": {
     "mtime": 1791216240.0527928,
@@ -516,10 +516,10 @@
     "semantic_hash": "f28f4e7b824739a1390edd80513de486"
   },
   "src/app/static/sw.js": {
-    "mtime": 1791726902.1902986,
-    "seen": 1791727289.1628442,
-    "ast_hash": "5579d72799e41e796cc3bf21b81154a5",
-    "semantic_hash": "5579d72799e41e796cc3bf21b81154a5"
+    "mtime": 1791736827.3474495,
+    "seen": 1791736839.9329264,
+    "ast_hash": "d5e1200c6e4d1c097d9f545be1862aa8",
+    "semantic_hash": ""
   },
   "src/app/universe.py": {
     "mtime": 1791216240.0712662,
@@ -1522,5 +1522,245 @@
     "seen": 1791727289.163001,
     "ast_hash": "37b3e1f529ef84341433fd6aa5987099",
     "semantic_hash": "37b3e1f529ef84341433fd6aa5987099"
+  },
+  ".github/workflows/build-apk.yml": {
+    "mtime": 1791525546.5369565,
+    "seen": 1791736839.9331417,
+    "ast_hash": "3bf808d291ffa273181642af8983a56a",
+    "semantic_hash": ""
+  },
+  ".github/workflows/docker-build.yml": {
+    "mtime": 1791525558.0843034,
+    "seen": 1791736839.9331434,
+    "ast_hash": "a0bdd1b87b8516da03b031e9be811c67",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1791216239.7436535,
+    "seen": 1791736839.9331443,
+    "ast_hash": "0c01312889f3bc55cbe78392eb28ed97",
+    "semantic_hash": ""
+  },
+  "CONTEXT.md": {
+    "mtime": 1791216239.7436535,
+    "seen": 1791736839.933145,
+    "ast_hash": "2d53c253b25d4035ae1dcf39278b0dc4",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1791216239.7436535,
+    "seen": 1791736839.933146,
+    "ast_hash": "a35475948ec9e9c1dd11aa2604494787",
+    "semantic_hash": ""
+  },
+  "docker-compose.yml": {
+    "mtime": 1791525558.0848343,
+    "seen": 1791736839.9331472,
+    "ast_hash": "cc58988a179610014f62a50c8f8bb442",
+    "semantic_hash": ""
+  },
+  "docs/ARCHITECTURE.md": {
+    "mtime": 1791216239.7449272,
+    "seen": 1791736839.9331484,
+    "ast_hash": "209b8f1de35c65005c2d08b1c45a59c8",
+    "semantic_hash": ""
+  },
+  "docs/HOSTING_AND_SCALABILITY.md": {
+    "mtime": 1791525558.0854,
+    "seen": 1791736839.933149,
+    "ast_hash": "1d2c444f7c312ba0170e95ce0efd5feb",
+    "semantic_hash": ""
+  },
+  "docs/ML_PIPELINE.md": {
+    "mtime": 1791216239.7449272,
+    "seen": 1791736839.9331503,
+    "ast_hash": "48006c360f7fffdba51651ef7c1f84c3",
+    "semantic_hash": ""
+  },
+  "docs/PRD.md": {
+    "mtime": 1791216239.7449272,
+    "seen": 1791736839.9331512,
+    "ast_hash": "cf1ac329897822cd9148b604d61e6e95",
+    "semantic_hash": ""
+  },
+  "docs/RESEARCH_PAPER_MASTER_DOSSIER.md": {
+    "mtime": 1791216239.746397,
+    "seen": 1791736839.9331522,
+    "ast_hash": "59971969ce102d832fbb63fe14c5d19a",
+    "semantic_hash": ""
+  },
+  "docs/USER_GUIDE.md": {
+    "mtime": 1791216239.746397,
+    "seen": 1791736839.9331534,
+    "ast_hash": "3666170dd68f5853a7fcd7f776de3c4a",
+    "semantic_hash": ""
+  },
+  "docs/adr/0001-pivot-from-backtesting-to-portfolio-growth-intelligence.md": {
+    "mtime": 1791216239.7478833,
+    "seen": 1791736839.9331543,
+    "ast_hash": "ba5783a8b918736a143934a99866067a",
+    "semantic_hash": ""
+  },
+  "docs/adr/0002-dual-tabbed-architecture-investor-and-quant-lab.md": {
+    "mtime": 1791216239.7478833,
+    "seen": 1791736839.933155,
+    "ast_hash": "fc444613a79678df6098a52bbf497696",
+    "semantic_hash": ""
+  },
+  "docs/adr/0003-virtual-paper-portfolio-with-regime-rebalancing-alerts.md": {
+    "mtime": 1791216239.7478833,
+    "seen": 1791736839.933156,
+    "ast_hash": "8a57c1e14f52dd12fcb290ca4a7b125b",
+    "semantic_hash": ""
+  },
+  "docs/adr/0004-explainable-ai-trust-card-and-disintermediation-model.md": {
+    "mtime": 1791216239.7478833,
+    "seen": 1791736839.9331572,
+    "ast_hash": "c984c11b40e85ffe7d7f75c31de6e4b0",
+    "semantic_hash": ""
+  },
+  "docs/adr/0005-discrete-allocation-and-ledoit-wolf-covariance-shrinkage.md": {
+    "mtime": 1791216239.7488832,
+    "seen": 1791736839.933158,
+    "ast_hash": "4df4ae19e7f7fe5dd9af3355d0cc5b31",
+    "semantic_hash": ""
+  },
+  "docs/adr/0006-rag-powered-conversational-assistant-nitibot.md": {
+    "mtime": 1791216239.7488832,
+    "seen": 1791736839.9331589,
+    "ast_hash": "4c972c5f8577c5987f7fb25505c8dd31",
+    "semantic_hash": ""
+  },
+  "docs/adr/0007-esg-conscience-score-and-socially-responsible-investing.md": {
+    "mtime": 1791216239.7498827,
+    "seen": 1791736839.9331598,
+    "ast_hash": "e518351491462c0d62433bec9849dfba",
+    "semantic_hash": ""
+  },
+  "docs/adr/0008-cross-platform-pwa-with-adaptive-desktop-layout.md": {
+    "mtime": 1791216239.7498827,
+    "seen": 1791736839.933161,
+    "ast_hash": "c2a6d4682f30fdc1bd8194879106381a",
+    "semantic_hash": ""
+  },
+  "docs/adr/0009-portfolio-intelligence-over-strategy-testing.md": {
+    "mtime": 1791216239.7498827,
+    "seen": 1791736839.933162,
+    "ast_hash": "483f24f57abffb46ce98726ab97b127e",
+    "semantic_hash": ""
+  },
+  "docs/adr/0010-multi-asset-universe-with-commodity-etfs.md": {
+    "mtime": 1791216239.750883,
+    "seen": 1791736839.933163,
+    "ast_hash": "e10895539b4e8a4b421cc36f7f3e5e5d",
+    "semantic_hash": ""
+  },
+  "docs/adr/0011-server-side-ml-computation-thin-client.md": {
+    "mtime": 1791216239.750883,
+    "seen": 1791736839.933164,
+    "ast_hash": "f0a48b196f74f0ca9bc81f18938f0674",
+    "semantic_hash": ""
+  },
+  "docs/adr/0012-ai-review-verification-fact-checking-agent.md": {
+    "mtime": 1791216239.750883,
+    "seen": 1791736839.9331648,
+    "ast_hash": "f6f4be94f62fdabfaacba4e18fa7bb92",
+    "semantic_hash": ""
+  },
+  "docs/agents/domain.md": {
+    "mtime": 1791216239.7523656,
+    "seen": 1791736839.9331658,
+    "ast_hash": "2c5f2c5f8b714234251bc55dbfdc0da0",
+    "semantic_hash": ""
+  },
+  "docs/agents/issue-tracker.md": {
+    "mtime": 1791216239.7523656,
+    "seen": 1791736839.9331667,
+    "ast_hash": "f7a4c1d8300e294d0d8872dac7c37c52",
+    "semantic_hash": ""
+  },
+  "docs/agents/triage-labels.md": {
+    "mtime": 1791216239.75349,
+    "seen": 1791736839.933168,
+    "ast_hash": "85409347dbf487c8a25c9dac59708b83",
+    "semantic_hash": ""
+  },
+  "docs/research/competitor-and-open-source-audit.md": {
+    "mtime": 1791216239.95466,
+    "seen": 1791736839.933169,
+    "ast_hash": "67b81818ae1bd6230e9f9d8a1df44769",
+    "semantic_hash": ""
+  },
+  "docs/research/exhaustive-competitor-analysis-moneycontrol-zerodha-groww-indmoney.md": {
+    "mtime": 1791216239.9558587,
+    "seen": 1791736839.9331698,
+    "ast_hash": "679d48057897391fee9a975503ac1ef2",
+    "semantic_hash": ""
+  },
+  "docs/research/fresh-competitive-research-2026.md": {
+    "mtime": 1791404462.6876042,
+    "seen": 1791736839.933171,
+    "ast_hash": "0e9b04ffc43e34fddc27bdb1a6e4f54e",
+    "semantic_hash": ""
+  },
+  "docs/research/ml-architecture-and-competitive-moat.md": {
+    "mtime": 1791216239.9558587,
+    "seen": 1791736839.933172,
+    "ast_hash": "e7c58d96371fef3f845e08613c0e6e74",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1791525546.547426,
+    "seen": 1791736839.9331727,
+    "ast_hash": "d794080aa4ad63590d488e80f19ce292",
+    "semantic_hash": ""
+  },
+  "render.yaml": {
+    "mtime": 1791525558.0859144,
+    "seen": 1791736839.9331737,
+    "ast_hash": "7a7934ca6de7ed378cd523e6abc20539",
+    "semantic_hash": ""
+  },
+  "src/app/static/index.html": {
+    "mtime": 1791525546.5518248,
+    "seen": 1791736839.9331748,
+    "ast_hash": "ed08b95663ebf3fe2e3482d50cb1d20f",
+    "semantic_hash": ""
+  },
+  "src/app/static/offline.html": {
+    "mtime": 1791525546.552354,
+    "seen": 1791736839.9331758,
+    "ast_hash": "a65aeea7f53d1b083a6f2dfb87651b97",
+    "semantic_hash": ""
+  },
+  "src/app/static/icons/icon-192.png": {
+    "mtime": 1791216240.0638862,
+    "seen": 1791736839.9331765,
+    "ast_hash": "579fdcba6b41bb5da63790e8d3ca76dc",
+    "semantic_hash": ""
+  },
+  "src/app/static/icons/icon-512.png": {
+    "mtime": 1791216240.0648937,
+    "seen": 1791736839.9331777,
+    "ast_hash": "ac01421517d7d07b88314977125b1a2f",
+    "semantic_hash": ""
+  },
+  "src/app/static/icons/icon-maskable-192.png": {
+    "mtime": 1791216240.0648937,
+    "seen": 1791736839.9331787,
+    "ast_hash": "08f89fd90d473bf963b4c5ecb7a2023b",
+    "semantic_hash": ""
+  },
+  "src/app/static/icons/icon-maskable-512.png": {
+    "mtime": 1791216240.0648937,
+    "seen": 1791736839.9331796,
+    "ast_hash": "731487c2262869b0af01959eb508bf4a",
+    "semantic_hash": ""
+  },
+  "src/app/static/icons/icon.svg": {
+    "mtime": 1791216240.0658941,
+    "seen": 1791736839.9331806,
+    "ast_hash": "0a0039ce9c12fcfedb4745b7759d3103",
+    "semantic_hash": ""
   }
 }

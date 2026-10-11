@@ -9,7 +9,7 @@
 .scratch/
 
 # Academic presentation snapshots, raw PDFs, and paper figures (contain no code symbols)
-competitor_analysis/
+docs/research/competitor_analysis/
 docs/pdfs/
 docs/review/
 docs/research_paper/

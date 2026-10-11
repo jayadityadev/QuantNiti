@@ -155,31 +155,24 @@ def create_app(
 
 
 
-    # Register routers under prefix
-    app.include_router(health_router, prefix=settings.api_v1_prefix)
-    app.include_router(health_router, prefix="/api/v1")
-    app.include_router(market_router, prefix=settings.api_v1_prefix)
-    app.include_router(market_router, prefix="/api/v1")
-    app.include_router(regime_router, prefix=settings.api_v1_prefix)
-    app.include_router(regime_router, prefix="/api/v1")
-    app.include_router(explore_router, prefix=settings.api_v1_prefix)
-    app.include_router(explore_router, prefix="/api/v1")
-    app.include_router(grow_router, prefix=settings.api_v1_prefix)
-    app.include_router(grow_router, prefix="/api/v1")
-    app.include_router(backtest_router, prefix=settings.api_v1_prefix)
-    app.include_router(backtest_router, prefix="/api/v1")
-    app.include_router(portfolio_router, prefix=settings.api_v1_prefix)
-    app.include_router(portfolio_router, prefix="/api/v1")
-    app.include_router(chat_router, prefix=settings.api_v1_prefix)
-    app.include_router(chat_router, prefix="/api/v1")
-    app.include_router(literacy_router, prefix=settings.api_v1_prefix)
-    app.include_router(literacy_router, prefix="/api/v1")
-    app.include_router(stream_router, prefix=settings.api_v1_prefix)
-    app.include_router(stream_router, prefix="/api/v1")
-    app.include_router(alerts_router, prefix=settings.api_v1_prefix)
-    app.include_router(alerts_router, prefix="/api/v1")
-    app.include_router(reviews_router, prefix=settings.api_v1_prefix)
-    app.include_router(reviews_router, prefix="/api/v1")
+    # Register routers under api prefixes (supporting both default /api and /api/v1)
+    api_prefixes = tuple(dict.fromkeys([settings.api_v1_prefix, "/api/v1"]))
+    for router in [
+        health_router,
+        market_router,
+        regime_router,
+        explore_router,
+        grow_router,
+        backtest_router,
+        portfolio_router,
+        chat_router,
+        literacy_router,
+        stream_router,
+        alerts_router,
+        reviews_router,
+    ]:
+        for prefix in api_prefixes:
+            app.include_router(router, prefix=prefix)
 
     # Convenience aliases for frontend compatibility
     @app.get("/api/v1/stocks/explore", include_in_schema=False)

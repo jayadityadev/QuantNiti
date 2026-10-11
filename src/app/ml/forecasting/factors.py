@@ -65,7 +65,7 @@ def compute_stock_beta_and_alpha(
     risk_free_rate: float = 0.065,
 ) -> Tuple[float, float, float]:
     """Compute Capital Asset Pricing Model (CAPM) Beta, Annualized Alpha, and Correlation."""
-    aligned = pd.concat([stock_returns, benchmark_returns], axis=1).dropna()
+    aligned = pd.concat([stock_returns, benchmark_returns], axis=1, sort=False).dropna()
     if len(aligned) < 20:
         return 1.0, 0.0, 0.5
 

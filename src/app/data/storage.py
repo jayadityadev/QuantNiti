@@ -25,6 +25,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
+    Session,
     mapped_column,
     relationship,
     sessionmaker,
@@ -334,100 +335,98 @@ class PortfolioRepository:
 
             session.commit()
 
+    def _build_portfolio_state(self, session: Session, record: PortfolioRecord) -> PortfolioState:
+        """Helper to construct PortfolioState from record within an existing session."""
+        holdings_recs = (
+            session.query(HoldingRecord)
+            .filter_by(portfolio_id=record.id)
+            .order_by(HoldingRecord.weight.desc())
+            .all()
+        )
+
+        holdings = [
+            PortfolioHolding(
+                symbol=h.symbol,
+                name=h.name,
+                sector=h.sector,
+                shares=h.shares,
+                buy_price=h.buy_price,
+                current_price=h.current_price,
+                prev_close_price=h.prev_close_price,
+                invested_amount=h.invested_amount,
+                current_value=h.current_value,
+                unrealized_pnl=h.unrealized_pnl,
+                unrealized_pnl_pct=h.unrealized_pnl_pct,
+                pnl_1d=h.pnl_1d,
+                pnl_1d_pct=h.pnl_1d_pct,
+                weight=h.weight,
+            )
+            for h in holdings_recs
+        ]
+
+        bench_comp = None
+        if record.benchmark_nifty_return is not None:
+            bench_comp = BenchmarkComparisonLive(
+                portfolio_return_pct=record.total_pnl_pct,
+                nifty_return_pct=record.benchmark_nifty_return or 0.0,
+                bank_fd_return_pct=record.benchmark_fd_return or 0.0,
+                alpha_vs_nifty=record.alpha_vs_nifty or 0.0,
+                alpha_vs_fd=record.alpha_vs_fd or 0.0,
+            )
+
+        # Match enum types safely
+        reg_init = MarketRegimeType.LOW_VOLATILITY_BULL
+        for r in MarketRegimeType:
+            if r.value == record.initial_regime or r.name == record.initial_regime:
+                reg_init = r
+                break
+
+        reg_curr = MarketRegimeType.LOW_VOLATILITY_BULL
+        for r in MarketRegimeType:
+            if r.value == record.current_regime or r.name == record.current_regime:
+                reg_curr = r
+                break
+
+        persona = RiskPersona.BALANCED
+        for p in RiskPersona:
+            if p.value == record.risk_persona or p.name == record.risk_persona:
+                persona = p
+                break
+
+        return PortfolioState(
+            portfolio_id=record.id,
+            name=record.name,
+            initial_capital=record.initial_capital,
+            cash=record.cash,
+            invested_capital=record.invested_capital,
+            current_value=record.current_value,
+            total_pnl=record.total_pnl,
+            total_pnl_pct=record.total_pnl_pct,
+            pnl_1d=record.pnl_1d,
+            pnl_1d_pct=record.pnl_1d_pct,
+            holdings=holdings,
+            benchmark_comparison=bench_comp,
+            initial_regime=reg_init,
+            current_regime=reg_curr,
+            risk_persona=persona,
+            horizon=record.horizon,
+            created_at=record.created_at,
+            as_of_date=record.as_of_date,
+        )
+
     def get_portfolio(self, portfolio_id: str) -> Optional[PortfolioState]:
         """Fetch complete portfolio state by ID."""
         with self.SessionLocal() as session:
             record = session.get(PortfolioRecord, portfolio_id)
             if not record:
                 return None
-
-            holdings_recs = (
-                session.query(HoldingRecord)
-                .filter_by(portfolio_id=portfolio_id)
-                .order_by(HoldingRecord.weight.desc())
-                .all()
-            )
-
-            holdings = [
-                PortfolioHolding(
-                    symbol=h.symbol,
-                    name=h.name,
-                    sector=h.sector,
-                    shares=h.shares,
-                    buy_price=h.buy_price,
-                    current_price=h.current_price,
-                    prev_close_price=h.prev_close_price,
-                    invested_amount=h.invested_amount,
-                    current_value=h.current_value,
-                    unrealized_pnl=h.unrealized_pnl,
-                    unrealized_pnl_pct=h.unrealized_pnl_pct,
-                    pnl_1d=h.pnl_1d,
-                    pnl_1d_pct=h.pnl_1d_pct,
-                    weight=h.weight,
-                )
-                for h in holdings_recs
-            ]
-
-            bench_comp = None
-            if record.benchmark_nifty_return is not None:
-                bench_comp = BenchmarkComparisonLive(
-                    portfolio_return_pct=record.total_pnl_pct,
-                    nifty_return_pct=record.benchmark_nifty_return or 0.0,
-                    bank_fd_return_pct=record.benchmark_fd_return or 0.0,
-                    alpha_vs_nifty=record.alpha_vs_nifty or 0.0,
-                    alpha_vs_fd=record.alpha_vs_fd or 0.0,
-                )
-
-            # Match enum types safely
-            reg_init = MarketRegimeType.LOW_VOLATILITY_BULL
-            for r in MarketRegimeType:
-                if r.value == record.initial_regime or r.name == record.initial_regime:
-                    reg_init = r
-                    break
-
-            reg_curr = MarketRegimeType.LOW_VOLATILITY_BULL
-            for r in MarketRegimeType:
-                if r.value == record.current_regime or r.name == record.current_regime:
-                    reg_curr = r
-                    break
-
-            persona = RiskPersona.BALANCED
-            for p in RiskPersona:
-                if p.value == record.risk_persona or p.name == record.risk_persona:
-                    persona = p
-                    break
-
-            return PortfolioState(
-                portfolio_id=record.id,
-                name=record.name,
-                initial_capital=record.initial_capital,
-                cash=record.cash,
-                invested_capital=record.invested_capital,
-                current_value=record.current_value,
-                total_pnl=record.total_pnl,
-                total_pnl_pct=record.total_pnl_pct,
-                pnl_1d=record.pnl_1d,
-                pnl_1d_pct=record.pnl_1d_pct,
-                holdings=holdings,
-                benchmark_comparison=bench_comp,
-                initial_regime=reg_init,
-                current_regime=reg_curr,
-                risk_persona=persona,
-                horizon=record.horizon,
-                created_at=record.created_at,
-                as_of_date=record.as_of_date,
-            )
+            return self._build_portfolio_state(session, record)
 
     def list_portfolios(self) -> List[PortfolioState]:
         """List all active portfolios in the database."""
         with self.SessionLocal() as session:
             records = session.query(PortfolioRecord).order_by(PortfolioRecord.created_at.desc()).all()
-            result = []
-            for r in records:
-                p = self.get_portfolio(r.id)
-                if p:
-                    result.append(p)
-            return result
+            return [self._build_portfolio_state(session, r) for r in records]
 
     def delete_portfolio(self, portfolio_id: str) -> bool:
         """Delete portfolio and all cascading child records."""
