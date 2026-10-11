@@ -106,10 +106,9 @@ def create_app(
     # Static assets directory
     static_dir = Path(__file__).resolve().parent.parent / "static"
     dist_dir = static_dir / "dist"
-    legacy_dir = static_dir / "legacy"
     use_vite = os.getenv("QUANTNITI_USE_VITE", "0") == "1"
     vite_index = dist_dir / "index.html"
-    legacy_index = (legacy_dir / "index.html") if (legacy_dir / "index.html").exists() else (static_dir / "index.html")
+    legacy_index = static_dir / "index.html"
     default_index = (vite_index) if (use_vite and vite_index.exists()) else legacy_index
 
     if static_dir.exists():

@@ -1,0 +1,31 @@
+# .graphifyignore
+# Authoritatively exclude non-domain directories from the Graphify knowledge graph
+
+# Third-party agent skills and internal skill scripts/fixtures
+.agents/
+.opencode/
+
+# Local task issue tickets and scratch specs
+.scratch/
+
+# Academic presentation snapshots, raw PDFs, and paper figures (contain no code symbols)
+competitor_analysis/
+docs/pdfs/
+docs/review/
+docs/research_paper/
+
+# Mobile Capacitor Android native build
+android/
+
+# Build artifacts, caches, and database
+data/cache/
+src/app/static/dist/
+*.parquet
+*.db
+*.sqlite3
+
+# Node & Python dependencies and caches
+node_modules/
+.venv/
+.pytest_cache/
+__pycache__/
