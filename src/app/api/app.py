@@ -130,7 +130,10 @@ def create_app(
             return FileResponse(
                 static_dir / "sw.js",
                 media_type="application/javascript",
-                headers={"Service-Worker-Allowed": "/"},
+                headers={
+                    "Service-Worker-Allowed": "/",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                },
             )
 
         @app.get("/offline.html", response_class=FileResponse, include_in_schema=False)

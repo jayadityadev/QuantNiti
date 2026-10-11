@@ -250,6 +250,8 @@ def ensure_emulator_running(adb_bin: Path, emu_bin: Path) -> None:
 
     subprocess.Popen(
         emu_cmd,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
         close_fds=True,
     )
 

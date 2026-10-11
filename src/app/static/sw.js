@@ -4,7 +4,7 @@
  * Auto-generated with Vite production asset bundle
  */
 
-const CACHE_VERSION = "quantniti-v1791736827346";
+const CACHE_VERSION = "quantniti-v2-purple";
 const PRECACHE_ASSETS = [
   "/",
   "/app",
