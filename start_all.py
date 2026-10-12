@@ -14,6 +14,7 @@ import shutil
 import socket
 import subprocess
 import sys
+import threading
 import time
 import urllib.request
 from pathlib import Path
@@ -191,110 +192,52 @@ def get_running_devices(adb_bin: Path) -> list[str]:
         return []
 
 
-def has_visible_emulator_window() -> bool:
-    """Check if an emulator process on Windows has an active GUI window."""
-    if sys.platform != "win32":
-        return True
-    try:
-        cmd = [
-            "powershell",
-            "-NoProfile",
-            "-Command",
-            "(Get-Process -Name 'emulator', 'qemu-system-x86_64' -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowHandle -ne 0 }).Count",
-        ]
-        res = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
-        count = int(res.stdout.strip() or "0")
-        return count > 0
-    except Exception:
-        return True
-
-
-def ensure_emulator_running(adb_bin: Path, emu_bin: Path) -> None:
-    """Ensure an Android emulator is running visibly on screen; launch one if not."""
-    devices = get_running_devices(adb_bin)
-
-    # If an emulator is reported by ADB but has no visible GUI window, kill it to restart visibly
-    if devices and sys.platform == "win32" and not has_visible_emulator_window():
-        print("[3/4] Headless/background emulator detected without window. Restarting with GUI...", flush=True)
-        try:
-            subprocess.run([str(adb_bin), "emu", "kill"], capture_output=True, timeout=5)
-        except Exception:
-            pass
-        time.sleep(1)
-        devices = []
-
-    if devices:
-        print(f"[3/4] Active Android device connected: {devices[0]}", flush=True)
+def auto_open_emulator_in_background(adb_bin: Optional[Path], port: int = 8000) -> None:
+    """Watch in background for an emulator/device to boot up, then auto-open QuantNiti on its screen."""
+    if not adb_bin:
         return
 
-    # Discover available AVDs
-    res = subprocess.run([str(emu_bin), "-list-avds"], capture_output=True, text=True)
-    avds = [line.strip() for line in res.stdout.splitlines() if line.strip()]
-    if not avds:
-        print("Error: No Android Virtual Devices (AVD) found.", flush=True)
-        print("Please create an AVD via Android Studio Device Manager.", flush=True)
-        sys.exit(1)
-
-    selected_avd = "Medium_Phone_API_37.0" if "Medium_Phone_API_37.0" in avds else avds[0]
-    print(f"[3/4] Launching Android Studio emulator GUI ({selected_avd})...", flush=True)
-
-    emu_cmd = [
-        str(emu_bin),
-        "-avd",
-        selected_avd,
-        "-netdelay",
-        "none",
-        "-netspeed",
-        "full",
-    ]
-
-    subprocess.Popen(
-        emu_cmd,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        close_fds=True,
-    )
-
-    print("      Waiting for Android device to finish booting...", flush=True)
-    start_wait = time.time()
-    while time.time() - start_wait < 90:
-        online = get_running_devices(adb_bin)
-        if online:
-            check = subprocess.run(
-                [str(adb_bin), "shell", "getprop", "sys.boot_completed"],
-                capture_output=True,
-                text=True,
-            )
-            if check.stdout.strip() == "1":
-                print("      Android emulator GUI boot completed.", flush=True)
-                return
-        time.sleep(2)
-
-    print("      Proceeding with pipeline...", flush=True)
-
-
-def open_app_on_emulator(adb_bin: Path, port: int = 8000) -> None:
-    """Open QuantNiti on the Android emulator screen."""
-    print("[4/4] Opening QuantNiti on the emulator screen...", flush=True)
-    pkg_check = subprocess.run(
-        [str(adb_bin), "shell", "pm", "list", "packages", "com.quantniti.app"],
-        capture_output=True,
-        text=True,
-    )
-    if "com.quantniti.app" in pkg_check.stdout:
-        print("      Launching native QuantNiti package...", flush=True)
-        subprocess.run(
-            [str(adb_bin), "shell", "am", "start", "-n", "com.quantniti.app/.MainActivity"],
-            check=True,
-        )
-    else:
-        # Loopback URL from inside the Android guest pointing to host machine
+    def _watcher() -> None:
         guest_url = f"http://10.0.2.2:{port}/"
-        print(f"      Launching browser inside emulator pointing to {guest_url}...", flush=True)
-        subprocess.run(
-            [str(adb_bin), "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", guest_url],
-            check=True,
-        )
+        # Poll periodically for up to 10 minutes while the session is active
+        for _ in range(300):
+            devices = get_running_devices(adb_bin)
+            if devices:
+                try:
+                    check = subprocess.run(
+                        [str(adb_bin), "shell", "getprop", "sys.boot_completed"],
+                        capture_output=True,
+                        text=True,
+                        timeout=5,
+                    )
+                    if check.stdout.strip() == "1":
+                        time.sleep(1)
+                        pkg_check = subprocess.run(
+                            [str(adb_bin), "shell", "pm", "list", "packages", "com.quantniti.app"],
+                            capture_output=True,
+                            text=True,
+                            timeout=5,
+                        )
+                        if "com.quantniti.app" in pkg_check.stdout:
+                            subprocess.run(
+                                [str(adb_bin), "shell", "am", "start", "-n", "com.quantniti.app/.MainActivity"],
+                                capture_output=True,
+                                timeout=5,
+                            )
+                        else:
+                            subprocess.run(
+                                [str(adb_bin), "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", guest_url],
+                                capture_output=True,
+                                timeout=5,
+                            )
+                        print(f"\n[Android Emulator] Connected ({devices[0]}) — opened {guest_url} on emulator screen!\n", flush=True)
+                        return
+                except Exception:
+                    pass
+            time.sleep(2)
+
+    thread = threading.Thread(target=_watcher, daemon=True)
+    thread.start()
 
 
 def main() -> None:
@@ -307,17 +250,12 @@ def main() -> None:
     print("==================================================================", flush=True)
 
     adb_bin = find_android_tool("adb")
-    emu_bin = find_android_tool("emulator")
-
-    if not adb_bin or not emu_bin:
-        print("Error: Android toolchain (adb / emulator) not found.", flush=True)
-        print("Ensure Android Studio / SDK is installed and set ANDROID_HOME.", flush=True)
-        sys.exit(1)
 
     build_web_assets_if_needed()
     server_proc = start_backend_server(port)
-    ensure_emulator_running(adb_bin, emu_bin)
-    open_app_on_emulator(adb_bin, port)
+
+    # Listen in background so whenever you click Play in Android Studio, QuantNiti opens automatically
+    auto_open_emulator_in_background(adb_bin, port)
 
     print("\n==================================================================", flush=True)
     print("                   Pipeline Successfully Running!                 ", flush=True)
@@ -326,9 +264,8 @@ def main() -> None:
     print("                        (Open this URL in Chrome / Edge on your PC)", flush=True)
     print(f"  [Mobile on LAN]     : http://{lan_ip}:{port}/", flush=True)
     print("                        (Open on any phone connected to the same Wi-Fi)", flush=True)
-    print("  [Android Emulator]  : Running inside the Android Studio emulator window!", flush=True)
-    print("                        (Note: 10.0.2.2 is internal to the emulator guest;", flush=True)
-    print("                         do NOT navigate to 10.0.2.2 on your PC browser)", flush=True)
+    print("  [Android Emulator]  : Launch your device from Android Studio Device Manager", flush=True)
+    print(f"                        (QuantNiti will auto-open at http://10.0.2.2:{port}/)", flush=True)
     print("==================================================================", flush=True)
     print("Press Ctrl+C at any time to stop the backend server.\n", flush=True)
 

@@ -114,9 +114,9 @@
     "semantic_hash": "a4dab76d43d15bfc1666e46f38789710"
   },
   "src/app/api/app.py": {
-    "mtime": 1791742074.698448,
-    "seen": 1791742734.3100357,
-    "ast_hash": "848c9d1989e79e91c24f1fd68123894a",
+    "mtime": 1791743229.8033743,
+    "seen": 1791744196.5906534,
+    "ast_hash": "1211460e3328a8f570232dfdbefc77e0",
     "semantic_hash": ""
   },
   "src/app/api/routes/__init__.py": {
@@ -138,8 +138,8 @@
     "semantic_hash": "0cd2b03a5a0e34f25527aeba3dc23c0b"
   },
   "src/app/api/routes/chat.py": {
-    "mtime": 1791216240.037741,
-    "seen": 1791727289.1627843,
+    "mtime": 1791782250.7327247,
+    "seen": 1791784396.3042698,
     "ast_hash": "d2199f5ab9923bd2c4cec1e438efb638",
     "semantic_hash": "d2199f5ab9923bd2c4cec1e438efb638"
   },
@@ -510,9 +510,9 @@
     "semantic_hash": "f28f4e7b824739a1390edd80513de486"
   },
   "src/app/static/sw.js": {
-    "mtime": 1791740195.4527223,
-    "seen": 1791741384.5844324,
-    "ast_hash": "a642ff60c135512134a799273257aed5",
+    "mtime": 1791743212.7063203,
+    "seen": 1791744196.5907679,
+    "ast_hash": "08f54430380e96af00bf2f4eaa884ad5",
     "semantic_hash": ""
   },
   "src/app/universe.py": {
@@ -1716,9 +1716,9 @@
     "semantic_hash": ""
   },
   "start_all.py": {
-    "mtime": 1791742229.1379771,
-    "seen": 1791742734.3102553,
-    "ast_hash": "133bda5d9b40b9352d41b1891999ac26",
+    "mtime": 1791784921.9841642,
+    "seen": 1791784951.6777687,
+    "ast_hash": "95086af566203c8f36ec3706c0a71338",
     "semantic_hash": ""
   },
   "tests/unit/test_start_all.py": {
