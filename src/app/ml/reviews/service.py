@@ -63,12 +63,15 @@ class ReviewService:
             "return_discrepancy_pct": verification.return_discrepancy_pct,
         }
 
+        audit_summary = verification.verification_badge or verification.audit_notes or verification.rejection_reason
+
         return ReviewSubmissionResponse(
             is_approved=verification.is_approved,
             status=verification.status,
             review=review_item if verification.is_approved else None,
             verification_badge=verification.verification_badge,
             rejection_reason=verification.rejection_reason,
+            audit_summary=audit_summary,
             audit_details=audit_dict,
         )
 

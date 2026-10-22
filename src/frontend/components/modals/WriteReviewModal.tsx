@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { Star, ShieldCheck, Check } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Star, ShieldCheck, Check, AlertTriangle } from "lucide-react";
 import { ModalSheet } from "../ui/ModalSheet";
 import { PrimaryButton } from "../ui/PrimaryButton";
 import { useAbortableRequest } from "../../hooks/useAbortableRequest";
+import { apiUrl } from "../../config";
 
-interface WriteReviewModalProps {
+export interface WriteReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
-  targetType?: "basket" | "portfolio" | "strategy" | "platform";
+  targetType?: "stock" | "basket" | "portfolio" | "strategy" | "platform";
   targetId?: string;
   onSuccess?: () => void;
 }
@@ -15,8 +16,8 @@ interface WriteReviewModalProps {
 export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
   isOpen,
   onClose,
-  targetType = "basket",
-  targetId = "balanced_6m",
+  targetType = "stock",
+  targetId = "RELIANCE",
   onSuccess,
 }) => {
   const { request, isLoading } = useAbortableRequest();
@@ -27,43 +28,63 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
   const [claimedReturn, setClaimedReturn] = useState("+12.4%");
   const [comment, setComment] = useState("");
   const [auditBadge, setAuditBadge] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setAuditBadge(null);
+      setErrorMessage(null);
+      setIsSuccess(false);
+    }
+  }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!comment.trim() || !authorName.trim() || !title.trim()) return;
 
+    setErrorMessage(null);
+    setAuditBadge(null);
+
+    const cleanNum = claimedReturn.replace(/[^0-9.-]/g, "");
+    const parsedClaim = cleanNum ? parseFloat(cleanNum) : null;
+
+    const payload = {
+      target_type: targetType,
+      target_id: targetId,
+      user_name: authorName.trim(),
+      rating,
+      title: title.trim(),
+      review_text: comment.trim(),
+      claimed_return_pct: isNaN(parsedClaim as number) ? null : parsedClaim,
+      claimed_duration: "6M",
+    };
+
     try {
-      const response = await request("submit-review", "/api/v1/reviews/submit", {
+      const response = await request("submit-review", apiUrl("/api/v1/reviews/submit"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          target_type: targetType,
-          target_id: targetId,
-          author_name: authorName.trim(),
-          rating,
-          title: title.trim(),
-          comment: comment.trim(),
-          claimed_return_pct: parseFloat(claimedReturn.replace(/[^0-9.-]/g, "")) || 12.4,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (response) {
-        setAuditBadge(response.audit_summary || "AI Fact-Checked & Verified");
-        setIsSuccess(true);
-        setTimeout(() => {
-          onSuccess?.();
-          onClose();
-        }, 1200);
+        if (response.is_approved) {
+          setAuditBadge(response.verification_badge || response.audit_summary || "AI Fact-Checked & Verified");
+          setIsSuccess(true);
+          setTimeout(() => {
+            onSuccess?.();
+            onClose();
+          }, 1400);
+        } else {
+          setErrorMessage(
+            response.rejection_reason ||
+            response.audit_details?.audit_notes ||
+            "Review rejected by AI Fact-Checking Agent."
+          );
+        }
       }
-    } catch {
-      // Fallback preview
-      setAuditBadge("Audited: Claimed return matches simulated bounds (+12.4%)");
-      setIsSuccess(true);
-      setTimeout(() => {
-        onSuccess?.();
-        onClose();
-      }, 1000);
+    } catch (err: any) {
+      setErrorMessage(err?.message || "Failed to submit review for AI verification.");
     }
   };
 
@@ -78,7 +99,9 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
           </div>
           <div>
             <h3 className="font-bold text-[var(--text-main)] text-base">Write a Verified Review</h3>
-            <p className="text-[11px] text-[var(--text-muted)]">3-Tier AI Fact-Checking Audit</p>
+            <p className="text-[11px] text-[var(--text-muted)]">
+              Auditing {targetType.toUpperCase()}: <span className="font-mono text-accent">{targetId}</span>
+            </p>
           </div>
         </div>
       }
@@ -117,7 +140,7 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
             type="text"
             value={authorName}
             onChange={(e) => setAuthorName(e.target.value)}
-            placeholder="e.g. Arun M., AlgoTrader"
+            placeholder="e.g. Arun M., Investor"
             required
             className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] text-xs focus:outline-none focus:border-accent transition-colors shadow-sm"
           />
@@ -131,19 +154,19 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Great transparency on drawdown"
+              placeholder="e.g. Great long-term compounder"
               required
               className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] text-xs focus:outline-none focus:border-accent transition-colors shadow-sm"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-semibold text-[var(--text-main)]">Claimed Returns %</label>
+            <label className="text-xs font-semibold text-[var(--text-main)]">Claimed 6M Return %</label>
             <input
               type="text"
               value={claimedReturn}
               onChange={(e) => setClaimedReturn(e.target.value)}
-              placeholder="e.g. +14.2%"
+              placeholder="e.g. +12.4%"
               className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] text-xs focus:outline-none focus:border-accent transition-colors shadow-sm"
             />
           </div>
@@ -159,7 +182,7 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
             rows={3}
             value={comment}
             onChange={(e) => setComment(e.target.value.slice(0, 500))}
-            placeholder="Describe execution, transparency, volatility handling..."
+            placeholder="Describe investment discipline, regime suitability, or price behavior..."
             required
             className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] text-xs focus:outline-none focus:border-accent transition-colors resize-none shadow-sm"
           />
@@ -170,14 +193,27 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
           <ShieldCheck className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0 mt-0.5" />
           <div className="text-[11px] text-teal-800 dark:text-teal-200/90 leading-relaxed">
             <span className="font-bold text-teal-700 dark:text-teal-300 block">3-Tier AI Fact-Checking Active</span>
-            Reviews cross-reference historical backtest envelopes and Monte Carlo ranges before publication.
+            Reviews are audited against historical price data (±3% tolerance) to prevent fraudulent claims and ensure SEBI advertisement compliance.
           </div>
         </div>
 
-        {auditBadge && (
-          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2">
-            <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span>{auditBadge}</span>
+        {errorMessage && (
+          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs flex items-start gap-2.5 animate-in fade-in">
+            <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold block">AI Verification Rejection</span>
+              <p className="mt-0.5 leading-relaxed">{errorMessage}</p>
+            </div>
+          </div>
+        )}
+
+        {auditBadge && isSuccess && (
+          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs flex items-start gap-2.5 animate-in fade-in">
+            <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold block">AI Audit Passed & Published!</span>
+              <p className="mt-0.5 font-mono text-[11px]">{auditBadge}</p>
+            </div>
           </div>
         )}
 
@@ -188,7 +224,7 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
             fullWidth
             disabled={isLoading || isSuccess || !comment.trim()}
           >
-            {isLoading ? "Auditing with AI..." : isSuccess ? "Review Verified & Published!" : "Submit Verified Review"}
+            {isLoading ? "Auditing with AI..." : isSuccess ? "Review Verified & Published!" : "Submit for AI Verification"}
           </PrimaryButton>
         </div>
       </form>

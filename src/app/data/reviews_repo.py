@@ -127,59 +127,116 @@ class ReviewRepository:
         )
 
     def seed_default_reviews_if_empty(self):
-        """Seed representative verified and qualitative reviews for NIFTY basket preview."""
+        """Seed representative verified and qualitative reviews for baskets and stocks."""
         with self.SessionLocal() as session:
-            count = session.execute(select(ReviewRecord)).scalars().first()
-            if count is not None:
-                return
+            has_basket = session.execute(
+                select(ReviewRecord).where(ReviewRecord.target_type == ReviewTargetType.BASKET.value)
+            ).scalars().first()
+            
+            if has_basket is None:
+                seed_items = [
+                    ReviewRecord(
+                        id="seed-rev-1",
+                        target_type=ReviewTargetType.BASKET.value,
+                        target_id="balanced_6m",
+                        user_name="Aarav Sharma",
+                        rating=5,
+                        review_text="Disciplined allocation across defensive and quality large-caps. Gained +13.5% over 6 months with minimal drawdown during market chop.",
+                        claimed_return_pct=13.5,
+                        claimed_duration="6M",
+                        actual_return_pct=12.8,
+                        return_discrepancy_pct=0.7,
+                        status=ReviewStatus.VERIFIED.value,
+                        verification_badge="[✅ Verified: Actual Return +12.8% vs Claimed +13.5%]",
+                        created_at="2026-08-28T10:15:00Z",
+                    ),
+                    ReviewRecord(
+                        id="seed-rev-2",
+                        target_type=ReviewTargetType.BASKET.value,
+                        target_id="balanced_6m",
+                        user_name="Meera Kapoor",
+                        rating=5,
+                        review_text="The Trust Card and stress drawdown limits gave me confidence to stay invested rather than panic selling during corrections.",
+                        claimed_return_pct=None,
+                        claimed_duration=None,
+                        actual_return_pct=12.8,
+                        return_discrepancy_pct=None,
+                        status=ReviewStatus.APPROVED.value,
+                        verification_badge="[ℹ️ Qualitative Review - Platform Experience]",
+                        created_at="2026-08-30T14:22:00Z",
+                    ),
+                    ReviewRecord(
+                        id="seed-rev-3",
+                        target_type=ReviewTargetType.BASKET.value,
+                        target_id="balanced_6m",
+                        user_name="Rohan Varma",
+                        rating=4,
+                        review_text="Solid steady compounder. Recorded +18.2% over the 1 year holding horizon, very close to backtested projections.",
+                        claimed_return_pct=18.2,
+                        claimed_duration="12M",
+                        actual_return_pct=19.5,
+                        return_discrepancy_pct=1.3,
+                        status=ReviewStatus.VERIFIED.value,
+                        verification_badge="[✅ Verified: Actual Return +19.5% vs Claimed +18.2%]",
+                        created_at="2026-09-02T09:40:00Z",
+                    ),
+                ]
+                for s in seed_items:
+                    session.add(s)
 
-            seed_items = [
-                ReviewRecord(
-                    id="seed-rev-1",
-                    target_type=ReviewTargetType.BASKET.value,
-                    target_id="balanced_6m",
-                    user_name="Aarav Sharma",
-                    rating=5,
-                    review_text="Disciplined allocation across defensive and quality large-caps. Gained +13.5% over 6 months with minimal drawdown during market chop.",
-                    claimed_return_pct=13.5,
-                    claimed_duration="6M",
-                    actual_return_pct=12.8,
-                    return_discrepancy_pct=0.7,
-                    status=ReviewStatus.VERIFIED.value,
-                    verification_badge="[✅ Verified: Actual Return +12.8% vs Claimed +13.5%]",
-                    created_at="2026-08-28T10:15:00Z",
-                ),
-                ReviewRecord(
-                    id="seed-rev-2",
-                    target_type=ReviewTargetType.BASKET.value,
-                    target_id="balanced_6m",
-                    user_name="Meera Kapoor",
-                    rating=5,
-                    review_text="The Trust Card and stress drawdown limits gave me confidence to stay invested rather than panic selling during corrections.",
-                    claimed_return_pct=None,
-                    claimed_duration=None,
-                    actual_return_pct=12.8,
-                    return_discrepancy_pct=None,
-                    status=ReviewStatus.APPROVED.value,
-                    verification_badge="[ℹ️ Qualitative Review - Platform Experience]",
-                    created_at="2026-08-30T14:22:00Z",
-                ),
-                ReviewRecord(
-                    id="seed-rev-3",
-                    target_type=ReviewTargetType.BASKET.value,
-                    target_id="balanced_6m",
-                    user_name="Rohan Varma",
-                    rating=4,
-                    review_text="Solid steady compounder. Recorded +18.2% over the 1 year holding horizon, very close to backtested projections.",
-                    claimed_return_pct=18.2,
-                    claimed_duration="12M",
-                    actual_return_pct=19.5,
-                    return_discrepancy_pct=1.3,
-                    status=ReviewStatus.VERIFIED.value,
-                    verification_badge="[✅ Verified: Actual Return +19.5% vs Claimed +18.2%]",
-                    created_at="2026-09-02T09:40:00Z",
-                ),
-            ]
-            for s in seed_items:
-                session.add(s)
+            has_stock = session.execute(
+                select(ReviewRecord).where(ReviewRecord.target_type == ReviewTargetType.STOCK.value)
+            ).scalars().first()
+
+            if has_stock is None:
+                stock_seeds = [
+                    ReviewRecord(
+                        id="seed-stock-1",
+                        target_type=ReviewTargetType.STOCK.value,
+                        target_id="RELIANCE",
+                        user_name="Aarav Sharma",
+                        rating=5,
+                        review_text="Disciplined accumulation during consolidation. Made +12.4% over 6 months with steady dividend support.",
+                        claimed_return_pct=12.4,
+                        claimed_duration="6M",
+                        actual_return_pct=13.1,
+                        return_discrepancy_pct=0.7,
+                        status=ReviewStatus.VERIFIED.value,
+                        verification_badge="[✅ Verified: Actual Return +13.1% vs Claimed +12.4%]",
+                        created_at="2026-09-10T11:00:00Z",
+                    ),
+                    ReviewRecord(
+                        id="seed-stock-2",
+                        target_type=ReviewTargetType.STOCK.value,
+                        target_id="RELIANCE",
+                        user_name="Pooja Sen",
+                        rating=5,
+                        review_text="The regime suitability badge and multi-horizon cone gave me confidence to hold without anxiety during intraday swings.",
+                        claimed_return_pct=None,
+                        claimed_duration=None,
+                        actual_return_pct=13.1,
+                        return_discrepancy_pct=None,
+                        status=ReviewStatus.APPROVED.value,
+                        verification_badge="[ℹ️ Qualitative Review - Platform Experience]",
+                        created_at="2026-09-12T15:30:00Z",
+                    ),
+                    ReviewRecord(
+                        id="seed-stock-3",
+                        target_type=ReviewTargetType.STOCK.value,
+                        target_id="TCS",
+                        user_name="Devansh Rao",
+                        rating=4,
+                        review_text="Held through the IT cycle. +9.2% return over 6 months tracked close to the algorithmic forecast.",
+                        claimed_return_pct=9.2,
+                        claimed_duration="6M",
+                        actual_return_pct=8.8,
+                        return_discrepancy_pct=0.4,
+                        status=ReviewStatus.VERIFIED.value,
+                        verification_badge="[✅ Verified: Actual Return +8.8% vs Claimed +9.2%]",
+                        created_at="2026-09-15T16:45:00Z",
+                    ),
+                ]
+                for s in stock_seeds:
+                    session.add(s)
+
             session.commit()

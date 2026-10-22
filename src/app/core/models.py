@@ -791,6 +791,7 @@ class ReviewStatus(str, Enum):
 
 
 class ReviewTargetType(str, Enum):
+    STOCK = "stock"
     BASKET = "basket"
     PORTFOLIO = "portfolio"
     STRATEGY = "strategy"
@@ -803,6 +804,7 @@ class ReviewSubmissionRequest(BaseModel):
     user_name: str
     rating: int = Field(..., ge=1, le=5)
     review_text: str = Field(..., min_length=5, max_length=2000)
+    title: Optional[str] = None
     claimed_return_pct: Optional[float] = None
     claimed_duration: Optional[str] = None
 
@@ -814,6 +816,7 @@ class ReviewItem(BaseModel):
     user_name: str
     rating: int
     review_text: str
+    title: Optional[str] = None
     claimed_return_pct: Optional[float] = None
     claimed_duration: Optional[str] = None
     actual_return_pct: Optional[float] = None
@@ -860,5 +863,6 @@ class ReviewSubmissionResponse(BaseModel):
     review: Optional[ReviewItem] = None
     verification_badge: Optional[str] = None
     rejection_reason: Optional[str] = None
+    audit_summary: Optional[str] = None
     audit_details: Optional[Dict[str, Any]] = None
 

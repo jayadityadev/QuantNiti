@@ -4,12 +4,16 @@ import {
   Activity,
   Leaf,
   Loader2,
+  Star,
+  ShieldCheck,
+  MessageSquarePlus,
 } from "lucide-react";
 import { ModalSheet } from "../ui/ModalSheet";
 import { GlassCard } from "../ui/GlassCard";
 import { AnimatedNumber } from "../ui/AnimatedNumber";
 import { RegimeBadge } from "../ui/RegimeBadge";
 import { apiUrl } from "../../config";
+import { useAppStore } from "../../store/useAppStore";
 
 export interface StockProfileModalProps {
   symbol: string | null;
@@ -24,17 +28,31 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
 }) => {
   const [profile, setProfile] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [reviewsData, setReviewsData] = useState<any | null>(null);
+  const openModal = useAppStore((state) => state.openModal);
 
   // Stale-response guard: tracks the active requested symbol to prevent race conditions
   const activeSymbolRef = useRef<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  const fetchReviews = (sym: string) => {
+    fetch(apiUrl(`/api/v1/reviews/stock/${encodeURIComponent(sym)}`))
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) setReviewsData(data);
+      })
+      .catch(() => {});
+  };
+
   useEffect(() => {
     if (!isOpen || !symbol) {
       setProfile(null);
+      setReviewsData(null);
       setIsLoading(false);
       return;
     }
+
+    fetchReviews(symbol);
 
     // Abort previous in-flight fetch if any
     if (abortControllerRef.current) {
@@ -421,6 +439,92 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
                   Source: {profile.esg?.source || "BRSR / CRISIL ESG / NSE Sustainability"}
                 </div>
               </GlassCard>
+            </div>
+
+            {/* Section 4: Community Reviews & AI Fact-Checking */}
+            <div className="space-y-3 pt-1">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+                  <h4 className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">
+                    Community Reviews & AI Fact-Check
+                  </h4>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    openModal("review", {
+                      targetType: "stock",
+                      targetId: symbol,
+                      onSuccess: () => symbol && fetchReviews(symbol),
+                    })
+                  }
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-violet-600/15 hover:bg-violet-600/25 text-violet-700 dark:text-violet-300 text-xs font-semibold border border-violet-500/30 transition-all hover:scale-105 shadow-sm"
+                >
+                  <MessageSquarePlus className="w-3.5 h-3.5" />
+                  <span>Write Review</span>
+                </button>
+              </div>
+
+              {reviewsData && reviewsData.summary?.total_reviews > 0 ? (
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between px-1 text-xs text-[var(--text-muted)]">
+                    <div className="flex items-center gap-1.5 font-bold text-[var(--text-main)]">
+                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      <span>{reviewsData.summary.average_rating.toFixed(1)} / 5.0</span>
+                      <span className="font-normal text-[var(--text-muted)]">
+                        ({reviewsData.summary.total_reviews} review{reviewsData.summary.total_reviews > 1 ? "s" : ""})
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                      <ShieldCheck className="w-3 h-3" />
+                      {reviewsData.summary.verified_reviews_count} Verified by AI
+                    </span>
+                  </div>
+
+                  <div className="space-y-2">
+                    {reviewsData.reviews.map((rev: any) => (
+                      <div
+                        key={rev.id}
+                        className="p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-2"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-[var(--text-main)]">
+                            {rev.user_name}
+                          </span>
+                          <div className="flex items-center gap-0.5">
+                            {Array.from({ length: rev.rating || 5 }).map((_, idx) => (
+                              <Star
+                                key={idx}
+                                className="w-3 h-3 fill-amber-400 text-amber-400"
+                              />
+                            ))}
+                          </div>
+                        </div>
+
+                        {rev.verification_badge && (
+                          <div className="inline-block px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-mono font-medium text-emerald-700 dark:text-emerald-300">
+                            {rev.verification_badge}
+                          </div>
+                        )}
+
+                        <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                          {rev.review_text}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <GlassCard className="p-4 rounded-xl text-center space-y-1.5">
+                  <p className="text-xs font-medium text-[var(--text-main)]">
+                    No verified reviews for {symbol} yet
+                  </p>
+                  <p className="text-[11px] text-[var(--text-muted)]">
+                    Be the first to share your performance experience! Our AI agent will mathematically verify your claim against historical price return before publishing.
+                  </p>
+                </GlassCard>
+              )}
             </div>
           </>
         ) : (

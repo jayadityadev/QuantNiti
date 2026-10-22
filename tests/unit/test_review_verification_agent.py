@@ -73,3 +73,56 @@ def test_agent_approves_qualitative_review(agent):
     assert res.is_approved is True
     assert res.status == ReviewStatus.APPROVED
     assert "Qualitative Review" in res.verification_badge
+
+
+def test_agent_verifies_stock_review_within_tolerance(agent):
+    """Verify stock review with legitimate return (+12.4% vs 13.1% actual on RELIANCE 6M) passes."""
+    req = ReviewSubmissionRequest(
+        target_type=ReviewTargetType.STOCK,
+        target_id="RELIANCE",
+        user_name="Aarav Sharma",
+        rating=5,
+        review_text="Disciplined accumulation in consolidation. Made +12.4% over 6 months with steady growth.",
+        claimed_return_pct=12.4,
+        claimed_duration="6M",
+    )
+    res = agent.verify_review(req)
+    assert res.is_approved is True
+    assert res.status == ReviewStatus.VERIFIED
+    assert "✅ Verified" in res.verification_badge
+    assert res.actual_return_pct == 13.1
+    assert abs(res.return_discrepancy_pct) <= 3.0
+
+
+def test_agent_rejects_exaggerated_stock_review(agent):
+    """Verify exaggerated stock review (+90% in 1 month on TCS) is rejected by AI fact-checker at Tier 2."""
+    req = ReviewSubmissionRequest(
+        target_type=ReviewTargetType.STOCK,
+        target_id="TCS",
+        user_name="MoonShot",
+        rating=5,
+        review_text="TCS gave me +90% returns in 1 month with unbelievable price expansion.",
+    )
+    res = agent.verify_review(req)
+    assert res.is_approved is False
+    assert res.status == ReviewStatus.REJECTED
+    assert res.tier1_passed is True
+    assert res.tier2_passed is False
+    assert res.actual_return_pct == 1.4
+    assert res.claimed_return_pct == 90.0
+
+
+def test_agent_blocks_stock_tipping_at_tier1(agent):
+    """Verify speculative stock tipping phrases like 100x bagger are blocked at Tier 1."""
+    req = ReviewSubmissionRequest(
+        target_type=ReviewTargetType.STOCK,
+        target_id="TCS",
+        user_name="Tipster",
+        rating=5,
+        review_text="TCS is a 100x bagger buy now fast before breakout!",
+    )
+    res = agent.verify_review(req)
+    assert res.is_approved is False
+    assert res.status == ReviewStatus.REJECTED
+    assert res.tier1_passed is False
+    assert "stock tips" in res.rejection_reason.lower() or "tipping" in res.audit_notes.lower()

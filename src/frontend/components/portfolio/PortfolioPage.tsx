@@ -9,6 +9,7 @@ import { RebalanceBanner } from "./RebalanceBanner";
 import { CompoundingTrajectoryChart } from "./CompoundingTrajectoryChart";
 import { CreatePortfolioModal } from "./CreatePortfolioModal";
 import { PrimaryButton } from "../ui/PrimaryButton";
+import { apiUrl } from "../../config";
 import {
   PortfolioData,
   CompoundingTrajectoryData,
@@ -31,6 +32,21 @@ export const PortfolioPage: React.FC = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isRebalancing, setIsRebalancing] = useState(false);
   const [trajectoryData, setTrajectoryData] = useState<CompoundingTrajectoryData | null>(null);
+
+  // Load existing real portfolios from backend if empty in memory
+  useEffect(() => {
+    fetch(apiUrl("/api/v1/portfolios"))
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setPortfolios(data);
+          if (!activePortfolioId) {
+            setActivePortfolioId(data[0].portfolio_id);
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Determine active portfolio
   const activePortfolio =

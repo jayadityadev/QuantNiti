@@ -12,14 +12,15 @@ import { apiUrl } from "../config";
 
 const SECTORS = [
   "All",
-  "Technology",
   "Banking",
+  "Technology",
   "Energy",
-  "Auto",
+  "Automobile",
   "Healthcare",
-  "FMCG",
-  "Metal",
-  "Finance",
+  "Consumer Goods",
+  "Metals",
+  "Defense",
+  "Commodities",
 ];
 
 const DEFAULT_STOCKS: ExploreStockItem[] = [
@@ -208,9 +209,21 @@ export const ExplorePage: React.FC = () => {
         stock.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
         stock.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesSector =
-        selectedSector === "All" ||
-        stock.sector.toLowerCase() === selectedSector.toLowerCase();
+      const matchesSector = (() => {
+        if (selectedSector === "All") return true;
+        const s = selectedSector.toLowerCase();
+        const st = (stock.sector || "").toLowerCase();
+        if (s === "banking" || s === "finance") return st.includes("financial") || st.includes("bank");
+        if (s === "technology" || s === "it") return st.includes("tech") || st.includes("information");
+        if (s === "energy") return st.includes("energy") || st.includes("power") || st.includes("oil");
+        if (s === "automobile" || s === "auto") return st.includes("auto");
+        if (s === "healthcare") return st.includes("health") || st.includes("pharma");
+        if (s === "consumer goods" || s === "fmcg" || s === "consumer") return st.includes("consumer") || st.includes("fmcg") || st.includes("retail");
+        if (s === "metals" || s === "metal") return st.includes("metal") || st.includes("mining");
+        if (s === "commodities") return st.includes("commodit") || st.includes("gold") || st.includes("silver") || (stock.asset_class === "COMMODITY_ETF");
+        if (s === "defense") return st.includes("defense");
+        return st.includes(s) || st === s;
+      })();
 
       return matchesSearch && matchesSector;
     });

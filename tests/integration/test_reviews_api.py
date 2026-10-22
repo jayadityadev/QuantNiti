@@ -104,3 +104,41 @@ async def test_submit_prohibited_spam_rejected(test_app):
         assert data["is_approved"] is False
         assert data["status"] == "REJECTED"
         assert "contact" in data["rejection_reason"].lower() or "phone" in data["rejection_reason"].lower()
+
+
+@pytest.mark.asyncio
+async def test_stock_review_flow(test_app):
+    """Verify end-to-end GET and POST reviews for individual stocks (TargetType.STOCK)."""
+    transport = ASGITransport(app=test_app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        # 1. GET initial reviews for RELIANCE
+        resp = await client.get(f"{settings.api_v1_prefix}/reviews/stock/RELIANCE")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["target_type"] == "stock"
+        assert data["target_id"] == "RELIANCE"
+
+        # 2. POST verified review for RELIANCE (+12.4% over 6M)
+        payload = {
+            "target_type": "stock",
+            "target_id": "RELIANCE",
+            "user_name": "Ananya Sharma",
+            "rating": 5,
+            "title": "Solid largecap compounding",
+            "review_text": "Steady accumulation during market consolidation. Gained +12.4% over 6 months with minimal drawdown.",
+            "claimed_return_pct": 12.4,
+            "claimed_duration": "6M",
+        }
+        post_resp = await client.post(f"{settings.api_v1_prefix}/reviews/submit", json=payload)
+        assert post_resp.status_code == 200
+        post_data = post_resp.json()
+        assert post_data["is_approved"] is True
+        assert post_data["status"] == "VERIFIED"
+        assert "✅ Verified" in post_data["verification_badge"]
+
+        # 3. GET reviews again and verify new review appears in list
+        resp2 = await client.get(f"{settings.api_v1_prefix}/reviews/stock/RELIANCE")
+        assert resp2.status_code == 200
+        data2 = resp2.json()
+        user_names = [r["user_name"] for r in data2["reviews"]]
+        assert "Ananya Sharma" in user_names

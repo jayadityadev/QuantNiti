@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ShieldCheck,
   BarChart3,
@@ -7,10 +7,13 @@ import {
   Star,
   Users,
   Leaf,
+  MessageSquarePlus,
 } from "lucide-react";
 import { GlassCard } from "../ui/GlassCard";
 import { PrimaryButton } from "../ui/PrimaryButton";
 import { GhostButton } from "../ui/GhostButton";
+import { apiUrl } from "../../config";
+import { useAppStore } from "../../store/useAppStore";
 
 export interface Step5DeepDiveProps {
   basket: any;
@@ -57,6 +60,27 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
   onTrackInPortfolio,
 }) => {
   const [activeReviewCategory, setActiveReviewCategory] = useState<string>("All");
+  const [dynamicReviews, setDynamicReviews] = useState<any[]>([]);
+  const [reviewSummary, setReviewSummary] = useState<any | null>(null);
+  const openModal = useAppStore((state) => state.openModal);
+
+  const basketTargetId = basket?.id || "balanced_6m";
+
+  const fetchBasketReviews = () => {
+    fetch(apiUrl(`/api/v1/reviews/basket/${encodeURIComponent(basketTargetId)}`))
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && data.reviews && data.reviews.length > 0) {
+          setDynamicReviews(data.reviews);
+          setReviewSummary(data.summary);
+        }
+      })
+      .catch(() => {});
+  };
+
+  useEffect(() => {
+    fetchBasketReviews();
+  }, [basketTargetId]);
 
   const trustCard = basket?.trust_card || {};
   const esgScore = basket?.portfolio_esg_score || 78.4;
@@ -238,10 +262,28 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
               Community Reviews & Legitimacy
             </h3>
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold text-amber-500 dark:text-amber-400">
-            <Star className="w-3.5 h-3.5 fill-amber-500 dark:fill-amber-400" />
-            <span>4.9</span>
-            <span className="text-[var(--text-muted)] font-normal">(128)</span>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 text-xs font-bold text-amber-500 dark:text-amber-400">
+              <Star className="w-3.5 h-3.5 fill-amber-500 dark:fill-amber-400" />
+              <span>{reviewSummary?.average_rating?.toFixed(1) || "4.9"}</span>
+              <span className="text-[var(--text-muted)] font-normal">
+                ({reviewSummary?.total_reviews || dynamicReviews.length || "3"})
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() =>
+                openModal("review", {
+                  targetType: "basket",
+                  targetId: basketTargetId,
+                  onSuccess: fetchBasketReviews,
+                })
+              }
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-violet-600/15 hover:bg-violet-600/25 text-violet-700 dark:text-violet-300 text-xs font-semibold border border-violet-500/30 transition-all hover:scale-105 shadow-sm"
+            >
+              <MessageSquarePlus className="w-3 h-3" />
+              <span>Write</span>
+            </button>
           </div>
         </div>
 
@@ -265,23 +307,62 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
 
         {/* Reviews list */}
         <div className="space-y-2">
-          {filteredReviews.map((rev) => (
-            <div
-              key={rev.id}
-              className="p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-1.5"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[var(--text-main)]">{rev.author}</span>
-                <div className="flex items-center gap-0.5">
-                  {Array.from({ length: rev.rating }).map((_, idx) => (
-                    <Star key={idx} className="w-3 h-3 fill-amber-500 dark:fill-amber-400 text-amber-500 dark:text-amber-400" />
-                  ))}
+          {dynamicReviews.length > 0
+            ? dynamicReviews.map((rev) => (
+                <div
+                  key={rev.id}
+                  className="p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-1.5"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[var(--text-main)]">
+                      {rev.user_name || rev.author}
+                    </span>
+                    <div className="flex items-center gap-0.5">
+                      {Array.from({ length: rev.rating || 5 }).map((_, idx) => (
+                        <Star
+                          key={idx}
+                          className="w-3 h-3 fill-amber-500 dark:fill-amber-400 text-amber-500 dark:text-amber-400"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  {rev.verification_badge && (
+                    <div className="inline-block px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/25 text-[10px] font-mono font-medium text-emerald-700 dark:text-emerald-300">
+                      {rev.verification_badge}
+                    </div>
+                  )}
+                  {rev.title && (
+                    <p className="text-xs font-semibold text-violet-600 dark:text-violet-300">
+                      {rev.title}
+                    </p>
+                  )}
+                  <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                    {rev.review_text || rev.comment}
+                  </p>
                 </div>
-              </div>
-              <p className="text-xs font-semibold text-violet-600 dark:text-violet-300">{rev.title}</p>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">{rev.comment}</p>
-            </div>
-          ))}
+              ))
+            : filteredReviews.map((rev) => (
+                <div
+                  key={rev.id}
+                  className="p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-1.5"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[var(--text-main)]">{rev.author}</span>
+                    <div className="flex items-center gap-0.5">
+                      {Array.from({ length: rev.rating }).map((_, idx) => (
+                        <Star
+                          key={idx}
+                          className="w-3 h-3 fill-amber-500 dark:fill-amber-400 text-amber-500 dark:text-amber-400"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-xs font-semibold text-violet-600 dark:text-violet-300">
+                    {rev.title}
+                  </p>
+                  <p className="text-xs text-[var(--text-muted)] leading-relaxed">{rev.comment}</p>
+                </div>
+              ))}
         </div>
       </div>
 

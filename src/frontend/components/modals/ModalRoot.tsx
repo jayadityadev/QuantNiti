@@ -61,6 +61,7 @@ export const ModalRoot: React.FC = () => {
         onClose={closeModal}
         targetType={modalPayload?.targetType}
         targetId={modalPayload?.targetId}
+        onSuccess={modalPayload?.onSuccess}
       />
 
       {/* 4. Financial Literacy Concept Detail Modal */}

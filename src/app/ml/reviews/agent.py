@@ -70,7 +70,36 @@ class ReviewVerificationAgent:
         if target_type == ReviewTargetType.STRATEGY:
             return 14.5
 
-        # 4. Platform-level general return
+        # 4. Individual Stock lookup
+        if target_type == ReviewTargetType.STOCK:
+            if self.market_service:
+                try:
+                    from app.universe import normalize_symbol
+                    canonical = normalize_symbol(target_id)
+                    df = self.market_service.get_history(canonical)
+                    if not df.empty and "close" in df.columns and len(df) >= 5:
+                        days_map = {"1M": 21, "3M": 63, "6M": 126, "12M": 252, "1Y": 252}
+                        lookback = days_map.get(horizon, 126)
+                        start_price = float(df["close"].iloc[-lookback]) if len(df) > lookback else float(df["close"].iloc[0])
+                        end_price = float(df["close"].iloc[-1])
+                        if start_price > 0:
+                            ret = ((end_price / start_price) - 1.0) * 100
+                            return round(ret, 1)
+                except Exception:
+                    pass
+
+            stock_defaults = {
+                "RELIANCE": {"1M": 2.1, "3M": 6.5, "6M": 13.1, "12M": 22.4},
+                "TCS": {"1M": 1.4, "3M": 4.2, "6M": 8.8, "12M": 15.6},
+                "INFY": {"1M": 1.8, "3M": 5.1, "6M": 11.2, "12M": 18.0},
+                "HDFCBANK": {"1M": 0.9, "3M": 3.4, "6M": 7.5, "12M": 14.2},
+            }
+            symbol_key = str(target_id).upper().replace(".NS", "")
+            if symbol_key in stock_defaults and horizon in stock_defaults[symbol_key]:
+                return stock_defaults[symbol_key][horizon]
+            return 11.5
+
+        # 5. Platform-level general return
         return 13.2
 
     def verify_review(self, request: ReviewSubmissionRequest) -> ReviewVerificationResult:

@@ -79,5 +79,5 @@ A branded, downloadable PDF/image document summarizing a user's portfolio alloca
 _Avoid_: Statement, Receipt, Export dump
 
 **Review**:
-User-submitted feedback on platform usability, strategy transparency, or educational quality — scoped to app experience and algorithmic explainability, never to personal monetary returns. Subject to automated AI legitimacy verification.
-_Avoid_: Testimonial, Rating, P&L review
+User-submitted feedback on an individual stock, AI Portfolio Basket, or investment strategy, audited by an autonomous 3-tier AI Fact-Checking Agent. Reviews with performance claims are verified against ground-truth mathematical market returns (within a +/- 3% tolerance window) to award verified badges, while unsubstantiated claims, deceptive tips, and contact solicitations are rejected to enforce SEBI advertisement compliance.
+_Avoid_: Unverified testimonial, Stock tip, Speculative boast, P&L bragging

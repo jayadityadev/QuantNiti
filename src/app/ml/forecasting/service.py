@@ -214,19 +214,32 @@ class ExploreService:
             if asset_class and st_asset_class.upper() != asset_class.strip().upper():
                 continue
 
-            # Filter by sector / theme
+            # Filter by sector / theme with normalized category mapping
             if sector:
                 s_lower = sector.strip().lower()
-                if s_lower == "metals":
-                    if st_sector.lower() not in ("metals", "metals & mining"):
-                        continue
-                elif s_lower == "commodities":
-                    if st_sector.lower() != "commodities" and st_asset_class != "COMMODITY_ETF":
-                        continue
+                st_lower = st_sector.lower()
+                matched = False
+                if s_lower in ("banking", "finance", "financial services"):
+                    matched = "financial" in st_lower or "bank" in st_lower
+                elif s_lower in ("technology", "it", "tech", "information technology"):
+                    matched = "tech" in st_lower or "information" in st_lower
+                elif s_lower in ("energy", "power", "oil", "energy & oil", "power & energy"):
+                    matched = "energy" in st_lower or "power" in st_lower or "oil" in st_lower
+                elif s_lower in ("auto", "automobile"):
+                    matched = "auto" in st_lower
+                elif s_lower in ("healthcare", "pharma"):
+                    matched = "health" in st_lower or "pharma" in st_lower
+                elif s_lower in ("fmcg", "consumer", "consumer goods", "retail"):
+                    matched = "consumer" in st_lower or "fmcg" in st_lower
+                elif s_lower in ("metals", "metal", "mining", "metals & mining"):
+                    matched = "metal" in st_lower or "mining" in st_lower
+                elif s_lower in ("commodities", "commodity"):
+                    matched = "commodit" in st_lower or st_asset_class == "COMMODITY_ETF"
                 elif s_lower == "defense":
-                    if st_sector.lower() != "defense":
-                        continue
-                elif st_sector.lower() != s_lower:
+                    matched = "defense" in st_lower
+                else:
+                    matched = (s_lower in st_lower) or (st_lower == s_lower)
+                if not matched:
                     continue
 
             # Filter by search

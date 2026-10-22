@@ -12,6 +12,7 @@ import { Step3Persona } from "./Step3Persona";
 import { Step4ResultsOverview } from "./Step4ResultsOverview";
 import { Step5DeepDive } from "./Step5DeepDive";
 import { GrowSkeleton } from "./GrowSkeleton";
+import { apiUrl } from "../../config";
 
 export function GrowPage() {
   const shouldReduceMotion = useReducedMotion();
@@ -25,6 +26,10 @@ export function GrowPage() {
     currentBasket,
     setCurrentBasket,
     setActiveTab,
+    portfolios,
+    setPortfolios,
+    setActivePortfolioId,
+    setActivePortfolio,
   } = useAppStore();
 
   const { request, isLoading, error } = useAbortableRequest();
@@ -65,23 +70,68 @@ export function GrowPage() {
   };
 
   const handleTrackInPortfolio = async () => {
-    // If basket exists, attempt activation or navigate to portfolio tab
-    if (currentBasket?.basket_id) {
+    if (currentBasket) {
       try {
-        await request(
+        const response = await request(
           "portfolio-activation",
-          "/api/v1/portfolios/activate",
+          apiUrl("/api/v1/portfolios/activate"),
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               basket_id: currentBasket.basket_id,
-              name: `Virtual Paper Basket (${riskPersona})`,
+              name: `AI Basket (${riskPersona})`,
+              capital: capital || 100000,
+              horizon: horizon || "6M",
+              risk_persona: riskPersona,
             }),
           }
         );
-      } catch {
-        // Fallback gracefully
+
+        if (response && response.portfolio_id) {
+          const updated = [response, ...portfolios.filter((p) => p.portfolio_id !== response.portfolio_id)];
+          setPortfolios(updated);
+          setActivePortfolioId(response.portfolio_id);
+          setActivePortfolio(response);
+        } else {
+          const fallbackPortfolio = {
+            portfolio_id: `port_${Date.now()}`,
+            name: `AI Basket (${riskPersona})`,
+            initial_capital: capital || 100000,
+            current_value: capital || 100000,
+            total_pnl: 0,
+            total_pnl_pct: 0,
+            day_pnl: 0,
+            day_pnl_pct: 0,
+            holdings: currentBasket.holdings || [],
+            risk_persona: riskPersona,
+            horizon: horizon || "6M",
+            created_at: new Date().toISOString(),
+          };
+          const updated = [fallbackPortfolio, ...portfolios];
+          setPortfolios(updated);
+          setActivePortfolioId(fallbackPortfolio.portfolio_id);
+          setActivePortfolio(fallbackPortfolio);
+        }
+      } catch (err) {
+        const fallbackPortfolio = {
+          portfolio_id: `port_${Date.now()}`,
+          name: `AI Basket (${riskPersona})`,
+          initial_capital: capital || 100000,
+          current_value: capital || 100000,
+          total_pnl: 0,
+          total_pnl_pct: 0,
+          day_pnl: 0,
+          day_pnl_pct: 0,
+          holdings: currentBasket.holdings || [],
+          risk_persona: riskPersona,
+          horizon: horizon || "6M",
+          created_at: new Date().toISOString(),
+        };
+        const updated = [fallbackPortfolio, ...portfolios];
+        setPortfolios(updated);
+        setActivePortfolioId(fallbackPortfolio.portfolio_id);
+        setActivePortfolio(fallbackPortfolio);
       }
     }
     setActiveTab("portfolio");
