@@ -7,11 +7,11 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from start_all import (
+    auto_open_emulator_in_background,
     find_android_tool,
     get_lan_ip,
     get_python_exe,
     get_running_devices,
-    has_visible_emulator_window,
     is_server_ready,
     kill_process_on_port,
 )
@@ -50,10 +50,9 @@ def test_get_running_devices_parsing():
         assert devices == ["emulator-5554"]
 
 
-def test_has_visible_emulator_window():
-    # Calling has_visible_emulator_window should return a bool without exception
-    result = has_visible_emulator_window()
-    assert isinstance(result, bool)
+def test_auto_open_emulator_in_background_none():
+    # Calling auto_open_emulator_in_background with adb_bin=None returns safely
+    auto_open_emulator_in_background(adb_bin=None, port=8000)
 
 
 def test_kill_process_on_port_safely():

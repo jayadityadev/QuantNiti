@@ -1,17 +1,17 @@
-# Graph Report - QuantNiti  (2026-10-12)
+# Graph Report - QuantNiti  (2026-10-22)
 
 ## Corpus Check
-- 277 files · ~134,074 words
+- 277 files · ~134,068 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: (none) 6, .toml 2, .example 1)
 
 ## Summary
-- 2360 nodes · 5640 edges · 143 communities (114 shown, 29 thin omitted)
+- 2360 nodes · 5642 edges · 143 communities (114 shown, 29 thin omitted)
 - Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 695 edges (avg confidence: 0.93)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9eb6d97e`
+- Built from commit: `337b5d34`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -308,7 +308,7 @@ Nodes (4): ReviewStatus, ReviewSummary, ReviewRepository, test_app()
 
 ### Community 33 - "start_all.py"
 Cohesion: 0.07
-Nodes (22): main(), run_command(), get_lan_ip(), main(), print_qr_code(), auto_open_emulator_in_background(), _watcher(), build_web_assets_if_needed() (+14 more)
+Nodes (23): main(), run_command(), get_lan_ip(), main(), print_qr_code(), auto_open_emulator_in_background(), _watcher(), build_web_assets_if_needed() (+15 more)
 
 ### Community 34 - "typing"
 Cohesion: 0.14
@@ -636,7 +636,7 @@ Nodes (4): 6.3.1 Blended Expected Drift & Volatility, 6.3.2 Closed-Form Geometri
 
 ## Knowledge Gaps
 - **13 isolated node(s):** `@capacitor/android`, `@capacitor/core`, `clsx`, `tailwind-merge`, `@types/node` (+8 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1109 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1108 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **29 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions

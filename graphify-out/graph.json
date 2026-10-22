@@ -6516,6 +6516,18 @@
       "source_location": "L132"
     },
     {
+      "id": "tests_unit_test_start_all_test_auto_open_emulator_in_background_none",
+      "label": "test_auto_open_emulator_in_background_none()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "start_all.py",
+      "file_type": "code",
+      "norm_label": "test_auto_open_emulator_in_background_none()",
+      "source_file": "tests/unit/test_start_all.py",
+      "source_location": "L53"
+    },
+    {
       "id": "tests_unit_test_start_all_test_find_android_tool",
       "label": "test_find_android_tool()",
       "_callable": true,
@@ -6564,18 +6576,6 @@
       "source_location": "L45"
     },
     {
-      "id": "tests_unit_test_start_all_test_has_visible_emulator_window",
-      "label": "test_has_visible_emulator_window()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "start_all.py",
-      "file_type": "code",
-      "norm_label": "test_has_visible_emulator_window()",
-      "source_file": "tests/unit/test_start_all.py",
-      "source_location": "L53"
-    },
-    {
       "id": "tests_unit_test_start_all_test_is_server_ready_when_closed",
       "label": "test_is_server_ready_when_closed()",
       "_callable": true,
@@ -6597,7 +6597,7 @@
       "file_type": "code",
       "norm_label": "test_kill_process_on_port_safely()",
       "source_file": "tests/unit/test_start_all.py",
-      "source_location": "L59"
+      "source_location": "L58"
     },
     {
       "id": "src_app_data_storage_portfoliorepository_record_transaction",
@@ -35866,6 +35866,18 @@
       "weight": 1.0
     },
     {
+      "source": "tests_unit_test_start_all_test_auto_open_emulator_in_background_none",
+      "target": "start_all_auto_open_emulator_in_background",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/unit/test_start_all.py",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
       "source": "tests_unit_test_start_all_test_find_android_tool",
       "target": "start_all_find_android_tool",
       "relation": "calls",
@@ -35934,7 +35946,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/unit/test_start_all.py",
-      "source_location": "L61",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -49700,6 +49712,18 @@
       "context": "import",
       "source_file": "tests/unit/test_start_all.py",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_unit_test_start_all",
+      "target": "start_all_auto_open_emulator_in_background",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/unit/test_start_all.py",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -75322,7 +75346,7 @@
     },
     {
       "source": "tests_unit_test_start_all",
-      "target": "tests_unit_test_start_all_test_has_visible_emulator_window",
+      "target": "tests_unit_test_start_all_test_auto_open_emulator_in_background_none",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -75339,7 +75363,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/unit/test_start_all.py",
-      "source_location": "L59",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -92630,5 +92654,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9eb6d97eb5d9b4be8f85423c89f394a47255a990"
+  "built_at_commit": "337b5d3480f9e3340c7793fc636973820c66be98"
 }
