@@ -1,4 +1,4 @@
-# QuantNiti (क्वान्टनीति) 🇮🇳
+# QuantNiti
 ### AI-Driven Regime-Adaptive Portfolio Intelligence & Quantitative Decision Support System
 
 [![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
