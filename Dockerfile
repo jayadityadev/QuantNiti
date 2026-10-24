@@ -44,7 +44,7 @@ RUN pip install --no-cache-dir --upgrade pip \
 # Copy application source code
 COPY src/ ./src/
 COPY scripts/ ./scripts/
-COPY data/ ./data/
+RUN mkdir -p /app/data /app/data/cache
 
 # Copy built frontend assets from Stage 1 into the static directory
 COPY --from=frontend-builder /build/src/app/static/dist/ ./src/app/static/dist/
