@@ -38,13 +38,13 @@ WORKDIR /app
 
 # Install Python dependencies
 COPY pyproject.toml README.md ./
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir .
-
-# Copy application source code
 COPY src/ ./src/
 COPY scripts/ ./scripts/
 RUN mkdir -p /app/data /app/data/cache
+
+# Install Python dependencies and app package
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir .
 
 # Copy built frontend assets from Stage 1 into the static directory
 COPY --from=frontend-builder /build/src/app/static/dist/ ./src/app/static/dist/
