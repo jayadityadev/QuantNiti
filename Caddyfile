@@ -1,0 +1,16 @@
+quantniti.jayadityadev.tech {
+    reverse_proxy quantniti:8000
+
+    encode zstd gzip
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+}
+
+:80 {
+    respond "QuantNiti Server Live" 200
+}
