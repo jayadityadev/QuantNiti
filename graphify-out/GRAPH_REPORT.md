@@ -1,17 +1,17 @@
 # Graph Report - QuantNiti  (2026-10-25)
 
 ## Corpus Check
-- 280 files · ~139,237 words
+- 284 files · ~140,994 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 14 file(s) not represented in the graph (top: (none) 8, .toml 2, .example 1)
 
 ## Summary
-- 2378 nodes · 5728 edges · 155 communities (124 shown, 31 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 721 edges (avg confidence: 0.93)
+- 2432 nodes · 5780 edges · 144 communities (120 shown, 24 thin omitted)
+- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 721 edges (avg confidence: 0.93)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6792dc70`
+- Built from commit: `587cc8cd`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,49 +21,50 @@
 - pytest
 - GrowPage.tsx
 - GlassCard
-- storage.py
+- reviews_repo.py
 - ParquetMarketCache
 - ExplorePage.tsx
 - extract_stock_factors
 - models.py
-- StrategyType
+- PortfolioState
 - PortfolioService
 - compounding_engine.py
 - create_app
-- agent.py
+- ReviewStatus
 - PortfolioPage.tsx
-- SmartAlertType
+- TestDiscreteAllocationEngine
 - MarketRegimeType
 - backtest/service.py
 - lucide-react
 - 🔍 Platform-by-Platform Research (Primary-Source Verified)
 - RegimeService
 - AppShell.tsx
-- backtest.py
-- MarketDataService
-- test_literacy_api.py
+- streaming.py
+- get_esg_score_for_symbol
+- Base
 - NitiBotService
 - useAppStore.ts
 - hrp.py
 - RAGContextBuilder
-- numpy
-- alerts.py
+- pandas
+- AlertService
 - asyncio
-- start_all.py
+- pathlib
 - test_portfolio_full_lifecycle_api
-- engine.py
-- test_client_serving.py
+- BacktestEngine
+- ⚡ Quick Start
 - MarketRegimeClassifier
 - routes/portfolio.py
 - alerts/service.py
-- pandas
+- provider.py
+- PortfolioRepository
 - test_chat_api.py
-- test_day_over_day_mtm.py
+- 3. Academic Demonstration & Evaluation Scenarios
 - literacy.py
 - test_market_service.py
-- test_nitibot_edge_cases.py
-- test_api_routes.py
-- forecasting/service.py
+- Cloud Deployment via AWS Lightsail, Caddy SSL & Custom Domain
+- Native Android Container via WebViewAssetLoader & Automated APK CI/CD
+- ExploreService
 - ConversationMemoryManager
 - assistant/service.py
 - compilerOptions
@@ -71,52 +72,47 @@
 - ReviewSubmissionRequest
 - QuantNiti: Machine Learning & Quantitative Finance Technical Specification
 - asyncio
-- AlertService
+- Interactive Financial Literacy Hub & Playable Video Explainer Architecture
 - MarketStreamClient
 - asyncio
-- pathlib
+- fig6_backtest_comparison.py
 - devDependencies
 - filter_tier1_content
 - dependencies
 - test_portfolio_storage.py
 - manifest.json
-- MockDataProvider
+- Multi-Condition Quantitative Smart Alert Engine with Web Push
 - asyncio
 - compute_regime_suitability
 - MarketTickGenerator
 - MarketDataProvider
 - test_stream_api.py
 - asyncio
-- test_explore_api.py
-- test_get_alerts_empty_and_populated
-- MultiHorizonGrowthForecast
+- .format_sse_event
+- forecaster.py
 - data/service.py
 - test_pwa_unit.py
 - ReviewTargetType
 - scripts
 - DiscreteAllocationEngine
 - test_review_service.py
-- .extract_trades
-- universe.py
-- test_explore_stocks_total_and_asset_class_filter
+- test_multi_asset_universe.py
+- AssetClass
 - asyncio
-- asyncio
-- market.py
+- test_reviews_api.py
+- MarketDataService
 - setup.ts
 - test_hrp_optimizer.py
 - compilerOptions
-- QuantNiti: Hosting, Centralized Server & Scalability Guide
+- QuantNiti: Production Hosting, Cloud Architecture & Scalability Guide
 - QuantNiti
-- test_esg_data.py
 - chat.py
 - FastAPI
-- app_instance
 - vite.config.ts
 - 2. Platform-by-Platform Verified Primary-Source Audit
-- app_instance
 - 6. Mathematical Formulations & Algorithmic Engines
-- market_service
-- 3. Academic Demonstration & Evaluation Scenarios
+- test_tick_generator.py
+- 2. Accessing & Launching the Application
 - QuantNiti: Complete Architectural Blueprint & System Design Document
 - capacitor.config.ts
 - 2. Audit of the 4 Open-Source Repositories
@@ -126,7 +122,6 @@
 - sw.js
 - app
 - README.md
-- 4.1 Quantitative Factor Extraction Engine
 - Spec: QuantNiti Core Platform
 - Agent skills
 - Domain Docs
@@ -136,28 +131,24 @@
 - 8. Empirical Results, Verification & Benchmarks
 - RAG-Powered Conversational Assistant (NitiBot)
 - ESG Conscience Score and Socially Responsible Investing
-- Cross-Platform PWA with Adaptive Desktop Layout
-- Portfolio Intelligence Platform over Strategy Testing Platform
-- Multi-Asset Investment Universe with Commodity ETFs
-- Server-Side ML Computation with Thin-Client Mobile Delivery
-- AI Review Verification and Ground-Truth Fact-Checking Agent
-- 6. Portfolio Optimization: Hierarchical Risk Parity (HRP) Algorithm
+- Cross-Platform Progressive Web App (PWA) with Responsive Layout
+- Prioritizing Portfolio Intelligence Over Pure Strategy Testing
+- Multi-Asset Universe Expansion with Defensive Commodity ETFs
+- Server-Side Quantitative ML Computation with Asynchronous ASGI Gateway
+- Autonomous AI Ground-Truth Review Fact-Checking Agent
 - 6.2 Multi-Factor Econometric Extraction Engine
 - 2. Introduction, Problem Statement & Socio-Economic Context
 - 4. Dataset Engineering & Multi-Asset Universe
 - 5. End-to-End System Architecture
 - 6.5 Hierarchical Risk Parity (HRP) Optimization Algorithm
-- 1. Foundational Problem Statement & Financial Econometrics
-- 2. Datasets, Ingestion Architecture & Preprocessing Justifications
-- 8. Geometric Brownian Motion (GBM) Long-Horizon Wealth Compounding
 - 1. Academic Metadata & Proposed Paper Formulations
 - 6.1 Unsupervised Market Regime Classifier (GMM & Parkinson Volatility)
 - 6.3 Multi-Horizon Quantile Growth Forecaster & Isotonic Regularization
-- 0001-pivot-from-backtesting-to-portfolio-growth-intelligence.md
-- 0002-dual-tabbed-architecture-investor-and-quant-lab.md
-- 0003-virtual-paper-portfolio-with-regime-rebalancing-alerts.md
-- 0004-explainable-ai-trust-card-and-disintermediation-model.md
-- 0005-discrete-allocation-and-ledoit-wolf-covariance-shrinkage.md
+- Pivot from Technical Backtesting to Portfolio Growth Intelligence
+- Progressive Disclosure UX: 4-Tab Architecture and Embedded Quant Lab Pro Tools
+- Virtual Paper Portfolio with Regime-Shift Rebalance Alerts
+- Explainable AI Trust Card and Disintermediation Moat
+- Discrete Integer Allocation and Ledoit-Wolf Covariance Shrinkage
 - triage-labels.md
 
 ## God Nodes (most connected - your core abstractions)
@@ -187,7 +178,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (155 total, 31 thin omitted)
+## Communities (144 total, 24 thin omitted)
 
 ### Community 0 - "react"
 Cohesion: 0.10
@@ -198,8 +189,8 @@ Cohesion: 0.25
 Nodes (6): get_grow_service(), recommend_basket_alias(), recommend_basket_get(), recommend_basket_post(), BasketRecommendationRequest, BasketRecommendationResponse
 
 ### Community 2 - "pytest"
-Cohesion: 0.09
-Nodes (17): RiskPersona, build_benchmark_comparisons(), calculate_basket_growth_projections(), HRPOptimizer, GrowService, test_grow_service_different_risk_personas(), test_grow_service_esg_portfolio_score_and_persona(), test_grow_service_invalid_inputs_raise_error() (+9 more)
+Cohesion: 0.18
+Nodes (8): GrowService, test_grow_service_different_risk_personas(), test_grow_service_esg_portfolio_score_and_persona(), test_grow_service_invalid_inputs_raise_error(), test_grow_service_recommend_basket_balanced(), test_grow_service_bear_regime_allocates_defensive_commodity(), test_get_current_regime(), test_get_regime_history()
 
 ### Community 3 - "GrowPage.tsx"
 Cohesion: 0.07
@@ -209,9 +200,9 @@ Nodes (50): chart.js, framer-motion, react-chartjs-2, AllocationDonut(), Allocat
 Cohesion: 0.10
 Nodes (27): AdaptiveHomeCard(), AdaptiveHomeCardProps, CompoundingVisualizer(), CompoundingVisualizerProps, LearningHub(), LearningHubProps, isIndianMarketOpen(), MarketPulse() (+19 more)
 
-### Community 5 - "storage.py"
-Cohesion: 0.10
-Nodes (8): ReviewSummary, ReviewRepository, Base, DailySnapshotRecord, HoldingRecord, PortfolioRecord, ReviewRecord, TransactionRecord
+### Community 5 - "reviews_repo.py"
+Cohesion: 0.15
+Nodes (3): ReviewSummary, ReviewRepository, ReviewRecord
 
 ### Community 6 - "ParquetMarketCache"
 Cohesion: 0.16
@@ -222,48 +213,44 @@ Cohesion: 0.09
 Nodes (26): ASSETS, ProToolsBacktester(), STRATEGIES, ExploreStockItem, StockCard(), StockCardProps, StockProfileModal(), StockProfileModalProps (+18 more)
 
 ### Community 8 - "extract_stock_factors"
-Cohesion: 0.11
-Nodes (14): compute_bollinger_bands(), compute_ema(), compute_macd(), compute_max_drawdown(), compute_rsi(), compute_stock_beta_and_alpha(), extract_stock_factors(), sample_stock_and_index() (+6 more)
+Cohesion: 0.13
+Nodes (13): compute_bollinger_bands(), compute_ema(), compute_macd(), compute_max_drawdown(), compute_rsi(), compute_stock_beta_and_alpha(), extract_stock_factors(), test_compute_bollinger_bands() (+5 more)
 
 ### Community 9 - "models.py"
-Cohesion: 0.15
-Nodes (26): BasketAllocationItem, BasketGrowthProjections, BenchmarkComparison, BenchmarkComparisonItem, BrokerOrderItem, CompoundingResponse, CompoundingYearlyPoint, EvaluateAlertsResponse (+18 more)
+Cohesion: 0.12
+Nodes (22): BasketAllocationItem, BasketGrowthProjections, BenchmarkComparisonItem, HorizonForecastCone, MultiHorizonGrowthForecast, PushSubscriptionKeys, RupeeGrowthTier, TrustCardPillarDrawdown (+14 more)
 
-### Community 10 - "StrategyType"
-Cohesion: 0.14
-Nodes (10): StrategyType, BacktestEngine, benchmark_price_series(), sample_price_series(), test_bollinger_bands_strategy(), test_buy_and_hold_strategy(), test_dual_momentum_strategy(), test_ma_crossover_strategy() (+2 more)
+### Community 10 - "PortfolioState"
+Cohesion: 0.12
+Nodes (11): BrokerOrderItem, BrokerOrderSheet, PortfolioState, RebalanceAlert, RebalanceItemDiff, compute_rebalance_diff(), execute_rebalance(), generate_broker_order_sheet() (+3 more)
 
 ### Community 11 - "PortfolioService"
-Cohesion: 0.08
-Nodes (12): BrokerOrderSheet, CreatePortfolioRequest, RebalanceAlert, PortfolioRepository, execute_rebalance(), generate_broker_order_sheet(), PortfolioService, test_create_and_get_portfolio() (+4 more)
+Cohesion: 0.14
+Nodes (7): CreatePortfolioRequest, PortfolioService, portfolio_service(), test_create_and_get_portfolio(), test_get_nonexistent_portfolio_raises_error(), test_get_order_sheet(), test_rebalance_diff_and_apply()
 
 ### Community 12 - "compounding_engine.py"
-Cohesion: 0.10
-Nodes (17): CompoundingMonthlyPoint, CompoundingRequest, CompoundingSummary, CompoundingTippingPoint, calculate_lump_sum(), calculate_monthly_sip(), calculate_step_up_sip(), compute_gbm_quantile_cones() (+9 more)
+Cohesion: 0.09
+Nodes (19): CompoundingMonthlyPoint, CompoundingRequest, CompoundingResponse, CompoundingSummary, CompoundingTippingPoint, CompoundingYearlyPoint, calculate_lump_sum(), calculate_monthly_sip() (+11 more)
 
 ### Community 13 - "create_app"
-Cohesion: 0.07
-Nodes (10): create_app(), app_instance(), test_app(), app_instance(), test_app(), app(), app(), app_instance() (+2 more)
+Cohesion: 0.05
+Nodes (19): create_app(), MockDataProvider, test_app(), app(), app_instance(), test_app(), app_instance(), test_app() (+11 more)
 
-### Community 14 - "agent.py"
-Cohesion: 0.10
-Nodes (11): ReviewVerificationResult, extract_duration_claim(), extract_return_claim(), verify_tier2_fact_check(), audit_tier3_llm(), test_extract_duration_claim(), test_extract_return_claim(), test_tier2_approves_pure_qualitative_reviews() (+3 more)
+### Community 14 - "ReviewStatus"
+Cohesion: 0.11
+Nodes (12): ReviewStatus, ReviewVerificationResult, extract_duration_claim(), extract_return_claim(), verify_tier2_fact_check(), audit_tier3_llm(), test_extract_duration_claim(), test_extract_return_claim() (+4 more)
 
 ### Community 15 - "PortfolioPage.tsx"
 Cohesion: 0.17
 Nodes (20): OrderSheetModalProps, PortfolioReportCardProps, CompoundingTrajectoryChart(), CompoundingTrajectoryChartProps, DemoPortfolio(), DemoPortfolioProps, BenchmarkComparison, CompoundingTrajectoryData (+12 more)
 
-### Community 16 - "SmartAlertType"
-Cohesion: 0.15
-Nodes (10): AlertSeverity, LiteracyCategory, SmartAlertType, test_mark_alert_read_and_clear(), test_trigger_1_regime_transition(), test_trigger_2_portfolio_drift(), test_trigger_3_rsi_extremes(), test_trigger_4_drawdown_breach() (+2 more)
-
 ### Community 17 - "MarketRegimeType"
-Cohesion: 0.11
-Nodes (16): BenchmarkComparisonLive, MarketRegimeType, PortfolioHolding, PortfolioState, calculate_day_over_day_mtm(), create_portfolio_from_allocations(), PortfolioSimulator, update_portfolio_mark_to_market() (+8 more)
+Cohesion: 0.10
+Nodes (16): BenchmarkComparisonLive, MarketRegimeType, PortfolioHolding, RiskPersona, calculate_day_over_day_mtm(), create_portfolio_from_allocations(), PortfolioSimulator, update_portfolio_mark_to_market() (+8 more)
 
 ### Community 18 - "backtest/service.py"
-Cohesion: 0.15
-Nodes (7): BacktestDataPoint, BacktestService, backtest_service(), test_backtest_service_invalid_symbol_raises_error(), test_backtest_service_run_buy_and_hold_nifty(), test_backtest_service_run_ma_crossover_stock(), test_backtest_service_with_date_filter()
+Cohesion: 0.11
+Nodes (14): get_backtest_service(), run_backtest_get(), run_backtest_post(), run_quant_lab_backtest_alias(), BacktestDataPoint, BacktestRequest, BacktestResponse, StrategyType (+6 more)
 
 ### Community 19 - "lucide-react"
 Cohesion: 0.14
@@ -274,104 +261,104 @@ Cohesion: 0.07
 Nodes (27): 1. Groww (groww.in), 2. Zerodha Streak (streak.tech), 3. Smallcase (smallcase.com), 4. INDmoney (indmoney.com), 5. MoneyControl Pro / Super Pro (moneycontrol.com), 6. TradingView (tradingview.com), Bank FD Rates vs. Equity Returns (2025–2026 Context), 🎯 Consolidated Competitive Matrix (10 Dimensions) (+19 more)
 
 ### Community 21 - "RegimeService"
-Cohesion: 0.08
-Nodes (14): get_current_regime(), get_regime_history(), get_regime_service(), train_regime_model(), TrainRegimeRequest, CurrentRegimeResponse, RegimeHistoryResponse, RegimeProbabilities (+6 more)
+Cohesion: 0.09
+Nodes (13): get_current_regime(), get_regime_history(), get_regime_service(), train_regime_model(), TrainRegimeRequest, CurrentRegimeResponse, RegimeHistoricalPoint, RegimeHistoryResponse (+5 more)
 
 ### Community 22 - "AppShell.tsx"
 Cohesion: 0.13
 Nodes (22): AppShell(), BottomNav(), BottomNavProps, NAV_ITEMS, NavItem, triggerHaptic(), Header(), HeaderProps (+14 more)
 
-### Community 23 - "backtest.py"
-Cohesion: 0.25
-Nodes (6): get_backtest_service(), run_backtest_get(), run_backtest_post(), run_quant_lab_backtest_alias(), BacktestRequest, BacktestResponse
+### Community 23 - "streaming.py"
+Cohesion: 0.15
+Nodes (3): get_tick_generator(), stream_ticks(), is_indian_market_open()
 
-### Community 24 - "MarketDataService"
-Cohesion: 0.11
-Nodes (5): get_universe(), MarketDataService, grow_service(), test_universe_stock_model_includes_esg_fields(), test_factor_extractor_on_multi_asset_universe()
-
-### Community 25 - "test_literacy_api.py"
-Cohesion: 0.39
-Nodes (5): test_dual_routing_api_prefix(), test_get_all_literacy_cards_category_filter(), test_get_all_literacy_cards_v1(), test_get_literacy_card_by_unknown_key_returns_404(), test_get_literacy_card_by_valid_key()
+### Community 25 - "Base"
+Cohesion: 0.18
+Nodes (5): Base, DailySnapshotRecord, HoldingRecord, PortfolioRecord, TransactionRecord
 
 ### Community 26 - "NitiBotService"
-Cohesion: 0.15
-Nodes (12): ChatMessageRequest, ChatMessageResponse, NitiBotService, test_edge_case_empty_or_whitespace_message(), test_edge_case_huge_message_overflow(), test_edge_case_sebi_compliance_always_injected(), MockGeminiAdapter, test_nitibot_service_chat_raises_when_unavailable() (+4 more)
+Cohesion: 0.12
+Nodes (13): ChatMessageRequest, ChatMessageResponse, NitiBotService, EchoMockAdapter, test_edge_case_empty_or_whitespace_message(), test_edge_case_huge_message_overflow(), test_edge_case_sebi_compliance_always_injected(), MockGeminiAdapter (+5 more)
 
 ### Community 27 - "useAppStore.ts"
 Cohesion: 0.14
 Nodes (16): SAMPLE_REVIEWS, Step5DeepDiveProps, ACTIVE_PORTFOLIO_ID_STORAGE_KEY, AppStoreState, loadActivePortfolioId(), loadIsOnboarded(), loadLearnedConcepts(), loadPortfolios() (+8 more)
 
 ### Community 28 - "hrp.py"
-Cohesion: 0.14
+Cohesion: 0.16
 Nodes (6): apply_weight_caps(), compute_hrp_weights(), get_cluster_variance(), get_quasi_diag_order(), _traverse(), recursive_bisection()
 
 ### Community 29 - "RAGContextBuilder"
 Cohesion: 0.14
 Nodes (12): RAGContextPayload, RAGContextBuilder, create_sample_backtest(), create_sample_regime(), test_rag_context_builder_builds_complete_grounding(), test_rag_context_builder_esg_enrichment(), test_rag_context_builder_fallback_defaults(), test_edge_case_corrupted_or_unexpected_context_types() (+4 more)
 
-### Community 30 - "numpy"
-Cohesion: 0.12
-Nodes (9): draw_ellipse(), calculate_parkinson_volatility(), calculate_realized_volatility(), calculate_rolling_log_returns(), test_ledoit_wolf_covariance_on_multi_asset_matrix(), sample_market_data(), test_calculate_parkinson_volatility(), test_calculate_realized_volatility() (+1 more)
+### Community 30 - "pandas"
+Cohesion: 0.08
+Nodes (16): draw_ellipse(), calculate_parkinson_volatility(), calculate_realized_volatility(), calculate_rolling_log_returns(), extract_regime_features(), benchmark_price_series(), sample_price_series(), sample_stock_and_index() (+8 more)
 
-### Community 31 - "alerts.py"
-Cohesion: 0.15
-Nodes (9): clear_alerts(), evaluate_alerts_micro_batch(), get_alert_service(), get_vapid_public_key(), list_alerts(), mark_alert_read(), mark_all_alerts_read(), send_test_push_notification() (+1 more)
+### Community 31 - "AlertService"
+Cohesion: 0.06
+Nodes (14): clear_alerts(), evaluate_alerts_micro_batch(), get_alert_service(), get_vapid_public_key(), list_alerts(), mark_alert_read(), mark_all_alerts_read(), send_test_push_notification() (+6 more)
 
 ### Community 32 - "asyncio"
 Cohesion: 0.22
 Nodes (4): test_compounding_endpoint_mounted_at_both_prefixes(), test_compounding_endpoint_standalone_post(), test_compounding_endpoint_validation_errors(), test_compounding_endpoint_with_portfolio_id()
 
-### Community 33 - "start_all.py"
-Cohesion: 0.07
+### Community 33 - "pathlib"
+Cohesion: 0.06
 Nodes (25): main(), run_command(), get_lan_ip(), main(), print_qr_code(), log_test(), run_full_analysis(), auto_open_emulator_in_background() (+17 more)
 
-### Community 35 - "engine.py"
-Cohesion: 0.15
-Nodes (8): BacktestMetrics, BacktestTrade, BacktestResultData, calculate_backtest_metrics(), calculate_regime_breakdown(), mock_backtest_result(), test_calculate_backtest_metrics_values(), test_calculate_regime_breakdown()
+### Community 35 - "BacktestEngine"
+Cohesion: 0.07
+Nodes (17): BacktestMetrics, BacktestTrade, RegimePerformanceBreakdown, BacktestEngine, BacktestResultData, compute_rsi(), calculate_backtest_metrics(), calculate_regime_breakdown() (+9 more)
 
-### Community 36 - "test_client_serving.py"
-Cohesion: 0.29
-Nodes (5): test_app_route_serves_html(), test_competitor_benchmark_assets_served(), test_root_serves_html(), test_static_assets_served(), test_vite_build_assets_served()
+### Community 36 - "⚡ Quick Start"
+Cohesion: 0.22
+Nodes (9): 1. Prerequisites, 2. Installation, 3. Running Locally, 4. Running the Native Android App, Development Mode (Hot Reloading Frontend & Backend):, Option A: Direct APK Download, Option B: Compile with Android SDK, Production Unified Mode: (+1 more)
 
 ### Community 37 - "MarketRegimeClassifier"
-Cohesion: 0.16
-Nodes (3): MarketRegimeClassifier, test_classifier_fit_and_predict(), test_classifier_probabilities_sum_to_one()
+Cohesion: 0.14
+Nodes (5): MarketRegimeClassifier, synthetic_regime_features(), test_classifier_fit_and_predict(), test_classifier_probabilities_sum_to_one(), test_classifier_state_label_determinism()
 
 ### Community 38 - "routes/portfolio.py"
-Cohesion: 0.13
-Nodes (10): apply_rebalance_endpoint(), calculate_compounding_endpoint(), create_portfolio_endpoint(), delete_portfolio_endpoint(), get_order_sheet_endpoint(), get_portfolio_endpoint(), get_portfolio_service(), get_rebalance_diff_endpoint() (+2 more)
+Cohesion: 0.16
+Nodes (9): apply_rebalance_endpoint(), calculate_compounding_endpoint(), create_portfolio_endpoint(), delete_portfolio_endpoint(), get_order_sheet_endpoint(), get_portfolio_endpoint(), get_portfolio_service(), get_rebalance_diff_endpoint() (+1 more)
 
 ### Community 39 - "alerts/service.py"
-Cohesion: 0.23
-Nodes (7): SmartAlert, evaluate_52w_high_breakout(), evaluate_drawdown_breach(), evaluate_factor_anomaly(), evaluate_portfolio_drift(), evaluate_regime_transition(), evaluate_rsi_extreme()
+Cohesion: 0.10
+Nodes (19): AlertSeverity, SmartAlert, SmartAlertType, evaluate_52w_high_breakout(), evaluate_drawdown_breach(), evaluate_factor_anomaly(), evaluate_portfolio_drift(), evaluate_regime_transition() (+11 more)
 
-### Community 40 - "pandas"
-Cohesion: 0.16
-Nodes (10): align_to_trading_calendar(), calculate_returns(), sanitize_raw_provider_data(), validate_ohlcv_dataframe(), test_align_to_trading_calendar(), test_calculate_returns(), test_validate_ohlcv_dataframe_drops_invalid_rows(), test_validate_ohlcv_dataframe_valid_data() (+2 more)
+### Community 40 - "provider.py"
+Cohesion: 0.05
+Nodes (33): align_to_trading_calendar(), calculate_returns(), sanitize_raw_provider_data(), validate_ohlcv_dataframe(), test_get_history_endpoint(), test_get_quote_endpoint(), test_get_returns_matrix_endpoint(), test_get_universe_endpoint() (+25 more)
 
 ### Community 42 - "test_chat_api.py"
 Cohesion: 0.22
 Nodes (7): configured_app(), MockGeminiAdapter, test_chat_endpoint_graceful_degradation_503(), test_chat_endpoint_success(), test_chat_status_endpoint(), test_chat_status_endpoint_when_disabled(), unconfigured_app()
 
-### Community 43 - "test_day_over_day_mtm.py"
-Cohesion: 0.22
-Nodes (3): base_portfolio(), test_aggregate_portfolio_day_over_day_mtm(), test_holding_day_over_day_mtm_formula()
+### Community 43 - "3. Academic Demonstration & Evaluation Scenarios"
+Cohesion: 0.29
+Nodes (7): 3. Academic Demonstration & Evaluation Scenarios, Demonstration 1: First-Time Onboarding & Behavioral Persona Quiz, Demonstration 2: Interactive Financial Literacy & Video Explainer Hub (`Home` Tab), Demonstration 3: 5-Step Guided Grow Wizard (`Grow` Tab), Demonstration 4: Stock Explorer & Quant Lab Backtesting (`Explore` Tab), Demonstration 5: Dual-State Portfolio Tracking & Smart Alerts (`Portfolio` Tab), Demonstration 6: NitiBot Grounded Conversational AI Copilot
 
 ### Community 44 - "literacy.py"
 Cohesion: 0.20
 Nodes (6): get_all_literacy_cards(), _get_cards_dict(), get_literacy_card_by_key(), _get_literacy_data(), LiteracyCard, LiteracyListResponse
 
 ### Community 45 - "test_market_service.py"
-Cohesion: 0.29
-Nodes (3): test_get_latest_quote(), test_get_universe(), test_sync_universe_batch()
+Cohesion: 0.22
+Nodes (4): mock_service(), test_get_latest_quote(), test_get_universe(), test_sync_universe_batch()
 
-### Community 47 - "test_api_routes.py"
-Cohesion: 0.39
-Nodes (7): test_get_history_endpoint(), test_get_quote_endpoint(), test_get_returns_matrix_endpoint(), test_get_universe_endpoint(), test_get_universe_filtered_by_sector(), test_health_endpoint(), test_sync_endpoint()
+### Community 46 - "Cloud Deployment via AWS Lightsail, Caddy SSL & Custom Domain"
+Cohesion: 0.40
+Nodes (4): Cloud Deployment via AWS Lightsail, Caddy SSL & Custom Domain, Consequences, Context, Decision
 
-### Community 48 - "forecasting/service.py"
-Cohesion: 0.09
-Nodes (19): get_explore_service(), get_growth_forecast(), get_stock_profile(), get_ticker_esg(), list_explore_stocks(), ESGScoreResponse, ExploreStockSummary, StockIntelligenceProfile (+11 more)
+### Community 47 - "Native Android Container via WebViewAssetLoader & Automated APK CI/CD"
+Cohesion: 0.40
+Nodes (4): Consequences, Context, Decision, Native Android Container via WebViewAssetLoader & Automated APK CI/CD
+
+### Community 48 - "ExploreService"
+Cohesion: 0.10
+Nodes (17): get_explore_service(), get_growth_forecast(), get_stock_profile(), get_ticker_esg(), list_explore_stocks(), BenchmarkComparison, ESGScoreResponse, ExploreStockSummary (+9 more)
 
 ### Community 49 - "ConversationMemoryManager"
 Cohesion: 0.22
@@ -390,16 +377,16 @@ Cohesion: 0.15
 Nodes (9): get_review_service(), get_target_reviews(), preview_verification(), submit_review(), ReviewItem, ReviewsListResponse, ReviewSubmissionRequest, ReviewSubmissionResponse (+1 more)
 
 ### Community 54 - "QuantNiti: Machine Learning & Quantitative Finance Technical Specification"
-Cohesion: 0.11
-Nodes (18): 10. End-to-End Execution Flowchart & Mathematical Reference, 3.1 Feature Engineering Matrix, 3.2 GMM Formulation & Expectation-Maximization (EM), 3.3 Deterministic State Mapping via Return-to-Volatility Centroids, 3. Unsupervised Market Regime Classification Engine (GMM & Features), 5.1 Formulation, 5.2 Ridge Regularization Layer, 5. Covariance Matrix Regularization: Ledoit-Wolf Shrinkage (+10 more)
+Cohesion: 0.04
+Nodes (47): 10. End-to-End Execution Flowchart & Mathematical Reference, 11.1 The Six Deterministic Mathematical Triggers, 11.2 Asymmetric Pinball Quantile Loss (LightGBM), 11.3 4-Pillar Explainable AI (XAI) Trust Card Equations, 11. Multi-Condition Quantitative Smart Alert Engine & XAI Formulations, 1.1 The Markowitz "Error Maximizer" Curse, 1.2 Non-Stationarity & Structural Regime Breaks, 1.3 The Flaw of Single-Point Deterministic Targets (+39 more)
 
 ### Community 55 - "asyncio"
 Cohesion: 0.18
 Nodes (5): test_get_grow_recommend_success(), test_grow_recommend_esg_conscious_api(), test_grow_recommend_validation_errors(), test_post_baskets_recommend_alias(), test_post_grow_recommend_success()
 
-### Community 56 - "AlertService"
-Cohesion: 0.11
-Nodes (3): PushSubscriptionRequest, AlertService, test_alert_service_deduplication()
+### Community 56 - "Interactive Financial Literacy Hub & Playable Video Explainer Architecture"
+Cohesion: 0.40
+Nodes (4): Consequences, Context, Decision, Interactive Financial Literacy Hub & Playable Video Explainer Architecture
 
 ### Community 57 - "MarketStreamClient"
 Cohesion: 0.15
@@ -408,10 +395,6 @@ Nodes (5): marketStream, MarketStreamClient, MarketTick, TickListener, MockEvent
 ### Community 58 - "asyncio"
 Cohesion: 0.22
 Nodes (4): test_backtest_validation_errors(), test_get_backtest_run_success(), test_post_backtest_run_success(), test_post_quant_lab_backtest_alias()
-
-### Community 59 - "pathlib"
-Cohesion: 0.12
-Nodes (3): draw_card(), test_invalid_literacy_card_fails_validation(), test_literacy_cards_schema_and_count()
 
 ### Community 60 - "devDependencies"
 Cohesion: 0.13
@@ -433,9 +416,9 @@ Nodes (5): repo(), test_delete_portfolio_cascades(), test_list_portfolios(), tes
 Cohesion: 0.14
 Nodes (13): background_color, categories, description, display, icons, id, name, orientation (+5 more)
 
-### Community 65 - "MockDataProvider"
-Cohesion: 0.09
-Nodes (9): MockDataProvider, test_app(), app(), explore_service(), mock_service(), integration_app(), regime_service(), test_app() (+1 more)
+### Community 65 - "Multi-Condition Quantitative Smart Alert Engine with Web Push"
+Cohesion: 0.40
+Nodes (4): Consequences, Context, Decision, Multi-Condition Quantitative Smart Alert Engine with Web Push
 
 ### Community 66 - "asyncio"
 Cohesion: 0.18
@@ -446,96 +429,84 @@ Cohesion: 0.33
 Nodes (5): RegimeSuitability, compute_regime_suitability(), test_suitability_in_bear_regime(), test_suitability_in_bull_regime(), test_suitability_score_bounds()
 
 ### Community 68 - "MarketTickGenerator"
-Cohesion: 0.09
-Nodes (8): get_tick_generator(), stream_ticks(), MarketTick, is_indian_market_open(), MarketTickGenerator, test_format_sse_event(), test_generate_single_tick(), test_live_fallback_to_synthetic()
+Cohesion: 0.19
+Nodes (3): MarketTick, MarketTickGenerator, test_live_fallback_to_synthetic()
 
 ### Community 69 - "MarketDataProvider"
-Cohesion: 0.11
-Nodes (4): MarketDataProvider, YahooFinanceProvider, denormalize_symbol(), test_denormalize_symbol_for_provider()
+Cohesion: 0.07
+Nodes (9): MarketDataProvider, YahooFinanceProvider, denormalize_symbol(), test_denormalize_symbol_for_provider(), test_get_sector_for_symbol(), test_get_universe_metadata(), test_get_universe_symbols(), test_is_valid_symbol() (+1 more)
 
 ### Community 70 - "test_stream_api.py"
-Cohesion: 0.31
-Nodes (3): test_stream_ticks_alias_route(), test_stream_ticks_endpoint_headers_and_event(), test_stream_ticks_symbol_filter()
+Cohesion: 0.19
+Nodes (5): test_stream_ticks_alias_route(), test_stream_ticks_endpoint_headers_and_event(), test_stream_ticks_symbol_filter(), test_invalid_literacy_card_fails_validation(), test_literacy_cards_schema_and_count()
 
 ### Community 71 - "asyncio"
 Cohesion: 0.22
 Nodes (4): test_e2e_explore_stock_to_quant_lab_backtest_journey(), test_e2e_grow_basket_to_virtual_portfolio_lifecycle(), test_e2e_quant_lab_multi_strategy_suite(), test_e2e_regime_radar_history_endpoint()
 
-### Community 72 - "test_explore_api.py"
-Cohesion: 0.39
-Nodes (7): test_explore_stocks_contain_esg_fields(), test_get_explore_stocks_filtered(), test_get_explore_stocks_route(), test_get_growth_forecast_route(), test_get_stock_profile_route(), test_get_ticker_esg_endpoint(), test_stock_profile_contains_esg()
-
-### Community 73 - "test_get_alerts_empty_and_populated"
-Cohesion: 0.29
-Nodes (3): test_evaluate_endpoint(), test_get_alerts_empty_and_populated(), test_web_push_subscription_and_vapid_key()
-
-### Community 74 - "MultiHorizonGrowthForecast"
-Cohesion: 0.16
-Nodes (9): HorizonForecastCone, MultiHorizonGrowthForecast, MultiHorizonForecaster, mock_stock_forecasts(), _create_forecast(), sample_stock_and_index(), test_forecast_all_four_horizons(), test_forecast_cone_widening_over_longer_horizons() (+1 more)
+### Community 74 - "forecaster.py"
+Cohesion: 0.21
+Nodes (4): MultiHorizonForecaster, test_forecast_all_four_horizons(), test_forecast_cone_widening_over_longer_horizons(), test_strict_quantile_monotonicity()
 
 ### Community 75 - "data/service.py"
 Cohesion: 0.07
-Nodes (7): Settings, test_get_current_regime_route(), test_get_regime_history_route(), test_train_regime_model_route(), test_train_model(), test_generate_batch_ticks(), test_tick_consecutive_price_movement()
+Nodes (10): Settings, get_esg_badge(), get_sector_for_symbol(), get_universe_metadata(), get_universe_symbols(), test_get_growth_forecast(), test_get_current_regime_route(), test_get_regime_history_route() (+2 more)
 
 ### Community 76 - "test_pwa_unit.py"
 Cohesion: 0.17
 Nodes (5): test_desktop_responsive_css_rules(), test_icon_assets_exist(), test_manifest_file_exists_and_valid(), test_offline_page_exists_and_styled(), test_service_worker_script_structure()
 
 ### Community 77 - "ReviewTargetType"
-Cohesion: 0.11
-Nodes (12): test_all(), ReviewStatus, ReviewTargetType, ReviewVerificationAgent, agent(), test_agent_approves_and_verifies_authentic_review(), test_agent_approves_qualitative_review(), test_agent_blocks_stock_tipping_at_tier1() (+4 more)
+Cohesion: 0.10
+Nodes (11): test_all(), ReviewTargetType, ReviewVerificationAgent, agent(), test_agent_approves_and_verifies_authentic_review(), test_agent_approves_qualitative_review(), test_agent_blocks_stock_tipping_at_tier1(), test_agent_blocks_tier1_spam_immediately() (+3 more)
 
 ### Community 78 - "scripts"
 Cohesion: 0.22
 Nodes (9): scripts, apk:build, build, cap:open, cap:sync, dev, mobile:serve, preview (+1 more)
 
-### Community 79 - "DiscreteAllocationEngine"
-Cohesion: 0.08
-Nodes (3): DiscreteAllocationEngine, DiscreteAllocationResult, TestDiscreteAllocationEngine
-
 ### Community 80 - "test_review_service.py"
 Cohesion: 0.25
 Nodes (3): review_service(), test_service_rejects_and_does_not_publish_exaggerated_review(), test_service_submits_and_stores_verified_review()
 
-### Community 83 - "universe.py"
-Cohesion: 0.08
-Nodes (15): AssetClass, get_asset_class_for_symbol(), get_sector_for_symbol(), get_universe_symbols(), test_asset_class_enum_members(), test_commodity_etfs_constituents(), test_defense_constituents(), test_expanded_universe_total_count() (+7 more)
+### Community 83 - "test_multi_asset_universe.py"
+Cohesion: 0.12
+Nodes (7): test_asset_class_enum_members(), test_commodity_etfs_constituents(), test_defense_constituents(), test_expanded_universe_total_count(), test_factor_extractor_on_multi_asset_universe(), test_ledoit_wolf_covariance_on_multi_asset_matrix(), test_metals_constituents()
 
-### Community 84 - "test_explore_stocks_total_and_asset_class_filter"
-Cohesion: 0.29
-Nodes (3): test_explore_profiles_for_etf_and_defense(), test_explore_stocks_total_and_asset_class_filter(), test_explore_theme_filter_chips()
+### Community 84 - "AssetClass"
+Cohesion: 0.15
+Nodes (7): AssetClass, LiteracyCategory, get_asset_class_for_symbol(), test_explore_profiles_for_etf_and_defense(), test_explore_stocks_total_and_asset_class_filter(), test_explore_theme_filter_chips(), test_taxonomy_and_sector_lookup_helpers()
 
 ### Community 85 - "asyncio"
 Cohesion: 0.22
 Nodes (4): test_create_and_list_multiple_portfolios(), test_delete_portfolio_lifecycle(), test_dual_prefix_routing_portfolios(), test_portfolio_detail_mtm_metrics()
 
-### Community 86 - "asyncio"
-Cohesion: 0.18
-Nodes (5): test_get_reviews_endpoint(), test_stock_review_flow(), test_submit_exaggerated_review_rejected(), test_submit_prohibited_spam_rejected(), test_submit_verified_review()
+### Community 86 - "test_reviews_api.py"
+Cohesion: 0.17
+Nodes (6): test_app(), test_get_reviews_endpoint(), test_stock_review_flow(), test_submit_exaggerated_review_rejected(), test_submit_prohibited_spam_rejected(), test_submit_verified_review()
 
-### Community 87 - "market.py"
-Cohesion: 0.11
-Nodes (11): get_history(), get_market_service(), get_quote(), get_returns_matrix(), sync_universe(), SyncRequest, MarketHistoryResponse, OHLCVBar (+3 more)
+### Community 87 - "MarketDataService"
+Cohesion: 0.07
+Nodes (16): get_history(), get_market_service(), get_quote(), get_returns_matrix(), get_universe(), sync_universe(), SyncRequest, MarketHistoryResponse (+8 more)
 
 ### Community 88 - "setup.ts"
 Cohesion: 0.25
 Nodes (3): @testing-library/jest-dom, localStorageMock, sessionStorageMock
 
 ### Community 89 - "test_hrp_optimizer.py"
-Cohesion: 0.11
-Nodes (11): compute_shrunk_covariance(), sample_returns_df(), test_compute_hrp_weights_helper_function(), test_compute_shrunk_covariance_fallback_on_degenerate_data(), test_compute_shrunk_covariance_ledoit_wolf(), test_compute_shrunk_covariance_without_shrinkage(), test_hrp_optimizer_esg_conscious_favors_high_esg_stocks(), test_hrp_optimizer_lower_volatility_gets_higher_allocation_in_conservative() (+3 more)
+Cohesion: 0.09
+Nodes (14): compute_shrunk_covariance(), HRPOptimizer, sample_returns_df(), test_compute_hrp_weights_helper_function(), test_compute_shrunk_covariance_ledoit_wolf(), test_compute_shrunk_covariance_without_shrinkage(), test_hrp_distance_matrix_conditioning_extreme_correlation(), test_hrp_optimizer_all_personas_and_caps() (+6 more)
 
 ### Community 90 - "compilerOptions"
 Cohesion: 0.25
 Nodes (7): compilerOptions, allowSyntheticDefaultImports, composite, module, moduleResolution, skipLibCheck, include
 
-### Community 91 - "QuantNiti: Hosting, Centralized Server & Scalability Guide"
-Cohesion: 0.13
-Nodes (14): 1. Architectural Overview, 2. 1-Click Cloud Deployment Guides, 3. Running with Docker & Docker Compose (Any VPS / Local Machine), 4. Connecting Standalone Clients (Mobile APK & PWAs), 5. Horizontal & Vertical Scalability, ASGI Concurrency, Direct Docker Run, Memory Optimization (+6 more)
+### Community 91 - "QuantNiti: Production Hosting, Cloud Architecture & Scalability Guide"
+Cohesion: 0.11
+Nodes (18): 1. Production Architecture Overview, 2.1. Host Configuration, 2.2. Caddy Reverse Proxy Configuration (`/etc/caddy/Caddyfile`), 2.3. Docker Container Execution, 2.4. Production Healthcheck Verification, 2. Production AWS Lightsail Deployment Setup, 3. Automated Continuous Deployment (GitHub Actions), 4.1. Automated GitHub Actions APK Build (+10 more)
 
 ### Community 92 - "QuantNiti"
-Cohesion: 0.13
-Nodes (15): 1. Prerequisites, 2. Installation, 3. Running Locally, AI-Driven Regime-Adaptive Portfolio Intelligence & Quantitative Decision Support System, 🎯 Core Mathematical & Algorithmic Methodologies, Development Mode (Hot Reloading Frontend & Backend):, 📱 Key Product Capabilities, 📄 License & Attribution (+7 more)
+Cohesion: 0.22
+Nodes (9): AI-Driven Regime-Adaptive Portfolio Intelligence & Quantitative Decision Support System, 🎯 Core Mathematical & Algorithmic Methodologies, 📱 Key Product Capabilities, 📄 License & Attribution, 📂 Project Structure, QuantNiti, 🏗️ System Architecture, 📚 Technical Documentation Links (+1 more)
 
 ### Community 94 - "chat.py"
 Cohesion: 0.31
@@ -549,13 +520,17 @@ Nodes (11): 1. Executive Summary: The Structural Gap in Indian WealthTech, 2. Pl
 Cohesion: 0.18
 Nodes (11): 6.4 Ledoit-Wolf Covariance Matrix Regularization, 6.6.1 Greedy Deficit-Minimization Sizing (Primary Real-Time Algorithm), 6.6.2 Mixed-Integer Linear Programming (MILP Formulation), 6.6 Discrete Integer Share Sizing & Cash Buffer Optimization, 6.7.1 Stochastic Differential Equation (SDE), 6.7.2 Monthly Systematic Investment Plan (SIP) with Annual Step-Up, 6.7.3 The Compounding Tipping Point, 6.7 Geometric Brownian Motion Compounding & Analytical Tipping Point (+3 more)
 
-### Community 102 - "3. Academic Demonstration & Evaluation Scenarios"
-Cohesion: 0.18
-Nodes (10): 1. System Overview, 2. Launching the Application, 3. Academic Demonstration & Evaluation Scenarios, 4-Tab Navigation Architecture, 4. Test Suite Execution, Demonstration 1: Retail Investor Flow (`Grow` Tab), Demonstration 2: Stock Explorer Flow (`Explore` Tab), Demonstration 3: Quant Lab Strategy Studio (`Quant Lab` Tab) (+2 more)
+### Community 101 - "test_tick_generator.py"
+Cohesion: 0.20
+Nodes (5): market_service(), test_generate_batch_ticks(), test_generate_single_tick(), test_tick_consecutive_price_movement(), tick_generator()
+
+### Community 102 - "2. Accessing & Launching the Application"
+Cohesion: 0.20
+Nodes (9): 1. System Overview, 2. Accessing & Launching the Application, 4-Tab Navigation Architecture, 4. Test Suite Execution & Verification, Option A: Live Production Cloud (Recommended), Option B: Native Android App (APK), Option C: Mobile Progressive Web App (PWA), Option D: Local Development Mode (+1 more)
 
 ### Community 103 - "QuantNiti: Complete Architectural Blueprint & System Design Document"
-Cohesion: 0.20
-Nodes (10): 1. Executive Summary & Problem Context, 2. Full-Stack System Architecture, 4.1. The 5-Step Guided Grow Experience, 4.2. Universal Financial & Brand Color Palette, 4.3. Lifecycle Management & Race Condition Guards, 4. Frontend Architecture & Design Engineering, 5. Security, Reliability & Verification Matrix, 6. Deployment & Operations (+2 more)
+Cohesion: 0.15
+Nodes (13): 1. Executive Summary & Problem Context, 2. Full-Stack System Architecture, 4.1. The 5-Step Guided Grow Experience, 4.2. Universal Financial & Brand Color Palette, 4.3. Lifecycle Management & Race Condition Guards, 4. Frontend Architecture & Design Engineering, 5. Security, Reliability & Verification Matrix, 6. Cloud Infrastructure & Production Operations (+5 more)
 
 ### Community 106 - "2. Audit of the 4 Open-Source Repositories"
 Cohesion: 0.20
@@ -577,13 +552,9 @@ Nodes (9): 9. IEEE Research Paper Blueprint (Section-by-Section Outline), I. INT
 Cohesion: 0.25
 Nodes (3): Core Product Concepts, Language, QuantNiti: Domain Glossary
 
-### Community 123 - "4.1 Quantitative Factor Extraction Engine"
-Cohesion: 0.25
-Nodes (8): 1. Momentum Pillar, 2. Volatility & Risk Pillar, 3. Market Sensitivity Pillar (CAPM), 4.1 Quantitative Factor Extraction Engine, 4.2 Multi-Factor Drift & Volatility Blending, 4.3 Quantile Cones & Strict Monotonicity Enforcement, 4. Multi-Factor Asset Extraction & Quantile Growth Forecasting Cones, 4. Sustainability Pillar (ESG Conscience)
-
 ### Community 124 - "Spec: QuantNiti Core Platform"
-Cohesion: 0.25
-Nodes (8): Further Notes, Implementation Decisions, Out of Scope, Problem Statement, Solution, Spec: QuantNiti Core Platform, Testing Decisions, User Stories
+Cohesion: 0.29
+Nodes (7): Implementation Decisions, Out of Scope, Problem Statement, Solution, Spec: QuantNiti Core Platform, Testing Decisions, User Stories
 
 ### Community 125 - "Agent skills"
 Cohesion: 0.33
@@ -617,29 +588,25 @@ Nodes (4): Consequences, Context, Decision, RAG-Powered Conversational Assistant
 Cohesion: 0.40
 Nodes (4): Consequences, Context, Decision, ESG Conscience Score and Socially Responsible Investing
 
-### Community 133 - "Cross-Platform PWA with Adaptive Desktop Layout"
+### Community 133 - "Cross-Platform Progressive Web App (PWA) with Responsive Layout"
 Cohesion: 0.40
-Nodes (4): Consequences, Context, Cross-Platform PWA with Adaptive Desktop Layout, Decision
+Nodes (4): Consequences, Context, Cross-Platform Progressive Web App (PWA) with Responsive Layout, Decision
 
-### Community 134 - "Portfolio Intelligence Platform over Strategy Testing Platform"
+### Community 134 - "Prioritizing Portfolio Intelligence Over Pure Strategy Testing"
 Cohesion: 0.40
-Nodes (4): Consequences, Considered Options, Context, Portfolio Intelligence Platform over Strategy Testing Platform
+Nodes (4): Consequences, Context, Decision, Prioritizing Portfolio Intelligence Over Pure Strategy Testing
 
-### Community 135 - "Multi-Asset Investment Universe with Commodity ETFs"
+### Community 135 - "Multi-Asset Universe Expansion with Defensive Commodity ETFs"
 Cohesion: 0.40
-Nodes (4): Consequences, Considered Options, Context, Multi-Asset Investment Universe with Commodity ETFs
+Nodes (4): Consequences, Context, Decision, Multi-Asset Universe Expansion with Defensive Commodity ETFs
 
-### Community 136 - "Server-Side ML Computation with Thin-Client Mobile Delivery"
+### Community 136 - "Server-Side Quantitative ML Computation with Asynchronous ASGI Gateway"
 Cohesion: 0.40
-Nodes (4): Consequences, Considered Options, Context, Server-Side ML Computation with Thin-Client Mobile Delivery
+Nodes (4): Consequences, Context, Decision, Server-Side Quantitative ML Computation with Asynchronous ASGI Gateway
 
-### Community 137 - "AI Review Verification and Ground-Truth Fact-Checking Agent"
+### Community 137 - "Autonomous AI Ground-Truth Review Fact-Checking Agent"
 Cohesion: 0.40
-Nodes (4): AI Review Verification and Ground-Truth Fact-Checking Agent, Consequences, Considered Options, Context
-
-### Community 138 - "6. Portfolio Optimization: Hierarchical Risk Parity (HRP) Algorithm"
-Cohesion: 0.40
-Nodes (5): 6.4 Risk Persona & ESG Allocation Constraints, 6. Portfolio Optimization: Hierarchical Risk Parity (HRP) Algorithm, Stage 1: Correlation Metric & Tree Clustering, Stage 2: Quasi-Diagonalization, Stage 3: Recursive Bisection
+Nodes (4): Autonomous AI Ground-Truth Review Fact-Checking Agent, Consequences, Context, Decision
 
 ### Community 139 - "6.2 Multi-Factor Econometric Extraction Engine"
 Cohesion: 0.40
@@ -661,18 +628,6 @@ Nodes (5): 5.1 Decoupled Full-Stack Architecture, 5.2 Four-Tier Quantitative Dat
 Cohesion: 0.40
 Nodes (5): 6.5 Hierarchical Risk Parity (HRP) Optimization Algorithm, Phase 1: Correlation Distance & Hierarchical Tree Clustering, Phase 2: Quasi-Diagonalization (Seriation), Phase 3: Recursive Bisection, Risk Persona Allocation Constraints & ESG Tilting
 
-### Community 146 - "1. Foundational Problem Statement & Financial Econometrics"
-Cohesion: 0.50
-Nodes (4): 1.1 The Markowitz "Error Maximizer" Curse, 1.2 Non-Stationarity & Structural Regime Breaks, 1.3 The Flaw of Single-Point Deterministic Targets, 1. Foundational Problem Statement & Financial Econometrics
-
-### Community 147 - "2. Datasets, Ingestion Architecture & Preprocessing Justifications"
-Cohesion: 0.50
-Nodes (4): 2.1 Asset Universe Composition, 2.2 Why These Datasets?, 2.3 Mathematical Data Preprocessing, 2. Datasets, Ingestion Architecture & Preprocessing Justifications
-
-### Community 148 - "8. Geometric Brownian Motion (GBM) Long-Horizon Wealth Compounding"
-Cohesion: 0.50
-Nodes (4): 8.1 Stochastic Differential Equation (SDE), 8.2 Monthly SIP Compounding with Step-Up Dynamics, 8.3 The Compounding Tipping Point, 8. Geometric Brownian Motion (GBM) Long-Horizon Wealth Compounding
-
 ### Community 149 - "1. Academic Metadata & Proposed Paper Formulations"
 Cohesion: 0.50
 Nodes (4): 1.1 Candidate Paper Titles, 1.2 Structured Abstract (IEEE Standard), 1.3 IEEE Indexing Terms & Keywords, 1. Academic Metadata & Proposed Paper Formulations
@@ -685,25 +640,45 @@ Nodes (4): 6.1.1 Feature Vector Construction, 6.1.2 Gaussian Mixture Model Formu
 Cohesion: 0.50
 Nodes (4): 6.3.1 Blended Expected Drift & Volatility, 6.3.2 Closed-Form Geometric Brownian Motion Quantile Cones, 6.3.3 Isotonic Monotonicity Regularization, 6.3 Multi-Horizon Quantile Growth Forecaster & Isotonic Regularization
 
+### Community 153 - "Pivot from Technical Backtesting to Portfolio Growth Intelligence"
+Cohesion: 0.40
+Nodes (4): Consequences, Context, Decision, Pivot from Technical Backtesting to Portfolio Growth Intelligence
+
+### Community 154 - "Progressive Disclosure UX: 4-Tab Architecture and Embedded Quant Lab Pro Tools"
+Cohesion: 0.40
+Nodes (4): Consequences, Context, Decision, Progressive Disclosure UX: 4-Tab Architecture and Embedded Quant Lab Pro Tools
+
+### Community 155 - "Virtual Paper Portfolio with Regime-Shift Rebalance Alerts"
+Cohesion: 0.40
+Nodes (4): Consequences, Context, Decision, Virtual Paper Portfolio with Regime-Shift Rebalance Alerts
+
+### Community 156 - "Explainable AI Trust Card and Disintermediation Moat"
+Cohesion: 0.40
+Nodes (4): Consequences, Context, Decision, Explainable AI Trust Card and Disintermediation Moat
+
+### Community 157 - "Discrete Integer Allocation and Ledoit-Wolf Covariance Shrinkage"
+Cohesion: 0.40
+Nodes (4): Consequences, Context, Decision, Discrete Integer Allocation and Ledoit-Wolf Covariance Shrinkage
+
 ## Knowledge Gaps
 - **13 isolated node(s):** `@capacitor/android`, `@capacitor/core`, `clsx`, `tailwind-merge`, `@types/node` (+8 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1115 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **31 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1154 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `MarketDataService` connect `MarketDataService` to `pytest`, `ParquetMarketCache`, `models.py`, `PortfolioService`, `create_app`, `backtest/service.py`, `RegimeService`, `RAGContextBuilder`, `numpy`, `MarketRegimeClassifier`, `routes/portfolio.py`, `alerts/service.py`, `test_chat_api.py`, `forecasting/service.py`, `AlertService`, `MockDataProvider`, `MarketTickGenerator`, `MarketDataProvider`, `data/service.py`, `ReviewTargetType`, `universe.py`, `market.py`, `app_instance`, `app_instance`, `market_service`?**
-  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+- **Why does `useAbortableRequest()` connect `GlassCard` to `react`, `GrowPage.tsx`, `QuantNiti: Complete Architectural Blueprint & System Design Document`, `9. IEEE Research Paper Blueprint (Section-by-Section Outline)`, `5. End-to-End System Architecture`, `PortfolioPage.tsx`, `lucide-react`, `useAppStore.ts`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **Are the 53 inferred relationships involving `MarketDataService` (e.g. with `test_all()` and `get_history()`) actually correct?**
   _`MarketDataService` has 53 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `@capacitor/android`, `@capacitor/core`, `clsx` to the rest of the system?**
   _13 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `react` be split into smaller, more focused modules?**
   _Cohesion score 0.09608843537414966 - nodes in this community are weakly interconnected._
-- **Why does `AlertService` connect `AlertService` to `MockDataProvider`, `alerts/service.py`, `data/service.py`, `PortfolioService`, `create_app`, `SmartAlertType`, `MarketRegimeType`, `forecasting/service.py`, `RegimeService`, `MarketDataService`, `alerts.py`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+- **Why does `MarketDataService` connect `MarketDataService` to `pytest`, `ParquetMarketCache`, `PortfolioService`, `create_app`, `backtest/service.py`, `RegimeService`, `streaming.py`, `get_esg_score_for_symbol`, `RAGContextBuilder`, `AlertService`, `BacktestEngine`, `MarketRegimeClassifier`, `alerts/service.py`, `PortfolioRepository`, `test_chat_api.py`, `test_market_service.py`, `ExploreService`, `MarketTickGenerator`, `MarketDataProvider`, `forecaster.py`, `data/service.py`, `ReviewTargetType`, `test_multi_asset_universe.py`, `test_reviews_api.py`, `test_hrp_optimizer.py`, `test_tick_generator.py`?**
+  _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **Are the 38 inferred relationships involving `MarketRegimeType` (e.g. with `PortfolioRepository` and `evaluate_regime_transition()`) actually correct?**
   _`MarketRegimeType` has 38 INFERRED edges - model-reasoned connections that need verification._
-- **Should `pytest` be split into smaller, more focused modules?**
-  _Cohesion score 0.09358974358974359 - nodes in this community are weakly interconnected._
+- **Should `GrowPage.tsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.07111501316944688 - nodes in this community are weakly interconnected._

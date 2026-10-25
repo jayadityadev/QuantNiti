@@ -4,7 +4,7 @@
 
 **Blocked by:** 01-react-vite-scaffold
 
-**Status:** resolved
+**Status:** completed
 
 - [x] `<GlassCard>` — primary content container: `rounded-3xl`, hairline border (`border-violet-400/20` light, `border-violet-500/15` dark), subtle inner-top highlight, tonal surface background, Framer Motion `fadeInUp` entrance
 - [x] `<ChipButton>` — selectable pill: active state with violet accent, inactive with muted surface, spring scale on tap (`whileTap={{ scale: 0.97 }}`)

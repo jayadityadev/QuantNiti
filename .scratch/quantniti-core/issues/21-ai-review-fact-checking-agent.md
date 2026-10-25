@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: AI Portfolio Basket Engine & Trust Card, 16: Groww-Inspired Mobile UI Redesign & 4-Tab Navigation, 19: Persistent Multi-Portfolio Storage & Day-over-Day MTM Engine
 
-**Status:** ready-for-human
+**Status:** completed
 
 - [x] Implements database models and REST endpoints for review submission and retrieval: `POST /api/v1/reviews/submit` and `GET /api/v1/reviews/{target_type}/{target_id}`.
 - [x] Builds Tier 1 deterministic regex filters: automatically blocks contact details, external links, Telegram handles, profanity, and explicit stock tips.

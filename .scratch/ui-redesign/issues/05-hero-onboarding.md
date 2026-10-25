@@ -4,7 +4,7 @@
 
 **Blocked by:** 02-layout-shell, 03-shared-components
 
-**Status:** resolved
+**Status:** completed
 
 - [x] `<OnboardingHero>` route/component that renders full-screen (hiding header + bottom nav) when `localStorage.getItem('quantniti_onboarded')` is falsy
 - [x] **Step 1 — Welcome Splash**: Animated brand display with value proposition ("AI-driven portfolio intelligence for Indian retail investors"), Framer Motion staggered text entrance, smooth violet gradient background, "Get Started" CTA

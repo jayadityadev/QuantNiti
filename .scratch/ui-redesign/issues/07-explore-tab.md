@@ -4,7 +4,7 @@
 
 **Blocked by:** 02-layout-shell, 03-shared-components, 04-async-lifecycle
 
-**Status:** resolved
+**Status:** completed
 
 - [x] `<ExplorePage>` component with search bar and sector filter chip row (horizontally scrollable)
 - [x] `<StockCard>` redesigned: larger squircle card (`rounded-2xl`), stock name in bold, price with animated ticker, regime suitability as a visual badge (green "Strong Buy" / amber "Hold" / rose "Caution"), 6M forecast range as a compact progress bar — not raw percentages

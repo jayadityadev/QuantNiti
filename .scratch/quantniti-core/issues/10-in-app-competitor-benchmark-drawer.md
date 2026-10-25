@@ -4,7 +4,7 @@
 
 **Blocked by:** 07: Unified Mobile-First Client Shell & End-to-End Integration
 
-**Status:** closed
+**Status:** completed
 
 - [x] Adds an interactive "Compare vs Existing Platforms" trigger button in the Trust Card and header navigation.
 - [x] Renders a sleek, responsive comparison table/matrix highlighting QuantNiti's unique advantages (Forward ₹ growth cones, GMM regime radar, 0% commissions, HRP optimization).

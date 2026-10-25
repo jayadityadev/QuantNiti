@@ -588,9 +588,9 @@
     "semantic_hash": "db2b086d97246794bea333cb14469c60"
   },
   "src/frontend/components/grow/Step5DeepDive.tsx": {
-    "mtime": 1792665664.5426252,
-    "seen": 1792665764.392253,
-    "ast_hash": "3de931cb1221ead86cafab80b483398d",
+    "mtime": 1792912390.9381979,
+    "seen": 1792912811.2786486,
+    "ast_hash": "2bfca3709a78640e48b1f4ca2f963120",
     "semantic_hash": ""
   },
   "src/frontend/components/grow/SummaryPills.tsx": {
@@ -942,10 +942,10 @@
     "semantic_hash": "632c3506f57250d98d8d3f54dd582574"
   },
   "tests/frontend/modals/ModalsSuite.test.tsx": {
-    "mtime": 1791216240.1054626,
-    "seen": 1791727289.162909,
-    "ast_hash": "ac9a37ec3649f896094fe8327573c1bc",
-    "semantic_hash": "ac9a37ec3649f896094fe8327573c1bc"
+    "mtime": 1792912486.6084871,
+    "seen": 1792912811.278801,
+    "ast_hash": "ac79005715b93ef28bfcf4d7cca95278",
+    "semantic_hash": ""
   },
   "tests/frontend/modals/NitiBotModal.test.tsx": {
     "mtime": 1791216240.1054626,
@@ -1050,10 +1050,10 @@
     "semantic_hash": "a84266123f8681aa12d7d0133a0d8434"
   },
   "tests/frontend/unit/grow/GrowResults.test.tsx": {
-    "mtime": 1791216240.112975,
-    "seen": 1791727289.162928,
-    "ast_hash": "7194a1bcf161b9874c453e5af6015b5c",
-    "semantic_hash": "7194a1bcf161b9874c453e5af6015b5c"
+    "mtime": 1792912390.8155155,
+    "seen": 1792912811.2788615,
+    "ast_hash": "25b44f699243baaed46938cee1b73221",
+    "semantic_hash": ""
   },
   "tests/frontend/unit/grow/GrowWizard.test.tsx": {
     "mtime": 1791216240.1139765,
@@ -1500,15 +1500,15 @@
     "semantic_hash": ""
   },
   "CONTEXT.md": {
-    "mtime": 1792665140.7561042,
-    "seen": 1792665764.3924406,
-    "ast_hash": "5c59a744de7ca9f1650f890d9eadc9ba",
+    "mtime": 1792911910.9858563,
+    "seen": 1792912811.279054,
+    "ast_hash": "30aa1a0acbaa590bfa2553a592ee43ba",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1792866576.9491284,
-    "seen": 1792867105.6940196,
-    "ast_hash": "c5eb6484b0ec03ba20b9a051640fa68c",
+    "mtime": 1792911890.6662655,
+    "seen": 1792912811.2790565,
+    "ast_hash": "507501e3f56cb7f3e261eb2236c3c533",
     "semantic_hash": ""
   },
   "docker-compose.yml": {
@@ -1518,27 +1518,27 @@
     "semantic_hash": ""
   },
   "docs/ARCHITECTURE.md": {
-    "mtime": 1791216239.7449272,
-    "seen": 1791736839.9331484,
-    "ast_hash": "209b8f1de35c65005c2d08b1c45a59c8",
+    "mtime": 1792911957.1450415,
+    "seen": 1792912811.2790616,
+    "ast_hash": "63b69da00b33147b065dd1acebe670d8",
     "semantic_hash": ""
   },
   "docs/HOSTING_AND_SCALABILITY.md": {
-    "mtime": 1791525558.0854,
-    "seen": 1791736839.933149,
-    "ast_hash": "1d2c444f7c312ba0170e95ce0efd5feb",
+    "mtime": 1792911974.4108963,
+    "seen": 1792912811.2790632,
+    "ast_hash": "bac8007b1c69e84d42eddb785279276d",
     "semantic_hash": ""
   },
   "docs/ML_PIPELINE.md": {
-    "mtime": 1791216239.7449272,
-    "seen": 1791736839.9331503,
-    "ast_hash": "48006c360f7fffdba51651ef7c1f84c3",
+    "mtime": 1792912093.5454862,
+    "seen": 1792912811.279065,
+    "ast_hash": "e3a099b5673ed8179b876d74c096d6a8",
     "semantic_hash": ""
   },
   "docs/PRD.md": {
-    "mtime": 1791216239.7449272,
-    "seen": 1791736839.9331512,
-    "ast_hash": "cf1ac329897822cd9148b604d61e6e95",
+    "mtime": 1792912038.7550893,
+    "seen": 1792912811.2790666,
+    "ast_hash": "9cf458d2c235c016c2dfddb6f588b426",
     "semantic_hash": ""
   },
   "docs/RESEARCH_PAPER_MASTER_DOSSIER.md": {
@@ -1548,81 +1548,81 @@
     "semantic_hash": ""
   },
   "docs/USER_GUIDE.md": {
-    "mtime": 1791216239.746397,
-    "seen": 1791736839.9331534,
-    "ast_hash": "3666170dd68f5853a7fcd7f776de3c4a",
+    "mtime": 1792911998.8157997,
+    "seen": 1792912811.2790701,
+    "ast_hash": "065d7b69bc2a529ee65f5861215e026a",
     "semantic_hash": ""
   },
   "docs/adr/0001-pivot-from-backtesting-to-portfolio-growth-intelligence.md": {
-    "mtime": 1791216239.7478833,
-    "seen": 1791736839.9331543,
-    "ast_hash": "ba5783a8b918736a143934a99866067a",
+    "mtime": 1792912154.190486,
+    "seen": 1792912811.279072,
+    "ast_hash": "be0ce3468caed3b4ba8d3cadc1fa57af",
     "semantic_hash": ""
   },
   "docs/adr/0002-dual-tabbed-architecture-investor-and-quant-lab.md": {
-    "mtime": 1791216239.7478833,
-    "seen": 1791736839.933155,
-    "ast_hash": "fc444613a79678df6098a52bbf497696",
+    "mtime": 1792912154.191557,
+    "seen": 1792912811.2790732,
+    "ast_hash": "d14ab4d6ae905afaa4dfbc41b56c94d8",
     "semantic_hash": ""
   },
   "docs/adr/0003-virtual-paper-portfolio-with-regime-rebalancing-alerts.md": {
-    "mtime": 1791216239.7478833,
-    "seen": 1791736839.933156,
-    "ast_hash": "8a57c1e14f52dd12fcb290ca4a7b125b",
+    "mtime": 1792912154.191557,
+    "seen": 1792912811.2790742,
+    "ast_hash": "d76d41bc458e95f771e8d1138000275f",
     "semantic_hash": ""
   },
   "docs/adr/0004-explainable-ai-trust-card-and-disintermediation-model.md": {
-    "mtime": 1791216239.7478833,
-    "seen": 1791736839.9331572,
-    "ast_hash": "c984c11b40e85ffe7d7f75c31de6e4b0",
+    "mtime": 1792912154.191557,
+    "seen": 1792912811.2790766,
+    "ast_hash": "3f5f385f784c260160204f833b1af4be",
     "semantic_hash": ""
   },
   "docs/adr/0005-discrete-allocation-and-ledoit-wolf-covariance-shrinkage.md": {
-    "mtime": 1791216239.7488832,
-    "seen": 1791736839.933158,
-    "ast_hash": "4df4ae19e7f7fe5dd9af3355d0cc5b31",
+    "mtime": 1792912154.192079,
+    "seen": 1792912811.2790785,
+    "ast_hash": "3e66ca736eb7b61e49a010249b768e41",
     "semantic_hash": ""
   },
   "docs/adr/0006-rag-powered-conversational-assistant-nitibot.md": {
-    "mtime": 1791216239.7488832,
-    "seen": 1791736839.9331589,
-    "ast_hash": "4c972c5f8577c5987f7fb25505c8dd31",
+    "mtime": 1792912154.192079,
+    "seen": 1792912811.27908,
+    "ast_hash": "6aa6abad510b71567722e4731c7a48c3",
     "semantic_hash": ""
   },
   "docs/adr/0007-esg-conscience-score-and-socially-responsible-investing.md": {
-    "mtime": 1791216239.7498827,
-    "seen": 1791736839.9331598,
-    "ast_hash": "e518351491462c0d62433bec9849dfba",
+    "mtime": 1792912154.1926067,
+    "seen": 1792912811.2790816,
+    "ast_hash": "eca5430e31d645d1a70784c30ad64a14",
     "semantic_hash": ""
   },
   "docs/adr/0008-cross-platform-pwa-with-adaptive-desktop-layout.md": {
-    "mtime": 1791216239.7498827,
-    "seen": 1791736839.933161,
-    "ast_hash": "c2a6d4682f30fdc1bd8194879106381a",
+    "mtime": 1792912154.1931336,
+    "seen": 1792912811.279083,
+    "ast_hash": "fd21359f9993ce6766c53be84d3da427",
     "semantic_hash": ""
   },
   "docs/adr/0009-portfolio-intelligence-over-strategy-testing.md": {
-    "mtime": 1791216239.7498827,
-    "seen": 1791736839.933162,
-    "ast_hash": "483f24f57abffb46ce98726ab97b127e",
+    "mtime": 1792912154.1931336,
+    "seen": 1792912811.2790844,
+    "ast_hash": "6d848a579832c1d4c173e9f57eec5ed6",
     "semantic_hash": ""
   },
   "docs/adr/0010-multi-asset-universe-with-commodity-etfs.md": {
-    "mtime": 1791216239.750883,
-    "seen": 1791736839.933163,
-    "ast_hash": "e10895539b4e8a4b421cc36f7f3e5e5d",
+    "mtime": 1792912154.193681,
+    "seen": 1792912811.2790859,
+    "ast_hash": "5ef803de86b48abd73de96789684ae16",
     "semantic_hash": ""
   },
   "docs/adr/0011-server-side-ml-computation-thin-client.md": {
-    "mtime": 1791216239.750883,
-    "seen": 1791736839.933164,
-    "ast_hash": "f0a48b196f74f0ca9bc81f18938f0674",
+    "mtime": 1792912154.193681,
+    "seen": 1792912811.279087,
+    "ast_hash": "43da7792f9bc2391270cf4d718a47d84",
     "semantic_hash": ""
   },
   "docs/adr/0012-ai-review-verification-fact-checking-agent.md": {
-    "mtime": 1791216239.750883,
-    "seen": 1791736839.9331648,
-    "ast_hash": "f6f4be94f62fdabfaacba4e18fa7bb92",
+    "mtime": 1792912154.1942039,
+    "seen": 1792912811.2790885,
+    "ast_hash": "a3d3eceeccdcc38ddfedbacd0724001e",
     "semantic_hash": ""
   },
   "docs/agents/domain.md": {
@@ -1749,6 +1749,30 @@
     "mtime": 1792905511.3839319,
     "seen": 1792905551.4631894,
     "ast_hash": "edce033498631a711e9beb5ff9a69989",
+    "semantic_hash": ""
+  },
+  "docs/adr/0013-cloud-deployment-lightsail-caddy-custom-domain.md": {
+    "mtime": 1792912154.1947374,
+    "seen": 1792912811.2790904,
+    "ast_hash": "58de3bd7e3949acb68867062384fb8ed",
+    "semantic_hash": ""
+  },
+  "docs/adr/0014-native-android-container-and-automated-apk-ci-cd.md": {
+    "mtime": 1792912154.19528,
+    "seen": 1792912811.2790926,
+    "ast_hash": "b03ae65d3a402670fb6e98bb6e8503b3",
+    "semantic_hash": ""
+  },
+  "docs/adr/0015-interactive-financial-literacy-and-video-explainer-hub.md": {
+    "mtime": 1792912154.19528,
+    "seen": 1792912811.2790945,
+    "ast_hash": "565eb4a2e56546f7194d65d8e66a4486",
+    "semantic_hash": ""
+  },
+  "docs/adr/0016-multi-condition-smart-alert-engine-and-web-push.md": {
+    "mtime": 1792912154.1959257,
+    "seen": 1792912811.279096,
+    "ast_hash": "18a86ec578bafb9fa9bdf26a3ba3c9d6",
     "semantic_hash": ""
   }
 }

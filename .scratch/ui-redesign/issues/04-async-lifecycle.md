@@ -4,7 +4,7 @@
 
 **Blocked by:** 01-react-vite-scaffold
 
-**Status:** resolved
+**Status:** completed
 
 - [x] `useAbortableRequest` custom hook: wraps `fetch()` with an `AbortController`, auto-aborts on component unmount or when a new request with the same key is initiated
 - [x] Zustand middleware or store slice for tracking active operation keys (e.g., `basket-generation`, `stock-profile-RELIANCE`, `portfolio-refresh`)

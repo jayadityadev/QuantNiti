@@ -67,15 +67,21 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
   const basketTargetId = basket?.id || "balanced_6m";
 
   const fetchBasketReviews = () => {
-    fetch(apiUrl(`/api/v1/reviews/basket/${encodeURIComponent(basketTargetId)}`))
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (data && data.reviews && data.reviews.length > 0) {
-          setDynamicReviews(data.reviews);
-          setReviewSummary(data.summary);
-        }
-      })
-      .catch(() => {});
+    try {
+      const p = fetch(apiUrl(`/api/v1/reviews/basket/${encodeURIComponent(basketTargetId)}`));
+      if (p && typeof p.then === "function") {
+        p.then((res) => (res && res.ok ? res.json() : null))
+          .then((data) => {
+            if (data && data.reviews && data.reviews.length > 0) {
+              setDynamicReviews(data.reviews);
+              setReviewSummary(data.summary);
+            }
+          })
+          .catch(() => {});
+      }
+    } catch {
+      // ignore
+    }
   };
 
   useEffect(() => {

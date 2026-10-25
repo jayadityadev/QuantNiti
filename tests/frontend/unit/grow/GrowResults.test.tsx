@@ -58,6 +58,10 @@ describe("Grow Guided Flow & Results Seam", () => {
       currentBasket: null,
     });
     vi.restoreAllMocks();
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ reviews: [], summary: {} }),
+    });
   });
 
   afterEach(() => {

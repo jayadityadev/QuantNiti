@@ -4,7 +4,7 @@
 
 **Blocked by:** 01-react-vite-scaffold
 
-**Status:** resolved
+**Status:** completed
 
 - [x] `<AppShell>` component with sticky header, scrollable content area, and fixed bottom nav
 - [x] `<Header>` component: brand badge (clickable → Home), regime pill badge, notification bell (with unread dot), theme toggle button, overflow menu (⋮) containing Compare, Install PWA, Viewport toggle

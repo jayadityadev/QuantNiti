@@ -4,7 +4,7 @@
 
 **Blocked by:** 07: Unified Mobile-First Client Shell & End-to-End Integration
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [x] Creates `manifest.json` specifying `name: "QuantNiti"`, `short_name: "QuantNiti"`, `display: "standalone"`, `theme_color: "#09090b"`, `background_color: "#09090b"`, `start_url: "/"`, `id: "quantniti"`, and responsive icon entries (192×192, 512×512, maskable).
 - [x] Creates `sw.js` service worker: caches app shell (HTML, CSS, JS, font CDNs) during `install` event, serves cached assets on `fetch` with network-first fallback, provides a custom offline fallback page, and calls `self.skipWaiting()` for immediate activation.

@@ -4,7 +4,7 @@
 
 **Blocked by:** 02-layout-shell, 03-shared-components, 04-async-lifecycle
 
-**Status:** resolved
+**Status:** completed
 Assigned: Developer 1
 
 - [x] `<PortfolioPage>` component that checks whether any real Virtual Paper Portfolio exists in Zustand state

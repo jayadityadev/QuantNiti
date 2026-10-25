@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately).
 
-**Status:** resolved
+**Status:** completed
 
 - [x] Vite + React 18 project initialized inside the existing repo structure, configured to output to `src/app/static/`
 - [x] Tailwind CSS v3 installed via Vite (not CDN) with a `tailwind.config.js` defining custom design tokens: violet accent (`#7C3AED`), indigo secondary (`#6366F1`), semantic green/red for profit/loss, light/dark theme CSS variables, corner radii scale (16px, 20px, 24px), and motion tokens

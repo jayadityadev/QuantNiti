@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: AI Portfolio Basket Engine & Trust Card, 07: Unified Mobile-First Client Shell & End-to-End Integration
 
-**Status:** complete
+**Status:** completed
 
 - [x] Adds `POST /api/v1/chat` endpoint accepting `{ "message": str, "context": optional dict }` and returning `{ "reply": str, "sources": list[str] }`.
 - [x] Implements RAG context builder service that aggregates: (1) current market regime state and probabilities, (2) active portfolio basket weights and stock names, (3) growth projection quantiles for basket stocks, (4) Trust Card pillars (regime context, hit rate, max drawdown, fee savings), (5) most recent backtest summary if available.

@@ -4,7 +4,7 @@
 
 **Blocked by:** 05-hero-onboarding, 06-home-tab, 07-explore-tab, 08-grow-tab, 09-portfolio-tab, 10-modals-overlays
 
-**Status:** resolved
+**Status:** completed
 
 - [x] Vite PWA plugin (or manual) generates a service worker that precaches all built assets
 - [x] `offline.html` fallback updated with violet theme

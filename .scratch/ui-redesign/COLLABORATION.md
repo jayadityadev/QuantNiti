@@ -1,6 +1,6 @@
 # QuantNiti UI Redesign — Team Collaboration & Workflow Guide
 
-**Repository:** `https://github.com/jayaditya/majorproject`  
+**Repository:** `https://github.com/jayadityadev/QuantNiti`  
 **Feature Scope:** Frontend React + Vite Migration, Violet Theme, Guided Flows & PWA Mobile Polish  
 **Specification:** [`.scratch/ui-redesign/spec.md`](spec.md)  
 **Ticket Directory:** [`.scratch/ui-redesign/issues/`](issues/)
@@ -17,8 +17,8 @@
 ### Setup Steps
 ```bash
 # 1. Clone repository
-git clone https://github.com/jayaditya/majorproject.git
-cd majorproject
+git clone https://github.com/jayadityadev/QuantNiti.git
+cd QuantNiti
 
 # 2. Set up Python virtualenv & backend dependencies
 uv sync

@@ -4,7 +4,7 @@
 
 **Blocked by:** 01: Data Ingestion & NIFTY 50 Universe Service
 
-**Status:** done
+**Status:** completed
 
 - [x] Calculates rolling log returns, realized volatility, and India VIX features on index data.
 - [x] Classifies current market regime into 3 macro states (Bull, Bear, Sideways) with probability distribution summing to 1.0.

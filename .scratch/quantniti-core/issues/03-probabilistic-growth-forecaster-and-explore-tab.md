@@ -4,7 +4,7 @@
 
 **Blocked by:** 01: Data Ingestion & NIFTY 50 Universe Service, 02: Unsupervised Market Regime Classifier & Regime Radar
 
-**Status:** done
+**Status:** completed
 
 - [x] Generates technical, momentum, volatility, and regime-sensitivity factors for each NIFTY 50 stock.
 - [x] Produces quantile return forecasts (Pessimistic 10th %, Base 50th %, Optimistic 90th %) across 1M, 3M, 6M, and 12M horizons ensuring quantile monotonicity ($Q_{10} \le Q_{50} \le Q_{90}$).

@@ -4,7 +4,7 @@
 
 **Blocked by:** 01: Data Ingestion & NIFTY 50 Universe Service, 02: Unsupervised Market Regime Classifier & Regime Radar
 
-**Status:** done
+**Status:** completed
 
 - [x] Implements vectorized backtest engine supporting Buy & Hold, MA Crossover, RSI Mean Reversion, Bollinger Band Breakout, and Dual Momentum strategies.
 - [x] Computes key performance metrics: CAGR, Sharpe Ratio, Sortino Ratio, Max Drawdown, Annualized Volatility, and Win Rate %.

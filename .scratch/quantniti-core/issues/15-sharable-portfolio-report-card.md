@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: AI Portfolio Basket Engine & Trust Card, 06: Virtual Portfolio Simulator & Rebalancing, 07: Unified Mobile-First Client Shell & End-to-End Integration
 
-**Status:** ready-for-human
+**Status:** completed
 
 - [x] Adds a "Download Report" button on the Portfolio tab (and optionally on the Grow tab after basket generation) that, when clicked, renders a hidden report HTML template, captures it via `html2canvas`, and converts it to a multi-page PDF via `jspdf`.
 - [x] Report card contents include: (1) QuantNiti branded header with logo and generation timestamp, (2) portfolio donut chart showing asset allocation, (3) growth projection bar/cone chart (Pessimistic/Base/Optimistic), (4) Trust Card 4-pillar summary, (5) portfolio-level ESG Conscience Score (if ESG ticket is complete), (6) current market regime badge, (7) key metrics table (total value, total return %, benchmark alpha), (8) branded watermark footer with SEBI disclaimer text.

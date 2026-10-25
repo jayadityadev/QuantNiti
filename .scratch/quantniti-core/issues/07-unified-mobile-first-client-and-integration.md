@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: AI Portfolio Basket Recommendation Engine & Trust Card (`Grow` Tab), 05: Quant Lab Technical Strategy Backtesting Studio, 06: Virtual Paper Portfolio Simulator & Regime Rebalance Diff Engine (`Portfolio` Tab)
 
-**Status:** done
+**Status:** completed
 
 - [x] Implements bottom tab bar navigation (`Grow`, `Explore`, `Quant Lab`, `Portfolio`) with smooth tab switching.
 - [x] Implements polished modern financial dark-mode UI with glassmorphism cards, responsive charts, and Lucide icons.

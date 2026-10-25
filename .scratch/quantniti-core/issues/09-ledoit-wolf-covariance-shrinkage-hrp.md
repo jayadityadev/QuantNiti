@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: AI Portfolio Basket Recommendation Engine & Trust Card (`Grow` Tab)
 
-**Status:** closed
+**Status:** completed
 
 - [x] Integrates Ledoit-Wolf analytical covariance shrinkage into the `HRPOptimizer` with automated fallback to empirical covariance.
 - [x] Validates that tree clustering distance matrices are non-singular and well-conditioned across all market regimes.

@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: AI Portfolio Basket Recommendation Engine & Trust Card (`Grow` Tab), 06: Virtual Paper Portfolio Simulator & Regime Rebalance Diff Engine (`Portfolio` Tab)
 
-**Status:** done
+**Status:** completed
 
 - [x] Implements discrete integer share calculation ensuring no fractional shares and total spend does not exceed available capital.
 - [x] Tracks exact unallocated cash buffer (e.g. ₹50,000 capital → ₹49,420 equities + ₹580 cash buffer).

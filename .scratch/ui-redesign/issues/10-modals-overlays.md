@@ -4,7 +4,7 @@
 
 **Blocked by:** 02-layout-shell, 03-shared-components, 04-async-lifecycle
 
-**Status:** resolved
+**Status:** completed
 Assigned: Developer 1
 
 - [x] `<NitiBotModal>` — floating AI chat: suggestion chips, message bubbles, citations, typing indicator. Send button disabled during await. AbortController on chat fetch. History pushState for Android back dismiss.

@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** done
+**Status:** completed
 
 - [x] Ingests full historical daily OHLCV data for all 50 constituent stocks of the NIFTY 50 index and India VIX with local caching for low latency.
 - [x] Provides API endpoints to query price history, daily returns, and latest quotes for any NIFTY 50 ticker.

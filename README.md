@@ -5,11 +5,15 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.141%2B-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-18-61DAFB.svg?logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-6.0-646CFF.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v3-38B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-v11-FF0055.svg?logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![Production](https://img.shields.io/badge/Production-Live%20on%20AWS-7C3AED.svg?logo=amazon-aws&logoColor=white)](https://quantniti.jayadityadev.tech/)
+[![Android App](https://img.shields.io/badge/Android%20App-Debug%20%26%20Release%20APK-3DDC84.svg?logo=android&logoColor=white)](https://github.com/jayadityadev/QuantNiti/actions)
+[![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF.svg?logo=github-actions&logoColor=white)](https://github.com/jayadityadev/QuantNiti/actions)
 [![Coverage](https://img.shields.io/badge/Backend%20Coverage-99%25-brightgreen.svg)]()
 [![Frontend Tests](https://img.shields.io/badge/Frontend%20Tests-132%2F132%20Pass-success.svg)]()
 [![PWA Ready](https://img.shields.io/badge/PWA-Installable-7C3AED.svg?logo=pwa&logoColor=white)]()
+
+> [!TIP]
+> **🚀 Live Production System:** QuantNiti is deployed in production at **[https://quantniti.jayadityadev.tech/](https://quantniti.jayadityadev.tech/)**, hosted on AWS Lightsail (`ap-south-1` Mumbai) behind Caddy v2 automated Let's Encrypt TLS/SSL with continuous deployment via GitHub Actions.
 
 > [!NOTE]
 > **QuantNiti** bridges the deep divide in Indian retail finance between black-box speculative trading tips, high-commission bank wealth advisors (1.5%–2.5% AUM fees), and low-yielding fixed deposits. It provides retail investors with unsupervised machine learning market regime detection, multi-factor quantile growth forecasting, hierarchical risk parity (HRP) portfolio optimization, transparent explainable AI (XAI) Trust Cards, and contextual financial literacy.
@@ -23,7 +27,10 @@
 * 🧙 **5-Step Guided Grow Wizard:** Multi-step narrative flow (Capital → Horizon → Persona → Allocation Overview → Deep Dive) with tactile quick-pick chips, word-form reassurance (e.g., `₹50,000 — Fifty Thousand Only`), and discrete whole-share sizing.
 * 📊 **Dual-State Portfolio Tracker:** Instant pre-populated **Demo Portfolio** for first-time visitors with realistic synthetic data, seamlessly transitioning to a live **Virtual Paper Portfolio** with real-time mark-to-market and regime-shift rebalance alerts.
 * 🔍 **Explore Tab & Hidden Pro Tools:** Streamlined stock cards with visual regime suitability badges, with the advanced **Quant Lab Backtester** (MA Crossover, RSI Reversion, Dual Momentum) cleanly tucked behind a Pro Tools accordion.
-* 🤖 **NitiBot RAG Copilot:** Grounded conversational AI assistant answering portfolio questions citing live regime dynamics, risk bounds, and backtest data.
+* 🤖 **NitiBot RAG Copilot:** Grounded conversational AI assistant answering portfolio questions citing live regime dynamics, risk bounds, and backtest data via Google Gemini.
+* 🎥 **Playable Video Explainer Hub:** Responsive 16:9 embedded YouTube quantitative breakdowns with key takeaways, conceptual analogies, and difficulty ratings across 4 learning tracks (*Basics*, *Regimes*, *Risk*, *Quant*).
+* ⚡ **Multi-Condition Smart Alert Engine:** Automated rules-and-regime event detection evaluating 6 distinct triggers (Regime Shift, Stop-Loss Breach, Profit Target Reached, Target Weights Drift >5%, Volatility Breakout, ESG Conscience Downgrade) with in-app notification toasts and Web Push support.
+* 📱 **Native Android Container & PWA:** Dual distribution model featuring standalone browser PWA installation and a native Android container app (`com.quantniti.app`) compiled via automated GitHub Actions CI/CD workflows using AndroidX `WebViewAssetLoader`.
 
 ---
 
@@ -33,15 +40,15 @@ QuantNiti follows a decoupled architecture where a reactive mobile-first client 
 
 ```mermaid
 flowchart TD
-    subgraph Client["📱 QuantNiti Frontend (React 18 + Vite PWA)"]
+    subgraph Client["📱 QuantNiti Frontend (React 18 + Vite PWA / Android APK)"]
         Hero["🚀 Onboarding Hero<br/>• 3-Q Scenario Quiz<br/>• Persona Deduction"]
-        Tabs["📱 4-Tab Navigation<br/>• Home (Radar & Pulse)<br/>• Explore (Stock Cards)<br/>• Grow (5-Step Wizard)<br/>• Portfolio (MTM & Demo)"]
-        Modals["💬 Overlays & Modals<br/>• NitiBot RAG Chat<br/>• Competitor Matrix<br/>• Concept Cards"]
-        Zustand["⚡ Zustand State Engine<br/>• AbortController Registry<br/>• Violet / Dark Theme"]
+        Tabs["📱 4-Tab Navigation<br/>• Home (Pulse & Video Hub)<br/>• Explore (Stock Cards & Pro Tools)<br/>• Grow (5-Step Wizard)<br/>• Portfolio (MTM & Demo)"]
+        Modals["💬 Overlays & Modals<br/>• NitiBot RAG Chat<br/>• Competitor Matrix<br/>• Video Explainer Modal<br/>• 6-Trigger Smart Alerts"]
+        Zustand["⚡ Zustand State Engine<br/>• AbortController Registry<br/>• Violet / Dark Theme Toggle"]
     end
 
     subgraph API["⚡ FastAPI Async Core (Python 3.12)"]
-        Gateway["REST Gateway & SSE Stream<br/>• /api/v1/market<br/>• /api/v1/grow<br/>• /api/v1/explore<br/>• /api/v1/portfolio<br/>• /api/v1/stream<br/>• /api/v1/chat"]
+        Gateway["REST Gateway & SSE Stream<br/>• /api/v1/market<br/>• /api/v1/grow<br/>• /api/v1/explore<br/>• /api/v1/portfolio<br/>• /api/v1/stream<br/>• /api/v1/chat<br/>• /api/v1/alerts<br/>• /api/v1/reviews"]
     end
 
     subgraph ML["🧠 Quantitative & ML Engine"]
@@ -50,13 +57,15 @@ flowchart TD
         Covariance["📐 Ledoit-Wolf Shrinkage<br/>(Optimal Regularization)"]
         HRP["🌳 Hierarchical Risk Parity<br/>(Tree Clustering & Bisection)"]
         Allocation["💰 Discrete Allocator<br/>(Whole Shares + Cash Buffer)"]
+        AlertEngine["⚡ 6-Trigger Smart Alert Evaluator<br/>(Regime, SL, TP, Drift, Vol, ESG)"]
     end
 
-    subgraph Data["💾 Data & External Services"]
-        DB[("🗄️ SQLite DB<br/>Portfolios & Reviews")]
+    subgraph Data["💾 Persistence & External Cloud"]
+        DB[("🗄️ SQLite DB (WAL Mode)<br/>Portfolios, Goals & Reviews")]
         MarketFeed["📡 Real-Time SSE Ticks<br/>& yfinance Ingestion"]
         Gemini["🤖 Google Gemini GenAI<br/>(RAG & Fact-Checker)"]
         ESG["🌱 SEBI BRSR & CRISIL<br/>ESG Scores Database"]
+        Cloud["☁️ AWS Lightsail (Mumbai)<br/>Caddy v2 Automated TLS/SSL"]
     end
 
     Client <==>|JSON REST & SSE| Gateway
@@ -66,10 +75,12 @@ flowchart TD
     Regime --> HRP
     Covariance --> HRP
     HRP --> Allocation
+    Gateway --> AlertEngine
     Gateway <==> DB
     Gateway <==> MarketFeed
     Gateway <==> Gemini
     Gateway <==> ESG
+    Cloud --- API
 ```
 
 ---
@@ -84,8 +95,8 @@ flowchart TD
 ### 2. Installation
 ```bash
 # Clone the repository
-git clone https://github.com/jayaditya/majorproject.git
-cd majorproject
+git clone https://github.com/jayadityadev/QuantNiti.git
+cd QuantNiti
 
 # Install Python backend dependencies
 uv sync
@@ -115,6 +126,19 @@ uv run uvicorn src.app.api.app:app --port 8000
 ```
 Open [http://localhost:8000](http://localhost:8000) in your browser. (Toggle Chrome DevTools Device Mode for the mobile experience).
 
+### 4. Running the Native Android App
+
+#### Option A: Direct APK Download
+Download the latest pre-compiled debug APK directly from the project's [GitHub Actions Releases / Artifacts](https://github.com/jayadityadev/QuantNiti/actions).
+
+#### Option B: Compile with Android SDK
+```bash
+cd android
+./gradlew assembleDebug
+# Generated APK: android/app/build/outputs/apk/debug/app-debug.apk
+adb install app/build/outputs/apk/debug/app-debug.apk
+```
+
 ---
 
 ## 🧪 Testing & Verification
@@ -139,13 +163,19 @@ uv run pytest tests/ --cov=src/app
 ## 📂 Project Structure
 
 ```
-├── .scratch/                  # Local issue tracker & specification records
-│   └── ui-redesign/          # Specifications, collaboration guides & ticket items
-├── docs/                     # Architectural decision records (ADRs) & PRDs
+├── .github/
+│   └── workflows/            # GitHub Actions CI/CD (Lightsail deploy & Android APK build)
+├── .scratch/                 # Local issue tracker & specification records
+│   ├── quantniti-core/       # Core platform specs & completed issue records
+│   └── ui-redesign/          # UI redesign specs & completed issue records
+├── android/                  # Native Android container project (Gradle, WebViewAssetLoader)
+├── docs/                     # Architectural decision records (ADRs), PRD, guides
 │   ├── ARCHITECTURE.md       # Complete system architecture blueprint
+│   ├── HOSTING_AND_SCALABILITY.md # AWS Lightsail, Caddy SSL & hosting guide
 │   ├── ML_PIPELINE.md        # Mathematical & econometric ML specification
-│   ├── adr/                  # 12 Architectural Decision Records
-│   └── PRD.md                # Master product requirement document
+│   ├── PRD.md                # Master product requirement document
+│   ├── USER_GUIDE.md         # Comprehensive user & evaluator walkthrough
+│   └── adr/                  # 16 Architectural Decision Records (ADRs)
 ├── src/
 │   ├── app/
 │   │   ├── api/              # FastAPI application, middleware, and route handlers
@@ -222,16 +252,31 @@ n_i = \left\lfloor \frac{w_i \cdot C}{P_i} \right\rfloor, \quad \text{Cash Buffe
 $$
 </details>
 
+<details>
+<summary><b>6. Multi-Condition Quantitative Smart Alert Engine</b></summary>
+
+Evaluates 6 automated triggers across market regimes, price boundaries, and portfolio allocations:
+1. **Macro Regime Transition:** $\text{Regime}_t \ne \text{Regime}_{t-1}$ triggering rebalance warnings.
+2. **Dynamic Persona Stop-Loss:** $P_t \le P_{\text{entry}} \times (1 - \text{SL}_{\text{persona}})$.
+3. **Profit Target Reached:** $P_t \ge P_{\text{entry}} \times (1 + \text{TP}_{\text{persona}})$.
+4. **Target Weights Drift:** $\sum |w_{i, \text{current}} - w_{i, \text{target}}| > 5\%$.
+5. **Volatility Breakout Alert:** $\sigma_{i, 20\text{d}} > 2 \times \bar{\sigma}_i$ or price breaking Bollinger Bands.
+6. **ESG Conscience Downgrade:** BRSR score reduction or sector governance alert.
+</details>
+
 ---
 
 ## 📚 Technical Documentation Links
 
 * 📘 [System Architecture Blueprint (`docs/ARCHITECTURE.md`)](docs/ARCHITECTURE.md)
+* ☁️ [Hosting, AWS Lightsail & Scalability Guide (`docs/HOSTING_AND_SCALABILITY.md`)](docs/HOSTING_AND_SCALABILITY.md)
+* 📖 [User & Evaluator Guide (`docs/USER_GUIDE.md`)](docs/USER_GUIDE.md)
 * 🧠 [Machine Learning & Quantitative Pipeline (`docs/ML_PIPELINE.md`)](docs/ML_PIPELINE.md)
 * 📑 [Product Requirements Document (`docs/PRD.md`)](docs/PRD.md)
 * 🏷️ [Domain Model & Glossary (`CONTEXT.md`)](CONTEXT.md)
+* 🏛️ [Architectural Decision Records (`docs/adr/`)](docs/adr/)
 
 ---
 
 ## 📄 License & Attribution
-Developed for the Major Project initiative by **Jayaditya Dev**. Sourced market data provided via NSE indices and public BRSR/CRISIL reporting.
+Developed for the Major Project initiative by **Jayaditya Dev** (with project teammates Aryaman Tiwari, Chirag T., and Durgashree M., under the guidance of Prof. Beena K). Sourced market data provided via NSE indices and public BRSR/CRISIL reporting.

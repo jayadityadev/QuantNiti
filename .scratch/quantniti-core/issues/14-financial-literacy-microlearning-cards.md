@@ -4,7 +4,7 @@
 
 **Blocked by:** 07: Unified Mobile-First Client Shell & End-to-End Integration, 16: Groww-Inspired Mobile UI Redesign & 4-Tab Navigation
 
-**Status:** closed
+**Status:** completed
 
 - [x] Creates a static `literacy_cards.json` knowledge base containing ~30 curated micro-lessons, each with fields: `key` (concept identifier), `title`, `explanation` (2–4 plain-English sentences), `analogy` (1 relatable everyday comparison), `category` (`basics`, `regimes`, `risk`, `quant`), and `related_keys`.
 - [x] Builds the Learning Hub carousel on the Home tab dashboard with visual concept cards, progress indicators ("X of 30 concepts learned"), and quick-filter category pills.

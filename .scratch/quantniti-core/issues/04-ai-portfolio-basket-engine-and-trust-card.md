@@ -4,7 +4,7 @@
 
 **Blocked by:** 02: Unsupervised Market Regime Classifier & Regime Radar, 03: Multi-Horizon Probabilistic Stock Growth Forecaster & Explore Tab
 
-**Status:** done
+**Status:** completed
 
 - [x] Implements 3-step wizard (Capital Amount, Time Horizon, Risk Persona: Conservative/Balanced/Aggressive).
 - [x] Optimizes stock allocations using regime-aware risk parity enforcing risk-persona diversification constraints ($\sum w_i = 1.0$).

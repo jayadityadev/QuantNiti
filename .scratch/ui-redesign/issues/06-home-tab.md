@@ -4,7 +4,7 @@
 
 **Blocked by:** 02-layout-shell, 03-shared-components, 04-async-lifecycle
 
-**Status:** resolved
+**Status:** completed
 
 - [x] `<HomePage>` component with Framer Motion staggered children entrance
 - [x] `<MarketPulse>` card: NIFTY 50 price + change fetched from `/api/v1/stream/ticks` SSE, animated number ticker, green/red styling based on direction

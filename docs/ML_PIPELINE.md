@@ -19,6 +19,7 @@
 8. [Geometric Brownian Motion (GBM) Long-Horizon Wealth Compounding](#8-geometric-brownian-motion-gbm-long-horizon-wealth-compounding)
 9. [Autonomous AI NLP Ground-Truth Fact-Checking Agent](#9-autonomous-ai-nlp-ground-truth-fact-checking-agent)
 10. [End-to-End Execution Flowchart & Mathematical Reference](#10-end-to-end-execution-flowchart--mathematical-reference)
+11. [Multi-Condition Quantitative Smart Alert Engine & XAI Formulations](#11-multi-condition-quantitative-smart-alert-engine--xai-formulations)
 
 ---
 
@@ -556,6 +557,66 @@ flowchart LR
         I --> J["1-Click Broker Order Sheet<br/>(Zerodha CSV & Groww Text)"]
     end
 ```
+
+
+---
+
+## 11. Multi-Condition Quantitative Smart Alert Engine & XAI Formulations
+
+To ensure proactive capital protection without crossing into speculative tip advisory, QuantNiti deploys an automated quantitative rules-and-regime event detection engine.
+
+### 11.1 The Six Deterministic Mathematical Triggers
+
+1. **Macro Regime Transition Trigger:**
+   Monitors the unsupervised GMM state vector $\mathbf{s}_t \in \{1, 2, 3\}$. A rebalance condition is emitted when:
+   $$\mathbb{I}(\mathbf{s}_t \ne \mathbf{s}_{t-1}) = 1$$
+   This immediately initiates an HRP re-optimization routine to generate an interactive before/after allocation diff.
+
+2. **Persona-Calibrated Trailing Stop-Loss:**
+   Tracks drawdown from peak observed price $P_{\max, i} = \max_{\tau \in [0, t]} P_{i, \tau}$ for constituent asset $i$:
+   $$\text{Drawdown}_i = \frac{P_{\max, i} - P_{i, t}}{P_{\max, i}} \ge \text{SL}_{\text{persona}}$$
+   Where stop-loss thresholds $\text{SL}$ are strictly calibrated by risk persona:
+   $$\text{SL}_{\text{conservative}} = 3.0\%, \quad \text{SL}_{\text{balanced}} = 7.0\%, \quad \text{SL}_{\text{aggressive}} = 12.0\%$$
+
+3. **Horizon-Conditioned Profit Target:**
+   Evaluates cumulative holding return against expected median quantile growth $Q_{0.50}(h)$:
+   $$\frac{P_{i, t} - P_{i, \text{entry}}}{P_{i, \text{entry}}} \ge \text{TP}_{\text{persona}}(h)$$
+   Where $\text{TP}_{\text{conservative}} = 8\%$, $\text{TP}_{\text{balanced}} = 15\%$, $\text{TP}_{\text{aggressive}} = 25\%$.
+
+4. **Portfolio Allocation Weight Drift:**
+   Calculates total absolute deviation between active mark-to-market weights $w_{i, t}$ and optimal target weights $w_{i, \text{target}}$:
+   $$\Delta_{\text{drift}} = \sum_{i=1}^N |w_{i, t} - w_{i, \text{target}}| > 0.05 \quad (5\% \text{ Drift Threshold})$$
+
+5. **Volatility Breakout Alert:**
+   Detects sudden heteroskedastic regime breaks at the asset level using rolling 20-day realized volatility $\sigma_{20\text{d}, i}$ relative to baseline annual volatility $\bar{\sigma}_i$:
+   $$\sigma_{20\text{d}, i} > 2.0 \times \bar{\sigma}_i \quad \lor \quad P_{i, t} \notin \left[\mu_{20, i} - 2\sigma_{20, i}, \; \mu_{20, i} + 2\sigma_{20, i}\right]$$
+
+6. **ESG Conscience Downgrade / Governance Alert:**
+   Monitors corporate governance disclosures and annual SEBI Business Responsibility and Sustainability Reporting (BRSR) filings:
+   $$\Delta \text{ESG}_i = \text{ESG}_{i, t} - \text{ESG}_{i, t-1} < -5.0 \quad \lor \quad \text{Governance}_i < 60$$
+
+### 11.2 Asymmetric Pinball Quantile Loss (LightGBM)
+
+For probabilistic growth forecast cones across horizons $h \in \{1\text{M}, 3\text{M}, 6\text{M}, 12\text{M}\}$, quantile models optimize the asymmetric pinball loss function:
+
+$$\mathcal{L}_q(y, \hat{y}) = \max\Big(q(y - \hat{y}), \; (1 - q)(\hat{y} - y)\Big)$$
+
+Where $q \in \{0.10, 0.50, 0.90\}$ represents the pessimistic, base, and optimistic quantile targets respectively. The resulting predictions strictly satisfy isotonic monotonicity:
+$$Q_{0.10}(y \mid \mathbf{x}) \le Q_{0.50}(y \mid \mathbf{x}) \le Q_{0.90}(y \mid \mathbf{x})$$
+
+### 11.3 4-Pillar Explainable AI (XAI) Trust Card Equations
+
+Every recommendation synthesizes four quantitative trust metrics to eliminate advisory opacity:
+
+* **Pillar 1 (Regime Context):** Probability distribution $[\pi_{\text{bull}}, \pi_{\text{bear}}, \pi_{\text{sideways}}]$ derived from GMM posterior clustering.
+* **Pillar 2 (Historical Hit Rate):** Empirical directional accuracy across a rolling 5-year out-of-sample backtest:
+  $$H = \frac{1}{M}\sum_{m=1}^M \mathbb{I}\Big(\text{sgn}(R_{\text{pred}, m}) = \text{sgn}(R_{\text{actual}, m})\Big)$$
+* **Pillar 3 (Stress Drawdown Limit):** Historical maximum peak-to-trough decline under worst macro shock:
+  $$\text{MDD}_{\text{stress}} = \max_{\tau \in [0, T]} \left( \frac{\max_{s \le \tau} V_s - V_\tau}{\max_{s \le \tau} V_s} \right)$$
+* **Pillar 4 (Disintermediation Fee Savings):** Net cumulative capital preserved over traditional wealth manager AUM fees ($f_{\text{fee}} = 1.5\% - 2.5\%$):
+  $$\Delta \text{Savings}(T) = C \cdot \left[ (1 + r)^T - (1 + r - f_{\text{fee}})^T \right]$$
+
+---
 
 ### Key Mathematical References
 1. **López de Prado, M. (2016).** *Building Diversified Portfolios that Outperform Out-of-Sample.* The Journal of Portfolio Management, 42(4), 59-69.

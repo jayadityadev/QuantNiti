@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: AI Portfolio Basket Engine & Trust Card, 16: Groww-Inspired Mobile UI Redesign & 4-Tab Navigation
 
-**Status:** done
+**Status:** completed
 
 - [x] Implements `POST /api/v1/portfolio/compounding` endpoint calculating future values for Lump Sum, monthly SIP, and annual Step-Up SIP ($g=10\%$), alongside invested principal and wealth gain.
 - [x] Computes Geometric Brownian Motion (GBM) quantile growth cones (10th percentile Pessimistic, 50th percentile Base, 90th percentile Optimistic) for portfolio-level projections over 1 to 10-year horizons.

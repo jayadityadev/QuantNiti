@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: AI Portfolio Basket Recommendation Engine & Trust Card (`Grow` Tab)
 
-**Status:** done
+**Status:** completed
 
 - [x] Allows activating any AI basket into a simulated Virtual Paper Portfolio with initial capital.
 - [x] Calculates daily mark-to-market portfolio value, unrealized P&L, and benchmark outperformance vs NIFTY 50 and Bank FDs.

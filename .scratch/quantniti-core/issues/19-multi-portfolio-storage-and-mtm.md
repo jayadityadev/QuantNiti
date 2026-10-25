@@ -4,7 +4,7 @@
 
 **Blocked by:** 06: Virtual Paper Portfolio Simulator & Rebalancing, 16: Groww-Inspired Mobile UI Redesign & 4-Tab Navigation
 
-**Status:** done
+**Status:** completed
 
 - [x] Creates SQLite relational schema (`portfolios`, `holdings`, `transactions`, `daily_snapshots`) with SQLModel / SQLAlchemy models.
 - [x] Implements REST endpoints for full portfolio lifecycle: `POST /api/v1/portfolios` (create named portfolio), `GET /api/v1/portfolios` (list user portfolios), `GET /api/v1/portfolios/{id}` (fetch details with MTM), `DELETE /api/v1/portfolios/{id}`.

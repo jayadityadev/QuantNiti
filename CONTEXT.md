@@ -38,8 +38,8 @@ _Avoid_: Trader tier, Experience level
 A comprehensive 360-degree assessment of a single equity or ETF asset encompassing projected growth ranges, regime sensitivity, downside risk, and benchmark comparison.
 _Avoid_: Ticker chart, Quote page
 
-**Smart Alert**:
-A proactive notification triggered by quantitative conditions (regime transition, portfolio drift, RSI extreme, drawdown guardrail breach) delivered via in-app notification center and Web Push. Always framed as an objective signal with Trust Card context, never as a speculative tip.
+**Smart Alert / Multi-Condition Alert Engine**:
+A proactive notification triggered by quantitative conditions across 6 automated evaluators: (1) Macro Regime Transition, (2) Persona Trailing Stop-Loss breach, (3) Profit Target reached, (4) Target Weights Drift >5%, (5) Volatility Breakout (Bollinger band penetration), and (6) ESG Conscience Downgrade. Delivered via in-app notification center and browser Web Push. Always framed as an objective quantitative signal with Trust Card context, never as a speculative tip.
 _Avoid_: Buy signal, Sell signal, Hot tip, Trading alert
 
 **Recommendation Score**:
@@ -67,8 +67,12 @@ A composite Environmental, Social, and Governance rating (0–100) assigned to e
 _Avoid_: Ethics rating, Green score, Sustainability label
 
 **Financial Literacy Microlearning Card**:
-A bite-sized, contextual educational card explaining a financial concept in plain language with a relatable analogy, surfaced inline alongside the relevant UI element and in the Learning Hub.
+A bite-sized, contextual educational card explaining a financial concept in plain language with a relatable analogy, surfaced inline alongside the relevant UI element and in the Learning Hub across 4 structured tracks (Basics, Regimes, Risk, Quant).
 _Avoid_: Tutorial, Help tooltip, Wiki
+
+**Video Explainer**:
+A responsive 16:9 embedded video guide hosted on YouTube (via `youtube-nocookie.com`) paired with plain-language quantitative takeaways and difficulty tiers, surfaced within the Learning Hub to explain complex concepts (such as market regimes, diversification, and Sharpe ratio).
+_Avoid_: Promotional video, Marketing reel, Webinar
 
 **Learning Hub**:
 A dedicated educational section on the Home tab offering structured financial literacy content, video explainers, and concept cards for users with no prior finance knowledge.
@@ -81,3 +85,11 @@ _Avoid_: Statement, Receipt, Export dump
 **Review**:
 User-submitted feedback on an individual stock, AI Portfolio Basket, or investment strategy, audited by an autonomous 3-tier AI Fact-Checking Agent. Reviews with performance claims are verified against ground-truth mathematical market returns (within a +/- 3% tolerance window) to award verified badges, while unsubstantiated claims, deceptive tips, and contact solicitations are rejected to enforce SEBI advertisement compliance.
 _Avoid_: Unverified testimonial, Stock tip, Speculative boast, P&L bragging
+
+**Native Android Container**:
+A lightweight native Android application shell (`com.quantniti.app`) utilizing AndroidX `WebViewAssetLoader`, custom JavaScript bridge, hardware back button gesture handling, and native splash screens to wrap the precompiled React PWA for mobile environments.
+_Avoid_: Web view wrapper, Hybrid port, PhoneGap app
+
+**Continuous Cloud Deployment**:
+An automated pipeline orchestrated via GitHub Actions that runs tests, builds the multi-stage Docker container, securely deploys to an AWS Lightsail instance (`13.207.117.167` in `ap-south-1` Mumbai), and manages automated TLS/SSL certificate renewal via Caddy v2 reverse proxy at `https://quantniti.jayadityadev.tech/`.
+_Avoid_: Manual FTP, Local tunnel, Staging box

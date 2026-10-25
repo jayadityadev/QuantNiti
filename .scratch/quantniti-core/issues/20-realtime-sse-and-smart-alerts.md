@@ -4,7 +4,7 @@
 
 **Blocked by:** 01: Data Ingestion & NIFTY 50 Market Data Service, 16: Groww-Inspired Mobile UI Redesign & 4-Tab Navigation, 19: Persistent Multi-Portfolio Storage & Day-over-Day MTM Engine
 
-**Status:** ready-for-human
+**Status:** completed
 
 - [x] Implements `GET /api/v1/stream/ticks` Server-Sent Events (SSE) endpoint broadcasting live market quotes with heartbeat pinging and client disconnect handling.
 - [x] Builds a synthetic tick generator for reliable demonstration and off-market hours, with clean fallback to live broker quotes when configured.

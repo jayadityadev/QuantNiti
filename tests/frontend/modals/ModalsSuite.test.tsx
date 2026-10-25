@@ -20,6 +20,14 @@ describe("Modals and Overlays Suite", () => {
   });
 
   it("WriteReviewModal renders star selector, claimed return input, and AI verification badge", async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        is_approved: true,
+        verification_badge: "AI Fact-Checked & Verified",
+        audit_summary: "Claim verified against historical returns.",
+      }),
+    });
     const handleSuccess = vi.fn();
     render(
       <WriteReviewModal
@@ -35,18 +43,18 @@ describe("Modals and Overlays Suite", () => {
     expect(screen.getByText("3-Tier AI Fact-Checking Active")).toBeInTheDocument();
 
     const nameInput = screen.getByPlaceholderText(/Arun M/i);
-    const headlineInput = screen.getByPlaceholderText(/Great transparency/i);
-    const commentInput = screen.getByPlaceholderText(/Describe execution/i);
+    const headlineInput = screen.getByPlaceholderText(/Great long-term compounder/i);
+    const commentInput = screen.getByPlaceholderText(/Describe investment discipline/i);
 
     fireEvent.change(nameInput, { target: { value: "Trader Test" } });
     fireEvent.change(headlineInput, { target: { value: "Super solid regime transitions" } });
     fireEvent.change(commentInput, { target: { value: "Drawdown remained within 4% throughout the quarter." } });
 
-    const submitBtn = screen.getByRole("button", { name: /Submit Verified Review/i });
+    const submitBtn = screen.getByRole("button", { name: /Submit for AI Verification/i });
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(screen.getByText(/Review Verified/i)).toBeInTheDocument();
+      expect(screen.getByText("AI Audit Passed & Published!")).toBeInTheDocument();
     });
   });
 

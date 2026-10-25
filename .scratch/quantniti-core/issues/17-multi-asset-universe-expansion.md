@@ -4,7 +4,7 @@
 
 **Blocked by:** 01: Data Ingestion & NIFTY 50 Market Data Service, 04: AI Portfolio Basket Engine & Trust Card
 
-**Status:** done
+**Status:** completed
 
 - [x] Extends `src/app/universe.py` with an asset taxonomy (`EQUITY`, `COMMODITY_ETF`, `SECTORAL`) supporting Gold/Silver ETFs, Defense stocks, and Metals stocks.
 - [x] Enhances the data ingestion service to download, clean, and cache historical daily price series for all new assets.

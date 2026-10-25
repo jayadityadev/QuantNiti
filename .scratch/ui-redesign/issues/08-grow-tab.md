@@ -4,7 +4,7 @@
 
 **Blocked by:** 02-layout-shell, 03-shared-components, 04-async-lifecycle
 
-**Status:** resolved
+**Status:** completed
 
 - [x] `<GrowPage>` component managing a 5-step guided flow state
 - [x] **Segmented progress bar** at top: 3 equal-width dashes (for the 3 input steps) that fill with violet as user progresses. Plus an additional "Results" and "Deep Dive" indicator for steps 4-5.
