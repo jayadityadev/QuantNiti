@@ -95,7 +95,7 @@ export const ModalRoot: React.FC = () => {
       </React.Suspense>
 
       {/* 8. Floating NitiBot FAB button (Persistent on desktop & mobile above bottom nav) */}
-      <div className="fixed bottom-20 right-4 z-40">
+      <div className="fixed bottom-24 right-4 sm:right-6 z-40">
         <button
           type="button"
           onClick={() => openModal("nitibot")}

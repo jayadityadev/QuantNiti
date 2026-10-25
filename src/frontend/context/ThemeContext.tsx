@@ -26,6 +26,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.classList.toggle("dark", theme === "dark");
     }
     if (typeof window !== "undefined" && window.localStorage) {
       window.localStorage.setItem(THEME_STORAGE_KEY, theme);

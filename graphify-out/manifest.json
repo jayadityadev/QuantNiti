@@ -510,9 +510,9 @@
     "semantic_hash": "f28f4e7b824739a1390edd80513de486"
   },
   "src/app/static/sw.js": {
-    "mtime": 1792669207.9818783,
-    "seen": 1792669369.2801354,
-    "ast_hash": "7d23030f7008f33544dcc28323164ba3",
+    "mtime": 1792908173.6686668,
+    "seen": 1792908204.7431772,
+    "ast_hash": "68d094452218bf970cb79227031178a8",
     "semantic_hash": ""
   },
   "src/app/universe.py": {
@@ -612,10 +612,10 @@
     "semantic_hash": "24717f9e9e8a633ec2c7bd325ad16f08"
   },
   "src/frontend/components/home/LearningHub.tsx": {
-    "mtime": 1791216240.0794344,
-    "seen": 1791727289.1628594,
-    "ast_hash": "81221f00e7e35b94da5c67f77dc16dd8",
-    "semantic_hash": "81221f00e7e35b94da5c67f77dc16dd8"
+    "mtime": 1792907015.27394,
+    "seen": 1792908204.7432022,
+    "ast_hash": "5d790327513be19640a85879414099af",
+    "semantic_hash": ""
   },
   "src/frontend/components/home/MarketPulse.tsx": {
     "mtime": 1791526177.8251019,
@@ -636,10 +636,10 @@
     "semantic_hash": "b49a09429e84500b8a987537c3e45a00"
   },
   "src/frontend/components/home/VideoFacades.tsx": {
-    "mtime": 1791525567.9227517,
-    "seen": 1791727289.1628628,
-    "ast_hash": "5202ffe063cf33d5d63a9ed80f061a07",
-    "semantic_hash": "5202ffe063cf33d5d63a9ed80f061a07"
+    "mtime": 1792906919.9159706,
+    "seen": 1792908204.7432077,
+    "ast_hash": "1d6490296127151d7ac60ab67fe8a369",
+    "semantic_hash": ""
   },
   "src/frontend/components/layout/AppShell.tsx": {
     "mtime": 1791525546.5531094,
@@ -672,9 +672,9 @@
     "semantic_hash": "8e58fdae08bf7f1115478c0771b7a389"
   },
   "src/frontend/components/modals/ModalRoot.tsx": {
-    "mtime": 1792665494.098272,
-    "seen": 1792665764.3922698,
-    "ast_hash": "bce182f3dbfa95136d10e88636fc9b75",
+    "mtime": 1792908108.7959573,
+    "seen": 1792908204.7432153,
+    "ast_hash": "bff2e9cf5ab1d1604817715646d42ef6",
     "semantic_hash": ""
   },
   "src/frontend/components/modals/NitiBotModal.tsx": {
@@ -858,10 +858,10 @@
     "semantic_hash": "eca2b4711448b12a24ed96857582a604"
   },
   "src/frontend/context/ThemeContext.tsx": {
-    "mtime": 1791525552.124139,
-    "seen": 1791727289.1628957,
-    "ast_hash": "2888f95d7ec2a132f78b9946ae115c42",
-    "semantic_hash": "2888f95d7ec2a132f78b9946ae115c42"
+    "mtime": 1792906981.2949598,
+    "seen": 1792908204.7432566,
+    "ast_hash": "2ca97c662f7313cf4987df2b65e98ce1",
+    "semantic_hash": ""
   },
   "src/frontend/hooks/useAbortableRequest.ts": {
     "mtime": 1791216240.0981016,
@@ -1482,9 +1482,9 @@
     "semantic_hash": "37b3e1f529ef84341433fd6aa5987099"
   },
   ".github/workflows/build-apk.yml": {
-    "mtime": 1791525546.5369565,
-    "seen": 1791736839.9331417,
-    "ast_hash": "3bf808d291ffa273181642af8983a56a",
+    "mtime": 1792904559.780643,
+    "seen": 1792904577.376698,
+    "ast_hash": "c72f7196700218714e7121cb79247f2b",
     "semantic_hash": ""
   },
   ".github/workflows/docker-build.yml": {
@@ -1506,15 +1506,15 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1791216239.7436535,
-    "seen": 1791736839.933146,
-    "ast_hash": "a35475948ec9e9c1dd11aa2604494787",
+    "mtime": 1792866576.9491284,
+    "seen": 1792867105.6940196,
+    "ast_hash": "c5eb6484b0ec03ba20b9a051640fa68c",
     "semantic_hash": ""
   },
   "docker-compose.yml": {
-    "mtime": 1791525558.0848343,
-    "seen": 1791736839.9331472,
-    "ast_hash": "cc58988a179610014f62a50c8f8bb442",
+    "mtime": 1792904524.8742204,
+    "seen": 1792904577.3767073,
+    "ast_hash": "17913ec177e306a746338f67d3c5f9c4",
     "semantic_hash": ""
   },
   "docs/ARCHITECTURE.md": {
@@ -1727,18 +1727,6 @@
     "ast_hash": "25d8b2e757591dd9809e39d77fdeb3af",
     "semantic_hash": ""
   },
-  "audit_results.json": {
-    "mtime": 1792666348.7436247,
-    "seen": 1792669369.2798429,
-    "ast_hash": "666c371d276ff2b0e604229f0f0b9204",
-    "semantic_hash": ""
-  },
-  "scripts/patch_sectors.py": {
-    "mtime": 1792669182.5120049,
-    "seen": 1792669369.2798996,
-    "ast_hash": "18efcc2a940d53a6710b84adbd46f969",
-    "semantic_hash": ""
-  },
   "scripts/test_and_analyze_all.py": {
     "mtime": 1792667709.291001,
     "seen": 1792669369.2799098,
@@ -1755,6 +1743,12 @@
     "mtime": 1792669460.7172158,
     "seen": 1792669513.911909,
     "ast_hash": "2908e854802521de6b7cbec7678f6bb9",
+    "semantic_hash": ""
+  },
+  ".github/workflows/deploy.yml": {
+    "mtime": 1792905511.3839319,
+    "seen": 1792905551.4631894,
+    "ast_hash": "edce033498631a711e9beb5ff9a69989",
     "semantic_hash": ""
   }
 }
