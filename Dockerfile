@@ -44,7 +44,7 @@ RUN mkdir -p /app/data /app/data/cache
 
 # Install Python dependencies and app package
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir .
+    && pip install --no-cache-dir ".[ai]"
 
 # Copy built frontend assets from Stage 1 into the static directory
 COPY --from=frontend-builder /build/src/app/static/dist/ ./src/app/static/dist/

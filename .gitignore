@@ -48,3 +48,5 @@ graphify-out/20*/
 *.blg
 *.out
 *.synctex.gz
+# Build artifacts
+build/
