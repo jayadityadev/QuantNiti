@@ -1,0 +1,1162 @@
+Visvesvaraya Technological University
+Jnana Sangama, Belagavi - 590018
+
+A Project Work Phase-I (BCS685)
+Report on
+“INDIAN MARKET PORTFOLIO INTELLIGENCE AND
+
+BACKTESTING SYSYTEM”
+Project Report submitted in partial fulfilment of the requirement for the
+award of the degree of
+BACHELOR OF ENGINEERING
+IN
+
+COMPUTER SCIENCE AND ENGINEERING
+
+Submitted by
+ARYAMAN TIWARI
+
+1KS23CS020
+
+CHIRAG T
+
+1KS23CS034
+
+DURGASHREE M
+
+1KS23CS043
+
+JAYADITYA DEV
+
+1KS23CS059
+
+Under the guidance of
+Mrs. Beena K
+Assistant Professor
+Department of Computer Science & Engineering
+K.S.I.T, Bengaluru-560109
+
+DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING
+
+K. S. Institute of Technology
+An Autonomous Institution Under VTU, Belagavi
+#14, Raghuvanahalli, Kanakapura Road, Bengaluru - 560109
+2025 - 2026
+
+K. S. Institute of Technology
+An Autonomous Institution Under VTU, Belagavi
+#14, Raghuvanahalli, Kanakapura Road, Bengaluru - 560109
+
+Department of Computer Science & Engineering
+
+CERTIFICATE
+Certified that the Project Work Phase-I (BCS685) entitled “INDIAN MARKET
+PORTFOLIO INTELLIGENCE AND BACKTESTING SYSYTEM” is
+bonafide work carried out by:
+ARYAMAN TIWARI
+
+1KS23CS020
+
+CHIRAG T
+
+1KS23CS034
+
+DURGASHREE M
+
+1KS23CS043
+
+JAYADITYA DEV
+
+1KS23CS059
+
+in partial fulfillment for VI semester B.E., Project Work in the branch of Computer
+Science and Engineering prescribed by Visvesvaraya Technological University,
+Belagavi during the period of January 2026 to May 2026. It is certified that all the
+corrections and suggestions indicated for internal assessment have been incorporated.
+The Project Work Phase-I Report has been approved as it satisfies the academic
+requirements in report of project work prescribed for the Bachelor of Engineering
+degree.
+
+…………………………
+Signature of the Guide
+
+[Mrs. Beena K]
+
+..……………..………
+Signature of the HOD
+
+.....…..…..…………....
+Signature of the Principal
+& Director
+[Dr. Rekha B Venkatapur]
+[Dr. Dilip Kumar K]
+
+DECLARATION
+We, the undersigned students of 6th semester, Computer Science & Engineering,
+KSIT, declare that our Project Work Phase-I entitled “INDIAN MARKET
+PORTFOLIO INTELLIGENCE AND BACKTESTING SYSYTEM”, is a
+bonafide work of ours. Our project is neither a copy nor by means a modification of
+any other engineering project.
+We also declare that this project was not entitled for submission to any other
+university in the past and shall remain the only submission made and will not be
+submitted by us to any other university in the future.
+Place:
+Date:
+Name and USN
+
+Signature
+
+Aryaman Tiwari (1KS23CS059)
+
+__________________
+
+Chirag T (1KS23CS034)
+
+__________________
+
+Durgashree M (1KS23CS043)
+
+__________________
+
+Jayaditya Dev (1KS23CS059)
+
+__________________
+
+ACKNOWLEDGEMENT
+The satisfaction and euphoria that accompany the successful completion of any task will be
+incomplete without the mention of the individuals, we are greatly indebted to, who through
+guidance and providing facilities have served as a beacon of light and crowned our efforts with
+success.
+First and foremost, our sincere prayer goes to almighty, whose grace made us realize our objective
+and conceive this project. We take pleasure in expressing our profound sense of gratitude to our
+parents for helping us complete our Project Work Phase-I successfully.
+We take this opportunity to express our sincere gratitude to our college K.S. Institute of
+Technology, Bengaluru for providing the environment to work on our project.
+We would like to express our gratitude to our MANAGEMENT, K.S. Institute of Technology,
+Bengaluru, for providing a very good infrastructure and all the kindness forwarded to us in carrying
+out this project work in college.
+We would like to express our gratitude to Dr. Dilip Kumar K, Principal/Director, K.S. Institute
+of Technology, Bengaluru, for his continuous support.
+We like to extend our gratitude to Dr. Rekha B Venkatapur, Professor and Head, Department
+of Computer Science & Engineering, for providing a very good facilities and all the support
+forwarded to us in carrying out this Project Work Phase-I successfully.
+We also like to thank our Project Coordinators, Mr. Roopesh Kumar B N, Associate Professor,
+Mr. Raghavendrachar S, Associate Professor, Department of Computer Science &
+Engineering for their help and support provided to carry out the Project Work Phase-I successfully.
+Also, we are thankful to Mrs. Beena K, Assistant Professor, for being our Project Guide, under
+whose able guidance this project work has been carried out Project Work Phase-I successfully.
+We are also thankful to the teaching and non-teaching staff of Computer Science & Engineering,
+KSIT for helping us in completing the Project Work Phase-I work.
+ARYAMAN TIWARI
+CHIRAG T
+DURGASHREE M
+JAYADITYA DEV
+
+ABSTRACT
+The rapid growth of financial markets and the increasing participation of retail investors have
+created a strong demand for intelligent tools that can assist in investment analysis and decisionmaking. Traditional investment approaches often rely on intuition or limited market analysis, which
+may lead to higher financial risks and poor strategy selection. To address these challenges, this
+project presents an Indian Market Portfolio Intelligence and Back testing Platform, a machine
+learning–based system designed to evaluate trading strategies using historical stock market data.
+
+The proposed platform integrates portfolio analysis, strategy back testing, market regime detection,
+and risk assessment into a unified framework. Historical market data is collected dynamically using
+the Yahoo Finance API and processed to generate important financial indicators such as returns,
+volatility, momentum, and maximum drawdown. The system supports multiple predefined trading
+strategies including Buy and Hold, Moving Average Crossover, RSI-based trading, Momentum
+Strategy, and Mean Reversion Strategy. These strategies are tested against historical market
+conditions to evaluate their effectiveness and performance.
+
+Machine learning techniques are incorporated to improve strategy analysis and recommendation.
+Unsupervised learning methods are used for market regime detection, enabling the identification of
+bullish, bearish, and sideways market conditions. Supervised learning models are employed to
+predict the suitability of trading strategies under varying market scenarios. In addition, the platform
+performs risk and performance analysis by calculating important financial metrics such as Sharpe
+Ratio, volatility, drawdown, and cumulative returns.
+The system is designed to benefit investors, researchers, and students by providing data-driven
+insights into stock market behaviour and trading performance. By combining financial analytics
+with machine learning, the platform enhances investment decision support and promotes a better
+understanding of portfolio management and risk evaluation in the Indian stock market environment
+
+i
+
+TABLE OF CONTENTS
+Chapter
+No.
+1.
+2.
+2.1
+2.2
+2.3
+2.4
+2.5
+3
+4
+4.1
+4.2
+5
+5.1
+5.2
+6
+6.1
+6.2
+6.3
+6.4
+6.5
+6.6
+6.7
+6.8
+6.9
+7
+
+Title
+
+Page No.
+
+INTRODUCTION
+LITERATURE SURVEY
+Enhancing Stock Market Prediction: A Robust LSTMDNN Model Analysis on 26 Real-Life Datasets
+Stock Price Prediction Using CNN and LSTM-Based
+Deep Learning Models
+An Application of Deep Reinforcement Learning to
+Algorithmic Trading
+A Hybrid Learning Approach to Detecting Regime
+Switches in Financial Markets
+Backtest Overfitting in the Machine Learning Era: A
+Comparison of Out-of-Sample Testing Methods in a
+Synthetic Controlled Environment
+PROBLEM IDENTIFICATION
+GOALS AND OBJECTIVES
+Goals
+Objectives
+SYSTEM REQUIREMENT SPECIFICATION
+Software Requirements
+Hardware Requirements
+METHODOLOGY
+Data Collection
+Data Processing
+Feature Engineering
+Market Regime Detection
+Trading Strategy Implementation
+Backtesting Process
+Performance and Risk Analysis
+Machine Learning-Based Strategy Recommendation
+Result Visualization and Reporting
+APPLICATIONS
+
+1
+2-6
+2
+
+ii
+
+3
+4
+4
+5
+
+7
+8-9
+8
+8
+10
+10
+10
+11-15
+11
+11
+12
+12
+13
+13
+14
+14
+14
+16
+
+8
+
+CONTRIBUTION
+TO
+SOCIETY
+AND
+ENVIRONMENT
+REFERENCES
+APPENDIX-I PUBLISHED SURVEY PAPER
+APPENDIX-II CERTIFICATES OF PAPER
+PRESENTED
+APPENDIX—III
+ONLINE
+COURSE
+CERTIFICATES
+
+iii
+
+17
+18-19
+20-25
+26-30
+31-32
+
+LIST OF FIGURES
+
+Fig. No.
+
+Figure Name
+
+Page No.
+
+2.1
+
+Survey Methodology Pipeline
+
+2
+
+2.2
+
+6
+
+6.1
+
+Classification of surveyed literature in intelligent
+financial systems.
+Architecture Diagram
+
+6.2
+
+Machine Learning Pipeline
+
+15
+
+iv
+
+11
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Chapter 1
+INTRODUCTION
+The stock market plays a major role in the global economy by enabling individuals and
+organizations to invest, trade, and grow their financial assets. In recent years, the Indian stock
+market has experienced rapid growth due to increased participation from retail investors, digital
+trading platforms, and the availability of real-time financial data. However, financial markets
+are highly dynamic and unpredictable, making investment decisions difficult for both beginners
+and experienced investors. Selecting an appropriate trading strategy without proper
+Traditionally, investors rely on technical indicators, historical price charts, or market intuition
+to make trading decisions. While these methods provide useful insights, they often fail to
+evaluate the robustness of a strategy under different market conditions. Existing platforms
+mainly focus on visualizing stock prices rather than analysing how trading strategies perform
+during bullish, bearish, or sideways markets. As a result, there is a need for a more intelligent
+and data-driven system that can evaluate strategies, measure risks, and provide meaningful
+investment insights.
+To address these challenges, this project proposes an Indian Market Portfolio Intelligence and
+Back testing Platform that combines financial analytics with machine learning techniques.. It
+supports multiple trading strategies such as Buy and Hold, Moving Average Crossover, RSIbased trading, Momentum Strategy, and Mean Reversion Strategy.
+The system retrieves historical stock market data from Yahoo Finance and processes it to
+generate important financial features such as returns, volatility, momentum, and drawdown.
+Machine learning algorithms are integrated into the platform to detect market regimes and
+recommend suitable strategies based on prevailing market conditions. The project also
+performs portfolio analysis and risk assessment using important performance metrics like
+Sharpe Ratio, cumulative returns, and volatility measures.
+The proposed platform serves as a valuable tool for investors, financial researchers, and
+students interested in stock market analytics. By integrating strategy evaluation, machine
+learning, and risk analysis into a single system, the project aims to improve investment
+decision-making and provide a deeper understanding of financial market behavior in the Indian
+stock market environment.
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 1
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Chapter 2
+LITERATURE SURVEY
+
+Fig 2.1: Survey Methodology Pipeline
+2.1 - Enhancing Stock Market Prediction: A Robust LSTM-DNN Model Analysis on 26
+Real-Life Datasets
+Authors: K. Alam, M. H. Bhuiyan, I. U. Haque, M. F. Monir, and T. Ahmed
+Journal: IEEE Access
+Volume & Issue: Vol. 12, 2024
+Summary:
+Dept. of CSE, K.S. Institute of Technology
+
+Page 2
+
+Indian Market Portfolio Intelligence And Back testing System
+
+This paper presents a hybrid LSTM-DNN framework for stock market prediction using
+multiple real-world financial datasets. The system combines Long Short-Term Memory
+(LSTM) networks and Deep Neural Networks (DNN) to improve stock forecasting accuracy
+and handle nonlinear market behavior effectively. The study demonstrated that hybrid deep
+learning models outperform traditional forecasting methods in analyzing dynamic financial
+time-series data.
+Methodology:
+The authors trained a hybrid LSTM-DNN architecture using historical stock market datasets
+and technical indicators. LSTM layers captured temporal dependencies while DNN layers
+extracted nonlinear patterns from market data. The model was evaluated across 26 real-life
+datasets to test robustness and prediction capability.
+Outcomes:
+• Improved stock price prediction accuracy compared to traditional methods.
+• Demonstrated effective handling of nonlinear and sequential market data.
+• Showed strong forecasting performance across multiple datasets.
+• Limited mainly to prediction without integrated portfolio analytics or risk-aware strategy
+evaluation.
+2.2 Stock Price Prediction Using CNN and LSTM-Based Deep Learning Models
+Authors: S. Mehtab and J. Sen
+Conference: International Conference on Decision Aid Sciences and Application (DASA)
+Year: 2020
+Summary:
+This paper proposed a CNN-LSTM-based deep learning system for stock market prediction.
+The study combined Convolutional Neural Networks (CNN) for extracting local market
+features and LSTM networks for learning long-term temporal dependencies in stock market
+data. The model demonstrated improved prediction capability compared to standalone machine
+learning approaches.
+Methodology:
+The framework used historical stock market datasets and technical indicators as input data.
+CNN layers extracted local trend patterns from stock price movements, while LSTM layers
+Dept. of CSE, K.S. Institute of Technology
+
+Page 3
+
+Indian Market Portfolio Intelligence And Back testing System
+
+learned sequential dependencies over time. The combined model was trained and tested on
+financial time-series data for stock forecasting tasks.
+Outcomes:
+• Improved prediction performance using hybrid CNN-LSTM architecture.
+• Captured both local and temporal market patterns effectively.
+• Demonstrated strong capability in analyzing financial time-series data.
+• Performance remained sensitive to sudden market volatility and regime changes.
+2.3 An Application of Deep Reinforcement Learning to Algorithmic Trading
+Authors: T. Théate and D. Ernst
+Journal: Expert Systems with Applications
+Volume & Issue: Vol. 173, 2021
+Summary:
+This paper explored the application of Deep Reinforcement Learning (DRL) in algorithmic
+trading systems. The proposed framework enabled intelligent trading agents to learn adaptive
+trading strategies directly from market environments through reward optimization techniques.
+The study demonstrated that DRL systems can outperform static rule-based trading systems
+under simulated market conditions.
+Methodology:
+The authors utilized Deep Q-Networks (DQN) and policy optimization methods using OHLCV
+market data and technical indicators such as RSI and MACD. Trading agents interacted with
+simulated market environments and continuously updated their strategies based on portfolio
+rewards and trading performance.
+Outcomes:
+• Enabled adaptive automated trading strategy generation.
+• Improved trading decision-making under varying market conditions.
+• Demonstrated better adaptability compared to rule-based systems.
+• Faced limitations such as overfitting, computational complexity, and transaction cost
+sensitivity.
+2.4 A Hybrid Learning Approach to Detecting Regime Switches in Financial Markets
+Authors: P. Akioyamen, Y. Z. Tang, and H. Hussien
+Dept. of CSE, K.S. Institute of Technology
+
+Page 4
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Conference: ACM International Conference on AI in Finance (ICAIF ’20)
+Year: 2020
+Summary:
+This paper proposed a hybrid machine learning approach for detecting regime switches in
+financial markets. The research focused on identifying bullish, bearish, and sideways market
+conditions using unsupervised learning and statistical analysis. The study highlighted that
+regime-aware systems improve trading strategy robustness and portfolio adaptability.
+Methodology:
+The authors applied clustering techniques on financial market datasets containing volatility,
+returns, and trend indicators. Machine learning models identified hidden structural patterns in
+market behavior to classify different market regimes. The system combined statistical analysis
+and unsupervised learning for improved regime detection under non-stationary conditions.
+Outcomes:
+• Successfully detected financial market regime switches.
+• Improved contextual trading strategy evaluation and portfolio analysis.
+• Enhanced adaptability under changing market conditions.
+• Existing systems lacked integration with unified portfolio analytics platforms.
+2.5 Backtest Overfitting in the Machine Learning Era: A Comparison of Out-of-Sample
+Testing Methods in a Synthetic Controlled Environment
+Authors: H. Arian, D. Norouzi Mobarekeh, and L. Seco
+Journal: Knowledge-Based Systems
+Volume & Issue: Vol. 305, 2024
+Summary:
+This paper investigated the problem of backtest overfitting in financial machine learning
+systems. The study emphasized that many trading strategies perform well on historical data but
+fail in real-world market environments due to poor validation techniques and data leakage. The
+research highlighted the importance of robust out-of-sample testing for reliable financial model
+evaluation.
+Methodology:
+The authors compared multiple out-of-sample validation techniques using synthetic financial
+environments and machine learning-based trading systems. The framework analyzed how
+Dept. of CSE, K.S. Institute of Technology
+
+Page 5
+
+Indian Market Portfolio Intelligence And Back testing System
+
+improper validation methods affect strategy reliability and model generalization under nonstationary market conditions.
+Outcomes:
+• Identified severe risks of backtest overfitting in financial ML systems.
+• Demonstrated the importance of proper validation frameworks.
+• Improved understanding of out-of-sample testing reliability.
+• Highlighted the need for risk-aware and regime-aware evaluation systems for financial
+analytics platforms.
+
+Fig 2.2: Classification of surveyed literature in intelligent financial systems.
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 6
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Chapter 3
+PROBLEM IDENTIFICATION
+
+Financial markets are highly volatile, making investment decisions difficult for investors.
+Many traders choose strategies without properly analysing risk, market conditions, or historical
+performance, which can lead to financial losses. Existing stock market platforms mainly focus
+on price charts and basic analysis but do not provide proper strategy evaluation or risk
+assessment.
+Another major issue is the lack of intelligent systems that can analyse market conditions and
+recommend suitable trading strategies. Investors also find it difficult to measure important
+factors such as volatility, drawdown, and overall portfolio performance using traditional
+methods.
+Therefore, there is a need for a smart and data-driven platform that can perform strategy back
+testing, market analysis, and risk evaluation using historical stock market data and machine
+learning techniques. The proposed Indian Market Portfolio Intelligence and Back testing
+Platform aims to address these challenges by helping users analyse and evaluate trading
+strategies more effectively
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 7
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Chapter 4
+GOALS AND OBJECTIVES
+4.1 GOALS
+1. To develop a machine learning–based platform for analysing and evaluating trading
+strategies using historical stock market data.
+2. To provide accurate back testing of different trading strategies under various market
+conditions.
+3. To detect market regimes such as bullish, bearish, and sideways markets using data
+analysis techniques.
+4. To help investors understand portfolio performance, risk, and return through
+financial metrics.
+5. To provide intelligent strategy recommendations for better investment decisionmaking.
+6. To create a useful learning and research tool for financial analytics and stock market
+analysis.
+4.2 OBJECTIVES
+1. To develop a strategy back testing system
+To create a reliable back testing engine that evaluates predefined trading strategies
+using historical stock market data and measures their effectiveness over different
+time periods.
+2. To collect and process historical market data
+To retrieve stock market data from financial sources such as Yahoo Finance and
+preprocess it for analysis by handling missing values, feature extraction, and data
+formatting.
+3. To implement multiple trading strategies
+To integrate various trading strategies such as Buy and Hold, Moving Average
+Crossover, RSI Strategy, Momentum Strategy, and Mean Reversion Strategy for
+comparative analysis.
+4. To detect market regimes using machine learning
+To apply unsupervised machine learning techniques for identifying different
+Dept. of CSE, K.S. Institute of Technology
+
+Page 8
+
+Indian Market Portfolio Intelligence And Back testing System
+
+market conditions such as bullish, bearish, and sideways markets based on
+historical trends and volatility.
+5. To evaluate strategy performance under different market conditions
+To analyse how each trading strategy performs in varying market environments
+and determine its strengths and weaknesses.
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 9
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Chapter 5
+SYSTEM REQUIREMENT SPECIFICATION
+5.1 Hardware Requirements
+• Processor: Intel Core i5/i7 or AMD Ryzen processor
+• RAM: 16 GB or higher for faster data processing and machine learning tasks
+• Storage: SSD with 10 GB or more free space
+• Display: Full HD monitor for better visualization of charts and analytics
+5.2 Software Requirements
+•
+
+Operating System-Windows 10/11, Linux distributions (Ubuntu or Fedora)
+macOS
+
+•
+
+Programming Language-Python 3.10 or above
+
+•
+
+Development Tools-Visual Studio Code (VS Code) / PyCharm, Jupiter Notebook
+for data analysis and testing
+
+•
+
+Libraries and Frameworks
+Pandas -Data manipulation and analysis
+NumPy - Numerical computations
+Scikit-learn -Machine learning algorithms
+SciPy -Scientific and statistical analysis
+Plot / Matplotlib -Data visualization and chart generation
+yFinance / NSEpy -Stock market data retrieval
+FastAPI -Backend API development
+
+•
+
+Database-PostgreSQL for storing user data, strategy results, and portfolio
+information
+
+•
+
+Web Technologies-HTML, CSS, JavaScript for frontend development
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 10
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Chapter 6
+METHODOLOGY
+The proposed Indian Market Portfolio Intelligence and Backtesting System is a regime-aware
+AI-driven financial analytics platform designed to evaluate trading strategies under different
+market conditions using machine learning and portfolio analysis techniques. The system
+integrates market regime detection, historical backtesting, strategy evaluation, and risk
+forecasting into a unified framework for Indian equity markets
+
+Fig: 6.1 Architecture Diagram
+6.1 Data Collection
+Historical stock market data is collected using the Yahoo Finance API through the yFinance
+library. The system retrieves OHLCV (Open, High, Low, Close, Volume) data for selected
+stocks and indices based on the user’s preferred time range.
+6.2 Data Processing
+Raw market data may contain missing values, duplicate records, or inconsistencies. Therefore,
+preprocessing is performed to improve the quality and reliability of the dataset.
+The preprocessing stage includes:
+•
+
+Handling missing or null values
+
+•
+
+Removing duplicate records
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 11
+
+Indian Market Portfolio Intelligence And Back testing System
+
+•
+
+Formatting date and time values
+
+•
+
+Normalizing financial data
+
+•
+
+Organizing the dataset into structured tabular form
+
+This step ensures that the data becomes suitable for feature extraction, machine learning, and
+strategy analysis.
+6.3 Feature Engineering
+Feature engineering is one of the most important stages in the system. In this stage, meaningful
+financial indicators are generated from historical stock data.
+The platform calculates features such as:
+•
+
+Daily Returns
+
+•
+
+Volatility
+
+•
+
+Momentum
+
+•
+
+Moving Averages
+
+•
+
+Relative Strength Index (RSI)
+
+•
+
+Maximum Drawdown
+
+•
+
+Rolling Mean and Standard Deviation
+
+These features help the system identify stock market trends, price movements, and investment
+risk. The generated features are later used for market regime detection, machine learning
+models, and strategy recommendations.
+6.4 Market Regime Detection
+Financial markets behave differently under various conditions. Therefore, the system identifies
+market regimes such as:
+•
+
+Bullish Market
+
+•
+
+Bearish Market
+
+•
+
+Sideways Market
+
+Unsupervised machine learning algorithms like clustering techniques are used to analyze
+hidden patterns in market behavior. The model studies features such as returns, volatility, and
+momentum to classify the current market condition.
+This helps investors understand the nature of the market before applying any trading strategy.
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 12
+
+Indian Market Portfolio Intelligence And Back testing System
+
+6.5. Trading Strategy Implementation
+The platform implements multiple trading strategies that are commonly used in stock market
+analysis. Each strategy follows a different trading logic and investment approach.
+The strategies include:
+•
+
+Buy and Hold Strategy
+
+•
+
+Investors purchase stocks and hold them for a long period regardless of short-term
+market fluctuations.
+
+•
+
+Moving Average Crossover Strategy
+
+•
+
+Buy and sell signals are generated when short-term moving averages cross long-term
+moving averages.
+
+•
+
+RSI Strategy
+
+•
+
+The Relative Strength Index is used to identify overbought and oversold conditions in
+stocks.
+
+•
+
+Momentum Strategy
+
+•
+
+Stocks with strong recent performance are selected with the expectation that the trend
+will continue.
+
+•
+
+Mean Reversion Strategy
+
+•
+
+This strategy assumes that stock prices eventually return to their historical average
+values.
+
+•
+
+Each strategy is tested independently using historical market data.
+
+6.6 Backtesting Process
+Backtesting is used to evaluate how a trading strategy would have performed in past market
+conditions. The platform simulates real-time trading using historical stock data.
+During backtesting, the system:
+•
+
+Generates buy and sell signals
+
+•
+
+Executes virtual trades
+
+•
+
+Tracks profits and losses
+
+•
+
+Calculates portfolio growth over time
+
+The backtesting engine helps determine whether a strategy is profitable, stable, and suitable for
+different market environments.
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 13
+
+Indian Market Portfolio Intelligence And Back testing System
+
+6.7 Performance and Risk Analysis
+After executing the trading strategies, the platform performs detailed performance and risk
+analysis.
+The following financial metrics are calculated:
+•
+
+Cumulative Returns
+
+•
+
+Annual Returns
+
+•
+
+Volatility
+
+•
+
+Sharpe Ratio
+
+•
+
+Maximum Drawdown
+
+•
+
+Risk-Adjusted Returns
+
+These metrics help users understand:
+•
+
+Profitability of strategies
+
+•
+
+Risk exposure
+
+•
+
+Portfolio stability
+
+•
+
+Long-term investment performance
+
+Risk analysis is important because a strategy with high returns may also involve high financial
+risk.
+6.8 Machine Learning–Based Strategy Recommendation
+The platform uses supervised machine learning models to recommend suitable trading
+strategies based on historical performance and current market conditions.
+The model is trained using:
+•
+
+Historical financial indicators
+
+•
+
+Market regimes
+
+•
+
+Strategy performance metrics
+
+Based on the analysed patterns, the system predicts which strategy may perform better under
+current market conditions.
+This feature provides intelligent decision support to investors and improves investment
+planning.
+6.9 Result Visualization and Reporting
+The final stage of the methodology involves presenting results in a clear and user-friendly
+format.
+Dept. of CSE, K.S. Institute of Technology
+
+Page 14
+
+Indian Market Portfolio Intelligence And Back testing System
+
+The platform provides:
+•
+
+Performance graphs
+
+•
+
+Portfolio growth charts
+
+•
+
+Risk comparison charts
+
+•
+
+Strategy comparison reports
+
+•
+
+Market trend visualizations
+
+Visualization helps users easily understand:
+•
+
+Market behavior
+
+•
+
+Strategy performance
+
+•
+
+Portfolio risk
+
+•
+
+Investment outcomes
+
+Fig: 6.2 Machine Learning Pipeline
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 15
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Chapter 7
+
+APPLICATIONS
+1. Investment Decision Support
+The platform helps investors analyze and compare different trading strategies before investing
+in the stock market. By providing data-driven insights and performance metrics, users can make
+better financial decisions with reduced risk.
+2. Portfolio Management
+The system assists users in managing and evaluating stock portfolios by analysing returns,
+volatility, and overall portfolio performance. It helps investors understand how different assets
+contribute to profit and risk.
+3. Strategy Backtesting
+Traders and analysts can test trading strategies on historical market data to evaluate their
+profitability and effectiveness before applying them in real market conditions.
+4. Risk Analysis and Management
+The platform calculates important financial metrics such as Sharpe Ratio, volatility, and
+maximum drawdown. This helps users identify potential risks and choose safer investment
+strategies.
+5. Market Regime Analysis
+Machine learning techniques are used to identify bullish, bearish, and sideways market
+conditions. This helps investors select suitable strategies based on current market behavior.
+6. Educational and Learning Tool
+The project serves as an educational platform for students and beginners who want to learn
+stock market analytics, trading strategies, portfolio management, and machine learning
+applications in finance.
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 16
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Chapter 8
+
+CONTRIBUTION TO SOCIETY AND ENVIRONMENT
+1.Improves Financial Awareness
+The platform helps users understand stock market behavior, investment strategies, and financial
+risk management, thereby increasing financial literacy among students and investors.
+2.Supports Better Investment Decisions
+By providing data-driven insights and strategy recommendations, the system helps investors
+make informed financial decisions and reduce unnecessary financial losses.
+3.Educational Benefits
+The project acts as a learning tool for students, researchers, and beginners interested in financial
+analytics, machine learning, and portfolio management.
+4.Encourages Technology In Finance
+The platform demonstrates the use of machine learning and data analysis in the financial sector,
+promoting innovation and technological advancement.
+5.Assists Small Investors
+Retail investors with limited market knowledge can use the platform to evaluate trading
+strategies and understand market risks more effectively.
+6.Reduces Paper Usage
+The platform is completely digital, reducing the need for printed reports, financial records, and
+manual documentation
+7.Efficient Data Management
+Digital storage and automated processing help reduce unnecessary manual operations and
+resource wastage
+8.Minimizes Physical Infrastructure Requirements
+The platform reduces dependency on traditional paperwork and offline analysis methods,
+contributing to an eco-friendlier working environment
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 17
+
+Indian Market Portfolio Intelligence And Back testing System
+
+REFERENCES
+[1] K. Alam, M. H. Bhuiyan, I. U. Haque, M. F. Monir, and T. Ahmed, “Enhancing stock
+market prediction: A robust LSTM-DNN model analysis on 26 real-life datasets,” IEEE
+Access, vol. 12, pp. 122757–122768, 2024, doi: 10.1109/ACCESS.2024.3434524
+[2]
+S. Mehtab, J. Sen, and A. Dutta, "Stock price prediction using machine learning and
+LSTM-based deep learning models," arXiv preprint arXiv:2009.10819, Sep. 2020. [Online].
+Available: https://arxiv.org/abs/2009.10819
+[3] S. Mehtab and J. Sen, "Stock price prediction using CNN and LSTM-based deep learning
+models," in Proc. 2020 Int. Conf. Decision Aid Sciences and Application (DASA), IEEE,
+2020, pp. 447–453. [Online]. Available: https://arxiv.org/abs/2010.13891
+[4]
+P. S. Sisodia, A. Gupta, Y. Kumar, and G. K. Ameta, "Stock market analysis and
+prediction for NIFTY50 using LSTM deep learning approach," in Proc. 2022 2nd Int. Conf.
+Innovative Practices in Technology and Management (ICIPTM), Gautam Buddha Nagar,
+India, 2022, pp. 156–161, doi: 10.1109/ICIPTM54933.2022.9754148.
+[5] T. Théate and D. Ernst, "An application of deep reinforcement learning to algorithmic
+trading," Expert Systems with Applications, vol. 173, p. 114632, 2021, doi:
+10.1016/j.eswa.2021.114632. [Preprint: arXiv:2004.06627, Apr. 2020.]
+[6] T. T.-L. Chong, W.-K. Ng, and V. K.-S. Liew, "Revisiting the performance of MACD
+and RSI oscillators," Journal of Risk and Financial Management, vol. 7, no. 1, pp. 1–12, Feb.
+2014, doi: 10.3390/jrfm7010001.
+[7] M. Devan, K. Thirunavukkarasu, and L. Shanmugam, "Algorithmic trading strategies:
+Real-time data analytics with machine learning," Journal of Knowledge Learning and Science
+Technology, vol. 2, no. 3, pp. 523–546, 2023.
+[8] V. S. G, S. Ali, and S. P. Chakrabarty, "Machine learning based stress testing framework
+for Indian financial market portfolios," arXiv preprint arXiv:2507.02011, Jul. 2025. [Online].
+Available: https://arxiv.org/abs/2507.02011
+[9] P. Akioyamen, Y. Z. Tang, and H. Hussien, "A hybrid learning approach to detecting
+regime switches in financial markets," in Proc. 1st ACM Int. Conf. AI in Finance (ICAIF '20),
+New York, NY, USA, Oct. 2020, ACM, doi: 10.1145/3383455.3422521. [Preprint:
+arXiv:2108.05801.]
+[10] B. Horvath, Z. Issa, and A. Muguruza, "Clustering market regimes using the Wasserstein
+distance," arXiv preprint arXiv:2110.11848, Oct. 2021. [Online]. Available:
+https://arxiv.org/abs/2110.11848
+[11] M. Wang, Y.-H. Lin, and I. Mikhelson, "Regime-switching factor investing with hidden
+Markov models," Journal of Risk and Financial Management, vol. 13, no. 12, p. 311, Dec.
+2020, doi: 10.3390/jrfm13120311.
+Dept. of CSE, K.S. Institute of Technology
+
+Page 18
+
+Indian Market Portfolio Intelligence And Back testing System
+
+[12] P. Pomorski and D. Gorse, "Improving portfolio performance using a novel method for
+predicting financial regimes," arXiv preprint arXiv:2310.04536, Sep. 2023. [Online].
+Available: https://arxiv.org/abs/2310.04536
+[13] H. Arian, D. Norouzi Mobarekeh, and L. Seco, "Backtest overfitting in the machine
+learning era: A comparison of out-of-sample testing methods in a synthetic controlled
+environment," Knowledge-Based Systems, vol. 305, p. 112477, Oct. 2024, doi:
+10.1016/j.knosys.2024.112477.
+[14] A. Peivandizadeh, S. Hatami, A. Nakhjavani, L. Khoshsima, M. R. Chalak Qazani, M.
+Haleem, and R. Alizadehsani, "Stock market prediction with transductive long short-term
+memory and social media sentiment analysis," IEEE Access, vol. 12, pp. 87110– 87130, May
+2024, doi: 10.1109/ACCESS.2024.3399548.
+[15] L. Yu, Y. Chen, and Y. Zheng, "A multi-market data- driven stock price prediction
+system: Model optimization and empirical study," IEEE Access, vol. 13, pp. 65884–65899,
+Apr. 2025, doi: 10.1109/ACCESS.2025.3559169.
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 19
+
+Indian Market Portfolio Intelligence And Back testing System
+
+APPENDIX-I
+
+PUBLISHED SURVEY PAPER
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 20
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 21
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 22
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 23
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 24
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 25
+
+Indian Market Portfolio Intelligence And Back testing System
+
+APPENDIX-II
+
+CERTIFICATES OF PAPER PRESENTED
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 26
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 27
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 28
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 29
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 30
+
+Indian Market Portfolio Intelligence And Back testing System
+
+APPENDIX - III
+
+ONLINE COURSE CERTIFICATES
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 31
+
+Indian Market Portfolio Intelligence And Back testing System
+
+Dept. of CSE, K.S. Institute of Technology
+
+Page 32
+
+

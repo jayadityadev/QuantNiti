@@ -80,7 +80,7 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
   return (
     <div
       data-testid="onboarding-hero"
-      className="fixed inset-0 z-50 overflow-y-auto flex flex-col justify-between bg-gradient-to-b from-slate-950 via-[#100C24] to-[#170E33] text-slate-100"
+      className="fixed inset-0 z-50 overflow-y-auto flex flex-col justify-between bg-gradient-to-b from-slate-50 via-white to-violet-50/40 dark:from-slate-950 dark:via-[#100C24] dark:to-[#170E33] text-[var(--text-main)]"
     >
       {/* Top Header / Progress Bar */}
       <div className="w-full max-w-[520px] mx-auto px-6 pt-6 pb-2">
@@ -89,9 +89,9 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
             <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/25">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold tracking-tight text-white text-base">QuantNiti</span>
+            <span className="font-bold tracking-tight text-[var(--text-main)] text-base">QuantNiti</span>
           </div>
-          <span className="text-xs font-medium text-violet-300/70 uppercase tracking-wider">
+          <span className="text-xs font-medium text-accent uppercase tracking-wider">
             Step {step} of 3
           </span>
         </div>
@@ -120,20 +120,20 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
                 transition={{ type: "spring", stiffness: 280, damping: 20 }}
                 className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-violet-600 via-purple-600 to-indigo-500 p-[1px] shadow-2xl shadow-violet-600/30"
               >
-                <div className="w-full h-full rounded-3xl bg-slate-950/80 backdrop-blur-xl flex items-center justify-center">
+                <div className="w-full h-full rounded-3xl bg-white dark:bg-slate-950/80 backdrop-blur-xl flex items-center justify-center shadow-sm">
                   <TrendingUp className="w-10 h-10 text-violet-400" />
                 </div>
               </motion.div>
 
               {/* Headings */}
               <div className="space-y-3">
-                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-main)]">
                   Intelligent Investing, <br />
                   <span className="bg-gradient-to-r from-violet-400 via-fuchsia-300 to-indigo-300 bg-clip-text text-transparent">
                     Made Simple
                   </span>
                 </h1>
-                <p className="text-sm sm:text-base text-slate-300/85 max-w-md mx-auto leading-relaxed">
+                <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-md mx-auto leading-relaxed">
                   AI-driven portfolio intelligence for Indian retail investors. Adaptive baskets,
                   explainable risk guardrails, and automated regime defense.
                 </p>
@@ -141,19 +141,19 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
 
               {/* Value Highlights */}
               <div className="w-full grid grid-cols-1 gap-2.5 pt-2 text-left">
-                <GlassCard className="p-3.5 flex items-center gap-3 bg-violet-950/30 border-violet-500/20">
+                <GlassCard className="p-3.5 flex items-center gap-3 bg-[var(--bg-card)] border-[var(--border-subtle)]">
                   <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
                   <div className="text-xs">
-                    <p className="font-semibold text-white">Regime-Adaptive Guardrails</p>
-                    <p className="text-slate-400">Protects your capital across bull, bear, and sideways regimes.</p>
+                    <p className="font-semibold text-[var(--text-main)]">Regime-Adaptive Guardrails</p>
+                    <p className="text-[var(--text-muted)]">Protects your capital across bull, bear, and sideways regimes.</p>
                   </div>
                 </GlassCard>
 
-                <GlassCard className="p-3.5 flex items-center gap-3 bg-violet-950/30 border-violet-500/20">
+                <GlassCard className="p-3.5 flex items-center gap-3 bg-[var(--bg-card)] border-[var(--border-subtle)]">
                   <Target className="w-5 h-5 text-violet-400 shrink-0" />
                   <div className="text-xs">
-                    <p className="font-semibold text-white">Personalized Persona Calibrations</p>
-                    <p className="text-slate-400">Tailored risk tolerance and compounding horizons.</p>
+                    <p className="font-semibold text-[var(--text-main)]">Personalized Persona Calibrations</p>
+                    <p className="text-[var(--text-muted)]">Tailored risk tolerance and compounding horizons.</p>
                   </div>
                 </GlassCard>
               </div>
@@ -190,7 +190,7 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
                     Question {questionIndex + 1} of {QUIZ_QUESTIONS.length}
                   </span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
+                <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] tracking-tight leading-snug">
                   {currentQuestion.prompt}
                 </h2>
               </div>
@@ -207,15 +207,15 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
                       onClick={() => handleSelectOption(option.id)}
                       className={`w-full text-left p-4 rounded-2xl border transition-all duration-200 flex items-start justify-between gap-3 ${
                         isSelected
-                          ? "bg-violet-600/20 border-violet-500 shadow-md shadow-violet-500/20 text-white"
-                          : "bg-slate-900/50 hover:bg-slate-900/80 border-violet-500/20 text-slate-200"
+                          ? "bg-violet-50 dark:bg-violet-600/20 border-violet-500 shadow-md shadow-violet-500/10 dark:shadow-violet-500/20 text-accent"
+                          : "bg-[var(--bg-card)] hover:bg-[var(--bg-card-subtle)] border-[var(--border-subtle)] text-[var(--text-main)] shadow-sm"
                       }`}
                     >
                       <div className="space-y-1 pr-2">
-                        <p className="font-semibold text-sm sm:text-base text-white">
+                        <p className="font-semibold text-sm sm:text-base text-[var(--text-main)]">
                           {option.title}
                         </p>
-                        <p className="text-xs text-slate-300/80 leading-relaxed">
+                        <p className="text-xs text-[var(--text-muted)] leading-relaxed">
                           {option.subtitle}
                         </p>
                       </div>
@@ -224,7 +224,7 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
                         className={`w-5 h-5 mt-0.5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
                           isSelected
                             ? "border-violet-400 bg-violet-600 text-white"
-                            : "border-slate-600 bg-slate-800"
+                            : "border-[var(--border-subtle)] bg-[var(--bg-card-subtle)]"
                         }`}
                       >
                         {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
@@ -277,26 +277,26 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
               </motion.div>
 
               <div className="space-y-2">
-                <h2 className="text-3xl font-extrabold text-white">
+                <h2 className="text-3xl font-extrabold text-[var(--text-main)]">
                   You're a{" "}
                   <span className="bg-gradient-to-r from-violet-400 to-indigo-300 bg-clip-text text-transparent">
                     {personaResult.title}
                   </span>
                 </h2>
-                <p className="text-sm text-slate-300/90 leading-relaxed max-w-sm mx-auto">
+                <p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-sm mx-auto">
                   {personaResult.description}
                 </p>
               </div>
 
               {/* Suggested Setup Card */}
-              <GlassCard className="w-full p-4 space-y-3 bg-violet-950/40 border-violet-500/30 text-left">
-                <div className="flex justify-between items-center text-xs pb-2 border-b border-violet-500/20">
-                  <span className="text-slate-400 font-medium">Recommended Horizon:</span>
-                  <span className="font-semibold text-violet-300">{personaResult.horizon}</span>
+              <GlassCard className="w-full p-4 space-y-3 bg-[var(--bg-card)] border-[var(--border-subtle)] text-left shadow-sm">
+                <div className="flex justify-between items-center text-xs pb-2 border-b border-[var(--border-subtle)]">
+                  <span className="text-[var(--text-muted)] font-medium">Recommended Horizon:</span>
+                  <span className="font-semibold text-accent">{personaResult.horizon}</span>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs text-slate-400">Target Asset Allocation:</p>
-                  <p className="text-xs font-semibold text-white">{personaResult.suggestedAllocation}</p>
+                  <p className="text-xs text-[var(--text-muted)]">Target Asset Allocation:</p>
+                  <p className="text-xs font-semibold text-[var(--text-main)]">{personaResult.suggestedAllocation}</p>
                 </div>
                 <div className="text-xs text-emerald-400 font-medium flex items-center gap-1.5 pt-1">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -321,7 +321,7 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
 
       {/* Footer reassurance */}
       <div className="w-full max-w-[520px] mx-auto px-6 pb-6 text-center">
-        <p className="text-xs text-slate-400/60">
+        <p className="text-xs text-[var(--text-muted)]/70">
           Your risk persona is advisory and can be updated anytime in the Grow tab.
         </p>
       </div>

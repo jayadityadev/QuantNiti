@@ -32,7 +32,7 @@ async def test_manifest_endpoint_served_with_correct_mime(test_app):
         assert data.get("short_name") == "QuantNiti"
         assert data.get("display") == "standalone"
         assert data.get("theme_color") in ["#7C3AED", "#09090b"]
-        assert data.get("background_color") in ["#0A0D14", "#09090b"]
+        assert data.get("background_color") in ["#F8FAFC", "#0A0D14", "#09090b"]
         assert data.get("start_url") == "/"
         assert data.get("id") in ["quantniti", "/"]
 
