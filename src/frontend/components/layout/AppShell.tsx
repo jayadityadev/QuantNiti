@@ -16,7 +16,7 @@ import { IOSInstallBanner } from "../pwa/IOSInstallBanner";
 export function AppShell() {
   const location = useLocation();
   const shouldReduceMotion = useReducedMotion();
-  const { activeTab, setActiveTab, clearActiveAsyncKeys, isOnboarded } = useAppStore();
+  const { activeTab, setActiveTab, clearActiveAsyncKeys, isOnboarded, isExpandedViewport, toggleViewport } = useAppStore();
 
   // Keep route pathname in sync with activeTab in Zustand store and abort in-flight requests from prior tab
   useEffect(() => {
@@ -65,10 +65,10 @@ export function AppShell() {
         )}
       </AnimatePresence>
 
-      {/* Container constrained to max-w-[520px] on desktop with centered shadow, full-width on mobile */}
-      <div className="w-full max-w-[520px] min-h-screen flex flex-col bg-[var(--bg-primary)] shadow-2xl shadow-violet-950/5 relative border-x border-[var(--border-subtle)]">
+      {/* Container constrained to max-w-[520px] on desktop with centered shadow, or expanded max-w-6xl when toggled */}
+      <div className={`w-full ${isExpandedViewport ? "max-w-6xl" : "max-w-[520px]"} min-h-screen flex flex-col bg-[var(--bg-primary)] shadow-2xl shadow-violet-950/5 relative border-x border-[var(--border-subtle)] transition-all duration-300`}>
         {/* Sticky Header - visible when onboarded */}
-        {isOnboarded && <Header />}
+        {isOnboarded && <Header onViewportToggle={toggleViewport} />}
 
         {/* Scrollable Content Area with bottom nav clearance */}
         <main className="flex-1 overflow-y-auto content-bottom-safe relative">

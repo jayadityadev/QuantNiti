@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Sun, Moon, Bell, MoreVertical, Layers, Download, Maximize2 } from "lucide-react";
+import { Sun, Moon, Bell, MoreVertical, Layers, Download, Maximize2, Minimize2 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { useAppStore } from "../../store/useAppStore";
 import { AnimatePresence, motion } from "framer-motion";
@@ -18,7 +18,7 @@ export function Header({
   onViewportToggle,
 }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
-  const { activeRegime, openModal } = useAppStore();
+  const { activeRegime, openModal, isExpandedViewport, toggleViewport } = useAppStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -170,15 +170,24 @@ export function Header({
                   </button>
 
                   <button
+                    data-testid="toggle-viewport-btn"
                     type="button"
                     role="menuitem"
                     onClick={() => {
                       setIsMenuOpen(false);
-                      onViewportToggle?.();
+                      if (onViewportToggle) {
+                        onViewportToggle();
+                      } else {
+                        toggleViewport();
+                      }
                     }}
                     className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[var(--text-main)] hover:bg-accent/10 hover:text-accent transition-colors"
                   >
-                    <Maximize2 className="w-4 h-4 text-accent" />
+                    {isExpandedViewport ? (
+                      <Minimize2 className="w-4 h-4 text-accent" />
+                    ) : (
+                      <Maximize2 className="w-4 h-4 text-accent" />
+                    )}
                     <span>Toggle Viewport</span>
                   </button>
                 </motion.div>

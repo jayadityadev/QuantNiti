@@ -28,6 +28,7 @@ export interface AppStoreState {
   isOnboarded: boolean;
   activeModal: string | null;
   modalPayload: any;
+  isExpandedViewport: boolean;
 
   // Actions
   setActiveTab: (tab: NavTab) => void;
@@ -36,6 +37,8 @@ export interface AppStoreState {
   setHorizon: (horizon: TimeHorizon) => void;
   setRiskPersona: (persona: RiskPersona) => void;
   setIsOnboarded: (onboarded: boolean) => void;
+  setIsExpandedViewport: (expanded: boolean) => void;
+  toggleViewport: () => void;
   setActiveRegime: (regime: any) => void;
   setCurrentBasket: (basket: any) => void;
   setActivePortfolioId: (id: string | null) => void;
@@ -60,6 +63,14 @@ export const ONBOARDED_STORAGE_KEY = "quantniti_onboarded";
 export const RISK_PERSONA_STORAGE_KEY = "quantniti_risk_persona";
 export const PORTFOLIOS_STORAGE_KEY = "quantniti_portfolios";
 export const ACTIVE_PORTFOLIO_ID_STORAGE_KEY = "quantniti_active_portfolio_id";
+export const EXPANDED_VIEWPORT_STORAGE_KEY = "quantniti_expanded_viewport";
+
+function loadExpandedViewport(): boolean {
+  if (typeof window !== "undefined" && window.localStorage) {
+    return window.localStorage.getItem(EXPANDED_VIEWPORT_STORAGE_KEY) === "true";
+  }
+  return false;
+}
 
 function loadPortfolios(): any[] {
   if (typeof window !== "undefined" && window.localStorage) {
@@ -146,6 +157,7 @@ export const useAppStore = create<AppStoreState>((set) => ({
   activeAsyncKeys: new Set(),
   activeModal: null,
   modalPayload: null,
+  isExpandedViewport: loadExpandedViewport(),
 
   setActiveTab: (tab) => set({ activeTab: tab }),
   setTheme: (theme) => set({ theme }),
@@ -162,6 +174,21 @@ export const useAppStore = create<AppStoreState>((set) => ({
       window.localStorage.setItem(ONBOARDED_STORAGE_KEY, String(isOnboarded));
     }
     set({ isOnboarded });
+  },
+  setIsExpandedViewport: (expanded: boolean) => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      window.localStorage.setItem(EXPANDED_VIEWPORT_STORAGE_KEY, String(expanded));
+    }
+    set({ isExpandedViewport: expanded });
+  },
+  toggleViewport: () => {
+    set((state) => {
+      const next = !state.isExpandedViewport;
+      if (typeof window !== "undefined" && window.localStorage) {
+        window.localStorage.setItem(EXPANDED_VIEWPORT_STORAGE_KEY, String(next));
+      }
+      return { isExpandedViewport: next };
+    });
   },
   setActiveRegime: (activeRegime) => set({ activeRegime }),
   setCurrentBasket: (currentBasket) => set({ currentBasket }),

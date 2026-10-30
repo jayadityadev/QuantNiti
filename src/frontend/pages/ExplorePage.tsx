@@ -253,7 +253,7 @@ export const ExplorePage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 max-w-[520px] mx-auto">
+    <div className="flex flex-col gap-4 p-4 w-full mx-auto">
       <h1 className="sr-only">Explore Page</h1>
       {/* Header Banner */}
       <div className="flex items-center justify-between pb-1">
