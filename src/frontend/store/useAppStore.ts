@@ -25,6 +25,7 @@ export interface AppStoreState {
   selectedLiteracyCategory: string;
   activeConceptKey: string | null;
   activeAsyncKeys: Set<string>;
+  unreadAlertCount: number;
   isOnboarded: boolean;
   activeModal: string | null;
   modalPayload: any;
@@ -40,6 +41,7 @@ export interface AppStoreState {
   setIsExpandedViewport: (expanded: boolean) => void;
   toggleViewport: () => void;
   setActiveRegime: (regime: any) => void;
+  setUnreadAlertCount: (count: number) => void;
   setCurrentBasket: (basket: any) => void;
   setActivePortfolioId: (id: string | null) => void;
   setActivePortfolio: (portfolio: any) => void;
@@ -155,6 +157,7 @@ export const useAppStore = create<AppStoreState>((set) => ({
   selectedLiteracyCategory: "all",
   activeConceptKey: null,
   activeAsyncKeys: new Set(),
+  unreadAlertCount: 0,
   activeModal: null,
   modalPayload: null,
   isExpandedViewport: loadExpandedViewport(),
@@ -191,6 +194,7 @@ export const useAppStore = create<AppStoreState>((set) => ({
     });
   },
   setActiveRegime: (activeRegime) => set({ activeRegime }),
+  setUnreadAlertCount: (unreadAlertCount) => set({ unreadAlertCount }),
   setCurrentBasket: (currentBasket) => set({ currentBasket }),
   setActivePortfolioId: (activePortfolioId) => {
     if (typeof window !== "undefined" && window.localStorage) {

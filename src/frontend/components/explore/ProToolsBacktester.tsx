@@ -36,10 +36,12 @@ export const ProToolsBacktester: React.FC = () => {
   const [slippageBps, setSlippageBps] = useState<number>(5);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [backtestResult, setBacktestResult] = useState<any | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [activeView, setActiveView] = useState<"equity" | "regimes">("equity");
 
   const handleRunBacktest = async () => {
     setIsLoading(true);
+    setErrorMessage(null);
     try {
       const response = await fetch(apiUrl("/api/backtest/run"), {
         method: "POST",
@@ -54,75 +56,28 @@ export const ProToolsBacktester: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Backtest run returned ${response.status}`);
+        let detail = `Backtest run returned ${response.status}`;
+        try {
+          const body = await response.json();
+          if (body?.detail) {
+            detail =
+              typeof body.detail === "string"
+                ? body.detail
+                : JSON.stringify(body.detail);
+          }
+        } catch {
+          // Response body was not JSON; keep the status message.
+        }
+        throw new Error(detail);
       }
       const data = await response.json();
       setBacktestResult(data);
-    } catch (err) {
-      // Fallback result for offline / testing robustness
-      const fallbackResult = {
-        backtest_id: "bt-fb-" + Date.now(),
-        symbol: selectedSymbol,
-        name: ASSETS.find((a) => a.symbol === selectedSymbol)?.name || selectedSymbol,
-        strategy: selectedStrategy,
-        initial_capital: initialCapital,
-        metrics: {
-          initial_capital: initialCapital,
-          final_equity: initialCapital * 1.485,
-          total_return_pct: 48.5,
-          cagr: 16.2,
-          annualized_volatility: 14.8,
-          sharpe_ratio: 1.45,
-          sortino_ratio: 1.88,
-          max_drawdown_pct: -8.4,
-          calmar_ratio: 1.92,
-          win_rate_pct: 64.0,
-          profit_factor: 1.95,
-          total_trades: 28,
-          winning_trades: 18,
-          losing_trades: 10,
-          avg_trade_return_pct: 2.1,
-          benchmark_total_return_pct: 32.0,
-          benchmark_cagr: 11.4,
-        },
-        equity_curve: [
-          { date: "2024-01-01", close_price: 2500, signal: 1, strategy_equity: initialCapital, benchmark_equity: initialCapital, drawdown_pct: 0 },
-          { date: "2024-06-01", close_price: 2650, signal: 1, strategy_equity: initialCapital * 1.12, benchmark_equity: initialCapital * 1.08, drawdown_pct: -2.1 },
-          { date: "2024-12-01", close_price: 2800, signal: 1, strategy_equity: initialCapital * 1.25, benchmark_equity: initialCapital * 1.16, drawdown_pct: -1.5 },
-          { date: "2025-06-01", close_price: 2750, signal: 0, strategy_equity: initialCapital * 1.32, benchmark_equity: initialCapital * 1.22, drawdown_pct: -4.5 },
-          { date: "2026-01-01", close_price: 2980, signal: 1, strategy_equity: initialCapital * 1.485, benchmark_equity: initialCapital * 1.32, drawdown_pct: -2.8 },
-        ],
-        regime_breakdown: [
-          {
-            regime: "Bullish Momentum",
-            days_count: 140,
-            strategy_return_pct: 24.5,
-            benchmark_return_pct: 18.2,
-            sharpe_ratio: 1.82,
-            max_drawdown_pct: -4.1,
-            win_rate_pct: 72.0,
-          },
-          {
-            regime: "Range-Bound",
-            days_count: 85,
-            strategy_return_pct: 8.4,
-            benchmark_return_pct: 2.1,
-            sharpe_ratio: 1.15,
-            max_drawdown_pct: -3.8,
-            win_rate_pct: 58.0,
-          },
-          {
-            regime: "High Volatility",
-            days_count: 45,
-            strategy_return_pct: -2.1,
-            benchmark_return_pct: -7.5,
-            sharpe_ratio: 0.45,
-            max_drawdown_pct: -8.4,
-            win_rate_pct: 50.0,
-          },
-        ],
-      };
-      setBacktestResult(fallbackResult);
+    } catch (err: any) {
+      // Surface real failures instead of silently showing fabricated results.
+      setErrorMessage(
+        err?.message || "Unable to run the backtest. Please try again."
+      );
+      setBacktestResult(null);
     } finally {
       setIsLoading(false);
     }
@@ -249,6 +204,15 @@ export const ProToolsBacktester: React.FC = () => {
                     </>
                   )}
                 </PrimaryButton>
+
+                {errorMessage && (
+                  <div
+                    role="alert"
+                    className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-xs font-semibold text-rose-600 dark:text-rose-300"
+                  >
+                    {errorMessage}
+                  </div>
+                )}
               </div>
 
               {/* Backtest Results Area */}
@@ -298,10 +262,10 @@ export const ProToolsBacktester: React.FC = () => {
                         Total Return
                       </span>
                       <div className="text-base font-black text-emerald-500 mt-0.5">
-                        +{backtestResult.metrics?.total_return_pct?.toFixed(1) || "48.5"}%
+                        +{backtestResult.metrics?.total_return_pct?.toFixed(1) ?? "—"}%
                       </div>
                       <span className="text-[9px] text-[var(--text-muted)]">
-                        vs Bmk +{backtestResult.metrics?.benchmark_total_return_pct?.toFixed(1) || "32.0"}%
+                        vs Bmk +{backtestResult.metrics?.benchmark_total_return_pct?.toFixed(1) ?? "—"}%
                       </span>
                     </GlassCard>
 
@@ -310,7 +274,7 @@ export const ProToolsBacktester: React.FC = () => {
                         Sharpe Ratio
                       </span>
                       <div className="text-base font-black text-accent mt-0.5">
-                        {backtestResult.metrics?.sharpe_ratio?.toFixed(2) || "1.45"}
+                        {backtestResult.metrics?.sharpe_ratio?.toFixed(2) ?? "—"}
                       </div>
                       <span className="text-[9px] text-[var(--text-muted)]">Risk-adjusted</span>
                     </GlassCard>
@@ -320,7 +284,7 @@ export const ProToolsBacktester: React.FC = () => {
                         Max Drawdown
                       </span>
                       <div className="text-base font-black text-rose-500 mt-0.5">
-                        {backtestResult.metrics?.max_drawdown_pct?.toFixed(1) || "-8.4"}%
+                        {backtestResult.metrics?.max_drawdown_pct?.toFixed(1) ?? "—"}%
                       </div>
                       <span className="text-[9px] text-[var(--text-muted)]">Peak stress</span>
                     </GlassCard>
@@ -330,7 +294,7 @@ export const ProToolsBacktester: React.FC = () => {
                         Win Rate
                       </span>
                       <div className="text-base font-black text-[var(--text-main)] mt-0.5">
-                        {backtestResult.metrics?.win_rate_pct?.toFixed(0) || "64"}%
+                        {backtestResult.metrics?.win_rate_pct?.toFixed(0) ?? "—"}%
                       </div>
                       <span className="text-[9px] text-[var(--text-muted)]">
                         {backtestResult.metrics?.winning_trades || 18}W /{" "}
@@ -349,7 +313,7 @@ export const ProToolsBacktester: React.FC = () => {
                         <div className="flex items-center gap-3">
                           <span className="flex items-center gap-1">
                             <span className="w-2.5 h-2.5 rounded-full bg-violet-500 inline-block" />
-                            Strategy Equity (₹{backtestResult.metrics?.final_equity?.toLocaleString('en-IN') || "1,48,500"})
+                            Strategy Equity (₹{backtestResult.metrics?.final_equity?.toLocaleString('en-IN') ?? "—"})
                           </span>
                           <span className="flex items-center gap-1">
                             <span className="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block" />

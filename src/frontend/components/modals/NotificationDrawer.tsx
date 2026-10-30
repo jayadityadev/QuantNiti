@@ -3,6 +3,8 @@ import { Bell, ShieldAlert, AlertTriangle, Info, CheckCheck } from "lucide-react
 import { ModalSheet } from "../ui/ModalSheet";
 import { useAbortableRequest } from "../../hooks/useAbortableRequest";
 import { subscribeUserToPush } from "../../services/pwaService";
+import { apiUrl } from "../../config";
+import { useAppStore } from "../../store/useAppStore";
 
 interface NotificationItem {
   id: string;
@@ -21,42 +23,25 @@ interface NotificationDrawerProps {
 
 const CATEGORIES = ["All", "Regime", "Drift", "Technicals", "Risk"];
 
+// Backend alert types are enum codes (e.g. REGIME_TRANSITION); map each UI pill to them.
+const CATEGORY_TYPE_MATCHERS: Record<string, string[]> = {
+  Regime: ["REGIME_TRANSITION"],
+  Drift: ["PORTFOLIO_DRIFT", "FACTOR_ANOMALY"],
+  Technicals: ["RSI_EXTREME", "WEEK_52_HIGH"],
+  Risk: ["DRAWDOWN_BREACH"],
+};
+
 export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
   isOpen,
   onClose,
 }) => {
   const { request } = useAbortableRequest();
+  const setUnreadAlertCount = useAppStore((state) => state.setUnreadAlertCount);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [notifications, setNotifications] = useState<NotificationItem[]>([
-    {
-      id: "init_1",
-      type: "Regime",
-      severity: "INFO",
-      title: "Market Regime Active: Bull Market",
-      message: "NIFTY 50 momentum continues above 50-day EMA. Portfolio allocations stable.",
-      timestamp: "10 mins ago",
-      read: false,
-    },
-    {
-      id: "init_2",
-      type: "Drift",
-      severity: "WARNING",
-      title: "Asset Allocation Drift Notice",
-      message: "IT sector weighting has drifted +3.8% above recommended baseline due to rally.",
-      timestamp: "1 hour ago",
-      read: false,
-    },
-    {
-      id: "init_3",
-      type: "Risk",
-      severity: "CRITICAL",
-      title: "Volatility Alert: Midcap Index",
-      message: "Annualized volatility spiked to 19.2%. Risk controls automatically activated.",
-      timestamp: "3 hours ago",
-      read: true,
-    },
-  ]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [pushSubscribed, setPushSubscribed] = useState(false);
+  const [markAllReadConfirmation, setMarkAllReadConfirmation] = useState(false);
 
   // 45-second polling interval with clean teardown
   useEffect(() => {
@@ -66,21 +51,29 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
 
     const fetchAlerts = async () => {
       try {
-        const response = await request("fetch-alerts", "/api/alerts");
-        if (response?.alerts && Array.isArray(response.alerts) && response.alerts.length > 0) {
-          const mapped: NotificationItem[] = response.alerts.map((a: any) => ({
-            id: a.alert_id || a.id || `alert_${Math.random()}`,
-            type: a.alert_type || a.type || "Regime",
-            severity: a.severity || "INFO",
-            title: a.title || "Smart Alert",
-            message: a.message || a.summary || "",
-            timestamp: "Just now",
-            read: !!a.read,
-          }));
-          setNotifications(mapped);
-        }
-      } catch {
-        // Retain initial notifications gracefully
+        const response = await request<{ alerts?: any[]; unread_count?: number }>(
+          "fetch-alerts",
+          apiUrl("/api/alerts")
+        );
+        const alerts = Array.isArray(response?.alerts) ? response!.alerts : [];
+        const mapped: NotificationItem[] = alerts.map((a: any) => ({
+          id: a.id || a.alert_id || `alert_${Math.random()}`,
+          type: String(a.type || a.alert_type || "INFO").toUpperCase(),
+          severity: String(a.severity || "INFO").toUpperCase() as NotificationItem["severity"],
+          title: a.title || "Smart Alert",
+          message: a.message || a.summary || "",
+          timestamp: a.timestamp || "Just now",
+          read: !!a.read,
+        }));
+        setNotifications(mapped);
+        setUnreadAlertCount(
+          typeof response?.unread_count === "number"
+            ? response.unread_count
+            : mapped.filter((n) => !n.read).length
+        );
+        setLoadError(null);
+      } catch (err: any) {
+        setLoadError(err?.message || "Unable to load alerts.");
       }
     };
 
@@ -90,15 +83,30 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
-  }, [isOpen]);
+  }, [isOpen, request, setUnreadAlertCount]);
 
   const filtered = notifications.filter((item) => {
     if (activeCategory === "All") return true;
-    return item.type.toLowerCase().includes(activeCategory.toLowerCase());
+    const matchers = CATEGORY_TYPE_MATCHERS[activeCategory] ?? [];
+    return (
+      matchers.includes(item.type) ||
+      item.type.toLowerCase().includes(activeCategory.toLowerCase())
+    );
   });
 
-  const handleMarkAllRead = () => {
+  const handleMarkAllRead = async () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    setUnreadAlertCount(0);
+    try {
+      await request("mark-all-alerts-read", apiUrl("/api/alerts/mark-all-read"), {
+        method: "POST",
+      });
+      // Show brief confirmation
+      setMarkAllReadConfirmation(true);
+      setTimeout(() => setMarkAllReadConfirmation(false), 2000);
+    } catch {
+      // Local list is already marked; the next poll reconciles with the backend.
+    }
   };
 
   const handleSubscribePush = async () => {
@@ -154,6 +162,9 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
             <CheckCheck className="w-3 h-3" />
             Mark read
           </button>
+          {markAllReadConfirmation && (
+            <div className="text-[10px] text-emerald-500 font-medium">All alerts marked as read</div>
+          )}
         </div>
 
         {/* Web Push Prompt Card */}
@@ -176,15 +187,21 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
         )}
 
         {/* Notification List */}
+        {loadError && (
+          <div role="alert" className="p-3 rounded-xl border border-rose-500/30 bg-rose-500/10 text-xs text-rose-600 dark:text-rose-400">
+            {loadError}
+          </div>
+        )}
         <div className="space-y-2.5 max-h-[50vh] overflow-y-auto pr-1">
           {filtered.length === 0 ? (
             <div className="p-8 text-center text-xs text-[var(--text-muted)]">
-              No notifications in this category.
+              {loadError ? "Alerts unavailable right now." : "No notifications in this category."}
             </div>
           ) : (
             filtered.map((item) => {
-              const isCrit = item.severity === "CRITICAL";
-              const isWarn = item.severity === "WARNING";
+              const severity = item.severity.toUpperCase();
+              const isCrit = severity === "CRITICAL" || severity === "HIGH";
+              const isWarn = severity === "WARNING" || severity === "MEDIUM";
 
               return (
                 <div

@@ -58,7 +58,18 @@ export function useAbortableRequest() {
         });
 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          let message = `HTTP error! status: ${response.status}`;
+          try {
+            const body = await response.json();
+            if (typeof body?.detail === "string") {
+              message = body.detail;
+            } else if (body?.detail) {
+              message = JSON.stringify(body.detail);
+            }
+          } catch {
+            /* error body was not JSON; keep the status message */
+          }
+          throw new Error(message);
         }
 
         const data = parseJson ? await response.json() : await response.text();

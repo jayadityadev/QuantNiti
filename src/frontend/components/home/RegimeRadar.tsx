@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Radar, Sparkles } from "lucide-react";
 import { GlassCard, RegimeBadge } from "../ui";
 import { useAppStore } from "../../store/useAppStore";
 import { useAbortableRequest } from "../../hooks/useAbortableRequest";
+import { apiUrl } from "../../config";
 
 export interface RegimeRadarProps {
   className?: string;
@@ -12,29 +13,25 @@ export interface RegimeRadarProps {
 export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
   const { activeRegime, setActiveRegime } = useAppStore();
   const { request } = useAbortableRequest();
+  const [loadFailed, setLoadFailed] = useState(false);
 
   useEffect(() => {
     if (!activeRegime) {
       const fetchRegime = async () => {
         try {
-          const data = await request<any>("home-regime", "/api/regime/current");
+          const data = await request<any>("home-regime", apiUrl("/api/regime/current"));
           if (data) {
             setActiveRegime(data);
           }
         } catch {
           try {
-            const dataV1 = await request<any>("home-regime-v1", "/api/v1/regime/current");
+            const dataV1 = await request<any>("home-regime-v1", apiUrl("/api/v1/regime/current"));
             if (dataV1) {
               setActiveRegime(dataV1);
             }
           } catch {
-            // Store default fallback
-            setActiveRegime({
-              regime: "BULL",
-              probabilities: { bull: 0.65, sideways: 0.25, bear: 0.1 },
-              confidence: 0.82,
-              description: "Macro momentum strong with sustained institutional buying.",
-            });
+            // Never fabricate a regime: surface the failure instead.
+            setLoadFailed(true);
           }
         }
       };
@@ -42,17 +39,15 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
     }
   }, [activeRegime, setActiveRegime, request]);
 
-  const regimeName = activeRegime?.regime || "BULL";
+  const regimeName = activeRegime?.regime || "UNKNOWN";
   const probs: any = activeRegime?.probabilities || {};
-  const bullVal = typeof probs.bull === "number" ? probs.bull : (typeof probs.BULL === "number" ? probs.BULL : 0.65);
-  const sidewaysVal = typeof probs.sideways === "number" ? probs.sideways : (typeof probs.SIDEWAYS === "number" ? probs.SIDEWAYS : 0.25);
-  const bearVal = typeof probs.bear === "number" ? probs.bear : (typeof probs.BEAR === "number" ? probs.BEAR : 0.10);
+  const bullVal = typeof probs.bull === "number" ? probs.bull : (typeof probs.BULL === "number" ? probs.BULL : 0);
+  const sidewaysVal = typeof probs.sideways === "number" ? probs.sideways : (typeof probs.SIDEWAYS === "number" ? probs.SIDEWAYS : 0);
+  const bearVal = typeof probs.bear === "number" ? probs.bear : (typeof probs.BEAR === "number" ? probs.BEAR : 0);
   const bullPct = Math.round(bullVal * 100);
   const sidewaysPct = Math.round(sidewaysVal * 100);
   const bearPct = Math.round(bearVal * 100);
-  const description =
-    activeRegime?.description ||
-    "Algorithmic classifier identifies active expansion regime. High growth probability with controlled macro volatility.";
+  const description = activeRegime?.description || "";
 
   return (
     <GlassCard className={`p-5 flex flex-col gap-4 ${className}`}>
@@ -71,10 +66,12 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
           </div>
         </div>
 
-        <RegimeBadge regime={regimeName} size="sm" />
+        {activeRegime && <RegimeBadge regime={regimeName} size="sm" />}
       </div>
 
-      {/* Probability Bars */}
+      {activeRegime ? (
+        <>
+          {/* Probability Bars */}
       <div className="flex flex-col gap-2.5 pt-1">
         {/* Bull Bar */}
         <div className="flex flex-col gap-1">
@@ -130,6 +127,17 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
         <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
         <span>{description}</span>
       </div>
+        </>
+      ) : (
+        <div
+          role={loadFailed ? "alert" : "status"}
+          className="py-6 text-center text-xs font-medium text-[var(--text-muted)]"
+        >
+          {loadFailed
+            ? "Regime data is unavailable right now."
+            : "Loading market regime..."}
+        </div>
+      )}
     </GlassCard>
   );
 };

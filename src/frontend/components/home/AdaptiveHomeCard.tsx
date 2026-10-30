@@ -14,13 +14,16 @@ export const AdaptiveHomeCard: React.FC<AdaptiveHomeCardProps> = ({ className = 
   if (activePortfolio) {
     // Returning user with active portfolio -> PortfolioSnapshot
     const isOverallPositive = (activePortfolio.total_pnl ?? 0) >= 0;
-    const dayPnl = activePortfolio.day_pnl ?? 420.5;
+    const hasDayPnl = typeof activePortfolio.day_pnl === "number";
+    const dayPnl = hasDayPnl ? activePortfolio.day_pnl : 0;
     const isDayPositive = dayPnl >= 0;
-    const dayPnlPct = activePortfolio.current_value > 0
-      ? (dayPnl / activePortfolio.current_value) * 100
-      : 0.8;
-    const alpha = activePortfolio.benchmark_comparison?.alpha_vs_nifty ?? 2.8;
-    const isAlphaPositive = alpha >= 0;
+    const dayPnlPct =
+      hasDayPnl && activePortfolio.current_value > 0
+        ? (dayPnl / activePortfolio.current_value) * 100
+        : null;
+    const alpha = activePortfolio.benchmark_comparison?.alpha_vs_nifty;
+    const hasAlpha = typeof alpha === "number";
+    const isAlphaPositive = (alpha ?? 0) >= 0;
 
     return (
       <GlassCard
@@ -72,18 +75,38 @@ export const AdaptiveHomeCard: React.FC<AdaptiveHomeCardProps> = ({ className = 
             <span className="text-[10px] font-medium text-[var(--text-muted)]">1D P&L</span>
             <span
               className={`text-xs font-bold font-mono flex items-center gap-0.5 ${
-                isDayPositive ? "text-emerald-500" : "text-rose-500"
+                !hasDayPnl
+                  ? "text-[var(--text-muted)]"
+                  : isDayPositive
+                  ? "text-emerald-500"
+                  : "text-rose-500"
               }`}
             >
-              {isDayPositive ? "+" : ""}₹{Math.round(dayPnl).toLocaleString("en-IN")}
+              {!hasDayPnl ? (
+                "—"
+              ) : (
+                <>
+                  {isDayPositive ? "+" : ""}₹{Math.round(dayPnl).toLocaleString("en-IN")}
+                </>
+              )}
             </span>
             <span
               className={`text-[9px] font-medium ${
-                isDayPositive ? "text-emerald-500" : "text-rose-500"
+                dayPnlPct === null
+                  ? "text-[var(--text-muted)]"
+                  : isDayPositive
+                  ? "text-emerald-500"
+                  : "text-rose-500"
               }`}
             >
-              {isDayPositive ? "+" : ""}
-              {dayPnlPct.toFixed(1)}%
+              {dayPnlPct === null ? (
+                "—"
+              ) : (
+                <>
+                  {isDayPositive ? "+" : ""}
+                  {dayPnlPct.toFixed(1)}%
+                </>
+              )}
             </span>
           </div>
 
@@ -113,11 +136,21 @@ export const AdaptiveHomeCard: React.FC<AdaptiveHomeCardProps> = ({ className = 
             <span className="text-[10px] font-medium text-[var(--text-muted)]">Alpha vs NIFTY</span>
             <span
               className={`text-xs font-bold font-mono flex items-center gap-0.5 ${
-                isAlphaPositive ? "text-emerald-500" : "text-rose-500"
+                !hasAlpha
+                  ? "text-[var(--text-muted)]"
+                  : isAlphaPositive
+                  ? "text-emerald-500"
+                  : "text-rose-500"
               }`}
             >
-              {isAlphaPositive ? "+" : ""}
-              {alpha.toFixed(1)}%
+              {!hasAlpha ? (
+                "—"
+              ) : (
+                <>
+                  {isAlphaPositive ? "+" : ""}
+                  {alpha.toFixed(1)}%
+                </>
+              )}
             </span>
             <span className="text-[9px] font-medium text-[var(--text-muted)]">Excess Return</span>
           </div>

@@ -6,12 +6,20 @@ export interface CompoundingVisualizerProps {
   className?: string;
 }
 
+export interface FeeDragCalculator {
+  finalWealth: number;
+  wealthWithoutFees: number;
+  totalFeesPaid: number;
+  feeDragPct: number;
+}
+
 export const CompoundingVisualizer: React.FC<CompoundingVisualizerProps> = ({ className = "" }) => {
   const [sipAmount, setSipAmount] = useState(10000);
-  const [tenureYears, setTenureYears] = useState(5);
+  const [tenureYears, setTenureYears] = useState(10); // Default to 10 years for fee drag calc
   const [expectedReturn, setExpectedReturn] = useState(14);
   const [stepUp, setStepUp] = useState(false);
 
+  // Core compounding projection (without fees)
   const { totalInvested, futureValue, totalGain } = useMemo(() => {
     const monthlyRate = expectedReturn / 12 / 100;
     const totalMonths = tenureYears * 12;
@@ -28,15 +36,53 @@ export const CompoundingVisualizer: React.FC<CompoundingVisualizerProps> = ({ cl
       fv = (fv + currentMonthlySip) * (1 + monthlyRate);
     }
 
-    const gain = Math.max(0, fv - invested);
     return {
       totalInvested: Math.round(invested),
       futureValue: Math.round(fv),
-      totalGain: Math.round(gain),
+      totalGain: Math.round(Math.max(0, fv - invested)),
     };
   }, [sipAmount, tenureYears, expectedReturn, stepUp]);
 
   const gainPercentage = totalInvested > 0 ? (totalGain / totalInvested) * 100 : 0;
+
+  // Fee drag calculation (mutual fund expense ratio impact over tenure)
+  const { finalWealth, wealthWithoutFees, totalFeesPaid, feeDragPct } = useMemo(() => {
+    const years = tenureYears;
+    const monthlyRate = expectedReturn / 12 / 100;
+    const totalMonths = years * 12;
+
+    let invested = 0;
+    let fv = 0;
+    let currentMonthlySip = sipAmount;
+    let totalFees = 0;
+
+    for (let m = 1; m <= totalMonths; m++) {
+      if (stepUp && m > 1 && (m - 1) % 12 === 0) {
+        currentMonthlySip *= 1.1; // 10% annual step-up
+      }
+      invested += currentMonthlySip;
+      // Apply expense ratio as monthly drag on the SIP amount
+      const monthlyFeeRate = 1.5 / 12 / 100; // Default 1.5% expense ratio
+      const feeOnThisMonth = currentMonthlySip * monthlyFeeRate;
+      totalFees += feeOnThisMonth;
+      // Fee is deducted before compounding
+      fv = (fv + currentMonthlySip - feeOnThisMonth) * (1 + monthlyRate);
+    }
+
+    // Wealth without fees = current FV + total fees that were "avoided"
+    const wealthWithoutFees = Math.round(fv + totalFees);
+    const finalWealth = Math.round(fv);
+    const totalFeesPaid = Math.round(totalFees);
+    // Fee drag as percentage of wealth without fees
+    const feeDragPct = wealthWithoutFees > 0 ? Math.round((totalFees / wealthWithoutFees) * 100 * 100) / 100 : 0;
+
+    return {
+      finalWealth,
+      wealthWithoutFees,
+      totalFeesPaid,
+      feeDragPct,
+    };
+  }, [sipAmount, tenureYears, expectedReturn, stepUp]);
 
   return (
     <GlassCard className={`p-5 flex flex-col gap-5 ${className}`}>
@@ -59,11 +105,7 @@ export const CompoundingVisualizer: React.FC<CompoundingVisualizerProps> = ({ cl
         <button
           type="button"
           onClick={() => setStepUp(!stepUp)}
-          className={`text-[10px] font-bold px-2.5 py-1 rounded-full border transition-all ${
-            stepUp
-              ? "bg-accent text-white border-accent shadow-sm shadow-violet-500/25"
-              : "bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-subtle)]"
-          }`}
+          className={`text-[10px] font-bold px-2.5 py-1 rounded-full border transition-all ${stepUp ? "bg-accent text-white border-accent shadow-sm shadow-violet-500/25" : "bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-subtle)]"}`}
         >
           +10% Annual Step-up
         </button>
@@ -179,6 +221,30 @@ export const CompoundingVisualizer: React.FC<CompoundingVisualizerProps> = ({ cl
             className="h-full bg-emerald-500"
             title="Estimated Wealth Created"
           />
+        </div>
+      </div>
+
+      {/* Fee Drag Calculator Results */}
+      <div className="mt-4 p-4 rounded-2xl bg-violet-50/50 border border-violet-200/50 flex flex-col gap-3">
+        <div className="flex items-center justify-between text-xs font-semibold text-[var(--text-muted)]">
+          <span>Mutual Fund Fee Drag (10-Yr Impact)</span>
+          <span className="text-[10px] font-bold text-violet-600">₹{totalFeesPaid.toLocaleString("en-IN")} fees</span>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <div className="text-[12px] font-medium text-[var(--text-muted)]">Wealth with fees</div>
+            <div className="text-2xl font-black text-violet-500">₹{finalWealth.toLocaleString("en-IN")}</div>
+          </div>
+          <div>
+            <div className="text-[12px] font-medium text-[var(--text-muted)]">Wealth without fees</div>
+            <div className="text-2xl font-black text-emerald-600">₹{wealthWithoutFees.toLocaleString("en-IN")}</div>
+          </div>
+        </div>
+        <div className="h-2 w-full rounded-full bg-violet-200/50 overflow-hidden mt-2">
+          <div style={{ width: `${feeDragPct}%` }} className="h-full bg-violet-500" title="Fee drag percentage of total wealth" />
+        </div>
+        <div className="text-[10px] text-[var(--text-muted)]">
+          {feeDragPct}% of projected wealth lost to expense ratios over {tenureYears} years
         </div>
       </div>
     </GlassCard>

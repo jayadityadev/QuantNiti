@@ -14,7 +14,6 @@ import {
   PortfolioData,
   CompoundingTrajectoryData,
   getDemoCompoundingTrajectory,
-  DEMO_HOLDINGS,
 } from "./demoPortfolioData";
 
 export const PortfolioPage: React.FC = () => {
@@ -67,7 +66,7 @@ export const PortfolioPage: React.FC = () => {
       try {
         const response = await request(
           "portfolio-compounding",
-          "/api/portfolio/compounding",
+          apiUrl("/api/portfolio/compounding"),
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -99,101 +98,89 @@ export const PortfolioPage: React.FC = () => {
     };
   }, [activePortfolio?.portfolio_id, activePortfolio?.current_value]);
 
-  // Handle portfolio creation
+  // Handle portfolio creation (persisted to the backend so it survives reloads)
   const handleCreatePortfolio = async (data: {
     name: string;
     capital: number;
     riskPersona: any;
   }) => {
-    // Generate synthetic bluechip holdings proportional to capital
-    const newHoldings = DEMO_HOLDINGS.map((h) => {
-      const targetAllocation = h.weight * data.capital;
-      const shares = Math.max(1, Math.floor(targetAllocation / h.current_price));
-      const invested_amount = shares * h.current_price;
-      const current_value = invested_amount;
-      return {
-        ...h,
-        shares,
-        buy_price: h.current_price,
-        invested_amount,
-        current_value,
-        unrealized_pnl: 0,
-        unrealized_pnl_pct: 0,
-        pnl_1d: Math.round(invested_amount * 0.008),
-        pnl_1d_pct: 0.8,
-      };
-    });
+    try {
+      const created = await request<PortfolioData>(
+        "create-portfolio",
+        apiUrl("/api/v1/portfolios"),
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: data.name,
+            capital: data.capital,
+            horizon: "6M",
+            risk_persona: data.riskPersona || riskPersona,
+          }),
+        }
+      );
 
-    const invested_capital = newHoldings.reduce(
-      (sum, h) => sum + h.invested_amount,
-      0
-    );
-    const cash = Math.max(0, data.capital - invested_capital);
+      if (!created?.portfolio_id) {
+        throw new Error("The server did not return a valid portfolio.");
+      }
 
-    const newPortfolio: PortfolioData = {
-      portfolio_id: `port_${Date.now()}`,
-      name: data.name,
-      initial_capital: data.capital,
-      cash,
-      invested_capital,
-      current_value: invested_capital + cash,
-      total_pnl: 0,
-      total_pnl_pct: 0,
-      pnl_1d: newHoldings.reduce((sum, h) => sum + h.pnl_1d, 0),
-      pnl_1d_pct: 0.8,
-      max_drawdown_pct: 0.0,
-      holdings: newHoldings,
-      benchmark_comparison: {
-        portfolio_return_pct: 0,
-        nifty_return_pct: 0,
-        bank_fd_return_pct: 0,
-        alpha_vs_nifty: 0,
-        alpha_vs_fd: 0,
-      },
-      initial_regime: "BULL_TRENDING",
-      current_regime: "BULL_TRENDING",
-      risk_persona: data.riskPersona || riskPersona,
-      horizon: "6M",
-      created_at: new Date().toISOString(),
-      as_of_date: new Date().toISOString().split("T")[0],
-    };
-
-    const nextPortfolios = [...portfolios, newPortfolio];
-    setPortfolios(nextPortfolios);
-    setActivePortfolioId(newPortfolio.portfolio_id);
+      setPortfolios([
+        created,
+        ...portfolios.filter((p) => p.portfolio_id !== created.portfolio_id),
+      ]);
+      setActivePortfolioId(created.portfolio_id);
+    } catch (err: any) {
+      window.alert(err?.message || "Failed to create portfolio. Please try again.");
+    }
   };
 
-  // Handle portfolio deletion
-  const handleDeleteActivePortfolio = () => {
+  // Handle portfolio deletion (persisted to the backend)
+  const handleDeleteActivePortfolio = async () => {
     if (!activePortfolio) return;
     const confirmDelete = window.confirm(
       `Are you sure you want to delete "${activePortfolio.name}"? This action cannot be undone.`
     );
     if (!confirmDelete) return;
 
-    const remaining = portfolios.filter(
-      (p) => p.portfolio_id !== activePortfolio.portfolio_id
-    );
-    setPortfolios(remaining);
+    try {
+      await request(
+        "delete-portfolio",
+        apiUrl(`/api/v1/portfolios/${encodeURIComponent(activePortfolio.portfolio_id)}`),
+        { method: "DELETE" }
+      );
+
+      const remaining = portfolios.filter(
+        (p) => p.portfolio_id !== activePortfolio.portfolio_id
+      );
+      setPortfolios(remaining);
+      setActivePortfolioId(remaining.length > 0 ? remaining[0].portfolio_id : null);
+    } catch (err: any) {
+      window.alert(err?.message || "Failed to delete portfolio. Please try again.");
+    }
   };
 
-  // Handle regime-shift rebalance
+  // Handle regime-shift rebalance (applies server-side and refreshes holdings)
   const handleApplyRebalance = async () => {
     if (!activePortfolio) return;
     setIsRebalancing(true);
     try {
-      // Simulate/apply rebalancing by normalizing target weights
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      const updatedPortfolios = portfolios.map((p) => {
-        if (p.portfolio_id === activePortfolio.portfolio_id) {
-          return {
-            ...p,
-            rebalance_alert: undefined,
-          };
-        }
-        return p;
-      });
-      setPortfolios(updatedPortfolios);
+      const updated = await request<PortfolioData>(
+        "apply-rebalance",
+        apiUrl(
+          `/api/v1/portfolio/${encodeURIComponent(activePortfolio.portfolio_id)}/rebalance/apply`
+        ),
+        { method: "POST" }
+      );
+
+      if (updated?.portfolio_id) {
+        setPortfolios(
+          portfolios.map((p) =>
+            p.portfolio_id === updated.portfolio_id ? updated : p
+          )
+        );
+      }
+    } catch (err: any) {
+      window.alert(err?.message || "Failed to apply rebalance. Please try again.");
     } finally {
       setIsRebalancing(false);
     }
@@ -207,10 +194,10 @@ export const PortfolioPage: React.FC = () => {
       {/* Top Header bar */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-black text-[var(--text-main)] tracking-tight">
             Portfolio Page
           </h1>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[var(--text-muted)]">
             {hasRealPortfolios
               ? "Live Mark-To-Market and Compounding Engine"
               : "Explore simulated paper portfolios & compounding"}
