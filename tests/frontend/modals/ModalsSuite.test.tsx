@@ -88,6 +88,9 @@ describe("Modals and Overlays Suite", () => {
     expect(screen.getByText("QuantNiti vs Competitors")).toBeInTheDocument();
     expect(screen.getByText("Dynamic Regime Adaptation")).toBeInTheDocument();
     expect(screen.getByText("Broker-Agnostic 1-Click Order Sheet")).toBeInTheDocument();
+    for (const name of ["Groww", "Angel One", "Zerodha Kite", "Smallcase", "Active MFs"]) {
+      expect(screen.getByRole("columnheader", { name })).toBeInTheDocument();
+    }
 
     // Fee drag calculator
     expect(screen.getByText(/10-Year Mutual Fund Fee Drag Calculator/i)).toBeInTheDocument();
