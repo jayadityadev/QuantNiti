@@ -97,11 +97,14 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
     Governance: 78.4,
   };
 
-  const benchmarks = basket?.benchmark_comparisons || [
-    { name: "Bank FD (7.0% p.a.)", return_pct: 3.5, label: "Low Risk Fixed" },
-    { name: "NIFTY 50 Benchmark", return_pct: 6.2, label: "Market Index" },
-    { name: "QuantNiti AI Basket", return_pct: 9.8, label: "Regime-Adaptive", highlight: true },
-  ];
+  // The API sends projected_return_pct / drawdown_risk_label; older payloads used return_pct / label.
+  const benchmarks = (basket?.benchmark_comparisons || []).map((bm: any) => ({
+    name: String(bm.name ?? ""),
+    label: bm.drawdown_risk_label ?? bm.label ?? "",
+    returnPct: Number(bm.projected_return_pct ?? bm.return_pct),
+    gainRupees: Number(bm.projected_gain_rupees),
+    highlight: Boolean(bm.highlight) || /QuantNiti|AI Optimized/i.test(String(bm.name ?? "")),
+  }));
 
   const filteredReviews = SAMPLE_REVIEWS.filter(
     (rev) => activeReviewCategory === "All" || rev.category === activeReviewCategory
@@ -229,29 +232,44 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
         </div>
 
         <div className="space-y-2">
+          {benchmarks.length === 0 && (
+            <p className="text-xs text-[var(--text-muted)] p-3 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)]">
+              Benchmark comparison is unavailable for this basket.
+            </p>
+          )}
           {benchmarks.map((bm: any, i: number) => {
-            const isHighlight = bm.highlight || bm.name.includes("QuantNiti");
+            const hasReturn = Number.isFinite(bm.returnPct);
+            const positive = hasReturn && bm.returnPct >= 0;
             return (
               <div
                 key={bm.name || i}
-                className={`flex items-center justify-between p-3 rounded-xl border ${
-                  isHighlight
+                className={`flex items-center justify-between gap-3 p-3 rounded-xl border ${
+                  bm.highlight
                     ? "bg-violet-500/15 border-violet-500/40 text-[var(--text-main)]"
                     : "bg-[var(--bg-card-subtle)] border-[var(--border-subtle)] text-[var(--text-main)]"
                 }`}
               >
-                <div>
+                <div className="min-w-0">
                   <p className="text-xs font-semibold">{bm.name}</p>
-                  <p className="text-[10px] text-[var(--text-muted)]">{bm.label}</p>
+                  {bm.label && <p className="text-[10px] text-[var(--text-muted)]">{bm.label}</p>}
                 </div>
-                <div className="text-right">
+                <div className="text-right shrink-0">
                   <span
-                    className={`text-xs font-bold ${
-                      isHighlight ? "text-emerald-600 dark:text-emerald-400 text-sm" : "text-[var(--text-muted)]"
+                    className={`block font-bold ${bm.highlight ? "text-sm" : "text-xs"} ${
+                      !hasReturn
+                        ? "text-[var(--text-muted)]"
+                        : positive
+                          ? "text-emerald-600 dark:text-emerald-400"
+                          : "text-rose-600 dark:text-rose-400"
                     }`}
                   >
-                    +{bm.return_pct?.toFixed(1)}%
+                    {hasReturn ? `${positive ? "+" : ""}${bm.returnPct.toFixed(1)}%` : "—"}
                   </span>
+                  {Number.isFinite(bm.gainRupees) && (
+                    <span className="block text-[10px] text-[var(--text-muted)] font-mono">
+                      {bm.gainRupees >= 0 ? "+" : "-"}₹{Math.abs(Math.round(bm.gainRupees)).toLocaleString("en-IN")}
+                    </span>
+                  )}
                 </div>
               </div>
             );

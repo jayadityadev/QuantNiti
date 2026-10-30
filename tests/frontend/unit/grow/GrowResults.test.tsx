@@ -40,9 +40,31 @@ const MOCK_BASKET = {
     pillar_4_fee_savings: "Save ~₹3,400 vs Traditional Funds",
   },
   benchmark_comparisons: [
-    { name: "Bank Fixed Deposit", return_pct: 3.5, label: "Fixed Guarantee" },
-    { name: "NIFTY 50 Benchmark", return_pct: 6.8, label: "Market Index" },
-    { name: "QuantNiti AI Basket", return_pct: 9.4, label: "Regime-Adaptive", highlight: true },
+    // Same shape as BenchmarkComparisonItem from /api/v1/grow/recommend
+    {
+      name: "AI Optimized Basket",
+      projected_return_pct: 9.4,
+      projected_value: 54700,
+      projected_gain_rupees: 4700,
+      drawdown_risk_label: "Guarded (Max 9.4%)",
+      summary: "",
+    },
+    {
+      name: "NIFTY 50 Benchmark",
+      projected_return_pct: 6.8,
+      projected_value: 53400,
+      projected_gain_rupees: 3400,
+      drawdown_risk_label: "Market Risk (~15%–20% Drawdown)",
+      summary: "",
+    },
+    {
+      name: "7% Bank Fixed Deposit",
+      projected_return_pct: 3.5,
+      projected_value: 51750,
+      projected_gain_rupees: 1750,
+      drawdown_risk_label: "Zero Risk (Capital Guaranteed)",
+      summary: "",
+    },
   ],
 };
 
@@ -166,6 +188,10 @@ describe("Grow Guided Flow & Results Seam", () => {
     // Benchmark comparison
     expect(screen.getByText(/Bank Fixed Deposit/i)).toBeInTheDocument();
     expect(screen.getByText(/NIFTY 50 Benchmark/i)).toBeInTheDocument();
+    expect(screen.getByText("+6.8%")).toBeInTheDocument();
+    expect(screen.getByText("+3.5%")).toBeInTheDocument();
+    expect(screen.getByText("+₹4,700")).toBeInTheDocument();
+    expect(screen.getByText("Zero Risk (Capital Guaranteed)")).toBeInTheDocument();
 
     // Reviews
     expect(screen.getByText(/Community Reviews & Legitimacy/i)).toBeInTheDocument();

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Check, X, Layers, Calculator, ArrowRight } from "lucide-react";
+import { Check, X, Minus, Layers, Calculator, ArrowRight } from "lucide-react";
 import { ModalSheet } from "../ui/ModalSheet";
 import { PrimaryButton } from "../ui/PrimaryButton";
 
@@ -9,48 +9,78 @@ interface CompetitorBenchmarkModalProps {
   onNavigateToGrow?: () => void;
 }
 
-const COMPARISON_ROWS = [
+type Support = "yes" | "partial" | "no";
+
+const COMPETITORS = [
+  { key: "groww", label: "Groww" },
+  { key: "angelone", label: "Angel One" },
+  { key: "kite", label: "Zerodha Kite" },
+  { key: "smallcase", label: "Smallcase" },
+  { key: "activeMfs", label: "Active MFs" },
+] as const;
+
+type CompetitorKey = (typeof COMPETITORS)[number]["key"];
+
+const COMPARISON_ROWS: {
+  feature: string;
+  detail: string;
+  quantniti: Support;
+  competitors: Record<CompetitorKey, Support>;
+}[] = [
   {
     feature: "Dynamic Regime Adaptation",
-    quantniti: true,
-    smallcase: false,
-    groww: false,
-    mutualFunds: false,
     detail: "Switches allocations during Bull, Volatile, or Correction regimes automatically.",
+    quantniti: "yes",
+    // Active funds do shift allocations, but at the manager's discretion rather than a disclosed rule.
+    competitors: { groww: "no", angelone: "no", kite: "no", smallcase: "no", activeMfs: "partial" },
   },
   {
     feature: "4-Pillar Explainable AI Trust Card",
-    quantniti: true,
-    smallcase: false,
-    groww: false,
-    mutualFunds: false,
     detail: "Complete transparency into data sources, training recency, and Monte Carlo envelope.",
+    quantniti: "yes",
+    competitors: { groww: "no", angelone: "no", kite: "no", smallcase: "no", activeMfs: "no" },
   },
   {
     feature: "Broker-Agnostic 1-Click Order Sheet",
-    quantniti: true,
-    smallcase: false,
-    groww: false,
-    mutualFunds: false,
     detail: "Exports Zerodha CSV / Groww text orders. You keep assets in your own demat account.",
+    quantniti: "yes",
+    // Smallcase routes baskets through a fixed list of partner brokers.
+    competitors: { groww: "no", angelone: "no", kite: "no", smallcase: "partial", activeMfs: "no" },
   },
   {
     feature: "Zero Commission / No Hidden Expense Ratio",
-    quantniti: true,
-    smallcase: true,
-    groww: true,
-    mutualFunds: false,
     detail: "Mutual fund TERs silently consume 1.0% to 2.2% every year regardless of performance.",
+    quantniti: "yes",
+    // Direct stocks carry no TER, but Groww and Angel One charge delivery brokerage
+    // (₹20 or 0.1% per order) and many smallcases charge a subscription fee.
+    competitors: { groww: "partial", angelone: "partial", kite: "yes", smallcase: "partial", activeMfs: "no" },
   },
   {
     feature: "Real-Time 10Y GBM Compounding Simulation",
-    quantniti: true,
-    smallcase: false,
-    groww: false,
-    mutualFunds: false,
     detail: "Monte Carlo quantile cones (Q10, Q50, Q90) vs 7% Bank FD hurdle.",
+    quantniti: "yes",
+    competitors: { groww: "no", angelone: "no", kite: "no", smallcase: "no", activeMfs: "no" },
   },
 ];
+
+const SupportIcon: React.FC<{ value: Support; highlight?: boolean }> = ({ value, highlight = false }) => {
+  if (value === "yes") {
+    return highlight ? (
+      <span
+        title="Yes"
+        className="inline-flex w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 items-center justify-center"
+      >
+        <Check className="w-3.5 h-3.5" />
+      </span>
+    ) : (
+      <Check aria-label="Yes" className="w-3.5 h-3.5 mx-auto text-emerald-600/80 dark:text-emerald-400/80" />
+    );
+  }
+  if (value === "partial") {
+    return <Minus aria-label="Partial" className="w-3.5 h-3.5 mx-auto text-amber-500" />;
+  }
+  return <X aria-label="No" className="w-3.5 h-3.5 mx-auto text-slate-300 dark:text-slate-600" />;
+};
 
 export const CompetitorBenchmarkModal: React.FC<CompetitorBenchmarkModalProps> = ({
   isOpen,
@@ -86,63 +116,58 @@ export const CompetitorBenchmarkModal: React.FC<CompetitorBenchmarkModalProps> =
       <div className="space-y-5 pt-1">
         {/* Comparison Matrix Table */}
         <div className="overflow-x-auto rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-card-subtle)]">
-          <table className="w-full text-left text-xs border-collapse">
+          <table className="table-fixed w-full min-w-[620px] text-left text-xs border-collapse">
+            <colgroup>
+              <col className="w-[170px]" />
+              <col className="w-[78px]" />
+              {COMPETITORS.map((c) => (
+                <col key={c.key} />
+              ))}
+            </colgroup>
             <thead>
               <tr className="border-b border-[var(--border-subtle)] bg-[var(--bg-primary)] text-[var(--text-muted)]">
-                <th className="py-2.5 px-3">Capability</th>
+                <th className="py-2.5 px-3 sticky left-0 z-10 bg-[var(--bg-primary)]">Capability</th>
                 <th className="py-2.5 px-2 text-center text-accent font-bold bg-violet-500/10">
                   QuantNiti
                 </th>
-                <th className="py-2.5 px-2 text-center">Smallcase</th>
-                <th className="py-2.5 px-2 text-center">Groww</th>
-                <th className="py-2.5 px-2 text-center">Active MFs</th>
+                {COMPETITORS.map((c) => (
+                  <th key={c.key} className="py-2.5 px-2 text-center font-semibold leading-tight">
+                    {c.label}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--border-subtle)]">
               {COMPARISON_ROWS.map((row, idx) => (
                 <tr key={idx} className="hover:bg-violet-500/10 transition-colors">
-                  <td className="py-3 px-3">
+                  <td className="py-3 px-3 sticky left-0 z-10 bg-[var(--bg-card-subtle)]">
                     <span className="font-semibold text-[var(--text-main)] block">{row.feature}</span>
-                    <span className="text-[10px] text-[var(--text-muted)] block mt-0.5 line-clamp-1">
-                      {row.detail}
-                    </span>
+                    <span className="text-[10px] text-[var(--text-muted)] block mt-0.5">{row.detail}</span>
                   </td>
                   <td className="py-3 px-2 text-center bg-violet-500/10">
-                    {row.quantniti ? (
-                      <span className="inline-flex w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 items-center justify-center">
-                        <Check className="w-3.5 h-3.5" />
-                      </span>
-                    ) : (
-                      <span className="inline-flex w-5 h-5 rounded-full bg-rose-500/20 text-rose-600 dark:text-rose-300 items-center justify-center">
-                        <X className="w-3.5 h-3.5" />
-                      </span>
-                    )}
+                    <SupportIcon value={row.quantniti} highlight />
                   </td>
-                  <td className="py-3 px-2 text-center">
-                    {row.smallcase ? (
-                      <Check className="w-3.5 h-3.5 mx-auto text-[var(--text-muted)]" />
-                    ) : (
-                      <X className="w-3.5 h-3.5 mx-auto text-slate-300 dark:text-slate-600" />
-                    )}
-                  </td>
-                  <td className="py-3 px-2 text-center">
-                    {row.groww ? (
-                      <Check className="w-3.5 h-3.5 mx-auto text-[var(--text-muted)]" />
-                    ) : (
-                      <X className="w-3.5 h-3.5 mx-auto text-slate-300 dark:text-slate-600" />
-                    )}
-                  </td>
-                  <td className="py-3 px-2 text-center">
-                    {row.mutualFunds ? (
-                      <Check className="w-3.5 h-3.5 mx-auto text-[var(--text-muted)]" />
-                    ) : (
-                      <X className="w-3.5 h-3.5 mx-auto text-slate-300 dark:text-slate-600" />
-                    )}
-                  </td>
+                  {COMPETITORS.map((c) => (
+                    <td key={c.key} className="py-3 px-2 text-center">
+                      <SupportIcon value={row.competitors[c.key]} />
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 -mt-3 px-1 text-[10px] text-[var(--text-muted)]">
+          <span className="flex items-center gap-1">
+            <Check className="w-3 h-3 text-emerald-500" /> Supported
+          </span>
+          <span className="flex items-center gap-1">
+            <Minus className="w-3 h-3 text-amber-500" /> Partial / depends on plan
+          </span>
+          <span className="flex items-center gap-1">
+            <X className="w-3 h-3 text-slate-400" /> Not offered
+          </span>
+          <span className="ml-auto">Based on publicly listed features; may change.</span>
         </div>
 
         {/* Dynamic Fee Drag Calculator */}
