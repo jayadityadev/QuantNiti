@@ -1,11 +1,15 @@
 """Market Data Service layer coordinating Providers, Cleaner, and Local Cache."""
 
+import logging
+import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 import pandas as pd
 
 from app.core.config import settings
 from app.core.models import StockQuote, UniverseStock, SyncResult
+from app.core.validation import validate_date_range
 from app.data.cache import ParquetMarketCache
 from app.data.cleaner import align_to_trading_calendar, calculate_returns, validate_ohlcv_dataframe
 from app.data.provider import MarketDataProvider, MockDataProvider, YahooFinanceProvider
@@ -16,6 +20,12 @@ from app.universe import (
     normalize_symbol,
     _SYMBOL_MAP,
 )
+
+logger = logging.getLogger(__name__)
+
+# Live quotes are reused for this long so list views (Explore, Top Movers) don't
+# make one blocking provider round-trip per symbol on every request.
+QUOTE_TTL_SECONDS = 60.0
 
 
 class MarketDataService:
@@ -30,6 +40,7 @@ class MarketDataService:
         self.provider = provider or YahooFinanceProvider()
         self.cache = cache or ParquetMarketCache()
         self.auto_cache = auto_cache
+        self._quote_cache: Dict[str, Tuple[float, StockQuote]] = {}
 
     def get_universe(
         self,
@@ -69,6 +80,7 @@ class MarketDataService:
 
         Loads from local cache if valid; otherwise fetches from provider and updates cache.
         """
+        validate_date_range(start_date, end_date)
         canonical = normalize_symbol(symbol)
         df: Optional[pd.DataFrame] = None
 
@@ -77,13 +89,21 @@ class MarketDataService:
 
         if df is None or df.empty:
             df = self.provider.fetch_history(canonical, start_date=start_date, end_date=end_date)
+            used_synthetic_fallback = False
             # Fallback to mock data if external provider is offline, rate-limited, or symbol delisted
             if (df is None or df.empty) and isinstance(self.provider, YahooFinanceProvider):
+                used_synthetic_fallback = True
+                logger.warning(
+                    "No live market data for %s; serving synthetic fallback (not cached).",
+                    canonical,
+                )
                 df = MockDataProvider().fetch_history(canonical, start_date=start_date, end_date=end_date)
 
             if df is not None and not df.empty:
                 df = calculate_returns(df)
-                if self.auto_cache:
+                # Never persist synthetic fallback rows: doing so would poison the
+                # cache and keep serving fabricated prices as if they were live.
+                if self.auto_cache and not used_synthetic_fallback:
                     self.cache.save_history(canonical, df)
 
         if df is None or df.empty:
@@ -115,11 +135,22 @@ class MarketDataService:
     def get_latest_quote(self, symbol: str) -> StockQuote:
         """Retrieve latest real-time/EOD quote for a ticker."""
         canonical = normalize_symbol(symbol)
+        cached = self._quote_cache.get(canonical)
+        if cached and time.monotonic() - cached[0] < QUOTE_TTL_SECONDS:
+            return cached[1]
         try:
             quote_dict = self.provider.fetch_quote(canonical)
         except Exception:
-            quote_dict = MockDataProvider().fetch_quote(canonical)
-        return StockQuote(**quote_dict)
+            # Synthetic fallback is never cached so the next request retries the provider.
+            return StockQuote(**MockDataProvider().fetch_quote(canonical))
+        quote = StockQuote(**quote_dict)
+        self._quote_cache[canonical] = (time.monotonic(), quote)
+        return quote
+
+    def prefetch_quotes(self, symbols: Iterable[str], max_workers: int = 8) -> None:
+        """Warm the quote cache concurrently; provider calls are network-bound."""
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            list(pool.map(self.get_latest_quote, symbols))
 
     def get_aligned_dataset(
         self,

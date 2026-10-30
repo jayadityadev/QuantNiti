@@ -110,9 +110,10 @@ class MultiHorizonForecaster:
             cones[name] = HorizonForecastCone(
                 horizon=name,
                 days=days,
-                pessimistic_pct=round(q10, 4),
-                base_pct=round(q50, 4),
-                optimistic_pct=round(q90, 4),
+                # *_pct fields are percentages (12.5 = +12.5%), like every other *_pct in the API
+                pessimistic_pct=round(q10 * 100.0, 2),
+                base_pct=round(q50 * 100.0, 2),
+                optimistic_pct=round(q90 * 100.0, 2),
                 pessimistic_price=p10,
                 base_price=p50,
                 optimistic_price=p90,

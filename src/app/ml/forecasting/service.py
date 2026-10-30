@@ -23,6 +23,7 @@ from app.ml.regime.service import RegimeService
 from app.universe import (
     get_esg_badge,
     get_esg_score_for_symbol,
+    get_market_cap_category,
     get_sector_for_symbol,
     get_universe_metadata,
     get_universe_symbols,
@@ -30,6 +31,37 @@ from app.universe import (
     normalize_symbol,
     _SYMBOL_MAP,
 )
+
+
+# Common names for the canonical sectors in app.universe.SECTORS (all lowercase).
+_SECTOR_ALIASES = {
+    "banking": "financial services",
+    "finance": "financial services",
+    "it": "information technology",
+    "tech": "information technology",
+    "technology": "information technology",
+    "oil": "energy",
+    "power": "energy",
+    "auto": "automobile",
+    "pharma": "healthcare",
+    "fmcg": "consumer goods",
+    "consumer": "consumer goods",
+    "retail": "consumer goods",
+    "metal": "metals & mining",
+    "metals": "metals & mining",
+    "mining": "metals & mining",
+    "defence": "defense",
+    "commodity": "commodities",
+    "gold": "commodities",
+    "silver": "commodities",
+    "infra": "infrastructure",
+    "telecommunication": "telecom",
+}
+
+
+def _resolve_sector_alias(sector: str) -> str:
+    key = sector.strip().lower()
+    return _SECTOR_ALIASES.get(key, key)
 
 
 class ExploreService:
@@ -200,6 +232,7 @@ class ExploreService:
         all_meta = get_universe_metadata(include_benchmarks=False)
         index_df = self.market_service.get_history("^NSEI")
         current_regime = self.regime_service.get_current_regime().regime
+        self.market_service.prefetch_quotes(item["symbol"] for item in all_meta)
 
         results: List[ExploreStockSummary] = []
 
@@ -214,33 +247,9 @@ class ExploreService:
             if asset_class and st_asset_class.upper() != asset_class.strip().upper():
                 continue
 
-            # Filter by sector / theme with normalized category mapping
-            if sector:
-                s_lower = sector.strip().lower()
-                st_lower = st_sector.lower()
-                matched = False
-                if s_lower in ("banking", "finance", "financial services"):
-                    matched = "financial" in st_lower or "bank" in st_lower
-                elif s_lower in ("technology", "it", "tech", "information technology"):
-                    matched = "tech" in st_lower or "information" in st_lower
-                elif s_lower in ("energy", "power", "oil", "energy & oil", "power & energy"):
-                    matched = "energy" in st_lower or "power" in st_lower or "oil" in st_lower
-                elif s_lower in ("auto", "automobile"):
-                    matched = "auto" in st_lower
-                elif s_lower in ("healthcare", "pharma"):
-                    matched = "health" in st_lower or "pharma" in st_lower
-                elif s_lower in ("fmcg", "consumer", "consumer goods", "retail"):
-                    matched = "consumer" in st_lower or "fmcg" in st_lower
-                elif s_lower in ("metals", "metal", "mining", "metals & mining"):
-                    matched = "metal" in st_lower or "mining" in st_lower
-                elif s_lower in ("commodities", "commodity"):
-                    matched = "commodit" in st_lower or st_asset_class == "COMMODITY_ETF"
-                elif s_lower == "defense":
-                    matched = "defense" in st_lower
-                else:
-                    matched = (s_lower in st_lower) or (st_lower == s_lower)
-                if not matched:
-                    continue
+            # Filter by sector: aliases resolve to one canonical sector, then match exactly
+            if sector and st_sector.lower() != _resolve_sector_alias(sector):
+                continue
 
             # Filter by search
             if search:
@@ -274,6 +283,7 @@ class ExploreService:
                         regime_badge=suit.badge,
                         volume=quote.volume,
                         asset_class=st_asset_class,
+                        market_cap=get_market_cap_category(sym),
                         esg_composite=esg_comp,
                         esg_badge=esg_badge,
                     )

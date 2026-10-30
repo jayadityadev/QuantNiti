@@ -16,6 +16,13 @@ BENCHMARK_SYMBOLS: Set[str] = {
     "^INDIAVIX",  # India Volatility Index (Regime Detection)
 }
 
+# Legacy tickers superseded by corporate actions (demergers/renames). Requests for
+# these still resolve to the currently listed symbol so old links keep working.
+LEGACY_SYMBOL_ALIASES: Dict[str, str] = {
+    # Tata Motors demerged in 2025; the commercial-vehicles listing trades as TMCV.
+    "TATAMOTORS": "TMCV",
+}
+
 BENCHMARK_METADATA: List[Dict[str, Any]] = [
     {
         "symbol": "^NSEI",
@@ -31,25 +38,46 @@ BENCHMARK_METADATA: List[Dict[str, Any]] = [
     },
 ]
 
+# Canonical sector taxonomy. Every universe asset carries exactly one of these, so
+# Explore filters and profile peer groups are exact matches with no overlap.
+SECTORS: List[str] = [
+    "Financial Services",
+    "Information Technology",
+    "Energy",
+    "Automobile",
+    "Healthcare",
+    "Consumer Goods",
+    "Metals & Mining",
+    "Defense",
+    "Infrastructure",
+    "Telecom",
+    "Commodities",
+]
+
+# SEBI/AMFI market-cap buckets (Large = top 100 by market cap, Mid = 101-250).
+# Everything in the equity universe is Large except these; ETFs have no bucket.
+# Refresh against AMFI's half-yearly list (published each January and July).
+MID_CAP_SYMBOLS: Set[str] = {"BDL", "COCHINSHIP"}
+
 # Canonical NIFTY 50 constituents list (50 large-cap Indian companies)
 NIFTY50_CONSTITUENTS: List[Dict[str, Any]] = [
     {"symbol": "ADANIENT", "name": "Adani Enterprises Ltd.", "sector": "Metals & Mining"},
-    {"symbol": "ADANIPORTS", "name": "Adani Ports and Special Economic Zone Ltd.", "sector": "Services & Logistics"},
+    {"symbol": "ADANIPORTS", "name": "Adani Ports and Special Economic Zone Ltd.", "sector": "Infrastructure"},
     {"symbol": "APOLLOHOSP", "name": "Apollo Hospitals Enterprise Ltd.", "sector": "Healthcare"},
     {"symbol": "ASIANPAINT", "name": "Asian Paints Ltd.", "sector": "Consumer Goods"},
     {"symbol": "AXISBANK", "name": "Axis Bank Ltd.", "sector": "Financial Services"},
     {"symbol": "BAJAJ-AUTO", "name": "Bajaj Auto Ltd.", "sector": "Automobile"},
     {"symbol": "BAJFINANCE", "name": "Bajaj Finance Ltd.", "sector": "Financial Services"},
     {"symbol": "BAJAJFINSV", "name": "Bajaj Finserv Ltd.", "sector": "Financial Services"},
-    {"symbol": "BEL", "name": "Bharat Electronics Ltd.", "sector": "Capital Goods"},
-    {"symbol": "BHARTIARTL", "name": "Bharti Airtel Ltd.", "sector": "Telecommunication"},
-    {"symbol": "BPCL", "name": "Bharat Petroleum Corporation Ltd.", "sector": "Energy & Oil"},
+    {"symbol": "BEL", "name": "Bharat Electronics Ltd.", "sector": "Defense"},
+    {"symbol": "BHARTIARTL", "name": "Bharti Airtel Ltd.", "sector": "Telecom"},
+    {"symbol": "BPCL", "name": "Bharat Petroleum Corporation Ltd.", "sector": "Energy"},
     {"symbol": "BRITANNIA", "name": "Britannia Industries Ltd.", "sector": "Consumer Goods"},
     {"symbol": "CIPLA", "name": "Cipla Ltd.", "sector": "Healthcare"},
-    {"symbol": "COALINDIA", "name": "Coal India Ltd.", "sector": "Energy & Mining"},
+    {"symbol": "COALINDIA", "name": "Coal India Ltd.", "sector": "Energy"},
     {"symbol": "DRREDDY", "name": "Dr. Reddy's Laboratories Ltd.", "sector": "Healthcare"},
     {"symbol": "EICHERMOT", "name": "Eicher Motors Ltd.", "sector": "Automobile"},
-    {"symbol": "GRASIM", "name": "Grasim Industries Ltd.", "sector": "Materials & Chemicals"},
+    {"symbol": "GRASIM", "name": "Grasim Industries Ltd.", "sector": "Infrastructure"},
     {"symbol": "HCLTECH", "name": "HCL Technologies Ltd.", "sector": "Information Technology"},
     {"symbol": "HDFCBANK", "name": "HDFC Bank Ltd.", "sector": "Financial Services"},
     {"symbol": "HDFCLIFE", "name": "HDFC Life Insurance Company Ltd.", "sector": "Financial Services"},
@@ -62,26 +90,26 @@ NIFTY50_CONSTITUENTS: List[Dict[str, Any]] = [
     {"symbol": "ITC", "name": "ITC Ltd.", "sector": "Consumer Goods"},
     {"symbol": "JSWSTEEL", "name": "JSW Steel Ltd.", "sector": "Metals & Mining"},
     {"symbol": "KOTAKBANK", "name": "Kotak Mahindra Bank Ltd.", "sector": "Financial Services"},
-    {"symbol": "LT", "name": "Larsen & Toubro Ltd.", "sector": "Construction & Engineering"},
+    {"symbol": "LT", "name": "Larsen & Toubro Ltd.", "sector": "Infrastructure"},
     {"symbol": "M&M", "name": "Mahindra & Mahindra Ltd.", "sector": "Automobile"},
     {"symbol": "MARUTI", "name": "Maruti Suzuki India Ltd.", "sector": "Automobile"},
     {"symbol": "NESTLEIND", "name": "Nestle India Ltd.", "sector": "Consumer Goods"},
-    {"symbol": "NTPC", "name": "NTPC Ltd.", "sector": "Power & Energy"},
-    {"symbol": "ONGC", "name": "Oil & Natural Gas Corporation Ltd.", "sector": "Energy & Oil"},
-    {"symbol": "POWERGRID", "name": "Power Grid Corporation of India Ltd.", "sector": "Power & Energy"},
-    {"symbol": "RELIANCE", "name": "Reliance Industries Ltd.", "sector": "Energy & Oil"},
+    {"symbol": "NTPC", "name": "NTPC Ltd.", "sector": "Energy"},
+    {"symbol": "ONGC", "name": "Oil & Natural Gas Corporation Ltd.", "sector": "Energy"},
+    {"symbol": "POWERGRID", "name": "Power Grid Corporation of India Ltd.", "sector": "Energy"},
+    {"symbol": "RELIANCE", "name": "Reliance Industries Ltd.", "sector": "Energy"},
     {"symbol": "SBILIFE", "name": "SBI Life Insurance Company Ltd.", "sector": "Financial Services"},
     {"symbol": "SBIN", "name": "State Bank of India", "sector": "Financial Services"},
     {"symbol": "SHRIRAMFIN", "name": "Shriram Finance Ltd.", "sector": "Financial Services"},
     {"symbol": "SUNPHARMA", "name": "Sun Pharmaceutical Industries Ltd.", "sector": "Healthcare"},
     {"symbol": "TATACONSUM", "name": "Tata Consumer Products Ltd.", "sector": "Consumer Goods"},
-    {"symbol": "TATAMOTORS", "name": "Tata Motors Ltd.", "sector": "Automobile"},
+    {"symbol": "TMCV", "name": "Tata Motors Ltd. (Commercial Vehicles)", "sector": "Automobile"},
     {"symbol": "TATASTEEL", "name": "Tata Steel Ltd.", "sector": "Metals & Mining"},
     {"symbol": "TCS", "name": "Tata Consultancy Services Ltd.", "sector": "Information Technology"},
     {"symbol": "TECHM", "name": "Tech Mahindra Ltd.", "sector": "Information Technology"},
     {"symbol": "TITAN", "name": "Titan Company Ltd.", "sector": "Consumer Goods"},
-    {"symbol": "TRENT", "name": "Trent Ltd.", "sector": "Consumer Retail"},
-    {"symbol": "ULTRACEMCO", "name": "UltraTech Cement Ltd.", "sector": "Materials & Construction"},
+    {"symbol": "TRENT", "name": "Trent Ltd.", "sector": "Consumer Goods"},
+    {"symbol": "ULTRACEMCO", "name": "UltraTech Cement Ltd.", "sector": "Infrastructure"},
     {"symbol": "WIPRO", "name": "Wipro Ltd.", "sector": "Information Technology"},
 ]
 
@@ -140,31 +168,31 @@ METALS_CONSTITUENTS: List[Dict[str, Any]] = [
     {
         "symbol": "TATASTEEL",
         "name": "Tata Steel Ltd.",
-        "sector": "Metals",
+        "sector": "Metals & Mining",
         "asset_class": AssetClass.SECTORAL,
     },
     {
         "symbol": "HINDALCO",
         "name": "Hindalco Industries Ltd.",
-        "sector": "Metals",
+        "sector": "Metals & Mining",
         "asset_class": AssetClass.SECTORAL,
     },
     {
         "symbol": "JSWSTEEL",
         "name": "JSW Steel Ltd.",
-        "sector": "Metals",
+        "sector": "Metals & Mining",
         "asset_class": AssetClass.SECTORAL,
     },
     {
         "symbol": "VEDL",
         "name": "Vedanta Ltd.",
-        "sector": "Metals",
+        "sector": "Metals & Mining",
         "asset_class": AssetClass.SECTORAL,
     },
     {
         "symbol": "JINDALSTEL",
         "name": "Jindal Steel & Power Ltd.",
-        "sector": "Metals",
+        "sector": "Metals & Mining",
         "asset_class": AssetClass.SECTORAL,
     },
 ]
@@ -259,7 +287,7 @@ def normalize_symbol(symbol: str) -> str:
         return cleaned
     if cleaned.endswith(".NS") or cleaned.endswith(".BO"):
         cleaned = cleaned[:-3]
-    return cleaned
+    return LEGACY_SYMBOL_ALIASES.get(cleaned, cleaned)
 
 
 def denormalize_symbol(symbol: str, provider: str = "yahoo") -> str:
@@ -335,6 +363,15 @@ def get_sector_for_symbol(symbol: str) -> Optional[str]:
     canonical = normalize_symbol(symbol)
     meta = _SYMBOL_MAP.get(canonical)
     return meta["sector"] if meta else None
+
+
+def get_market_cap_category(symbol: str) -> Optional[str]:
+    """Return 'Large' or 'Mid' for equities, or None for ETFs, indices and unknown tickers."""
+    canonical = normalize_symbol(symbol)
+    meta = _SYMBOL_MAP.get(canonical)
+    if not meta or meta.get("is_benchmark") or meta.get("asset_class") == AssetClass.COMMODITY_ETF:
+        return None
+    return "Mid" if canonical in MID_CAP_SYMBOLS else "Large"
 
 
 def is_valid_symbol(symbol: str) -> bool:

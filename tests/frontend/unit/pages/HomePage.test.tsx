@@ -15,9 +15,9 @@ describe("HomePage Component Seam (Ticket 06)", () => {
         description: "Macro momentum strong with positive FII flows and low volatility.",
       },
       allExploreStocks: [
-        { symbol: "RELIANCE", name: "Reliance Industries", sector: "Energy & Oil", current_price: 2980.5, growth_6m_base_pct: 18.2, day_change_pct: 1.2 },
-        { symbol: "TCS", name: "Tata Consultancy Services", sector: "Information Technology", current_price: 4120.0, growth_6m_base_pct: 14.5, day_change_pct: -0.4 },
-        { symbol: "HDFCBANK", name: "HDFC Bank", sector: "Financial Services", current_price: 1680.0, growth_6m_base_pct: 12.1, day_change_pct: 0.8 },
+        { symbol: "RELIANCE", name: "Reliance Industries", sector: "Energy", market_cap: "Large", current_price: 2980.5, growth_6m_base_pct: 18.2, day_change_pct: 1.2, volume: 9000000 },
+        { symbol: "TCS", name: "Tata Consultancy Services", sector: "Information Technology", market_cap: "Large", current_price: 4120.0, growth_6m_base_pct: 14.5, day_change_pct: -0.4, volume: 3000000 },
+        { symbol: "HDFCBANK", name: "HDFC Bank", sector: "Financial Services", market_cap: "Large", current_price: 1680.0, growth_6m_base_pct: 12.1, day_change_pct: 0.8, volume: 12000000 },
       ],
       literacyCards: [
         { key: "regime-investing", title: "Market Regimes 101", summary: "Learn how market regimes protect capital.", category: "Strategy", read_time_min: 3 },
@@ -83,19 +83,24 @@ describe("HomePage Component Seam (Ticket 06)", () => {
     expect(screen.queryByText(/Start Your Investment Journey/i)).not.toBeInTheDocument();
   });
 
-  it("renders Top Recommendations with regime scored stocks and link to Explore", () => {
+  it("renders Top Movers grouped by market cap with signed day change and link to Explore", () => {
     renderHomePage();
-    expect(screen.getByText(/Top Regime Picks/i)).toBeInTheDocument();
+    expect(screen.getByText(/Top Movers/i)).toBeInTheDocument();
+    expect(screen.getByText("Large Cap")).toBeInTheDocument();
     expect(screen.getAllByText("RELIANCE").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("TCS").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByRole("link", { name: /view all 50/i })).toBeInTheDocument();
+    expect(screen.getAllByText("+1.20%").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("-0.40%").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("Most Traded (Volume)")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /view all stocks/i })).toBeInTheDocument();
   });
 
   it("renders Learning Hub with progress and interactive concept cards", () => {
     renderHomePage();
-    expect(screen.getByText(/Financial Learning Hub/i)).toBeInTheDocument();
-    expect(screen.getByText(/Market Regimes 101/i)).toBeInTheDocument();
-    expect(screen.getByText(/Understanding Sharpe/i)).toBeInTheDocument();
+    expect(screen.getByText(/Stock Market Learning Hub/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Stock Market for Beginners/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/Risk Management in the Stock Market/i).length).toBeGreaterThanOrEqual(1);
+    // Every lesson card shows the real YouTube thumbnail for its video
+    expect(document.querySelector('img[src="https://i.ytimg.com/vi/mhHtFoTWaeQ/hqdefault.jpg"]')).not.toBeNull();
   });
 
   it("renders Compounding Visualizer with interactive sliders and calculated output", () => {
@@ -109,7 +114,7 @@ describe("HomePage Component Seam (Ticket 06)", () => {
 
   it("renders Video Facades section with lazy thumbnail cards", () => {
     renderHomePage();
-    expect(screen.getByText(/Video Explainers/i)).toBeInTheDocument();
+    expect(screen.getByText(/Featured Video Lessons/i)).toBeInTheDocument();
     expect(screen.getAllByTestId("video-facade-card").length).toBeGreaterThanOrEqual(2);
   });
 });

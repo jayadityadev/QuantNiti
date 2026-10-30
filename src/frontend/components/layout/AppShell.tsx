@@ -20,15 +20,18 @@ export function AppShell() {
 
   // Keep route pathname in sync with activeTab in Zustand store and abort in-flight requests from prior tab
   useEffect(() => {
-    // Abort all active controllers on tab switch
-    abortRegistry.abortAll("tab-switch");
-    clearActiveAsyncKeys?.();
-
     const rawPath = location.pathname.replace(/^\//, "").toLowerCase();
     const validTabs: NavTab[] = ["home", "explore", "grow", "portfolio"];
     if (validTabs.includes(rawPath as NavTab)) {
       setActiveTab(rawPath as NavTab);
     }
+
+    // Abort the outgoing tab's requests in cleanup. Aborting in the effect body would
+    // also kill the incoming page's fetches, because child effects run before this one.
+    return () => {
+      abortRegistry.abortAll("tab-switch");
+      clearActiveAsyncKeys?.();
+    };
   }, [location.pathname, setActiveTab, clearActiveAsyncKeys]);
 
   // Motion variants respecting reduced motion preferences

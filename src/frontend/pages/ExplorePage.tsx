@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+﻿import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Search, X, Compass, Layers } from "lucide-react";
 import { StockCard, ExploreStockItem } from "../components/explore/StockCard";
@@ -10,166 +10,41 @@ import { abortRegistry } from "../services/abortRegistry";
 import { ChipButton } from "../components/ui/ChipButton";
 import { apiUrl } from "../config";
 
-const SECTORS = [
-  "All",
-  "Banking",
-  "Technology",
-  "Energy",
-  "Automobile",
-  "Healthcare",
-  "Consumer Goods",
-  "Metals",
-  "Defense",
-  "Commodities",
+// Chip label -> canonical sector served by the API (see SECTORS in src/app/universe.py)
+const SECTORS: { label: string; sector: string | null }[] = [
+  { label: "All", sector: null },
+  { label: "Banking & Finance", sector: "Financial Services" },
+  { label: "Technology", sector: "Information Technology" },
+  { label: "Energy", sector: "Energy" },
+  { label: "Automobile", sector: "Automobile" },
+  { label: "Healthcare", sector: "Healthcare" },
+  { label: "Consumer Goods", sector: "Consumer Goods" },
+  { label: "Metals & Mining", sector: "Metals & Mining" },
+  { label: "Defense", sector: "Defense" },
+  { label: "Infrastructure", sector: "Infrastructure" },
+  { label: "Telecom", sector: "Telecom" },
+  { label: "Gold & Silver", sector: "Commodities" },
 ];
 
-const DEFAULT_STOCKS: ExploreStockItem[] = [
-  {
-    symbol: "RELIANCE.NS",
-    name: "Reliance Industries",
-    sector: "Energy",
-    current_price: 2980.5,
-    day_change: 35.2,
-    day_change_pct: 1.19,
-    growth_6m_base_pct: 14.5,
-    growth_6m_optimistic_pct: 22.0,
-    growth_6m_pessimistic_pct: 4.2,
-    regime_suitability_score: 88.5,
-    regime_badge: "Strong Buy",
-    volume: 12500000,
-    asset_class: "EQUITY",
-    esg_composite: 74.0,
-    esg_badge: "Leader",
-  },
-  {
-    symbol: "TCS.NS",
-    name: "Tata Consultancy Services",
-    sector: "Technology",
-    current_price: 4120.0,
-    day_change: -18.5,
-    day_change_pct: -0.45,
-    growth_6m_base_pct: 11.2,
-    growth_6m_optimistic_pct: 18.4,
-    growth_6m_pessimistic_pct: 2.1,
-    regime_suitability_score: 72.0,
-    regime_badge: "Hold",
-    volume: 3800000,
-    asset_class: "EQUITY",
-    esg_composite: 82.5,
-    esg_badge: "Leader",
-  },
-  {
-    symbol: "HDFCBANK.NS",
-    name: "HDFC Bank",
-    sector: "Banking",
-    current_price: 1640.25,
-    day_change: 8.75,
-    day_change_pct: 0.54,
-    growth_6m_base_pct: 13.8,
-    growth_6m_optimistic_pct: 20.5,
-    growth_6m_pessimistic_pct: 3.5,
-    regime_suitability_score: 82.0,
-    regime_badge: "Strong Buy",
-    volume: 18200000,
-    asset_class: "EQUITY",
-    esg_composite: 78.0,
-    esg_badge: "Leader",
-  },
-  {
-    symbol: "INFY.NS",
-    name: "Infosys Ltd",
-    sector: "Technology",
-    current_price: 1845.5,
-    day_change: 14.2,
-    day_change_pct: 0.78,
-    growth_6m_base_pct: 12.4,
-    growth_6m_optimistic_pct: 19.8,
-    growth_6m_pessimistic_pct: 3.0,
-    regime_suitability_score: 78.0,
-    regime_badge: "Strong Buy",
-    volume: 8200000,
-    asset_class: "EQUITY",
-    esg_composite: 85.0,
-    esg_badge: "Leader",
-  },
-  {
-    symbol: "ICICIBANK.NS",
-    name: "ICICI Bank",
-    sector: "Banking",
-    current_price: 1210.8,
-    day_change: 11.4,
-    day_change_pct: 0.95,
-    growth_6m_base_pct: 15.1,
-    growth_6m_optimistic_pct: 23.5,
-    growth_6m_pessimistic_pct: 5.2,
-    regime_suitability_score: 85.0,
-    regime_badge: "Strong Buy",
-    volume: 14500000,
-    asset_class: "EQUITY",
-    esg_composite: 76.5,
-    esg_badge: "Leader",
-  },
-  {
-    symbol: "TATAMOTORS.NS",
-    name: "Tata Motors",
-    sector: "Auto",
-    current_price: 980.0,
-    day_change: -12.0,
-    day_change_pct: -1.21,
-    growth_6m_base_pct: 6.5,
-    growth_6m_optimistic_pct: 12.0,
-    growth_6m_pessimistic_pct: -2.0,
-    regime_suitability_score: 55.0,
-    regime_badge: "Caution",
-    volume: 9500000,
-    asset_class: "EQUITY",
-    esg_composite: 68.0,
-    esg_badge: "Average",
-  },
-  {
-    symbol: "SUNPHARMA.NS",
-    name: "Sun Pharmaceutical",
-    sector: "Healthcare",
-    current_price: 1720.0,
-    day_change: 18.0,
-    day_change_pct: 1.06,
-    growth_6m_base_pct: 10.8,
-    growth_6m_optimistic_pct: 16.5,
-    growth_6m_pessimistic_pct: 3.2,
-    regime_suitability_score: 75.0,
-    regime_badge: "Hold",
-    volume: 4200000,
-    asset_class: "EQUITY",
-    esg_composite: 71.0,
-    esg_badge: "Leader",
-  },
-  {
-    symbol: "ITC.NS",
-    name: "ITC Ltd",
-    sector: "FMCG",
-    current_price: 505.2,
-    day_change: 2.1,
-    day_change_pct: 0.42,
-    growth_6m_base_pct: 9.4,
-    growth_6m_optimistic_pct: 14.8,
-    growth_6m_pessimistic_pct: 2.5,
-    regime_suitability_score: 70.0,
-    regime_badge: "Hold",
-    volume: 11200000,
-    asset_class: "EQUITY",
-    esg_composite: 83.0,
-    esg_badge: "Leader",
-  },
-];
 
 export const ExplorePage: React.FC = () => {
   const { allExploreStocks, setAllExploreStocks, setSelectedStockSymbol } =
     useAppStore();
 
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedSector, setSelectedSector] = useState<string>("All");
+  const [selectedSector, setSelectedSector] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [activeModalSymbol, setActiveModalSymbol] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<boolean>(false);
+
+  // Arriving from a Home "Top Movers" tap: open that stock's profile straight away
+  useEffect(() => {
+    const preselected = useAppStore.getState().selectedStockSymbol;
+    if (preselected) {
+      setActiveModalSymbol(preselected);
+      setIsModalOpen(true);
+    }
+  }, []);
 
   // Fetch stocks on mount with async cancellation seam
   useEffect(() => {
@@ -183,15 +58,13 @@ export const ExplorePage: React.FC = () => {
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
           setAllExploreStocks(data);
-        } else if (allExploreStocks.length === 0) {
-          setAllExploreStocks(DEFAULT_STOCKS);
         }
       })
       .catch((err) => {
-        if (err.name === "AbortError") return;
-        if (allExploreStocks.length === 0) {
-          setAllExploreStocks(DEFAULT_STOCKS);
-        }
+        // abort(reason) rejects with the reason string, not an AbortError
+        if (err?.name === "AbortError" || signal.aborted) return;
+        // Never substitute invented prices: show the real failure instead.
+        setLoadError(true);
       });
 
     return () => {
@@ -199,7 +72,7 @@ export const ExplorePage: React.FC = () => {
     };
   }, [setAllExploreStocks]);
 
-  const stockList = allExploreStocks.length > 0 ? allExploreStocks : DEFAULT_STOCKS;
+  const stockList = allExploreStocks;
 
   // In-memory search and sector filtering
   const filteredStocks = useMemo(() => {
@@ -209,21 +82,7 @@ export const ExplorePage: React.FC = () => {
         stock.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
         stock.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesSector = (() => {
-        if (selectedSector === "All") return true;
-        const s = selectedSector.toLowerCase();
-        const st = (stock.sector || "").toLowerCase();
-        if (s === "banking" || s === "finance") return st.includes("financial") || st.includes("bank");
-        if (s === "technology" || s === "it") return st.includes("tech") || st.includes("information");
-        if (s === "energy") return st.includes("energy") || st.includes("power") || st.includes("oil");
-        if (s === "automobile" || s === "auto") return st.includes("auto");
-        if (s === "healthcare") return st.includes("health") || st.includes("pharma");
-        if (s === "consumer goods" || s === "fmcg" || s === "consumer") return st.includes("consumer") || st.includes("fmcg") || st.includes("retail");
-        if (s === "metals" || s === "metal") return st.includes("metal") || st.includes("mining");
-        if (s === "commodities") return st.includes("commodit") || st.includes("gold") || st.includes("silver") || (stock.asset_class === "COMMODITY_ETF");
-        if (s === "defense") return st.includes("defense");
-        return st.includes(s) || st === s;
-      })();
+      const matchesSector = selectedSector === null || stock.sector === selectedSector;
 
       return matchesSearch && matchesSector;
     });
@@ -298,14 +157,14 @@ export const ExplorePage: React.FC = () => {
 
       {/* Horizontal Sector Filter Chips */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar -mx-4 px-4">
-        {SECTORS.map((sector) => (
+        {SECTORS.map(({ label, sector }) => (
           <ChipButton
-            key={sector}
+            key={label}
             active={selectedSector === sector}
             onClick={() => setSelectedSector(sector)}
             className="shrink-0"
           >
-            {sector}
+            {label}
           </ChipButton>
         ))}
       </div>
@@ -329,11 +188,19 @@ export const ExplorePage: React.FC = () => {
       ) : (
         <div className="p-8 text-center rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
           <Layers className="w-8 h-8 text-[var(--text-muted)] mx-auto mb-2 opacity-50" />
-          <h3 className="font-bold text-sm text-[var(--text-main)]">
-            No matching assets found
+          <h3 className="font-bold text-sm text-[var(--text-main)]" role={loadError ? "alert" : undefined}>
+            {loadError
+              ? "Unable to load the stock universe"
+              : stockList.length === 0
+              ? "Loading stock universe..."
+              : "No matching assets found"}
           </h3>
           <p className="text-xs text-[var(--text-muted)] mt-1">
-            Try adjusting your search query or switching sector filters.
+            {loadError
+              ? "The Explore API is unavailable. Please try again shortly."
+              : stockList.length === 0
+              ? "Fetching live scores and regime data."
+              : "Try adjusting your search query or switching sector filters."}
           </p>
         </div>
       )}
