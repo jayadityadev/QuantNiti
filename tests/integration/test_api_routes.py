@@ -75,6 +75,56 @@ async def test_get_history_endpoint(app):
 
 
 @pytest.mark.asyncio
+async def test_history_rejects_malformed_dates(app):
+    """Malformed dates must be a clean 422, never an unhandled pandas 500."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        for query in (
+            "/api/market/history?symbol=INFY&start_date=not-a-date",
+            "/api/market/history?symbol=INFY&end_date=2025-13-01",
+            "/api/market/history?symbol=INFY&start_date=2025-02-01&end_date=2025-01-01",
+        ):
+            response = await client.get(query)
+            assert response.status_code == 422, query
+            assert "detail" in response.json()
+
+
+@pytest.mark.asyncio
+async def test_returns_rejects_unknown_symbols(app):
+    """Unknown symbols must not silently return synthetic mock data."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        response = await client.get("/api/market/returns?symbols=RELIANCE,NOPE")
+        assert response.status_code == 404
+        assert "NOPE" in response.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_returns_rejects_malformed_dates(app):
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        response = await client.get(
+            "/api/market/returns?symbols=RELIANCE&start_date=2025-01-32"
+        )
+        assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_regime_dates_reject_malformed_input(app):
+    """Regime history and training must reject bad dates with 422, not 500."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        history = await client.get("/api/regime/history?start_date=not-a-date")
+        assert history.status_code == 422
+
+        train = await client.post(
+            "/api/regime/train",
+            json={"start_date": "2025-02-01", "end_date": "2025-01-01"},
+        )
+        assert train.status_code == 422
+
+
+@pytest.mark.asyncio
 async def test_get_quote_endpoint(app):
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:

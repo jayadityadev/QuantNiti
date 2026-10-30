@@ -1,5 +1,6 @@
 """PortfolioService domain orchestrator for Virtual Paper Portfolio management."""
 
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from app.core.models import (
@@ -109,6 +110,14 @@ class PortfolioService:
                     else h.current_price
                 )
 
+        # Benchmark comparison must be measured from this portfolio's inception,
+        # not a hard-coded 30-trading-day window.
+        try:
+            created_on = datetime.strptime(str(portfolio.created_at)[:10], "%Y-%m-%d").date()
+        except (TypeError, ValueError):
+            created_on = datetime.now(timezone.utc).date()
+        elapsed_days = max(0, (datetime.now(timezone.utc).date() - created_on).days)
+
         # Fetch benchmark index quotes
         nifty_curr_price = None
         nifty_init_price = None
@@ -117,7 +126,16 @@ class PortfolioService:
             nifty_curr_price = nifty_quote.current_price
             nifty_hist = self.market_service.get_history("^NSEI")
             if not nifty_hist.empty:
-                nifty_init_price = float(nifty_hist["close"].iloc[-30])
+                # First close on/after inception; fall back to the latest close
+                # when the index has no bar for the inception date yet.
+                nifty_init_price = None
+                for ts, row in nifty_hist.iterrows():
+                    ts_date = ts.date() if hasattr(ts, "date") else ts
+                    if ts_date >= created_on:
+                        nifty_init_price = float(row["close"])
+                        break
+                if nifty_init_price is None:
+                    nifty_init_price = float(nifty_hist["close"].iloc[-1])
         except Exception:
             pass
 
@@ -129,7 +147,7 @@ class PortfolioService:
             previous_close_prices=prev_prices,
             benchmark_index_price=nifty_curr_price,
             benchmark_initial_price=nifty_init_price,
-            elapsed_days=30,
+            elapsed_days=elapsed_days,
             current_regime=current_regime,
         )
 

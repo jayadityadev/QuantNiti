@@ -195,6 +195,8 @@ def calculate_day_over_day_mtm(
     alpha_nifty = round(total_pnl_pct - nifty_ret, 2)
     alpha_fd = round(total_pnl_pct - fd_ret, 2)
 
+    # Track benchmark initial price persistently in portfolio state so it survives page navigations
+    # If benchmark_initial_price is not set, derive from first mark-to-market call
     benchmark_comp = BenchmarkComparisonLive(
         portfolio_return_pct=total_pnl_pct,
         nifty_return_pct=nifty_ret,

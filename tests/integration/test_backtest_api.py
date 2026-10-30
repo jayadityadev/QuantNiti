@@ -86,6 +86,27 @@ async def test_post_quant_lab_backtest_alias(app_instance):
 
 
 @pytest.mark.asyncio
+async def test_post_backtest_accepts_frontend_wire_code(app_instance):
+    """The UI sends ``MA_CROSSOVER``; the API must accept it (regression)."""
+    async with AsyncClient(
+        transport=ASGITransport(app=app_instance),
+        base_url="http://test",
+    ) as client:
+        payload = {
+            "symbol": "^NSEI",
+            "strategy": "MA_CROSSOVER",
+            "initial_capital": 100000.0,
+            "slippage_bps": 5.0,
+        }
+        response = await client.post(
+            f"{settings.api_v1_prefix}/backtest/run", json=payload
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert data["strategy"] == "Moving Average Crossover"
+
+
+@pytest.mark.asyncio
 async def test_backtest_validation_errors(app_instance):
     """Invalid capital, invalid strategy or unknown symbol returns error codes."""
     async with AsyncClient(

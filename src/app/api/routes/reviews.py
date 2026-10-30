@@ -34,16 +34,20 @@ def submit_review(payload: ReviewSubmissionRequest, request: Request):
 
 @router.get("/{target_type}/{target_id}", response_model=ReviewsListResponse)
 def get_target_reviews(
-    target_type: str = Path(..., description="Target type: basket, portfolio, strategy, or platform"),
+    request: Request,
+    target_type: str = Path(..., description="Target type: stock, basket, portfolio, strategy, or platform"),
     target_id: str = Path(..., description="Target identifier (e.g. balanced_6m, port-123)"),
-    request: Request = None,
 ):
     """Retrieve approved community reviews and rating summary for a specific target."""
     service = get_review_service(request)
     try:
         t_enum = ReviewTargetType(target_type)
     except ValueError:
-        t_enum = ReviewTargetType.BASKET
+        valid = ", ".join(t.value for t in ReviewTargetType)
+        raise HTTPException(
+            status_code=422,
+            detail=f"Invalid review target type '{target_type}'. Expected one of: {valid}.",
+        )
 
     return service.get_reviews(target_type=t_enum, target_id=target_id)
 
