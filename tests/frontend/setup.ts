@@ -1,6 +1,10 @@
 import "@testing-library/jest-dom";
-import { cleanup } from "@testing-library/react";
+import { cleanup, configure } from "@testing-library/react";
 import { afterEach } from "vitest";
+
+// Heavy integration tests run in parallel; the default 1s polling window is too
+// tight and produces spurious "unable to find element" failures under load.
+configure({ asyncUtilTimeout: 5000 });
 
 afterEach(() => {
   cleanup();

@@ -46,6 +46,18 @@ async def test_get_reviews_endpoint(test_app):
 
 
 @pytest.mark.asyncio
+async def test_get_reviews_rejects_invalid_target_type(test_app):
+    """An unknown target type is a client error, not a silent basket fallback."""
+    transport = ASGITransport(app=test_app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        resp = await client.get(
+            f"{settings.api_v1_prefix}/reviews/not-a-type/RELIANCE"
+        )
+        assert resp.status_code == 422
+        assert "not-a-type" in resp.json()["detail"]
+
+
+@pytest.mark.asyncio
 async def test_submit_verified_review(test_app):
     """Verify POST /api/v1/reviews/submit approves authentic return claim within tolerance."""
     transport = ASGITransport(app=test_app)

@@ -16,19 +16,22 @@ import { IOSInstallBanner } from "../pwa/IOSInstallBanner";
 export function AppShell() {
   const location = useLocation();
   const shouldReduceMotion = useReducedMotion();
-  const { activeTab, setActiveTab, clearActiveAsyncKeys, isOnboarded } = useAppStore();
+  const { activeTab, setActiveTab, clearActiveAsyncKeys, isOnboarded, isExpandedViewport, toggleViewport } = useAppStore();
 
   // Keep route pathname in sync with activeTab in Zustand store and abort in-flight requests from prior tab
   useEffect(() => {
-    // Abort all active controllers on tab switch
-    abortRegistry.abortAll("tab-switch");
-    clearActiveAsyncKeys?.();
-
     const rawPath = location.pathname.replace(/^\//, "").toLowerCase();
     const validTabs: NavTab[] = ["home", "explore", "grow", "portfolio"];
     if (validTabs.includes(rawPath as NavTab)) {
       setActiveTab(rawPath as NavTab);
     }
+
+    // Abort the outgoing tab's requests in cleanup. Aborting in the effect body would
+    // also kill the incoming page's fetches, because child effects run before this one.
+    return () => {
+      abortRegistry.abortAll("tab-switch");
+      clearActiveAsyncKeys?.();
+    };
   }, [location.pathname, setActiveTab, clearActiveAsyncKeys]);
 
   // Motion variants respecting reduced motion preferences
@@ -65,10 +68,10 @@ export function AppShell() {
         )}
       </AnimatePresence>
 
-      {/* Container constrained to max-w-[520px] on desktop with centered shadow, full-width on mobile */}
-      <div className="w-full max-w-[520px] min-h-screen flex flex-col bg-[var(--bg-primary)] shadow-2xl shadow-violet-950/5 relative border-x border-[var(--border-subtle)]">
+      {/* Container constrained to max-w-[520px] on desktop with centered shadow, or expanded max-w-6xl when toggled */}
+      <div className={`w-full ${isExpandedViewport ? "max-w-6xl" : "max-w-[520px]"} min-h-screen flex flex-col bg-[var(--bg-primary)] shadow-2xl shadow-violet-950/5 relative border-x border-[var(--border-subtle)] transition-all duration-300`}>
         {/* Sticky Header - visible when onboarded */}
-        {isOnboarded && <Header />}
+        {isOnboarded && <Header onViewportToggle={toggleViewport} />}
 
         {/* Scrollable Content Area with bottom nav clearance */}
         <main className="flex-1 overflow-y-auto content-bottom-safe relative">

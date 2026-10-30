@@ -18,10 +18,10 @@ export const HoldingsTable: React.FC<HoldingsTableProps> = ({
         <div className="w-12 h-12 mx-auto rounded-2xl bg-violet-500/10 flex items-center justify-center text-violet-400">
           <Layers className="w-6 h-6" />
         </div>
-        <p className="text-sm font-medium text-slate-300">
+        <p className="text-sm font-medium text-[var(--text-muted)]">
           No holdings in this portfolio yet.
         </p>
-        <p className="text-xs text-slate-400">
+        <p className="text-xs text-[var(--text-muted)]">
           Add assets or allocate an AI basket from the Grow tab to start tracking.
         </p>
       </GlassCard>
@@ -32,7 +32,7 @@ export const HoldingsTable: React.FC<HoldingsTableProps> = ({
     <div className="space-y-2">
       <div className="flex items-center justify-between px-1">
         <div className="flex items-center gap-2">
-          <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <h3 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
             Holdings & Allocations ({holdings.length})
           </h3>
           {isDemo && (

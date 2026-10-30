@@ -419,9 +419,9 @@
     "esg_governance": 77.0,
     "source": "BRSR / CRISIL ESG / NSE Sustainability"
   },
-  "TATAMOTORS": {
-    "symbol": "TATAMOTORS",
-    "name": "Tata Motors Ltd.",
+  "TMCV": {
+    "symbol": "TMCV",
+    "name": "Tata Motors Ltd. (Commercial Vehicles)",
     "sector": "Automobile",
     "esg_composite": 71.0,
     "esg_environment": 70.0,

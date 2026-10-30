@@ -51,7 +51,7 @@ const MOCK_STOCKS = [
   {
     symbol: "TCS.NS",
     name: "Tata Consultancy Services",
-    sector: "Technology",
+    sector: "Information Technology",
     current_price: 4120.0,
     day_change: -18.5,
     day_change_pct: -0.45,
@@ -68,7 +68,7 @@ const MOCK_STOCKS = [
   {
     symbol: "HDFCBANK.NS",
     name: "HDFC Bank",
-    sector: "Banking",
+    sector: "Financial Services",
     current_price: 1640.25,
     day_change: 8.75,
     day_change_pct: 0.54,
@@ -85,7 +85,7 @@ const MOCK_STOCKS = [
   {
     symbol: "TATAMOTORS.NS",
     name: "Tata Motors",
-    sector: "Auto",
+    sector: "Automobile",
     current_price: 980.0,
     day_change: -12.0,
     day_change_pct: -1.21,
@@ -217,7 +217,7 @@ const MOCK_PROFILE_TCS = {
   ...MOCK_PROFILE_RELIANCE,
   symbol: "TCS.NS",
   name: "Tata Consultancy Services",
-  sector: "Technology",
+  sector: "Information Technology",
   current_price: 4120.0,
   suitability: {
     score: 72.0,

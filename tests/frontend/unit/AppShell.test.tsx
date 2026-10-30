@@ -67,4 +67,22 @@ describe("App Shell Integration Seam", () => {
     expect(await screen.findByText(/Home Page/i)).toBeInTheDocument();
     expect(window.location.hash).toContain("home");
   });
+
+  it("toggles viewport between mobile and expanded view via overflow menu", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    expect(container.querySelector(".max-w-\\[520px\\]")).toBeInTheDocument();
+
+    // Open overflow menu
+    const overflowBtn = screen.getByTestId("overflow-menu-btn");
+    await user.click(overflowBtn);
+
+    // Click toggle viewport button
+    const toggleViewportBtn = screen.getByText(/toggle viewport/i);
+    await user.click(toggleViewportBtn);
+
+    // Expect container to now have max-w-6xl
+    expect(container.querySelector(".max-w-6xl")).toBeInTheDocument();
+  });
 });

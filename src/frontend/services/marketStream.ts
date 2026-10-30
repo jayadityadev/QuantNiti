@@ -1,3 +1,5 @@
+import { apiUrl } from "../config";
+
 export interface MarketTick {
   symbol: string;
   price: number;
@@ -23,7 +25,7 @@ export class MarketStreamClient {
   private listeners: Set<TickListener> = new Set();
   public isConnected = false;
 
-  constructor(endpoint = "/api/v1/stream/ticks") {
+  constructor(endpoint = apiUrl("/api/v1/stream/ticks")) {
     this.endpoint = endpoint;
   }
 

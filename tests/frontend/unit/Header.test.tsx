@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { HashRouter } from "react-router-dom";
 import { ThemeProvider } from "../../../src/frontend/context/ThemeContext";
 import { Header } from "../../../src/frontend/components/layout/Header";
+import { useAppStore } from "../../../src/frontend/store/useAppStore";
 
 function renderHeader(props = {}) {
   return render(
@@ -20,6 +21,7 @@ describe("Header Component Seam", () => {
   beforeEach(() => {
     localStorage.clear();
     document.documentElement.removeAttribute("data-theme");
+    useAppStore.setState({ unreadAlertCount: 0 });
   });
 
   it("renders brand badge with title, clicking it triggers navigation to #home", async () => {
@@ -42,12 +44,17 @@ describe("Header Component Seam", () => {
     expect(regimeBadge).toBeInTheDocument();
   });
 
-  it("renders notification bell with unread dot indicator", () => {
-    renderHeader();
+  it("renders notification bell and only shows the unread dot when alerts are unread", () => {
+    useAppStore.setState({ unreadAlertCount: 2 });
+    const { unmount } = renderHeader();
     const bellBtn = screen.getByTestId("notification-bell-btn");
     expect(bellBtn).toBeInTheDocument();
-    const unreadDot = screen.getByTestId("notification-unread-dot");
-    expect(unreadDot).toBeInTheDocument();
+    expect(screen.getByTestId("notification-unread-dot")).toBeInTheDocument();
+
+    unmount();
+    useAppStore.setState({ unreadAlertCount: 0 });
+    renderHeader();
+    expect(screen.queryByTestId("notification-unread-dot")).not.toBeInTheDocument();
   });
 
   it("toggles theme when clicking theme toggle button", async () => {

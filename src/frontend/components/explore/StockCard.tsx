@@ -18,6 +18,7 @@ export interface ExploreStockItem {
   regime_badge: string;
   volume?: number;
   asset_class?: string;
+  market_cap?: "Large" | "Mid" | "Small" | null;
   esg_composite?: number;
   esg_badge?: string;
 }

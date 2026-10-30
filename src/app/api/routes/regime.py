@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel
 
 from app.core.models import CurrentRegimeResponse, RegimeHistoryResponse, RegimeTrainResponse
+from app.core.validation import validate_date_range
 from app.ml.regime.service import RegimeService
 
 router = APIRouter(prefix="/regime", tags=["Market Regime"])
@@ -39,7 +40,10 @@ def get_regime_history(
 ):
     """Retrieve historical market regime classification timeline and overall regime distribution."""
     try:
+        validate_date_range(start_date, end_date)
         return service.get_regime_history(start_date=start_date, end_date=end_date)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to retrieve regime history: {str(e)}")
 
@@ -53,6 +57,9 @@ def train_regime_model(
     start = payload.start_date if payload else None
     end = payload.end_date if payload else None
     try:
+        validate_date_range(start, end)
         return service.train_model(start_date=start, end_date=end)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to train regime model: {str(e)}")

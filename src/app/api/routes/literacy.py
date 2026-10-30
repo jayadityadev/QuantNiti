@@ -58,7 +58,8 @@ def get_all_literacy_cards(
 def get_literacy_card_by_key(key: str):
     """Retrieve a single microlearning concept card by unique slug key."""
     cards_map = _get_cards_dict()
-    clean_key = key.strip().lower()
+    # Accept URL-friendly aliases (``sharpe-ratio``) as well as canonical keys.
+    clean_key = key.strip().lower().replace("-", "_").replace(" ", "_")
     if clean_key not in cards_map:
         raise HTTPException(status_code=404, detail=f"Concept not found: {key}")
     return cards_map[clean_key]

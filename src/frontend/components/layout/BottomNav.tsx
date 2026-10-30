@@ -2,7 +2,7 @@ import type { ComponentType } from "react";
 import { useNavigate } from "react-router-dom";
 import { Home, Compass, TrendingUp, PieChart } from "lucide-react";
 import { motion } from "framer-motion";
-import { NavTab } from "../../store/useAppStore";
+import { NavTab, useAppStore } from "../../store/useAppStore";
 
 interface BottomNavProps {
   activeTab: string;
@@ -35,6 +35,7 @@ function triggerHaptic() {
 
 export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   const navigate = useNavigate();
+  const { isExpandedViewport } = useAppStore();
 
   const handleTabClick = (item: NavItem) => {
     triggerHaptic();
@@ -48,7 +49,7 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
       aria-label="Main Navigation"
       className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pointer-events-none"
     >
-      <div className="w-full max-w-[520px] px-3 bottom-nav-safe pointer-events-auto">
+      <div className={`w-full ${isExpandedViewport ? "max-w-6xl" : "max-w-[520px]"} px-3 bottom-nav-safe pointer-events-auto transition-all duration-300`}>
         <div className="flex items-center justify-around py-1 px-1.5 rounded-squircle-lg bg-[var(--bg-card)]/90 backdrop-blur-lg border border-[var(--border-subtle)] shadow-lg shadow-violet-950/10 transition-colors duration-200">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;

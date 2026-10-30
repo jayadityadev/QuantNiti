@@ -25,9 +25,11 @@ export interface AppStoreState {
   selectedLiteracyCategory: string;
   activeConceptKey: string | null;
   activeAsyncKeys: Set<string>;
+  unreadAlertCount: number;
   isOnboarded: boolean;
   activeModal: string | null;
   modalPayload: any;
+  isExpandedViewport: boolean;
 
   // Actions
   setActiveTab: (tab: NavTab) => void;
@@ -36,7 +38,10 @@ export interface AppStoreState {
   setHorizon: (horizon: TimeHorizon) => void;
   setRiskPersona: (persona: RiskPersona) => void;
   setIsOnboarded: (onboarded: boolean) => void;
+  setIsExpandedViewport: (expanded: boolean) => void;
+  toggleViewport: () => void;
   setActiveRegime: (regime: any) => void;
+  setUnreadAlertCount: (count: number) => void;
   setCurrentBasket: (basket: any) => void;
   setActivePortfolioId: (id: string | null) => void;
   setActivePortfolio: (portfolio: any) => void;
@@ -60,6 +65,14 @@ export const ONBOARDED_STORAGE_KEY = "quantniti_onboarded";
 export const RISK_PERSONA_STORAGE_KEY = "quantniti_risk_persona";
 export const PORTFOLIOS_STORAGE_KEY = "quantniti_portfolios";
 export const ACTIVE_PORTFOLIO_ID_STORAGE_KEY = "quantniti_active_portfolio_id";
+export const EXPANDED_VIEWPORT_STORAGE_KEY = "quantniti_expanded_viewport";
+
+function loadExpandedViewport(): boolean {
+  if (typeof window !== "undefined" && window.localStorage) {
+    return window.localStorage.getItem(EXPANDED_VIEWPORT_STORAGE_KEY) === "true";
+  }
+  return false;
+}
 
 function loadPortfolios(): any[] {
   if (typeof window !== "undefined" && window.localStorage) {
@@ -144,8 +157,10 @@ export const useAppStore = create<AppStoreState>((set) => ({
   selectedLiteracyCategory: "all",
   activeConceptKey: null,
   activeAsyncKeys: new Set(),
+  unreadAlertCount: 0,
   activeModal: null,
   modalPayload: null,
+  isExpandedViewport: loadExpandedViewport(),
 
   setActiveTab: (tab) => set({ activeTab: tab }),
   setTheme: (theme) => set({ theme }),
@@ -163,7 +178,23 @@ export const useAppStore = create<AppStoreState>((set) => ({
     }
     set({ isOnboarded });
   },
+  setIsExpandedViewport: (expanded: boolean) => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      window.localStorage.setItem(EXPANDED_VIEWPORT_STORAGE_KEY, String(expanded));
+    }
+    set({ isExpandedViewport: expanded });
+  },
+  toggleViewport: () => {
+    set((state) => {
+      const next = !state.isExpandedViewport;
+      if (typeof window !== "undefined" && window.localStorage) {
+        window.localStorage.setItem(EXPANDED_VIEWPORT_STORAGE_KEY, String(next));
+      }
+      return { isExpandedViewport: next };
+    });
+  },
   setActiveRegime: (activeRegime) => set({ activeRegime }),
+  setUnreadAlertCount: (unreadAlertCount) => set({ unreadAlertCount }),
   setCurrentBasket: (currentBasket) => set({ currentBasket }),
   setActivePortfolioId: (activePortfolioId) => {
     if (typeof window !== "undefined" && window.localStorage) {

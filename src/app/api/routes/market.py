@@ -12,6 +12,7 @@ from app.core.models import (
     SyncResult,
     UniverseStock,
 )
+from app.core.validation import validate_date_range
 from app.data.service import MarketDataService
 from app.universe import is_valid_symbol, normalize_symbol, _SYMBOL_MAP
 
@@ -52,6 +53,11 @@ def get_history(
     service: MarketDataService = Depends(get_market_service),
 ):
     """Retrieve historical daily OHLCV bars and returns for a symbol."""
+    try:
+        validate_date_range(start_date, end_date)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
     canonical = normalize_symbol(symbol)
     if not is_valid_symbol(canonical):
         raise HTTPException(status_code=404, detail=f"Symbol '{symbol}' not found in NIFTY 50 universe")
@@ -118,9 +124,24 @@ def get_returns_matrix(
     service: MarketDataService = Depends(get_market_service),
 ):
     """Retrieve aligned daily returns matrix for multiple assets."""
+    try:
+        validate_date_range(start_date, end_date)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
     symbol_list = [s.strip() for s in symbols.split(",") if s.strip()]
     if not symbol_list:
         raise HTTPException(status_code=400, detail="Must provide at least one valid symbol")
+
+    unknown = [s for s in symbol_list if not is_valid_symbol(normalize_symbol(s))]
+    if unknown:
+        raise HTTPException(
+            status_code=404,
+            detail=(
+                "Symbol(s) not found in NIFTY 50 universe: "
+                + ", ".join(unknown)
+            ),
+        )
 
     aligned_df = service.get_aligned_dataset(symbol_list, start_date=start_date, end_date=end_date, field="adj_close")
     if aligned_df.empty:

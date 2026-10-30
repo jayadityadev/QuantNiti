@@ -3,6 +3,7 @@ import { Bot, Send, User, Sparkles, AlertCircle, ExternalLink } from "lucide-rea
 import { ModalSheet } from "../ui/ModalSheet";
 import { useAbortableRequest } from "../../hooks/useAbortableRequest";
 import { useAppStore } from "../../store/useAppStore";
+import { apiUrl } from "../../config";
 
 interface ChatMessage {
   id: string;
@@ -43,7 +44,7 @@ export const NitiBotModal: React.FC<NitiBotModalProps> = ({ isOpen, onClose }) =
 
   useEffect(() => {
     if (isOpen) {
-      fetch("/api/chat/status")
+      fetch(apiUrl("/api/chat/status"))
         .then((res) => (res.ok ? res.json() : null))
         .then((data) => {
           if (data && typeof data.available === "boolean") {
@@ -78,7 +79,7 @@ export const NitiBotModal: React.FC<NitiBotModalProps> = ({ isOpen, onClose }) =
     setErrorMessage(null);
 
     try {
-      const response = await request("nitibot-chat", "/api/chat", {
+      const response = await request("nitibot-chat", apiUrl("/api/chat"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

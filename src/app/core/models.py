@@ -246,6 +246,7 @@ class ExploreStockSummary(BaseModel):
     regime_badge: str
     volume: float
     asset_class: Optional[str] = "EQUITY"
+    market_cap: Optional[str] = None  # "Large" | "Mid"; None for ETFs
     esg_composite: Optional[float] = None
     esg_badge: Optional[str] = None
 
@@ -371,6 +372,29 @@ class StrategyType(str, Enum):
     RSI_MEAN_REVERSION = "RSI Mean Reversion"
     BOLLINGER_BANDS = "Bollinger Band Breakout"
     DUAL_MOMENTUM = "Dual Momentum"
+
+    @classmethod
+    def _missing_(cls, value: object) -> Optional["StrategyType"]:
+        """Accept machine-friendly wire codes (e.g. ``MA_CROSSOVER``) in addition to labels.
+
+        The client sends enum-style codes while the canonical values are display
+        labels. Normalising here keeps a single source of truth and prevents the
+        API from rejecting every backtest request with a 422.
+        """
+        if not isinstance(value, str):
+            return None
+        normalized = value.strip().lower().replace("&", "and")
+        normalized = " ".join(normalized.replace("_", " ").replace("-", " ").split())
+        aliases = {
+            "buy and hold": cls.BUY_AND_HOLD,
+            "ma crossover": cls.MA_CROSSOVER,
+            "moving average crossover": cls.MA_CROSSOVER,
+            "rsi mean reversion": cls.RSI_MEAN_REVERSION,
+            "bollinger bands": cls.BOLLINGER_BANDS,
+            "bollinger band breakout": cls.BOLLINGER_BANDS,
+            "dual momentum": cls.DUAL_MOMENTUM,
+        }
+        return aliases.get(normalized)
 
 
 class BacktestTrade(BaseModel):

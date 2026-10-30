@@ -31,7 +31,7 @@ export const RebalanceBanner: React.FC<RebalanceBannerProps> = ({
               Regime-Shift Rebalance Recommended
             </h4>
           </div>
-          <p className="text-xs text-slate-300 leading-relaxed">
+          <p className="text-xs text-[var(--text-muted)] leading-relaxed">
             {triggerReason}
           </p>
         </div>

@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from app.core.models import StockQuote, UniverseStock, SyncResult
 from app.data.cache import ParquetMarketCache
-from app.data.provider import MockDataProvider
+from app.data.provider import MockDataProvider, YahooFinanceProvider
 from app.data.service import MarketDataService
 from app.universe import get_universe_symbols
 
@@ -54,6 +54,24 @@ def test_get_history_with_mock_and_cache(mock_service):
     cached_df = mock_service.get_history("RELIANCE", start_date="2025-01-01", end_date="2025-02-01")
     assert len(cached_df) == len(df)
     assert cached_df.iloc[0]["close"] == df.iloc[0]["close"]
+
+
+class _OfflineYahooProvider(YahooFinanceProvider):
+    """Simulates a delisted symbol / rate-limited Yahoo response."""
+
+    def fetch_history(self, *args, **kwargs) -> pd.DataFrame:
+        return pd.DataFrame()
+
+
+def test_synthetic_fallback_is_served_but_not_cached(tmp_path):
+    """Delisted symbols may use synthetic data, but it must never poison the cache."""
+    cache = ParquetMarketCache(cache_dir=tmp_path / "cache")
+    service = MarketDataService(provider=_OfflineYahooProvider(), cache=cache)
+
+    df = service.get_history("TATAMOTORS", start_date="2025-01-01", end_date="2025-02-01")
+
+    assert not df.empty
+    assert not cache.has_valid_cache("TATAMOTORS")
 
 
 def test_get_daily_returns(mock_service):

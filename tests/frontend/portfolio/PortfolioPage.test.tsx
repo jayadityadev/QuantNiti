@@ -1,8 +1,45 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { PortfolioPage } from "../../../src/frontend/components/portfolio/PortfolioPage";
 import { useAppStore } from "../../../src/frontend/store/useAppStore";
 import { DEMO_HOLDINGS } from "../../../src/frontend/components/portfolio/demoPortfolioData";
+
+const jsonResponse = (data: any) =>
+  ({
+    ok: true,
+    status: 200,
+    json: async () => data,
+    text: async () => JSON.stringify(data),
+  } as any);
+
+const makePortfolio = (overrides: Record<string, any> = {}) => ({
+  portfolio_id: "port_created",
+  name: "New Goal",
+  initial_capital: 100000,
+  cash: 5000,
+  invested_capital: 95000,
+  current_value: 100000,
+  total_pnl: 0,
+  total_pnl_pct: 0,
+  pnl_1d: 0,
+  pnl_1d_pct: 0,
+  max_drawdown_pct: 0,
+  holdings: DEMO_HOLDINGS.slice(0, 3),
+  benchmark_comparison: {
+    portfolio_return_pct: 0,
+    nifty_return_pct: 0,
+    bank_fd_return_pct: 0,
+    alpha_vs_nifty: 0,
+    alpha_vs_fd: 0,
+  },
+  initial_regime: "BULL_TRENDING",
+  current_regime: "BULL_TRENDING",
+  risk_persona: "Balanced",
+  horizon: "6M",
+  created_at: "2026-10-30",
+  as_of_date: "2026-10-30",
+  ...overrides,
+});
 
 describe("PortfolioPage", () => {
   beforeEach(() => {
@@ -13,6 +50,30 @@ describe("PortfolioPage", () => {
       activeTab: "portfolio",
     });
     localStorage.clear();
+
+    // The page is backend-backed: create/delete must hit the persistence API.
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: any, init?: any) => {
+        const url = String(input);
+        const method = (init?.method || "GET").toUpperCase();
+        if (url.includes("/api/v1/portfolios") && method === "POST") {
+          return jsonResponse(makePortfolio());
+        }
+        if (url.includes("/api/v1/portfolios/") && method === "DELETE") {
+          return jsonResponse({ deleted: true });
+        }
+        if (url.includes("/compounding")) {
+          return jsonResponse({ yearly_trajectories: [] });
+        }
+        return jsonResponse([]);
+      })
+    );
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 
   it("renders Demo Portfolio when no portfolios exist", () => {
@@ -100,6 +161,15 @@ describe("PortfolioPage", () => {
       expect(screen.queryByText(/This is a demo portfolio/i)).not.toBeInTheDocument();
       expect(useAppStore.getState().portfolios.length).toBe(1);
     });
+
+    // Creation is persisted through the backend, not just local state.
+    expect(
+      (fetch as any).mock.calls.some(
+        ([url, init]: any[]) =>
+          String(url).includes("/api/v1/portfolios") &&
+          (init?.method || "GET").toUpperCase() === "POST"
+      )
+    ).toBe(true);
   });
 
   it("reverts to Demo Portfolio state when the last real portfolio is deleted", async () => {
@@ -150,6 +220,15 @@ describe("PortfolioPage", () => {
       expect(useAppStore.getState().portfolios.length).toBe(0);
       expect(screen.getByText(/This is a demo portfolio/i)).toBeInTheDocument();
     });
+
+    // Deletion is persisted through the backend, not just local state.
+    expect(
+      (fetch as any).mock.calls.some(
+        ([url, init]: any[]) =>
+          String(url).includes("/api/v1/portfolios/port_to_delete") &&
+          (init?.method || "GET").toUpperCase() === "DELETE"
+      )
+    ).toBe(true);
 
     vi.restoreAllMocks();
   });

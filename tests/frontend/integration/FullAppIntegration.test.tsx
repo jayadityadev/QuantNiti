@@ -92,7 +92,42 @@ describe("QuantNiti Full Application Integration Suite (Ticket 11)", () => {
       if (urlStr.includes("/api/explore/stocks")) {
         return Promise.resolve({
           ok: true,
-          json: async () => [],
+          json: async () => [
+            {
+              symbol: "RELIANCE.NS",
+              name: "Reliance Industries",
+              sector: "Energy",
+              current_price: 2980.5,
+              day_change: 35.2,
+              day_change_pct: 1.19,
+              growth_6m_base_pct: 14.5,
+              growth_6m_optimistic_pct: 22.0,
+              growth_6m_pessimistic_pct: 4.2,
+              regime_suitability_score: 88.5,
+              regime_badge: "Strong Buy",
+              volume: 12500000,
+              asset_class: "EQUITY",
+              esg_composite: 74.0,
+              esg_badge: "Leader",
+            },
+            {
+              symbol: "TCS.NS",
+              name: "Tata Consultancy Services",
+              sector: "Technology",
+              current_price: 4120.0,
+              day_change: -18.5,
+              day_change_pct: -0.45,
+              growth_6m_base_pct: 11.2,
+              growth_6m_optimistic_pct: 18.4,
+              growth_6m_pessimistic_pct: 2.1,
+              regime_suitability_score: 72.0,
+              regime_badge: "Hold",
+              volume: 3800000,
+              asset_class: "EQUITY",
+              esg_composite: 82.5,
+              esg_badge: "Leader",
+            },
+          ],
         });
       }
       return Promise.resolve({

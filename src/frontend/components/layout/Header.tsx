@@ -1,10 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Sun, Moon, Bell, MoreVertical, Layers, Download, Maximize2 } from "lucide-react";
+import { Sun, Moon, Bell, MoreVertical, Layers, Download, Maximize2, Minimize2 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { useAppStore } from "../../store/useAppStore";
 import { AnimatePresence, motion } from "framer-motion";
 import { promptPWAInstall } from "../../services/pwaService";
+import { useAbortableRequest } from "../../hooks/useAbortableRequest";
+import { useAlertPolling } from "../../hooks/useAlertPolling";
+import { apiUrl } from "../../config";
 
 interface HeaderProps {
   onCompareClick?: () => void;
@@ -18,9 +21,34 @@ export function Header({
   onViewportToggle,
 }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
-  const { activeRegime, openModal } = useAppStore();
+  const {
+    activeRegime,
+    openModal,
+    isExpandedViewport,
+    toggleViewport,
+    unreadAlertCount,
+    setUnreadAlertCount,
+  } = useAppStore();
+  const { request } = useAbortableRequest();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // Keep the bell badge honest: only light up when the backend reports unread alerts.
+  const refreshUnreadAlerts = useCallback(async () => {
+    try {
+      const data = await request<{ unread_count?: number }>(
+        "header-unread-alerts",
+        apiUrl("/api/v1/alerts")
+      );
+      if (typeof data?.unread_count === "number") {
+        setUnreadAlertCount(data.unread_count);
+      }
+    } catch {
+      // Backend unreachable: keep the last known count instead of inventing one.
+    }
+  }, [request, setUnreadAlertCount]);
+
+  useAlertPolling(refreshUnreadAlerts, 45000);
 
   // Close overflow menu on outside click or Esc key
   useEffect(() => {
@@ -45,7 +73,7 @@ export function Header({
   }, [isMenuOpen]);
 
   // Regime display determination
-  const regimeLabel = activeRegime?.regime || activeRegime?.name || "Bull Market";
+  const regimeLabel = activeRegime?.regime || activeRegime?.name || "—";
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[var(--bg-primary)]/80 backdrop-blur-md border-b border-[var(--border-subtle)] px-4 py-2.5 transition-colors duration-200">
@@ -91,10 +119,12 @@ export function Header({
             title="Notifications"
           >
             <Bell className="w-4 h-4" />
-            <span
-              data-testid="notification-unread-dot"
-              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent ring-2 ring-[var(--bg-primary)]"
-            />
+            {unreadAlertCount > 0 && (
+              <span
+                data-testid="notification-unread-dot"
+                className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent ring-2 ring-[var(--bg-primary)]"
+              />
+            )}
           </button>
 
           {/* Theme Toggle */}
@@ -170,15 +200,24 @@ export function Header({
                   </button>
 
                   <button
+                    data-testid="toggle-viewport-btn"
                     type="button"
                     role="menuitem"
                     onClick={() => {
                       setIsMenuOpen(false);
-                      onViewportToggle?.();
+                      if (onViewportToggle) {
+                        onViewportToggle();
+                      } else {
+                        toggleViewport();
+                      }
                     }}
                     className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[var(--text-main)] hover:bg-accent/10 hover:text-accent transition-colors"
                   >
-                    <Maximize2 className="w-4 h-4 text-accent" />
+                    {isExpandedViewport ? (
+                      <Minimize2 className="w-4 h-4 text-accent" />
+                    ) : (
+                      <Maximize2 className="w-4 h-4 text-accent" />
+                    )}
                     <span>Toggle Viewport</span>
                   </button>
                 </motion.div>

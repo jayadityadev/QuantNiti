@@ -69,7 +69,7 @@ def test_denormalize_symbol_for_provider():
 def test_get_sector_for_symbol():
     assert get_sector_for_symbol("INFY") == "Information Technology"
     assert get_sector_for_symbol("HDFCBANK") == "Financial Services"
-    assert get_sector_for_symbol("RELIANCE") == "Energy & Oil"
+    assert get_sector_for_symbol("RELIANCE") == "Energy"
     assert get_sector_for_symbol("INVALID_TICKER") is None
 
 
@@ -93,4 +93,4 @@ def test_get_universe_metadata():
     assert "Financial Services" in sectors
     assert "Commodities" in sectors
     assert "Defense" in sectors
-    assert "Metals" in sectors
+    assert "Metals & Mining" in sectors
