@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Play,
   Clock,
   ChevronRight,
   Youtube,
@@ -9,200 +8,205 @@ import {
   ExternalLink,
   GraduationCap,
   Target,
+  Search,
 } from "lucide-react";
 import { GlassCard, ModalSheet, PrimaryButton, GhostButton } from "../ui";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DATA: Full learning path videos from TIDI Kannada & GTF
+// Learning Hub — curated topics with YouTube search links (always work)
 // ─────────────────────────────────────────────────────────────────────────────
 
-export interface LearningVideo {
+export interface LearningTopic {
   id: string;
-  videoId: string; // YouTube video ID
   title: string;
-  channel: "TIDI" | "GTF";
+  channel: "TIDI" | "GTF" | "BOTH";
   channelName: string;
   channelHandle: string;
+  channelUrl: string;
+  searchQuery: string; // used to build YouTube search URL
   category: string;
   level: "beginner" | "intermediate" | "advanced";
   duration: string;
   description: string;
-  thumbnail: string; // gradient fallback
 }
 
-const LEARNING_VIDEOS: LearningVideo[] = [
-  // ── BEGINNER: Stock Market Basics ──────────────────────────────────────────
+// YouTube channel search URL: always returns live, available videos
+const buildChannelSearchUrl = (channelHandle: string, query: string) =>
+  `https://www.youtube.com/${channelHandle}/search?query=${encodeURIComponent(query)}`;
+
+const LEARNING_TOPICS: LearningTopic[] = [
+  // ── BEGINNER ───────────────────────────────────────────────────────────────
   {
     id: "l1",
-    videoId: "nt6GWFJaFKs",
-    title: "Stock Market Basics – How It Works",
-    channel: "TIDI",
-    channelName: "TIDI Kannada",
-    channelHandle: "@TIDIkannada",
+    title: "Share Market Basics – How It Works",
+    channel: "GTF",
+    channelName: "GTF – A Stock Market Institute",
+    channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "share market basics beginners",
     category: "Basics",
     level: "beginner",
-    duration: "15 min",
+    duration: "15–25 min",
     description:
-      "Understand what a stock is, how stock exchanges work, and how to begin investing in India. Perfect first step for complete beginners.",
-    thumbnail: "from-blue-500 to-indigo-700",
+      "What is a stock, how NSE & BSE work, what is SEBI, and how to open a Demat account. The complete starting point for any beginner investor.",
   },
   {
     id: "l2",
-    videoId: "Xn7KWR9EOGQ",
-    title: "What is Share Market? Complete Beginners Guide",
-    channel: "GTF",
-    channelName: "GTF – A Stock Market Institute",
-    channelHandle: "@gettogetherfinance",
+    title: "Stock Market Basics in Kannada",
+    channel: "TIDI",
+    channelName: "TIDI Kannada",
+    channelHandle: "@TIDIkannada",
+    channelUrl: "https://www.youtube.com/@TIDIkannada",
+    searchQuery: "share market basics",
     category: "Basics",
     level: "beginner",
-    duration: "20 min",
+    duration: "10–20 min",
     description:
-      "GTF's comprehensive introduction to the share market. Learn about NSE, BSE, SEBI, and how to open a Demat account.",
-    thumbnail: "from-emerald-500 to-teal-700",
+      "TIDI Kannada explains the stock market from scratch in Kannada — perfect for Kannada speakers who want to learn investing in their native language.",
   },
   {
     id: "l3",
-    videoId: "PSL7bKTq1X0",
-    title: "How to Read Stock Charts for Beginners",
+    title: "How to Read Candlestick Charts",
     channel: "GTF",
     channelName: "GTF – A Stock Market Institute",
     channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "candlestick charts reading beginners",
     category: "Basics",
     level: "beginner",
-    duration: "18 min",
+    duration: "15–30 min",
     description:
-      "Learn candlestick charts, price trends, support & resistance levels. The foundation of technical analysis explained simply.",
-    thumbnail: "from-violet-500 to-purple-700",
+      "Learn candlestick patterns, support & resistance, and price action. The core skill every trader must master before anything else.",
   },
   {
     id: "l4",
-    videoId: "6JvFKr6sP_A",
-    title: "Fundamental Analysis – Analysing Stocks",
-    channel: "TIDI",
-    channelName: "TIDI Kannada",
-    channelHandle: "@TIDIkannada",
-    category: "Basics",
-    level: "beginner",
-    duration: "22 min",
-    description:
-      "How to evaluate a company's financials: P/E ratio, EPS, revenue, profits, debt. Pick quality stocks with confidence.",
-    thumbnail: "from-amber-500 to-orange-700",
-  },
-
-  // ── INTERMEDIATE: Trading Strategies ──────────────────────────────────────
-  {
-    id: "l5",
-    videoId: "HoAlkRlBsU0",
-    title: "Technical Analysis Masterclass",
+    title: "Fundamental Analysis – Picking Quality Stocks",
     channel: "GTF",
     channelName: "GTF – A Stock Market Institute",
     channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "fundamental analysis stocks PE ratio",
+    category: "Basics",
+    level: "beginner",
+    duration: "20–30 min",
+    description:
+      "How to evaluate a company: P/E ratio, EPS, revenue growth, debt levels, and ROE. Learn to distinguish quality businesses from overpriced hype.",
+  },
+
+  // ── INTERMEDIATE ───────────────────────────────────────────────────────────
+  {
+    id: "l5",
+    title: "Technical Analysis – RSI, MACD & Indicators",
+    channel: "GTF",
+    channelName: "GTF – A Stock Market Institute",
+    channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "technical analysis RSI MACD indicators",
     category: "Strategy",
     level: "intermediate",
-    duration: "30 min",
+    duration: "25–40 min",
     description:
-      "Deep dive into RSI, MACD, Bollinger Bands, moving averages. Build a complete technical analysis toolkit for trading Indian stocks.",
-    thumbnail: "from-cyan-500 to-blue-700",
+      "Master RSI, MACD, Bollinger Bands, and moving averages. Learn how to read momentum, divergence, and trend signals for entry and exit timing.",
   },
   {
     id: "l6",
-    videoId: "TlFKMz2RxCo",
-    title: "Intraday Trading Strategy – Complete Guide",
+    title: "Intraday Trading Strategy",
     channel: "GTF",
     channelName: "GTF – A Stock Market Institute",
     channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "intraday trading strategy stop loss",
     category: "Intraday",
     level: "intermediate",
-    duration: "25 min",
+    duration: "20–35 min",
     description:
-      "Master intraday trading setups, scalping strategies, risk management rules, and how to use stop-losses effectively for daily trading.",
-    thumbnail: "from-rose-500 to-red-700",
+      "Intraday setups, scalping strategies, stop-loss placement, and position sizing for same-day trading in Indian markets.",
   },
   {
     id: "l7",
-    videoId: "WGb8eAlMFxU",
-    title: "Swing Trading Strategy for Beginners",
+    title: "Swing Trading Strategy",
     channel: "TIDI",
     channelName: "TIDI Kannada",
     channelHandle: "@TIDIkannada",
+    channelUrl: "https://www.youtube.com/@TIDIkannada",
+    searchQuery: "swing trading strategy",
     category: "Strategy",
     level: "intermediate",
-    duration: "20 min",
+    duration: "15–25 min",
     description:
-      "How to hold positions for 2–10 days to catch bigger moves. Learn swing trading setups using price action and volume.",
-    thumbnail: "from-fuchsia-500 to-pink-700",
+      "Hold positions for 2–10 days to capture mid-term moves. Learn swing setups using price action, volume confirmation, and sector rotation.",
   },
   {
     id: "l8",
-    videoId: "aQqBYSFpGHc",
-    title: "Stock Market News & Sector Rotation",
+    title: "Stock Market News & Sector Analysis",
     channel: "GTF",
     channelName: "GTF – A Stock Market Institute",
     channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "stock market news sector rotation analysis",
     category: "News & Markets",
     level: "intermediate",
-    duration: "15 min",
+    duration: "10–20 min",
     description:
-      "How economic events, sector news, and market cycles affect stock prices. Build a news-driven trading edge.",
-    thumbnail: "from-slate-500 to-gray-700",
+      "How RBI policy, inflation data, and global events move the market. Build a news-driven edge by understanding macro and sectoral cycles.",
   },
 
-  // ── ADVANCED: F&O, Options & Algo Trading ────────────────────────────────
+  // ── ADVANCED ───────────────────────────────────────────────────────────────
   {
     id: "l9",
-    videoId: "TlFKMz2RxCo",
-    title: "Futures & Options (F&O) Explained from Scratch",
+    title: "Futures & Options (F&O) from Scratch",
     channel: "GTF",
     channelName: "GTF – A Stock Market Institute",
     channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "futures options F&O explained beginners",
     category: "F&O",
     level: "advanced",
-    duration: "35 min",
+    duration: "30–45 min",
     description:
-      "Complete F&O guide: futures contracts, option buying vs selling, strike prices, expiry, open interest, and margin requirements.",
-    thumbnail: "from-indigo-600 to-violet-800",
+      "Futures contracts, option buying vs selling, strike prices, expiry dates, open interest, and margin mechanics for Indian F&O markets.",
   },
   {
     id: "l10",
-    videoId: "8W9gK8OQ9dI",
-    title: "Options Trading – Greeks & Strategies",
+    title: "Options Greeks – Delta, Theta, Vega & Strategies",
     channel: "GTF",
     channelName: "GTF – A Stock Market Institute",
     channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "options greeks delta theta strategies",
     category: "Options",
     level: "advanced",
-    duration: "40 min",
+    duration: "35–50 min",
     description:
-      "Delta, Gamma, Theta, Vega explained practically. Learn covered calls, straddles, iron condors, and bull put spreads.",
-    thumbnail: "from-purple-600 to-indigo-900",
+      "Delta, Gamma, Theta, and Vega explained practically. Learn covered calls, straddles, iron condors, and how to manage option positions like a pro.",
   },
   {
     id: "l11",
-    videoId: "Xn7KWR9EOGQ",
     title: "Algorithmic Trading – Build Your Own Strategy",
     channel: "TIDI",
     channelName: "TIDI Kannada",
     channelHandle: "@TIDIkannada",
+    channelUrl: "https://www.youtube.com/@TIDIkannada",
+    searchQuery: "algorithmic trading strategy python",
     category: "Algo Trading",
     level: "advanced",
-    duration: "28 min",
+    duration: "25–40 min",
     description:
-      "How to write your own quantitative trading algorithm. Backtesting, strategy logic, automation tools, and deploying on Indian brokers.",
-    thumbnail: "from-teal-600 to-emerald-800",
+      "Write and backtest your own quantitative algorithm. Automate trading signals and deploy on Indian brokers like Zerodha using APIs.",
   },
   {
     id: "l12",
-    videoId: "PSL7bKTq1X0",
-    title: "Risk Management – Position Sizing & Capital Protection",
+    title: "Risk Management & Position Sizing",
     channel: "GTF",
     channelName: "GTF – A Stock Market Institute",
     channelHandle: "@gettogetherfinance",
+    channelUrl: "https://www.youtube.com/@gettogetherfinance",
+    searchQuery: "risk management position sizing trading",
     category: "Risk",
     level: "advanced",
-    duration: "22 min",
+    duration: "20–30 min",
     description:
-      "Kelly Criterion, fixed fractional sizing, max drawdown limits, and how professional traders protect capital across market regimes.",
-    thumbnail: "from-orange-600 to-red-800",
+      "Kelly Criterion, fixed fractional sizing, max drawdown limits, and capital protection rules. How professional traders survive the long run.",
   },
 ];
 
@@ -216,8 +220,9 @@ const LEVEL_CONFIG = {
 };
 
 const CHANNEL_CONFIG = {
-  TIDI: { color: "from-red-500 to-rose-700", badge: "bg-red-600/20 text-red-400 border-red-500/30" },
-  GTF: { color: "from-emerald-500 to-teal-700", badge: "bg-emerald-600/20 text-emerald-400 border-emerald-500/30" },
+  TIDI: { badge: "bg-red-600/20 text-red-400 border-red-500/30" },
+  GTF: { badge: "bg-emerald-600/20 text-emerald-400 border-emerald-500/30" },
+  BOTH: { badge: "bg-violet-600/20 text-violet-400 border-violet-500/30" },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -227,24 +232,20 @@ export interface LearningHubProps {
 }
 
 export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
-  const [activeVideo, setActiveVideo] = useState<LearningVideo | null>(null);
+  const [activeTopic, setActiveTopic] = useState<LearningTopic | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLevel, setSelectedLevel] = useState("All");
 
-  const filtered = LEARNING_VIDEOS.filter((v) => {
+  const filtered = LEARNING_TOPICS.filter((v) => {
     const catMatch = selectedCategory === "All" || v.category === selectedCategory;
     const lvlMatch = selectedLevel === "All" || v.level === selectedLevel;
     return catMatch && lvlMatch;
   });
 
-  const getThumbnailUrl = (videoId: string) =>
-    `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
-
-  const getEmbedUrl = (videoId: string) =>
-    `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-
-  const openYouTube = (videoId: string) =>
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank", "noopener,noreferrer");
+  const openSearch = (topic: LearningTopic) => {
+    const url = buildChannelSearchUrl(topic.channelHandle, topic.searchQuery);
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <GlassCard className={`p-5 flex flex-col gap-4 ${className}`}>
@@ -265,11 +266,11 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
         </div>
         <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20 flex items-center gap-1">
           <Youtube className="w-3 h-3" />
-          {LEARNING_VIDEOS.length} Videos
+          {LEARNING_TOPICS.length} Topics
         </span>
       </div>
 
-      {/* ── Channel Badges ── */}
+      {/* ── Channel Links ── */}
       <div className="flex items-center gap-2">
         <a
           href="https://www.youtube.com/@TIDIkannada"
@@ -293,7 +294,7 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
         </a>
       </div>
 
-      {/* ── Level Filter Pills ── */}
+      {/* ── Level Filter ── */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 no-scrollbar">
         {LEVELS.map((lvl) => (
           <button
@@ -310,7 +311,7 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
         ))}
       </div>
 
-      {/* ── Category Filter Pills ── */}
+      {/* ── Category Filter ── */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
         {CATEGORIES.map((cat) => (
           <button
@@ -327,77 +328,53 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
         ))}
       </div>
 
-      {/* ── Video Grid ── */}
-      <div className="flex flex-col gap-3">
+      {/* ── Topic List ── */}
+      <div className="flex flex-col gap-2.5">
         {filtered.length === 0 && (
           <div className="text-center py-8 text-[var(--text-muted)] text-xs">
-            No videos match this filter. Try "All" to see everything.
+            No topics match this filter.
           </div>
         )}
-        {filtered.map((video) => {
-          const levelCfg = LEVEL_CONFIG[video.level];
-          const channelCfg = CHANNEL_CONFIG[video.channel];
+        {filtered.map((topic) => {
+          const levelCfg = LEVEL_CONFIG[topic.level];
+          const channelCfg = CHANNEL_CONFIG[topic.channel];
           return (
             <div
-              key={video.id}
-              onClick={() => setActiveVideo(video)}
+              key={topic.id}
+              onClick={() => setActiveTopic(topic)}
               className="group flex gap-3 p-3 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] hover:border-violet-500/40 cursor-pointer transition-all duration-150 shadow-sm hover:shadow-md"
             >
-              {/* Thumbnail */}
-              <div className="relative shrink-0 w-28 h-[62px] rounded-xl overflow-hidden bg-black">
-                <img
-                  src={getThumbnailUrl(video.videoId)}
-                  alt={video.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Fallback to gradient if thumbnail fails
-                    e.currentTarget.style.display = "none";
-                    e.currentTarget.parentElement!.classList.add(
-                      "bg-gradient-to-br",
-                      ...video.thumbnail.split(" ")
-                    );
-                  }}
-                />
-                {/* Play overlay */}
-                <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                  <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
-                    <Play className="w-3.5 h-3.5 fill-gray-900 text-gray-900 ml-0.5" />
-                  </div>
-                </div>
-                {/* Duration badge */}
-                <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[9px] font-bold bg-black/80 text-white font-mono">
-                  {video.duration}
-                </span>
+              {/* Channel color strip + icon */}
+              <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
+                topic.channel === "TIDI" ? "bg-red-600/15" : "bg-emerald-600/15"
+              }`}>
+                <Youtube className={`w-5 h-5 ${topic.channel === "TIDI" ? "text-red-500" : "text-emerald-500"}`} />
               </div>
 
               {/* Content */}
               <div className="flex flex-col gap-1 flex-1 min-w-0">
-                {/* Badges row */}
+                {/* Badges */}
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <span
-                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${levelCfg.color}`}
-                  >
+                  <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${levelCfg.color}`}>
                     {levelCfg.label}
                   </span>
-                  <span
-                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${channelCfg.badge}`}
-                  >
-                    {video.channelHandle}
+                  <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${channelCfg.badge}`}>
+                    {topic.channelHandle}
                   </span>
                   <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-accent/10 text-accent border border-accent/20">
-                    {video.category}
+                    {topic.category}
                   </span>
                 </div>
 
                 {/* Title */}
                 <h4 className="text-xs font-bold text-[var(--text-main)] line-clamp-2 leading-snug group-hover:text-accent transition-colors">
-                  {video.title}
+                  {topic.title}
                 </h4>
 
-                {/* Channel name */}
+                {/* Duration */}
                 <span className="text-[10px] text-[var(--text-muted)] flex items-center gap-1">
-                  <Youtube className="w-3 h-3 text-red-500" />
-                  {video.channelName}
+                  <Clock className="w-3 h-3" />
+                  {topic.duration}
                 </span>
               </div>
 
@@ -410,7 +387,7 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
         })}
       </div>
 
-      {/* ── Pathway Legend ── */}
+      {/* ── Footer Legend ── */}
       <div className="flex items-center gap-3 pt-1 border-t border-[var(--border-subtle)]">
         <div className="flex items-center gap-1 text-[9px] font-semibold text-emerald-500">
           <Target className="w-3 h-3" /> Beginner
@@ -422,55 +399,50 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
           <Zap className="w-3 h-3" /> Advanced
         </div>
         <div className="ml-auto text-[9px] text-[var(--text-muted)]">
-          {filtered.length}/{LEARNING_VIDEOS.length} videos
+          {filtered.length}/{LEARNING_TOPICS.length} topics
         </div>
       </div>
 
-      {/* ── Video Player Modal ── */}
+      {/* ── Topic Detail Modal ── */}
       <ModalSheet
-        isOpen={Boolean(activeVideo)}
-        onClose={() => setActiveVideo(null)}
-        title={activeVideo?.title || "Video"}
+        isOpen={Boolean(activeTopic)}
+        onClose={() => setActiveTopic(null)}
+        title={activeTopic?.title || "Topic"}
       >
-        {activeVideo && (
+        {activeTopic && (
           <div className="flex flex-col gap-4 py-2">
-            {/* Embedded Player */}
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-[var(--border-subtle)]">
-              <iframe
-                key={activeVideo.id}
-                title={activeVideo.title}
-                src={getEmbedUrl(activeVideo.videoId)}
-                className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-
-            {/* Meta */}
+            {/* Badges */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${LEVEL_CONFIG[activeVideo.level].color}`}>
-                {LEVEL_CONFIG[activeVideo.level].label}
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${LEVEL_CONFIG[activeTopic.level].color}`}>
+                {LEVEL_CONFIG[activeTopic.level].label}
               </span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${CHANNEL_CONFIG[activeVideo.channel].badge}`}>
-                {activeVideo.channelHandle}
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border flex items-center gap-1 ${CHANNEL_CONFIG[activeTopic.channel].badge}`}>
+                <Youtube className="w-3 h-3" />
+                {activeTopic.channelHandle}
               </span>
               <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20">
-                {activeVideo.category}
+                {activeTopic.category}
               </span>
               <span className="ml-auto text-[10px] text-[var(--text-muted)] font-mono flex items-center gap-1">
                 <Clock className="w-3 h-3" />
-                {activeVideo.duration}
+                {activeTopic.duration}
               </span>
             </div>
 
             {/* Description */}
             <div className="p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)]">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--text-main)] mb-1.5">
-                <Youtube className="w-3.5 h-3.5 text-red-500" />
-                {activeVideo.channelName}
-              </div>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                {activeVideo.description}
+              <p className="text-sm text-[var(--text-main)] leading-relaxed">
+                {activeTopic.description}
+              </p>
+            </div>
+
+            {/* Info note */}
+            <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <Search className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
+              <p className="text-[11px] text-amber-700 dark:text-amber-300 leading-relaxed">
+                Clicking "Find Videos" searches{" "}
+                <strong>{activeTopic.channelName}</strong>'s YouTube channel for
+                the best videos on this topic — always fresh and available.
               </p>
             </div>
 
@@ -478,16 +450,17 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
             <div className="flex gap-2 pt-1">
               <GhostButton
                 className="flex-1 text-xs"
-                onClick={() => openYouTube(activeVideo.videoId)}
+                onClick={() => window.open(activeTopic.channelUrl, "_blank", "noopener,noreferrer")}
               >
-                <ExternalLink className="w-3.5 h-3.5 mr-1" />
-                Open in YouTube
+                <Youtube className="w-3.5 h-3.5 mr-1" />
+                Visit Channel
               </GhostButton>
               <PrimaryButton
                 className="flex-1 text-xs"
-                onClick={() => setActiveVideo(null)}
+                onClick={() => openSearch(activeTopic)}
               >
-                Done Watching
+                <Search className="w-3.5 h-3.5 mr-1" />
+                Find Videos
               </PrimaryButton>
             </div>
           </div>
