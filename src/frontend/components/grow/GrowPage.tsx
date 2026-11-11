@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Sparkles, Wand2 } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
@@ -15,6 +16,7 @@ import { GrowSkeleton } from "./GrowSkeleton";
 import { apiUrl } from "../../config";
 
 export function GrowPage() {
+  const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
   const {
     capital,
@@ -135,6 +137,7 @@ export function GrowPage() {
       }
     }
     setActiveTab("portfolio");
+    navigate("/portfolio");
   };
 
   // Motion variants for horizontal slide

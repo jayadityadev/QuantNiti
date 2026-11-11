@@ -8,6 +8,7 @@ import { abortRegistry } from "../../services/abortRegistry";
 import { OnboardingHero } from "../onboarding/OnboardingHero";
 import { GrowPage } from "../grow/GrowPage";
 import { HomePage } from "../../pages/HomePage";
+import { LearnPage } from "../../pages/LearnPage";
 import { ExplorePage } from "../../pages/ExplorePage";
 import { PortfolioPage } from "../portfolio/PortfolioPage";
 import { ModalRoot } from "../modals/ModalRoot";
@@ -25,7 +26,7 @@ export function AppShell() {
     clearActiveAsyncKeys?.();
 
     const rawPath = location.pathname.replace(/^\//, "").toLowerCase();
-    const validTabs: NavTab[] = ["home", "explore", "grow", "portfolio"];
+    const validTabs: NavTab[] = ["home", "learn", "explore", "grow", "portfolio"];
     if (validTabs.includes(rawPath as NavTab)) {
       setActiveTab(rawPath as NavTab);
     }
@@ -58,7 +59,7 @@ export function AppShell() {
             initial={{ opacity: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 overflow-hidden"
+            className="fixed inset-0 z-50 overflow-hidden bg-[#F8FAFC] dark:bg-[#0A0D14]"
           >
             <OnboardingHero />
           </motion.div>
@@ -71,7 +72,7 @@ export function AppShell() {
         {isOnboarded && <Header />}
 
         {/* Scrollable Content Area with bottom nav clearance */}
-        <main className="flex-1 overflow-y-auto content-bottom-safe relative">
+        <main className={`flex-1 overflow-y-auto content-bottom-safe relative ${!isOnboarded ? "invisible pointer-events-none" : ""}`} aria-hidden={!isOnboarded}>
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
@@ -84,6 +85,7 @@ export function AppShell() {
             >
               <Routes location={location}>
                 <Route path="/home" element={<HomePage />} />
+                <Route path="/learn" element={<LearnPage />} />
                 <Route path="/explore" element={<ExplorePage />} />
                 <Route path="/grow" element={<GrowPage />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />

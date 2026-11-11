@@ -26,10 +26,15 @@ export const PortfolioHeroCard: React.FC<PortfolioHeroCardProps> = ({
             <h2 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
               Current Value
             </h2>
-            {isDemo && (
+            {isDemo ? (
               <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/30 flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5" />
                 DEMO PREVIEW
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                LIVE STREAM
               </span>
             )}
           </div>

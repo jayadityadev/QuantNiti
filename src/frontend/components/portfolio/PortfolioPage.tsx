@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Plus, Trash2, Check } from "lucide-react";
+import { Plus, Trash2, Check, FileText } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
 import { useAbortableRequest } from "../../hooks/useAbortableRequest";
 import { DemoPortfolio } from "./DemoPortfolio";
@@ -10,6 +10,7 @@ import { CompoundingTrajectoryChart } from "./CompoundingTrajectoryChart";
 import { CreatePortfolioModal } from "./CreatePortfolioModal";
 import { PrimaryButton } from "../ui/PrimaryButton";
 import { apiUrl } from "../../config";
+import { marketStream, MarketTick } from "../../services/marketStream";
 import {
   PortfolioData,
   CompoundingTrajectoryData,
@@ -25,6 +26,7 @@ export const PortfolioPage: React.FC = () => {
     setPortfolios,
     setActiveTab,
     riskPersona,
+    openModal,
   } = useAppStore();
 
   const { request } = useAbortableRequest();
@@ -53,6 +55,66 @@ export const PortfolioPage: React.FC = () => {
     portfolios.find((p) => p.portfolio_id === activePortfolioId) ||
     portfolios[0] ||
     null;
+
+  // Real-time market tick subscription for live holdings and portfolio PnL
+  useEffect(() => {
+    if (!activePortfolio || !activePortfolio.holdings || activePortfolio.holdings.length === 0) {
+      return;
+    }
+
+    const holdingSymbols = new Set(
+      activePortfolio.holdings.map((h: any) => h.symbol.replace(".NS", "").toUpperCase())
+    );
+
+    const unsubscribe = marketStream.subscribe((tick: MarketTick) => {
+      const cleanSym = tick.symbol.replace(".NS", "").toUpperCase();
+      if (!holdingSymbols.has(cleanSym)) {
+        return;
+      }
+
+      setPortfolios(
+        portfolios.map((p) => {
+          if (p.portfolio_id !== activePortfolio.portfolio_id) return p;
+
+          const updatedHoldings = p.holdings.map((h: any) => {
+            if (h.symbol.replace(".NS", "").toUpperCase() === cleanSym) {
+              const newPrice = tick.price;
+              const newCurrentVal = Math.round(h.shares * newPrice);
+              const unrealizedPnl = newCurrentVal - h.invested_amount;
+              const unrealizedPnlPct = h.invested_amount > 0 ? (unrealizedPnl / h.invested_amount) * 100 : 0;
+              return {
+                ...h,
+                current_price: newPrice,
+                current_value: newCurrentVal,
+                unrealized_pnl: unrealizedPnl,
+                unrealized_pnl_pct: parseFloat(unrealizedPnlPct.toFixed(2)),
+              };
+            }
+            return h;
+          });
+
+          const totalHoldingsVal = updatedHoldings.reduce((sum: number, h: any) => sum + (h.current_value || 0), 0);
+          const totalVal = totalHoldingsVal + (p.cash || 0);
+          const totalPnl = totalVal - p.initial_capital;
+          const totalPnlPct = p.initial_capital > 0 ? (totalPnl / p.initial_capital) * 100 : 0;
+
+          return {
+            ...p,
+            holdings: updatedHoldings,
+            current_value: totalVal,
+            total_pnl: totalPnl,
+            total_pnl_pct: parseFloat(totalPnlPct.toFixed(2)),
+          };
+        })
+      );
+    });
+
+    marketStream.connect();
+
+    return () => {
+      unsubscribe();
+    };
+  }, [activePortfolio?.portfolio_id, activePortfolio?.holdings?.length]);
 
   // Fetch compounding projection when active portfolio changes
   useEffect(() => {
@@ -231,6 +293,16 @@ export const PortfolioPage: React.FC = () => {
             </button>
           )}
 
+          <button
+            type="button"
+            onClick={() => openModal("orderSheet")}
+            className="p-2 px-3 rounded-xl text-violet-500 dark:text-violet-300 hover:bg-violet-500/10 transition-colors border border-violet-500/30 text-xs flex items-center gap-1.5 font-bold"
+            title="Export 1-Click Order Sheet"
+            aria-label="Order Sheet"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            <span>Order Sheet</span>
+          </button>
           <PrimaryButton
             onClick={() => setIsCreateModalOpen(true)}
             icon={<Plus className="w-3.5 h-3.5" />}

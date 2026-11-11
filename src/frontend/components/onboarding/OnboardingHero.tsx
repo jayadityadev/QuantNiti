@@ -80,7 +80,7 @@ export const OnboardingHero: React.FC<OnboardingHeroProps> = ({ onComplete }) =>
   return (
     <div
       data-testid="onboarding-hero"
-      className="fixed inset-0 z-50 overflow-y-auto flex flex-col justify-between bg-gradient-to-b from-slate-50 via-white to-violet-50/40 dark:from-slate-950 dark:via-[#100C24] dark:to-[#170E33] text-[var(--text-main)]"
+      className="fixed inset-0 z-50 overflow-y-auto flex flex-col justify-between bg-[#F8FAFC] dark:bg-[#0A0D14] bg-gradient-to-b from-slate-50 via-white to-violet-50 dark:from-slate-950 dark:via-[#100C24] dark:to-[#170E33] text-[var(--text-main)]"
     >
       {/* Top Header / Progress Bar */}
       <div className="w-full max-w-[520px] mx-auto px-6 pt-6 pb-2">

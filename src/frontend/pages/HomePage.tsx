@@ -1,12 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { GraduationCap, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { MarketPulse } from "../components/home/MarketPulse";
 import { RegimeRadar } from "../components/home/RegimeRadar";
 import { AdaptiveHomeCard } from "../components/home/AdaptiveHomeCard";
 import { TopRecommendations } from "../components/home/TopRecommendations";
-import { LearningHub } from "../components/home/LearningHub";
 import { CompoundingVisualizer } from "../components/home/CompoundingVisualizer";
-import { VideoFacades } from "../components/home/VideoFacades";
+import { GlassCard } from "../components/ui/GlassCard";
 
 const containerVariants = {
   initial: { opacity: 0 },
@@ -57,19 +58,31 @@ export const HomePage: React.FC = () => {
         <TopRecommendations />
       </motion.div>
 
-      {/* 5. Concept Mastery Learning Hub */}
-      <motion.div variants={itemVariants}>
-        <LearningHub />
-      </motion.div>
-
-      {/* 6. Systematic Compounding Visualizer */}
+      {/* 5. Systematic Compounding Visualizer */}
       <motion.div variants={itemVariants}>
         <CompoundingVisualizer />
       </motion.div>
 
-      {/* 7. Video Explainer Facades */}
+      {/* 6. Quick Gateway to Quant Mastery Lab & Learn Tab */}
       <motion.div variants={itemVariants}>
-        <VideoFacades />
+        <Link to="/learn" className="block group">
+          <GlassCard className="p-4 flex items-center justify-between border-violet-500/20 group-hover:border-violet-500/50 transition-colors">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-violet-600/15 flex items-center justify-center text-violet-600 dark:text-violet-400 group-hover:scale-105 transition-transform">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-[var(--text-main)] group-hover:text-accent transition-colors">
+                  Quant Mastery Lab
+                </h3>
+                <p className="text-[11px] text-[var(--text-muted)]">
+                  Compare 5 algorithmic trading strategies & watch masterclasses.
+                </p>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 text-violet-400 group-hover:translate-x-1 transition-transform" />
+          </GlassCard>
+        </Link>
       </motion.div>
     </motion.div>
   );

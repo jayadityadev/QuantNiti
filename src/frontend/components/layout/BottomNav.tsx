@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import { useNavigate } from "react-router-dom";
-import { Home, Compass, TrendingUp, PieChart } from "lucide-react";
+import { Home, GraduationCap, TrendingUp, PieChart } from "lucide-react";
 import { motion } from "framer-motion";
 import { NavTab } from "../../store/useAppStore";
 
@@ -18,7 +18,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { id: "home", label: "Home", path: "/home", icon: Home },
-  { id: "explore", label: "Explore", path: "/explore", icon: Compass },
+  { id: "learn", label: "Learn", path: "/learn", icon: GraduationCap },
   { id: "grow", label: "Grow", path: "/grow", icon: TrendingUp },
   { id: "portfolio", label: "Portfolio", path: "/portfolio", icon: PieChart },
 ];

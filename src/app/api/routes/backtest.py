@@ -2,13 +2,14 @@
 
 from typing import Any, Dict, Optional
 from fastapi import APIRouter, HTTPException, Query, Request, status
+from pydantic import BaseModel, Field
 
 from app.core.models import (
     BacktestRequest,
     BacktestResponse,
     StrategyType,
 )
-from app.ml.backtest.service import BacktestService
+from app.ml.backtest.service import BacktestService, resolve_strategy_enum
 
 router = APIRouter(tags=["Quant Lab Backtesting Studio"])
 
@@ -24,11 +25,16 @@ def get_backtest_service(request: Request) -> BacktestService:
     return service
 
 
+class StrategyCompareRequest(BaseModel):
+    symbol: str = Field(default="RELIANCE", description="Stock symbol to compare")
+    initial_capital: float = Field(default=100000.0, ge=1000.0, description="Capital in INR")
+
+
 @router.post(
     "/backtest/run",
     response_model=BacktestResponse,
     summary="Execute Technical Strategy Backtest",
-    description="Simulates technical trading strategies (Buy & Hold, MA Crossover, RSI, Bollinger Bands, Dual Momentum) on historical data with metrics and market regime attribution.",
+    description="Simulates technical trading strategies on historical data with metrics and regime attribution.",
 )
 async def run_backtest_post(
     payload: BacktestRequest,
@@ -62,7 +68,7 @@ async def run_backtest_post(
 async def run_backtest_get(
     request: Request,
     symbol: str = Query(default="^NSEI", description="NSE Symbol or Index"),
-    strategy: StrategyType = Query(default=StrategyType.BUY_AND_HOLD, description="Strategy type"),
+    strategy: str = Query(default="BUY_AND_HOLD", description="Strategy type"),
     start_date: Optional[str] = Query(default=None, description="Start date (YYYY-MM-DD)"),
     end_date: Optional[str] = Query(default=None, description="End date (YYYY-MM-DD)"),
     initial_capital: float = Query(default=100000.0, ge=1000.0, le=100000000.0, description="Initial capital in INR"),
@@ -74,7 +80,7 @@ async def run_backtest_get(
     try:
         return service.run_backtest(
             symbol=symbol,
-            strategy=strategy,
+            strategy=resolve_strategy_enum(strategy),
             start_date=start_date,
             end_date=end_date,
             initial_capital=initial_capital,
@@ -86,6 +92,38 @@ async def run_backtest_get(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(exc),
         )
+
+
+@router.get(
+    "/backtest/compare",
+    summary="Compare all 5 quantitative strategies on a stock",
+    description="Executes Buy & Hold, MA Crossover, RSI Reversion, Bollinger Bands, and Dual Momentum and recommends the optimal stance.",
+)
+async def compare_strategies_get(
+    request: Request,
+    symbol: str = Query(default="RELIANCE", description="Symbol to compare"),
+    initial_capital: float = Query(default=100000.0, description="Capital"),
+) -> Dict[str, Any]:
+    service = get_backtest_service(request)
+    try:
+        return service.compare_all_strategies(symbol=symbol, initial_capital=initial_capital)
+    except Exception as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
+
+
+@router.post(
+    "/backtest/compare",
+    summary="Compare all 5 quantitative strategies on a stock (POST)",
+)
+async def compare_strategies_post(
+    payload: StrategyCompareRequest,
+    request: Request,
+) -> Dict[str, Any]:
+    service = get_backtest_service(request)
+    try:
+        return service.compare_all_strategies(symbol=payload.symbol, initial_capital=payload.initial_capital)
+    except Exception as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
 
 
 @router.post(

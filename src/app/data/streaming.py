@@ -13,12 +13,12 @@ from app.universe import get_universe_symbols, normalize_symbol
 
 # Default baseline prices calibrated from current live market levels
 _BASELINE_PRICES: Dict[str, float] = {
-    "^NSEI": 22511.80,
-    "^INDIAVIX": 14.65,
-    "RELIANCE": 1173.00,
-    "TCS": 2181.80,
-    "HDFCBANK": 704.60,
-    "INFY": 1021.90,
+    "^NSEI": 23010.00,
+    "^INDIAVIX": 15.20,
+    "RELIANCE": 1285.00,
+    "TCS": 4120.00,
+    "HDFCBANK": 1680.00,
+    "INFY": 1850.00,
     "ICICIBANK": 1210.30,
     "BHARTIARTL": 1425.60,
     "SBIN": 820.10,

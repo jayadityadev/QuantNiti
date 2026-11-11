@@ -65,8 +65,10 @@ class GrowService:
         if capital < 1000.0 or capital > 10000000.0:
             raise ValueError(f"Capital ₹{capital:,.2f} is out of allowable range [₹1,000, ₹1,00,00,000]")
 
-        if horizon not in HORIZON_DAYS:
-            raise ValueError(f"Horizon '{horizon}' invalid. Must be one of: {list(HORIZON_DAYS.keys())}")
+        clean_h = str(horizon).upper().replace(" ", "").replace("MONTHS", "M").replace("MONTH", "M")
+        digits = "".join(filter(str.isdigit, clean_h))
+        if not digits and clean_h not in HORIZON_DAYS:
+            raise ValueError(f"Horizon '{horizon}' invalid. Must be a valid timeframe like 1M, 6M, 12M or custom months.")
 
         # 1. Current Market Regime
         regime_info = self.regime_service.get_current_regime()
@@ -126,7 +128,7 @@ class GrowService:
                 break
 
         # In High-Volatility Bear regimes, guarantee at least one safe-haven Commodity ETF (e.g. Gold/Silver) participates
-        if active_regime == MarketRegimeType.HIGH_VOLATILITY_BEAR:
+        if active_regime == MarketRegimeType.HIGH_VOLATILITY_BEAR or risk_persona == RiskPersona.CONSERVATIVE:
             has_commodity = any(
                 c.get("asset_class") == AssetClass.COMMODITY_ETF or c.get("sector") == "Commodities"
                 for c in selected_candidates

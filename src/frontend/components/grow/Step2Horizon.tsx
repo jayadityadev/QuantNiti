@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronLeft, Check, Clock, Star } from "lucide-react";
+import { ArrowRight, ChevronLeft, Check, Clock, Star, Sliders } from "lucide-react";
 import { TimeHorizon } from "../../store/useAppStore";
 import { PrimaryButton } from "../ui/PrimaryButton";
 import { GhostButton } from "../ui/GhostButton";
@@ -59,6 +59,25 @@ export const Step2Horizon: React.FC<Step2HorizonProps> = ({
   onNext,
   onBack,
 }) => {
+  const isPreset = ["1M", "3M", "6M", "12M"].includes(horizon);
+  const initialCustomMonths = !isPreset
+    ? parseInt(horizon.replace(/\D/g, "") || "9", 10)
+    : 9;
+  const [customMonths, setCustomMonths] = useState<number>(initialCustomMonths);
+  const [isCustomMode, setIsCustomMode] = useState<boolean>(!isPreset);
+
+  const handleCustomSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseInt(e.target.value, 10);
+    setCustomMonths(val);
+    setIsCustomMode(true);
+    onHorizonChange(`${val}M` as TimeHorizon);
+  };
+
+  const handleSelectPreset = (id: TimeHorizon) => {
+    setIsCustomMode(false);
+    onHorizonChange(id);
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-1">
@@ -77,13 +96,13 @@ export const Step2Horizon: React.FC<Step2HorizonProps> = ({
       {/* 2x2 Grid of Horizon Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         {HORIZON_OPTIONS.map((opt) => {
-          const isSelected = horizon === opt.id;
+          const isSelected = !isCustomMode && horizon === opt.id;
           return (
             <motion.button
               key={opt.id}
               type="button"
               whileTap={{ scale: 0.98 }}
-              onClick={() => onHorizonChange(opt.id)}
+              onClick={() => handleSelectPreset(opt.id)}
               aria-label={`${opt.title} - ${opt.stance}`}
               className={`relative p-4 rounded-2xl border text-left flex flex-col justify-between gap-3 transition-all duration-200 cursor-pointer ${
                 isSelected
@@ -125,6 +144,44 @@ export const Step2Horizon: React.FC<Step2HorizonProps> = ({
             </motion.button>
           );
         })}
+      </div>
+
+      {/* Manual / Custom Horizon Input Section */}
+      <div
+        className={`p-4 rounded-2xl border transition-all duration-200 ${
+          isCustomMode
+            ? "bg-violet-600/15 border-violet-500 shadow-md shadow-violet-500/10"
+            : "bg-[var(--bg-card-subtle)] border-[var(--border-subtle)]"
+        }`}
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <Sliders className="w-4 h-4 text-violet-500" />
+            <span className="text-sm font-bold text-[var(--text-main)]">
+              Manual Custom Horizon
+            </span>
+          </div>
+          <span className="font-mono text-sm font-bold px-3 py-1 rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-300 border border-violet-500/30">
+            {customMonths} Months ({customMonths >= 12 ? (customMonths / 12).toFixed(1) + " Y" : `${customMonths * 30} Days`})
+          </span>
+        </div>
+
+        <input
+          type="range"
+          min={1}
+          max={36}
+          step={1}
+          value={customMonths}
+          onChange={handleCustomSliderChange}
+          className="w-full accent-violet-600 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none"
+        />
+
+        <div className="flex justify-between text-[10px] text-[var(--text-muted)] font-mono mt-1.5">
+          <span>1 Month</span>
+          <span>12 Months (1Y)</span>
+          <span>24 Months (2Y)</span>
+          <span>36 Months (3Y)</span>
+        </div>
       </div>
 
       {/* Navigation Controls */}

@@ -18,10 +18,10 @@
     "semantic_hash": "33fad9c02cb0ec6d6030369ef6347d57"
   },
   "pyproject.toml": {
-    "mtime": 1791216240.0318048,
-    "seen": 1791727289.1627638,
-    "ast_hash": "ccf81681f81fc41cd0e7f9ce708bab42",
-    "semantic_hash": "ccf81681f81fc41cd0e7f9ce708bab42"
+    "mtime": 1793267380.6407897,
+    "seen": 1793269102.1743226,
+    "ast_hash": "9b907740dbac4d217d4deece42489af6",
+    "semantic_hash": ""
   },
   "scripts/build_apk.py": {
     "mtime": 1791525546.548485,
@@ -30,22 +30,22 @@
     "semantic_hash": "f101c66bd5b024dea4e1cef6054edd5b"
   },
   "scripts/capture_all_snapshots.py": {
-    "mtime": 1791492840.1259842,
-    "seen": 1791727289.1627657,
-    "ast_hash": "b08e7af98ba637ffb0353367fec7a3bb",
-    "semantic_hash": "b08e7af98ba637ffb0353367fec7a3bb"
+    "mtime": 1793366883.398174,
+    "seen": 1793366986.4249077,
+    "ast_hash": "73cd0f967745732cac39693b2c8c5fcc",
+    "semantic_hash": ""
   },
   "scripts/capture_modals.py": {
-    "mtime": 1791492954.153728,
-    "seen": 1791727289.1627672,
-    "ast_hash": "94adbbde3c1d2ae229f4df11ce8b9f2a",
-    "semantic_hash": "94adbbde3c1d2ae229f4df11ce8b9f2a"
+    "mtime": 1793366896.356563,
+    "seen": 1793366986.4249103,
+    "ast_hash": "40d0c6915e3efd55d153d2076b3fdcf0",
+    "semantic_hash": ""
   },
   "scripts/capture_snapshots.py": {
-    "mtime": 1791492608.96784,
-    "seen": 1791727289.1627681,
-    "ast_hash": "a3be8d5e932b5732118a1ddde79c408d",
-    "semantic_hash": "a3be8d5e932b5732118a1ddde79c408d"
+    "mtime": 1793366910.393639,
+    "seen": 1793366986.4249122,
+    "ast_hash": "79232dbc17eb9a107541128d7c5bc039",
+    "semantic_hash": ""
   },
   "scripts/paper_figures/fig1_system_architecture.py": {
     "mtime": 1791216240.0318048,
@@ -84,10 +84,10 @@
     "semantic_hash": "b28766dbf735d98ed5fbe754ec311f01"
   },
   "scripts/serve_mobile.py": {
-    "mtime": 1791525546.548485,
-    "seen": 1791727289.1627753,
-    "ast_hash": "74bf8aad2601ddf566279ac0a75751c5",
-    "semantic_hash": "74bf8aad2601ddf566279ac0a75751c5"
+    "mtime": 1793423082.5387082,
+    "seen": 1793423211.2946177,
+    "ast_hash": "86961dab993ee3e966ac1919e24a14c9",
+    "semantic_hash": ""
   },
   "scripts/serve_production.py": {
     "mtime": 1791525558.086971,
@@ -114,9 +114,9 @@
     "semantic_hash": "a4dab76d43d15bfc1666e46f38789710"
   },
   "src/app/api/app.py": {
-    "mtime": 1792667131.0163014,
-    "seen": 1792669369.2799277,
-    "ast_hash": "b8bace5bd9667cb3360c8cddf0637d31",
+    "mtime": 1793422787.5979998,
+    "seen": 1793423211.2946332,
+    "ast_hash": "d86ffeee50ac06dc232ebd97934ed8c3",
     "semantic_hash": ""
   },
   "src/app/api/routes/__init__.py": {
@@ -132,10 +132,10 @@
     "semantic_hash": "8ada8ad339b03710ed34a28d1615cbba"
   },
   "src/app/api/routes/backtest.py": {
-    "mtime": 1791216240.037741,
-    "seen": 1791727289.1627831,
-    "ast_hash": "0cd2b03a5a0e34f25527aeba3dc23c0b",
-    "semantic_hash": "0cd2b03a5a0e34f25527aeba3dc23c0b"
+    "mtime": 1793355294.8971777,
+    "seen": 1793356597.875971,
+    "ast_hash": "cd107a2194404a259355b8eade62f631",
+    "semantic_hash": ""
   },
   "src/app/api/routes/chat.py": {
     "mtime": 1791782250.7327247,
@@ -150,10 +150,10 @@
     "semantic_hash": "14fa5380db3a992302b7b9c20341eab2"
   },
   "src/app/api/routes/grow.py": {
-    "mtime": 1791216240.037741,
-    "seen": 1791727289.1627862,
-    "ast_hash": "aff57de55c4da44ec77ccdac3e7dbe51",
-    "semantic_hash": "aff57de55c4da44ec77ccdac3e7dbe51"
+    "mtime": 1793356234.0573783,
+    "seen": 1793356597.8759756,
+    "ast_hash": "8b726cce38f507a15ec919a494b2279f",
+    "semantic_hash": ""
   },
   "src/app/api/routes/health.py": {
     "mtime": 1791216240.039264,
@@ -210,9 +210,9 @@
     "semantic_hash": "c61af93eae521104a1b3675336fdd5b5"
   },
   "src/app/core/models.py": {
-    "mtime": 1792665207.1430678,
-    "seen": 1792665764.3921738,
-    "ast_hash": "28d22f22ac19a0844ff05ce45931151a",
+    "mtime": 1793356449.0715892,
+    "seen": 1793356597.8759909,
+    "ast_hash": "d1bced87425f3090119a540e41473d6f",
     "semantic_hash": ""
   },
   "src/app/data/__init__.py": {
@@ -252,9 +252,9 @@
     "semantic_hash": "0dad698be3b1a91807f2fbfe1e1d6f54"
   },
   "src/app/data/reviews_repo.py": {
-    "mtime": 1792665272.852035,
-    "seen": 1792665764.392183,
-    "ast_hash": "40d7caf74b7614bbcea11525d6f0b489",
+    "mtime": 1793355882.5265884,
+    "seen": 1793356597.8760011,
+    "ast_hash": "b37cf458cf4777062be7df59e1e46c03",
     "semantic_hash": ""
   },
   "src/app/data/service.py": {
@@ -270,10 +270,10 @@
     "semantic_hash": ""
   },
   "src/app/data/streaming.py": {
-    "mtime": 1791526270.8280075,
-    "seen": 1791727289.1628056,
-    "ast_hash": "4eb1f578b13a989d50ad4d7e4bb493d1",
-    "semantic_hash": "4eb1f578b13a989d50ad4d7e4bb493d1"
+    "mtime": 1793355129.9165044,
+    "seen": 1793356597.8760054,
+    "ast_hash": "6a2bc4c708bcfa56a40a0cf0c488fca9",
+    "semantic_hash": ""
   },
   "src/app/ml/__init__.py": {
     "mtime": 1791216240.0476851,
@@ -294,10 +294,10 @@
     "semantic_hash": "a8d8fe556f26f18ff25b95ee203b35f4"
   },
   "src/app/ml/alerts/service.py": {
-    "mtime": 1791216240.0486853,
-    "seen": 1791727289.1628091,
-    "ast_hash": "2801216254341081f23e933a0a1d08cb",
-    "semantic_hash": "2801216254341081f23e933a0a1d08cb"
+    "mtime": 1793356011.6722379,
+    "seen": 1793356597.876012,
+    "ast_hash": "e8c6ac15b57aa60c395e4bf3d1ba4607",
+    "semantic_hash": ""
   },
   "src/app/ml/assistant/__init__.py": {
     "mtime": 1791216240.0496852,
@@ -348,10 +348,10 @@
     "semantic_hash": "3f275deb4ff02c6380908fb7d61048e7"
   },
   "src/app/ml/backtest/service.py": {
-    "mtime": 1791216240.0516853,
-    "seen": 1791727289.162817,
-    "ast_hash": "023241b47519c2f32f22a4f41c0b23ce",
-    "semantic_hash": "023241b47519c2f32f22a4f41c0b23ce"
+    "mtime": 1793355245.7857888,
+    "seen": 1793356597.8760269,
+    "ast_hash": "5470dedb9115e32dd73ae535a9657bb6",
+    "semantic_hash": ""
   },
   "src/app/ml/forecasting/__init__.py": {
     "mtime": 1791216240.0527928,
@@ -366,10 +366,10 @@
     "semantic_hash": ""
   },
   "src/app/ml/forecasting/forecaster.py": {
-    "mtime": 1791216240.0527928,
-    "seen": 1791727289.1628196,
-    "ast_hash": "d087fcfddc65b8cf09234fbebb2598f7",
-    "semantic_hash": "d087fcfddc65b8cf09234fbebb2598f7"
+    "mtime": 1793355457.8028965,
+    "seen": 1793356597.876031,
+    "ast_hash": "632dce69b4d9819b89e2ec89692b7866",
+    "semantic_hash": ""
   },
   "src/app/ml/forecasting/service.py": {
     "mtime": 1792669138.048087,
@@ -402,10 +402,10 @@
     "semantic_hash": "598c7a0323a81682f0bd49c7a2f87129"
   },
   "src/app/ml/portfolio/growth_calculator.py": {
-    "mtime": 1791216240.0557916,
-    "seen": 1791727289.162825,
-    "ast_hash": "a0c089267e4e3b9e6aa1d47cdd0dfde2",
-    "semantic_hash": "a0c089267e4e3b9e6aa1d47cdd0dfde2"
+    "mtime": 1793355556.4439292,
+    "seen": 1793356597.8760402,
+    "ast_hash": "64e2a39ff164f54a004caddf626d65a4",
+    "semantic_hash": ""
   },
   "src/app/ml/portfolio/hrp.py": {
     "mtime": 1791216240.0557916,
@@ -414,10 +414,10 @@
     "semantic_hash": "9d50a386ab48192b0bf96bcc67bcfa02"
   },
   "src/app/ml/portfolio/service.py": {
-    "mtime": 1791216240.0557916,
-    "seen": 1791727289.162827,
-    "ast_hash": "2fb1d480e190680e26073df3deb93643",
-    "semantic_hash": "2fb1d480e190680e26073df3deb93643"
+    "mtime": 1793356234.0573783,
+    "seen": 1793356597.8760433,
+    "ast_hash": "1af46544084cb65bbdf6d6ec24af4aa2",
+    "semantic_hash": ""
   },
   "src/app/ml/regime/__init__.py": {
     "mtime": 1791216240.0567918,
@@ -426,10 +426,10 @@
     "semantic_hash": "7dbae44031d6e1c82e21a1ba2700bffd"
   },
   "src/app/ml/regime/classifier.py": {
-    "mtime": 1791216240.0567918,
-    "seen": 1791727289.1628287,
-    "ast_hash": "8e82b455e14ff213e821331823a67b14",
-    "semantic_hash": "8e82b455e14ff213e821331823a67b14"
+    "mtime": 1793355129.9165044,
+    "seen": 1793356597.8760464,
+    "ast_hash": "271b79b08ad8be0ac17fb87c065c3f9c",
+    "semantic_hash": ""
   },
   "src/app/ml/regime/features.py": {
     "mtime": 1791216240.0577917,
@@ -510,9 +510,9 @@
     "semantic_hash": ""
   },
   "src/app/static/sw.js": {
-    "mtime": 1793258044.5407126,
-    "seen": 1793258150.0129101,
-    "ast_hash": "5ddbc139304dea20ba3c3af4cfcf563c",
+    "mtime": 1794421318.0377648,
+    "seen": 1794421372.950759,
+    "ast_hash": "41d3c58173a8b9378b43ab4c125b0208",
     "semantic_hash": ""
   },
   "src/app/universe.py": {
@@ -546,15 +546,15 @@
     "semantic_hash": ""
   },
   "src/frontend/components/grow/AllocationDonut.tsx": {
-    "mtime": 1791216240.0747483,
-    "seen": 1791727289.16285,
-    "ast_hash": "8599ae349faab3c75c04dd2d49dd68d2",
-    "semantic_hash": "8599ae349faab3c75c04dd2d49dd68d2"
+    "mtime": 1793355129.9145062,
+    "seen": 1793356597.8760777,
+    "ast_hash": "29343b26cacd76e6d9b2fcb2fd21fe81",
+    "semantic_hash": ""
   },
   "src/frontend/components/grow/GrowPage.tsx": {
-    "mtime": 1792668566.937826,
-    "seen": 1792669369.2801583,
-    "ast_hash": "fcf7af45c80f61626c67c218d78567e6",
+    "mtime": 1793355129.915505,
+    "seen": 1793356597.8760788,
+    "ast_hash": "ec76df76ed4a6634aef37cbaebfea486",
     "semantic_hash": ""
   },
   "src/frontend/components/grow/GrowSkeleton.tsx": {
@@ -570,10 +570,10 @@
     "semantic_hash": "937769df849f1618173ed106e8a40d6f"
   },
   "src/frontend/components/grow/Step2Horizon.tsx": {
-    "mtime": 1791525552.115723,
-    "seen": 1791727289.1628535,
-    "ast_hash": "7d646028c868049042b37bedcbd7a6c9",
-    "semantic_hash": "7d646028c868049042b37bedcbd7a6c9"
+    "mtime": 1793355574.8651552,
+    "seen": 1793356597.8760831,
+    "ast_hash": "37154bc8c75880e654f272c5380e9ede",
+    "semantic_hash": ""
   },
   "src/frontend/components/grow/Step3Persona.tsx": {
     "mtime": 1791525552.116248,
@@ -582,10 +582,10 @@
     "semantic_hash": "771bb3fb599ffffb1eb8f3292503e9af"
   },
   "src/frontend/components/grow/Step4ResultsOverview.tsx": {
-    "mtime": 1791525552.1167884,
-    "seen": 1791727289.1628551,
-    "ast_hash": "db2b086d97246794bea333cb14469c60",
-    "semantic_hash": "db2b086d97246794bea333cb14469c60"
+    "mtime": 1793355129.915505,
+    "seen": 1793356597.8760858,
+    "ast_hash": "67a8a9da84a6dfe40f418b9fcf3c25b8",
+    "semantic_hash": ""
   },
   "src/frontend/components/grow/Step5DeepDive.tsx": {
     "mtime": 1792912390.9381979,
@@ -594,10 +594,10 @@
     "semantic_hash": ""
   },
   "src/frontend/components/grow/SummaryPills.tsx": {
-    "mtime": 1791216240.078423,
-    "seen": 1791727289.162857,
-    "ast_hash": "ef7214b6e42ea7b4e04dacc31cd0e6a6",
-    "semantic_hash": "ef7214b6e42ea7b4e04dacc31cd0e6a6"
+    "mtime": 1793355129.9145062,
+    "seen": 1793356597.8760884,
+    "ast_hash": "ada65289417c150972dcb463709ea282",
+    "semantic_hash": ""
   },
   "src/frontend/components/home/AdaptiveHomeCard.tsx": {
     "mtime": 1791216240.078423,
@@ -618,10 +618,10 @@
     "semantic_hash": ""
   },
   "src/frontend/components/home/MarketPulse.tsx": {
-    "mtime": 1791526177.8251019,
-    "seen": 1791727289.1628604,
-    "ast_hash": "e416ca1046c5ecce002f102ce53e5e8d",
-    "semantic_hash": "e416ca1046c5ecce002f102ce53e5e8d"
+    "mtime": 1793355129.9178526,
+    "seen": 1793356597.8760936,
+    "ast_hash": "e62beb2b5deaef840ff0ba01fdea5252",
+    "semantic_hash": ""
   },
   "src/frontend/components/home/RegimeRadar.tsx": {
     "mtime": 1791526194.111508,
@@ -636,28 +636,28 @@
     "semantic_hash": "b49a09429e84500b8a987537c3e45a00"
   },
   "src/frontend/components/home/VideoFacades.tsx": {
-    "mtime": 1792906919.9159706,
-    "seen": 1792908204.7432077,
-    "ast_hash": "1d6490296127151d7ac60ab67fe8a369",
+    "mtime": 1793356086.6376517,
+    "seen": 1793356597.8760977,
+    "ast_hash": "25e4b336fe55e23482c1c85b2da4aa1b",
     "semantic_hash": ""
   },
   "src/frontend/components/layout/AppShell.tsx": {
-    "mtime": 1791525546.5531094,
-    "seen": 1791727289.162864,
-    "ast_hash": "4f074a6861db03cc3b62173583b492a4",
-    "semantic_hash": "4f074a6861db03cc3b62173583b492a4"
+    "mtime": 1793415370.4665234,
+    "seen": 1793423211.2947655,
+    "ast_hash": "88606463f77aea463a2c5a9f62791b2b",
+    "semantic_hash": ""
   },
   "src/frontend/components/layout/BottomNav.tsx": {
-    "mtime": 1791525546.553641,
-    "seen": 1791727289.1628647,
-    "ast_hash": "aa068cba74a9771ced30aaa9e76f908c",
-    "semantic_hash": "aa068cba74a9771ced30aaa9e76f908c"
+    "mtime": 1793355676.048777,
+    "seen": 1793356597.8761,
+    "ast_hash": "4e16d7442690629da505a96df9626673",
+    "semantic_hash": ""
   },
   "src/frontend/components/layout/Header.tsx": {
-    "mtime": 1791216240.082958,
-    "seen": 1791727289.1628656,
-    "ast_hash": "9eb9e4f954c634fb8f87a70aa81c4d00",
-    "semantic_hash": "9eb9e4f954c634fb8f87a70aa81c4d00"
+    "mtime": 1793355122.900185,
+    "seen": 1793356597.8761015,
+    "ast_hash": "19c473b9a6388ad1628eaa96c63b3a1e",
+    "semantic_hash": ""
   },
   "src/frontend/components/modals/CompetitorBenchmarkModal.tsx": {
     "mtime": 1791525552.1178987,
@@ -708,9 +708,9 @@
     "semantic_hash": ""
   },
   "src/frontend/components/onboarding/OnboardingHero.tsx": {
-    "mtime": 1793257669.799776,
-    "seen": 1793258150.0129566,
-    "ast_hash": "d87557651b34f54c3dea9032fcf1f8a7",
+    "mtime": 1793415370.4665234,
+    "seen": 1793423211.2947805,
+    "ast_hash": "e69f4b80fe5de2707d7c2a7835351e52",
     "semantic_hash": ""
   },
   "src/frontend/components/onboarding/personaScoring.ts": {
@@ -750,15 +750,15 @@
     "semantic_hash": "1c128ee8d43590d21a90175c11dc6073"
   },
   "src/frontend/components/portfolio/PortfolioHeroCard.tsx": {
-    "mtime": 1791525552.123072,
-    "seen": 1791727289.1628797,
-    "ast_hash": "22f33e9c0abf4e74acbe412042fd6b95",
-    "semantic_hash": "22f33e9c0abf4e74acbe412042fd6b95"
+    "mtime": 1793355785.5106514,
+    "seen": 1793356597.8761244,
+    "ast_hash": "fe366014e4f42ad35ed35eea50bace17",
+    "semantic_hash": ""
   },
   "src/frontend/components/portfolio/PortfolioPage.tsx": {
-    "mtime": 1792668597.67808,
-    "seen": 1792669369.2802541,
-    "ast_hash": "c3069bf8c37653b284f33b63f6337f2f",
+    "mtime": 1793359731.813582,
+    "seen": 1793360022.5636275,
+    "ast_hash": "f358227d74c42757be4ad0aab6533c88",
     "semantic_hash": ""
   },
   "src/frontend/components/portfolio/RebalanceBanner.tsx": {
@@ -882,16 +882,16 @@
     "semantic_hash": "599e7994b36a18e0f1d1e7df7b4a2491"
   },
   "src/frontend/pages/ExplorePage.tsx": {
-    "mtime": 1792669191.3164337,
-    "seen": 1792669369.2803087,
-    "ast_hash": "743b9d764bc8ffe81d72ce6b97bee64e",
+    "mtime": 1793355818.571414,
+    "seen": 1793356597.8761547,
+    "ast_hash": "9a3e6181c4c2fefa389cfc4247de3468",
     "semantic_hash": ""
   },
   "src/frontend/pages/HomePage.tsx": {
-    "mtime": 1791216240.099108,
-    "seen": 1791727289.1629002,
-    "ast_hash": "2a6ff497d711f1e4dfbc6099bc1e882a",
-    "semantic_hash": "2a6ff497d711f1e4dfbc6099bc1e882a"
+    "mtime": 1793355726.4591343,
+    "seen": 1793356597.8761559,
+    "ast_hash": "4cb8298c6a3ef0ddda8aa0898c680d7d",
+    "semantic_hash": ""
   },
   "src/frontend/services/abortRegistry.ts": {
     "mtime": 1791216240.101329,
@@ -912,10 +912,10 @@
     "semantic_hash": "46216f1ef2fbd482024ad4685d9e517a"
   },
   "src/frontend/store/useAppStore.ts": {
-    "mtime": 1791216240.1023273,
-    "seen": 1791727289.162904,
-    "ast_hash": "8c676be83ca24420f72de7a2d632a214",
-    "semantic_hash": "8c676be83ca24420f72de7a2d632a214"
+    "mtime": 1793355556.4434178,
+    "seen": 1793356597.8761628,
+    "ast_hash": "65d47f9b92cf9df638eaa37859921f68",
+    "semantic_hash": ""
   },
   "src/frontend/utils/asyncGuards.ts": {
     "mtime": 1791216240.1033292,
@@ -1668,9 +1668,9 @@
     "semantic_hash": ""
   },
   "index.html": {
-    "mtime": 1793257956.1526396,
-    "seen": 1793258150.0132003,
-    "ast_hash": "051d04a6b6f9cf8aa1e11c01746416e7",
+    "mtime": 1793355039.3493452,
+    "seen": 1793356597.8763595,
+    "ast_hash": "2aaf6f5691e3817ea9da0640bba5dee6",
     "semantic_hash": ""
   },
   "render.yaml": {
@@ -1710,9 +1710,9 @@
     "semantic_hash": ""
   },
   "src/app/static/icons/icon.svg": {
-    "mtime": 1791216240.0658941,
-    "seen": 1791736839.9331806,
-    "ast_hash": "0a0039ce9c12fcfedb4745b7759d3103",
+    "mtime": 1793354991.8776174,
+    "seen": 1793356597.876985,
+    "ast_hash": "996c7953e2ead9189a9f139e01298069",
     "semantic_hash": ""
   },
   "start_all.py": {
@@ -1775,28 +1775,1798 @@
     "ast_hash": "18a86ec578bafb9fa9bdf26a3ba3c9d6",
     "semantic_hash": ""
   },
-  "docs/academic_docs/samples/phase1_text.txt": {
-    "mtime": 1793256466.4858892,
-    "seen": 1793258150.0131652,
-    "ast_hash": "ba8e9ed614fcf15d7f83a1822ef066ac",
-    "semantic_hash": ""
-  },
   "docs/academic_docs/samples/ProjectPhase1Report.pdf": {
     "mtime": 1778564912.1328502,
     "seen": 1793258150.0132048,
     "ast_hash": "3cc5e19160e94f048ac1440cde2c1951",
     "semantic_hash": ""
   },
-  "docs/academic_docs/extracted_media/img_0.png": {
-    "mtime": 1793257810.201088,
-    "seen": 1793258150.013206,
-    "ast_hash": "b78e328c837b75621d229394bf92a8a8",
+  "scripts/fix_latex_underscores.py": {
+    "mtime": 1793268775.8209763,
+    "seen": 1793269102.1743324,
+    "ast_hash": "da84d8940ed20d798d414c22ad9c2970",
     "semantic_hash": ""
   },
-  "docs/academic_docs/extracted_media/img_1.png": {
-    "mtime": 1793257810.201088,
-    "seen": 1793258150.0132072,
-    "ast_hash": "da0e9e12838b9ca57e5f92595c7e8480",
+  "scripts/generate_report_docx.py": {
+    "mtime": 1793269054.9844096,
+    "seen": 1793269102.174334,
+    "ast_hash": "df46d80014fec73d31741567929fc72a",
+    "semantic_hash": ""
+  },
+  "scripts/report_figures/generate_all_diagrams.py": {
+    "mtime": 1793267536.2121081,
+    "seen": 1793269102.1743553,
+    "ast_hash": "66ed48c2795a078ec7db27f5a8cb1c9b",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/ProjectPhase2Review1.pdf": {
+    "mtime": 1787201659.8657787,
+    "seen": 1793269102.1748123,
+    "ast_hash": "0716810f0f24ab23485ee8d325b0286b",
+    "semantic_hash": ""
+  },
+  "scripts/report_figures/create_multipanel_plates.py": {
+    "mtime": 1793346425.833192,
+    "seen": 1793347352.1140873,
+    "ast_hash": "29da528a33000ff28feb283f027c86b2",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/templates/project_report_template.pdf": {
+    "mtime": 1793350560.8190465,
+    "seen": 1793352236.299513,
+    "ast_hash": "72b50636f0c686d73b1727028b715acf",
+    "semantic_hash": ""
+  },
+  "public/manifest.json": {
+    "mtime": 1793257923.4214647,
+    "seen": 1793356597.8759038,
+    "ast_hash": "9f0139d69db54f65bee1f8ea972143b6",
+    "semantic_hash": ""
+  },
+  "scripts/verify_all_endpoints.py": {
+    "mtime": 1793356131.7447293,
+    "seen": 1793356597.8759587,
+    "ast_hash": "fa08ca26fe6d18e93513286b97532add",
+    "semantic_hash": ""
+  },
+  "src/frontend/pages/LearnPage.tsx": {
+    "mtime": 1793356086.6376517,
+    "seen": 1793356597.8761573,
+    "ast_hash": "966cc00c795a3a75f51f282fab4ec538",
+    "semantic_hash": ""
+  },
+  "public/favicon.svg": {
+    "mtime": 1793354991.8776174,
+    "seen": 1793356597.8769715,
+    "ast_hash": "996c7953e2ead9189a9f139e01298069",
+    "semantic_hash": ""
+  },
+  "public/icon-192.png": {
+    "mtime": 1791216240.0638862,
+    "seen": 1793356597.876973,
+    "ast_hash": "579fdcba6b41bb5da63790e8d3ca76dc",
+    "semantic_hash": ""
+  },
+  "public/icon-512.png": {
+    "mtime": 1791216240.0648937,
+    "seen": 1793356597.876974,
+    "ast_hash": "ac01421517d7d07b88314977125b1a2f",
+    "semantic_hash": ""
+  },
+  "public/icon-maskable-192.png": {
+    "mtime": 1791216240.0648937,
+    "seen": 1793356597.8769753,
+    "ast_hash": "08f89fd90d473bf963b4c5ecb7a2023b",
+    "semantic_hash": ""
+  },
+  "public/icon-maskable-512.png": {
+    "mtime": 1791216240.0648937,
+    "seen": 1793356597.8769765,
+    "ast_hash": "731487c2262869b0af01959eb508bf4a",
+    "semantic_hash": ""
+  },
+  "public/icon.svg": {
+    "mtime": 1793354991.8776174,
+    "seen": 1793356597.876978,
+    "ast_hash": "996c7953e2ead9189a9f139e01298069",
+    "semantic_hash": ""
+  },
+  "src/app/static/favicon.svg": {
+    "mtime": 1793354991.8776174,
+    "seen": 1793360022.5645146,
+    "ast_hash": "996c7953e2ead9189a9f139e01298069",
+    "semantic_hash": ""
+  },
+  "src/app/static/icon.svg": {
+    "mtime": 1793354991.8776174,
+    "seen": 1793360022.564516,
+    "ast_hash": "996c7953e2ead9189a9f139e01298069",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/01_onboarding_welcome.png": {
+    "mtime": 1793358037.7585196,
+    "seen": 1793366986.4260595,
+    "ast_hash": "04b42beed419df43a9bbd348cf516bef",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/01b_onboarding_quiz.png": {
+    "mtime": 1793358039.558631,
+    "seen": 1793366986.4260614,
+    "ast_hash": "56b24bcf7b44fe890e63ba0c6db7a861",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/02_home_market_pulse.png": {
+    "mtime": 1793358050.8862827,
+    "seen": 1793366986.4260626,
+    "ast_hash": "aef39fcad372e5ff701cfd6d350e93cc",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/03_home_compounding_hub.png": {
+    "mtime": 1793358052.6199083,
+    "seen": 1793366986.426067,
+    "ast_hash": "1b0fe6d2318fdcbe31b6b8b08a161013",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/04_active_alerts_modal.png": {
+    "mtime": 1793358055.515385,
+    "seen": 1793366986.4260683,
+    "ast_hash": "fe29c22272a9cf7e18f0748a5318d4b2",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/05_grow_step1_capital.png": {
+    "mtime": 1793358058.2193146,
+    "seen": 1793366986.4260693,
+    "ast_hash": "9d73637f7cf6f66c93055ecc905fb119",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/06_grow_step2_custom_horizon.png": {
+    "mtime": 1793358060.3938458,
+    "seen": 1793366986.4260702,
+    "ast_hash": "5937dbfd8da53133058e2b06e6c0635d",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/07_grow_step3_persona.png": {
+    "mtime": 1793358062.6026518,
+    "seen": 1793366986.4260714,
+    "ast_hash": "80bdd139dc140ae5ec0866e0f84efb4e",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/08_grow_step4_results_donut.png": {
+    "mtime": 1793358073.7634096,
+    "seen": 1793366986.4260724,
+    "ast_hash": "17b77025451a2c47a754cdfaf3b7fb2e",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/09_grow_step4_scenarios_and_shares.png": {
+    "mtime": 1793358075.391077,
+    "seen": 1793366986.4260733,
+    "ast_hash": "e69d90b9031a8e0501a2deaebfe8af8d",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/10_grow_step5_trust_card.png": {
+    "mtime": 1793358077.0473459,
+    "seen": 1793366986.4260745,
+    "ast_hash": "504a6d07813c69657ebca6a9c6db4bdb",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/11_portfolio_realtime_tracker.png": {
+    "mtime": 1793359857.8475852,
+    "seen": 1793366986.4260755,
+    "ast_hash": "f4fa1be94949ab1cd59429edbb1b055f",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/12_order_sheet_modal.png": {
+    "mtime": 1793359860.2090082,
+    "seen": 1793366986.4260767,
+    "ast_hash": "1bc138a0fbcac973192d21658c3e83d7",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/13_learn_5_strategy_comparator.png": {
+    "mtime": 1793358495.7844508,
+    "seen": 1793366986.4260783,
+    "ast_hash": "304bdadf48500f28e6a32c47e2979f41",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/14_learn_concepts_and_videos.png": {
+    "mtime": 1793358496.9588811,
+    "seen": 1793366986.4260793,
+    "ast_hash": "88e8b6612c9935ca8612df4c94163f0f",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/15_explore_stocks_with_metals.png": {
+    "mtime": 1793358645.600559,
+    "seen": 1793366986.4260802,
+    "ast_hash": "65d34219bd1ef1cd64952f7a75cb18a6",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/16_stock_intelligence_profile.png": {
+    "mtime": 1793358736.3357668,
+    "seen": 1793366986.4260812,
+    "ast_hash": "7a4465845578d4d36e7acfa6716d8068",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/17_nitibot_ai_copilot.png": {
+    "mtime": 1793358110.3988178,
+    "seen": 1793366986.4260824,
+    "ast_hash": "463f94fa4e13d0dec4ce7755babfad65",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/18_home_light_mode.png": {
+    "mtime": 1793358114.2231338,
+    "seen": 1793366986.4260833,
+    "ast_hash": "09ba025b917f1c61197fc450ac987038",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/19_grow_results_light_mode.png": {
+    "mtime": 1793358080.8666565,
+    "seen": 1793366986.4260843,
+    "ast_hash": "a9277b62e7a6df39a25862fa708e7208",
+    "semantic_hash": ""
+  },
+  "docs/snapshots/20_grow_scenarios_light_mode.png": {
+    "mtime": 1793358082.0034142,
+    "seen": 1793366986.4260855,
+    "ast_hash": "c5f6513c5bb19088f8715cf505031952",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/build_academic_report.py": {
+    "mtime": 1793372482.1669827,
+    "seen": 1793374326.717102,
+    "ast_hash": "173750af48218b45fcfb3234e81ca001",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/generate_html_report.py": {
+    "mtime": 1793372019.3166673,
+    "seen": 1793374326.717106,
+    "ast_hash": "db080926da34131064be6797f26494b4",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/generate_latex_report.py": {
+    "mtime": 1793382077.9428027,
+    "seen": 1793383069.2891285,
+    "ast_hash": "1edaa4d1143e98b0c4ed4b84ffe3ff43",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/chapter1.py": {
+    "mtime": 1793372137.3787389,
+    "seen": 1793374326.7171102,
+    "ast_hash": "5148f5747e1625a518e8a1f9d73d2c6f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/chapter2.py": {
+    "mtime": 1793372194.3260994,
+    "seen": 1793374326.7171118,
+    "ast_hash": "723a52c9afa9d977e29e90d0e813ad33",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/chapter3.py": {
+    "mtime": 1793389149.2458,
+    "seen": 1793389289.4934263,
+    "ast_hash": "6bc64bec13849743de71e18bfe3bd14a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/chapter4.py": {
+    "mtime": 1793372273.690615,
+    "seen": 1793374326.717115,
+    "ast_hash": "1103dbd7ad9717d0f284fe536dd91353",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/chapter5.py": {
+    "mtime": 1793372321.7055135,
+    "seen": 1793374326.7171288,
+    "ast_hash": "9cd48180139a6baa70db4a243ee63a52",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/chapter6.py": {
+    "mtime": 1793372361.5383286,
+    "seen": 1793374326.71713,
+    "ast_hash": "d9274e40fae9156b663f2c47a1afd3b6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/chapter7.py": {
+    "mtime": 1793389181.5453863,
+    "seen": 1793389289.493436,
+    "ast_hash": "71f0305cfe01d0f512f321363b543228",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/chapter8_9_refs_appendix.py": {
+    "mtime": 1793414387.487412,
+    "seen": 1793414695.2368069,
+    "ast_hash": "5e910261f6617252b336dc6254d67c83",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/sections/preliminaries.py": {
+    "mtime": 1793372105.3530452,
+    "seen": 1793374326.7171338,
+    "ast_hash": "68b908d19e53765885d7fc6c95b175a7",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/create_placeholders.py": {
+    "mtime": 1793266247.011026,
+    "seen": 1793374326.717135,
+    "ast_hash": "42e457bc1174129d08d2ca95ca8dd284",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/generate_docx.py": {
+    "mtime": 1792673594.2719927,
+    "seen": 1793374326.7171361,
+    "ast_hash": "b477b3ecb37fd96cbe223abc394138ac",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/render_and_audit_pages.py": {
+    "mtime": 1792686817.5741012,
+    "seen": 1793374326.7171378,
+    "ast_hash": "19506d48232f879f9f61a081fdfe03be",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/QuantNiti_Academic_Report.html": {
+    "mtime": 1793414487.252026,
+    "seen": 1793414695.2373295,
+    "ast_hash": "377aa034f396602dbb0bc45213047ef0",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/main.pdf": {
+    "mtime": 1793414425.0455732,
+    "seen": 1793414695.2373893,
+    "ast_hash": "4e1d29af910f4f8e3069f794c8966c57",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/another-teams-report.pdf": {
+    "mtime": 1793367600.792919,
+    "seen": 1793374326.7175982,
+    "ast_hash": "ad700307b340186f17e7f4d1148290f1",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/CNS_Technical_Report_Batch_2026_CNS_A_01.pdf": {
+    "mtime": 1793297440.863792,
+    "seen": 1793374326.7175994,
+    "ast_hash": "2d6de842c3be9987c146b3f980d07906",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/main.pdf": {
+    "mtime": 1793297440.863792,
+    "seen": 1793374326.717601,
+    "ast_hash": "2d6de842c3be9987c146b3f980d07906",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/01_onboarding_welcome.png": {
+    "mtime": 1793358037.7585196,
+    "seen": 1793374326.7176046,
+    "ast_hash": "04b42beed419df43a9bbd348cf516bef",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/01b_onboarding_quiz.png": {
+    "mtime": 1793358039.558631,
+    "seen": 1793374326.7176058,
+    "ast_hash": "56b24bcf7b44fe890e63ba0c6db7a861",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/02_home_market_pulse.png": {
+    "mtime": 1793358050.8862827,
+    "seen": 1793374326.7176073,
+    "ast_hash": "aef39fcad372e5ff701cfd6d350e93cc",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/03_home_compounding_hub.png": {
+    "mtime": 1793358052.6199083,
+    "seen": 1793374326.7176082,
+    "ast_hash": "1b0fe6d2318fdcbe31b6b8b08a161013",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/04_active_alerts_modal.png": {
+    "mtime": 1793358055.515385,
+    "seen": 1793374326.7176104,
+    "ast_hash": "fe29c22272a9cf7e18f0748a5318d4b2",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/05_grow_step1_capital.png": {
+    "mtime": 1793358058.2193146,
+    "seen": 1793374326.7176116,
+    "ast_hash": "9d73637f7cf6f66c93055ecc905fb119",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/06_grow_step2_custom_horizon.png": {
+    "mtime": 1793358060.3938458,
+    "seen": 1793374326.7176125,
+    "ast_hash": "5937dbfd8da53133058e2b06e6c0635d",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/07_grow_step3_persona.png": {
+    "mtime": 1793358062.6026518,
+    "seen": 1793374326.717614,
+    "ast_hash": "80bdd139dc140ae5ec0866e0f84efb4e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/08_grow_step4_results_donut.png": {
+    "mtime": 1793358073.7634096,
+    "seen": 1793374326.7176151,
+    "ast_hash": "17b77025451a2c47a754cdfaf3b7fb2e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/09_grow_step4_scenarios_and_shares.png": {
+    "mtime": 1793358075.391077,
+    "seen": 1793374326.7176163,
+    "ast_hash": "e69d90b9031a8e0501a2deaebfe8af8d",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/10_grow_step5_trust_card.png": {
+    "mtime": 1793358077.0473459,
+    "seen": 1793374326.7176175,
+    "ast_hash": "504a6d07813c69657ebca6a9c6db4bdb",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/11_portfolio_realtime_tracker.png": {
+    "mtime": 1793359857.8475852,
+    "seen": 1793374326.7176187,
+    "ast_hash": "f4fa1be94949ab1cd59429edbb1b055f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/12_order_sheet_modal.png": {
+    "mtime": 1793359860.2090082,
+    "seen": 1793374326.7176201,
+    "ast_hash": "1bc138a0fbcac973192d21658c3e83d7",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/13_learn_5_strategy_comparator.png": {
+    "mtime": 1793358495.7844508,
+    "seen": 1793374326.7176213,
+    "ast_hash": "304bdadf48500f28e6a32c47e2979f41",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/14_learn_concepts_and_videos.png": {
+    "mtime": 1793358496.9588811,
+    "seen": 1793374326.7176225,
+    "ast_hash": "88e8b6612c9935ca8612df4c94163f0f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/15_explore_stocks_with_metals.png": {
+    "mtime": 1793358645.600559,
+    "seen": 1793374326.7176237,
+    "ast_hash": "65d34219bd1ef1cd64952f7a75cb18a6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/16_stock_intelligence_profile.png": {
+    "mtime": 1793358736.3357668,
+    "seen": 1793374326.7176251,
+    "ast_hash": "7a4465845578d4d36e7acfa6716d8068",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/17_nitibot_ai_copilot.png": {
+    "mtime": 1793358110.3988178,
+    "seen": 1793374326.7176263,
+    "ast_hash": "463f94fa4e13d0dec4ce7755babfad65",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/18_home_light_mode.png": {
+    "mtime": 1793358114.2231338,
+    "seen": 1793374326.7176273,
+    "ast_hash": "09ba025b917f1c61197fc450ac987038",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/19_grow_results_light_mode.png": {
+    "mtime": 1793358080.8666565,
+    "seen": 1793374326.717629,
+    "ast_hash": "a9277b62e7a6df39a25862fa708e7208",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/20_grow_scenarios_light_mode.png": {
+    "mtime": 1793358082.0034142,
+    "seen": 1793374326.71763,
+    "ast_hash": "c5f6513c5bb19088f8715cf505031952",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/appendix_1_plagiarism.png": {
+    "mtime": 1793369474.8305943,
+    "seen": 1793374326.7176309,
+    "ast_hash": "fbab4dd29412af250acdad956be2c08f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/appendix_2_courses.png": {
+    "mtime": 1793369474.8562171,
+    "seen": 1793374326.7176323,
+    "ast_hash": "0bf37c1280489e178bf0eebe4ec8a50c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/appendix_3_paper.png": {
+    "mtime": 1793369474.8811817,
+    "seen": 1793374326.7176335,
+    "ast_hash": "ea5a3b12f2d7e02d17d31ec3b3ee5ef5",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/appendix_4_certificates.png": {
+    "mtime": 1793369474.905783,
+    "seen": 1793374326.7176352,
+    "ast_hash": "b0c9f0da0b362639209b0c02e58646f8",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/screenshots/snap_01_market_pulse.png": {
+    "mtime": 1793358050.8862827,
+    "seen": 1793374326.7176363,
+    "ast_hash": "aef39fcad372e5ff701cfd6d350e93cc",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/screenshots/snap_02_grow_step1_capital.png": {
+    "mtime": 1793358058.2193146,
+    "seen": 1793374326.7176375,
+    "ast_hash": "9d73637f7cf6f66c93055ecc905fb119",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/screenshots/snap_03_grow_step3_persona.png": {
+    "mtime": 1793358062.6026518,
+    "seen": 1793374326.717639,
+    "ast_hash": "80bdd139dc140ae5ec0866e0f84efb4e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/screenshots/snap_04_grow_results_donut.png": {
+    "mtime": 1793358073.7634096,
+    "seen": 1793374326.71764,
+    "ast_hash": "17b77025451a2c47a754cdfaf3b7fb2e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/screenshots/snap_05_grow_order_sheet.png": {
+    "mtime": 1793358075.391077,
+    "seen": 1793374326.717641,
+    "ast_hash": "e69d90b9031a8e0501a2deaebfe8af8d",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/screenshots/snap_06_trust_card.png": {
+    "mtime": 1793358077.0473459,
+    "seen": 1793374326.7176425,
+    "ast_hash": "504a6d07813c69657ebca6a9c6db4bdb",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/screenshots/snap_07_paper_portfolio.png": {
+    "mtime": 1793359857.8475852,
+    "seen": 1793374326.7176437,
+    "ast_hash": "f4fa1be94949ab1cd59429edbb1b055f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/screenshots/snap_08_nitibot_rag.png": {
+    "mtime": 1793358110.3988178,
+    "seen": 1793374326.7176447,
+    "ast_hash": "463f94fa4e13d0dec4ce7755babfad65",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/team_presentation.jpg": {
+    "mtime": 1793266187.908527,
+    "seen": 1793374326.717646,
+    "ast_hash": "1e53eaea60184ffdb930252e44864aaf",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_01.png": {
+    "mtime": 1793382965.5063744,
+    "seen": 1793383069.2896843,
+    "ast_hash": "9202f4fac7ff0b9ead68cd6f44c5534c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_02.png": {
+    "mtime": 1793382965.5484376,
+    "seen": 1793383069.2896857,
+    "ast_hash": "4949ffd8e7d8028c0dfd1bd14b35dcf1",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_03.png": {
+    "mtime": 1793382965.6046464,
+    "seen": 1793383069.2896867,
+    "ast_hash": "5859aa517c0c49bb3345f2f154d2693a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_04.png": {
+    "mtime": 1793382965.6461504,
+    "seen": 1793383069.289688,
+    "ast_hash": "bb87f4cfe14b06f7cf3f708da523d972",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_05.png": {
+    "mtime": 1793382965.677473,
+    "seen": 1793383069.289689,
+    "ast_hash": "d6264e2755849aaeb0d429bba85bbf74",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_06.png": {
+    "mtime": 1793382965.7453184,
+    "seen": 1793383069.2896907,
+    "ast_hash": "90f5f06be2bad6440020462432af887a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_07.png": {
+    "mtime": 1793382965.7896552,
+    "seen": 1793383069.2896917,
+    "ast_hash": "a44643736320eccfe1fb2acc45c9b60c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_08.png": {
+    "mtime": 1793382965.8572128,
+    "seen": 1793383069.2896926,
+    "ast_hash": "310bc13ab93700be668e97e6c9bdb231",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_09.png": {
+    "mtime": 1793382965.8976371,
+    "seen": 1793383069.289694,
+    "ast_hash": "44f09422fc701caa1aca82e6bb9bce90",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_10.png": {
+    "mtime": 1793382965.9458826,
+    "seen": 1793383069.2896955,
+    "ast_hash": "20ed626a07b51daa1d20840a1bcc01fb",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_11.png": {
+    "mtime": 1793382966.005735,
+    "seen": 1793383069.2896967,
+    "ast_hash": "5ffeae5288d0204893b98a014bae8610",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_12.png": {
+    "mtime": 1793382966.0533848,
+    "seen": 1793383069.2896984,
+    "ast_hash": "9dd7a12d80142772fbdf08c37e87637e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_13.png": {
+    "mtime": 1793382966.1007638,
+    "seen": 1793383069.2896996,
+    "ast_hash": "bcc71f851170ff397edb0b3359dfb1b4",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_14.png": {
+    "mtime": 1793382966.160491,
+    "seen": 1793383069.2897005,
+    "ast_hash": "f55c94a7557ed7d56f1fa9d39ad3b9a2",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_15.png": {
+    "mtime": 1793382966.2128668,
+    "seen": 1793383069.289702,
+    "ast_hash": "1690c0bc5d9dcb852fdb19d652eb1dba",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_16.png": {
+    "mtime": 1793382966.2438245,
+    "seen": 1793383069.289703,
+    "ast_hash": "f46326254e20dc8ecb5c0b61bfdaad87",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_17.png": {
+    "mtime": 1793382966.3051932,
+    "seen": 1793383069.289704,
+    "ast_hash": "a99f1f8b1929ab60ab366641f3fd30bf",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_18.png": {
+    "mtime": 1793382966.3472025,
+    "seen": 1793383069.2897053,
+    "ast_hash": "a43da3f009591c5730fdf0f84cb623a7",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_19.png": {
+    "mtime": 1793382966.450022,
+    "seen": 1793383069.2897062,
+    "ast_hash": "205392cf2d49c2d5c1bc11622c8f33cc",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_20.png": {
+    "mtime": 1793382966.502684,
+    "seen": 1793383069.2897074,
+    "ast_hash": "104381fa5770818f11acd272653b9e5f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_21.png": {
+    "mtime": 1793382966.6478486,
+    "seen": 1793383069.2897089,
+    "ast_hash": "186cca457105c0603bc118b9eb53ae2e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_22.png": {
+    "mtime": 1793382966.6960647,
+    "seen": 1793383069.2897098,
+    "ast_hash": "b45e4645f7048733682512cb0f9af66c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_23.png": {
+    "mtime": 1793382966.7381096,
+    "seen": 1793383069.289711,
+    "ast_hash": "4a3bf3d45b6c69d0be5292797dedebb5",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_24.png": {
+    "mtime": 1793382966.789283,
+    "seen": 1793383069.2897124,
+    "ast_hash": "ff42d5f3fc5e91a3aa0d3c41000ea29c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_25.png": {
+    "mtime": 1793382966.8885205,
+    "seen": 1793383069.2897136,
+    "ast_hash": "21c5813b874e45b8fec4e09e099d665a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_26.png": {
+    "mtime": 1793382966.9915307,
+    "seen": 1793383069.2897146,
+    "ast_hash": "a6846cc37c9d5d338cc88547aad2db60",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_27.png": {
+    "mtime": 1793382967.0968091,
+    "seen": 1793383069.289716,
+    "ast_hash": "9445008ba4f0063a9325b6b828a884c1",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_28.png": {
+    "mtime": 1793382967.2100332,
+    "seen": 1793383069.289717,
+    "ast_hash": "fdfeddbd2a27754bd8417442ff1cadef",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_29.png": {
+    "mtime": 1793382967.2460039,
+    "seen": 1793383069.2897184,
+    "ast_hash": "aa923a95da168a68aaf6d11d098c38c6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_30.png": {
+    "mtime": 1793382967.3032422,
+    "seen": 1793383069.2897193,
+    "ast_hash": "5c57b97983cca3e8782dd84385eb3ce1",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_31.png": {
+    "mtime": 1793414636.5188804,
+    "seen": 1793414695.2375875,
+    "ast_hash": "bd845af79018a7706dadca4797b41b7a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_32.png": {
+    "mtime": 1793414636.629539,
+    "seen": 1793414695.2375886,
+    "ast_hash": "714b4c637375f6bcd9dfc354e6a16ab6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_33.png": {
+    "mtime": 1793414636.7444618,
+    "seen": 1793414695.2375903,
+    "ast_hash": "15722e9ee57312de96d1e53c2581e36d",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_34.png": {
+    "mtime": 1793414636.8613052,
+    "seen": 1793414695.2375917,
+    "ast_hash": "fff115d146385e2ba826e482dc05da0f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_35.png": {
+    "mtime": 1793414636.9776423,
+    "seen": 1793414695.237593,
+    "ast_hash": "207a52c3a553c1fb74e47491ed1474c1",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_36.png": {
+    "mtime": 1793414637.0510573,
+    "seen": 1793414695.2375946,
+    "ast_hash": "db5b66fb17225f3bb485aa0058791693",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_37.png": {
+    "mtime": 1793414637.1174905,
+    "seen": 1793414695.2375958,
+    "ast_hash": "9422c2081c7ac47d70d138c44662aa88",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_38.png": {
+    "mtime": 1793414637.1941397,
+    "seen": 1793414695.2375977,
+    "ast_hash": "57a1cafeb83165fd44541342f8af875a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_39.png": {
+    "mtime": 1793414637.247587,
+    "seen": 1793414695.2375991,
+    "ast_hash": "2529e13190c24ccb52fb0c3389e60627",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_40.png": {
+    "mtime": 1793414637.3023958,
+    "seen": 1793414695.2376006,
+    "ast_hash": "5fe2c64e3609bd2625a7180acad110a9",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_41.png": {
+    "mtime": 1793414637.348374,
+    "seen": 1793414695.2376022,
+    "ast_hash": "df0428cc2fb8a0b6e647bb069b1ef901",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_42.png": {
+    "mtime": 1793414637.3961906,
+    "seen": 1793414695.2376037,
+    "ast_hash": "4700f46dbbfbe65c12570a9499a1212f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_43.png": {
+    "mtime": 1793414637.4450433,
+    "seen": 1793414695.2376049,
+    "ast_hash": "8372837e578bc8c8fb58c63eee6d1351",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/page_44.png": {
+    "mtime": 1793369768.8586867,
+    "seen": 1793374326.717698,
+    "ast_hash": "22a3dbdeae80f8aeefc95c3b99001b84",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/code/listing4_1_caesar.jpg": {
+    "mtime": 1793292251.4840815,
+    "seen": 1793374326.717699,
+    "ast_hash": "6339b5bdc2ed74eee9d59495aa96a1ad",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/code/listing4_2_vigenere.jpg": {
+    "mtime": 1793292319.4802065,
+    "seen": 1793374326.7177,
+    "ast_hash": "f694c0e3d9f7130edd4c87f0925e07cb",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/code/listing4_3_otp.jpg": {
+    "mtime": 1793292358.535711,
+    "seen": 1793374326.7177012,
+    "ast_hash": "6a0d0253155a37c5d8d87676a0212472",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/code/listing4_4_rsa.jpg": {
+    "mtime": 1793292410.9972346,
+    "seen": 1793374326.7177024,
+    "ast_hash": "e41ee98776619e5b3347ac689ef9fa16",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/screenshots/screenshot_01_tui_main.png": {
+    "mtime": 1793293306.0765505,
+    "seen": 1793374326.7177033,
+    "ast_hash": "c3a5f082c6dfd6677533bdd91b4aa034",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/screenshots/screenshot_02_caesar.png": {
+    "mtime": 1793293445.7639568,
+    "seen": 1793374326.7177045,
+    "ast_hash": "b0df8327a06e4875a833d19df02834d1",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/screenshots/screenshot_03_vigenere.png": {
+    "mtime": 1793293506.1597369,
+    "seen": 1793374326.7177057,
+    "ast_hash": "77967c8be00205613cad83840881e41f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/screenshots/screenshot_04_otp.png": {
+    "mtime": 1793293754.3854754,
+    "seen": 1793374326.7177067,
+    "ast_hash": "7aee9a17d8e54edcef436fcf0a099a49",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/screenshots/screenshot_05_signature.png": {
+    "mtime": 1793293809.7642176,
+    "seen": 1793374326.717708,
+    "ast_hash": "eb6544f0141d36dd15bb11877514b71c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/figures/team_presentation.jpg": {
+    "mtime": 1793266187.908527,
+    "seen": 1793374326.7177093,
+    "ast_hash": "1e53eaea60184ffdb930252e44864aaf",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/flowchart_test_p1.png": {
+    "mtime": 1793295663.6013713,
+    "seen": 1793374326.7177105,
+    "ast_hash": "c94014a59fad4bb76a839f233181c746",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/flowchart_test_p2.png": {
+    "mtime": 1793295663.6434398,
+    "seen": 1793374326.7177117,
+    "ast_hash": "9a641b593e4fa60dc3d12de5b980c531",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/flowchart_test_p3.png": {
+    "mtime": 1793295663.6870618,
+    "seen": 1793374326.717713,
+    "ast_hash": "d89b55d72a3a1f467258aa2ecdc42d0f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/flowchart_test_p4.png": {
+    "mtime": 1793295663.7303925,
+    "seen": 1793374326.7177148,
+    "ast_hash": "35e392f668a7b882b65ed56f025c1f9b",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/integration_p1.png": {
+    "mtime": 1793295892.4962804,
+    "seen": 1793374326.7177157,
+    "ast_hash": "c1b027108e35c1790157ce310f5b3c71",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/integration_p2.png": {
+    "mtime": 1793295892.54143,
+    "seen": 1793374326.717717,
+    "ast_hash": "763171927afb7cf0e0294e6a369ed8ef",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/integration_p3.png": {
+    "mtime": 1793295892.588732,
+    "seen": 1793374326.7177181,
+    "ast_hash": "ab32c8505029dafecde4a555d6aed348",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/integration_p4.png": {
+    "mtime": 1793295892.6358404,
+    "seen": 1793374326.7177196,
+    "ast_hash": "934f705f0698931d2bda8728c7591088",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/integration_p5.png": {
+    "mtime": 1793295780.4955108,
+    "seen": 1793374326.7177205,
+    "ast_hash": "70e3bb07d8e97d5ea995b38de2cb5c8e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_01.png": {
+    "mtime": 1793296566.4251063,
+    "seen": 1793374326.717722,
+    "ast_hash": "3e0de430d09202bfc79239e79473f2b3",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_02.png": {
+    "mtime": 1793296566.4788308,
+    "seen": 1793374326.717723,
+    "ast_hash": "6dd95ad9fe25b02422c0fb3b8f07b908",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_03.png": {
+    "mtime": 1793296566.5294096,
+    "seen": 1793374326.7177243,
+    "ast_hash": "645f3ea4d9d7ba3db2605059080ea89d",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_04.png": {
+    "mtime": 1793296566.5914433,
+    "seen": 1793374326.7177253,
+    "ast_hash": "846a14b2e62f4680f03c58629265d0f0",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_05.png": {
+    "mtime": 1793296566.646635,
+    "seen": 1793374326.7177265,
+    "ast_hash": "84a7cfb07aa23f7314bafeb2848c6345",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_06.png": {
+    "mtime": 1793296566.7001996,
+    "seen": 1793374326.7177274,
+    "ast_hash": "8508a55f817c3cf01b06faee47c599fa",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_07.png": {
+    "mtime": 1793296566.7610633,
+    "seen": 1793374326.7177286,
+    "ast_hash": "8dc2b8be0fe0edca500aa1441f235bce",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_08.png": {
+    "mtime": 1793297468.998792,
+    "seen": 1793374326.7177298,
+    "ast_hash": "628e79d640c2db6b0744ceea916dc9a0",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_09.png": {
+    "mtime": 1793297469.0797648,
+    "seen": 1793374326.717731,
+    "ast_hash": "d089aec869f1398b9d4e1dd8a3a02f93",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_10.png": {
+    "mtime": 1793297469.1620119,
+    "seen": 1793374326.7177324,
+    "ast_hash": "6e873a120f307712f1a195a02c714a80",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_11.png": {
+    "mtime": 1793297469.250077,
+    "seen": 1793374326.7177334,
+    "ast_hash": "f0a6e9994e2959ba5f3450487daa9201",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_12.png": {
+    "mtime": 1793296567.1486301,
+    "seen": 1793374326.7177343,
+    "ast_hash": "4432307a609c4acc4b3f19646dc3fa09",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_13.png": {
+    "mtime": 1793296567.2006288,
+    "seen": 1793374326.7177358,
+    "ast_hash": "a7899b3c06c3a50df88a6a84c1978799",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_14.png": {
+    "mtime": 1793296567.2505627,
+    "seen": 1793374326.7177367,
+    "ast_hash": "6fdee0de2509114df96d7b0d9fe2fa92",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_15.png": {
+    "mtime": 1793296567.3008673,
+    "seen": 1793374326.717738,
+    "ast_hash": "9d96b158041444c202ec1dc9bea4dc68",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_16.png": {
+    "mtime": 1793296567.357405,
+    "seen": 1793374326.717739,
+    "ast_hash": "45a729a4800c1960dc5939b42cd47850",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_17.png": {
+    "mtime": 1793296567.4287367,
+    "seen": 1793374326.7177403,
+    "ast_hash": "853d6f7a3171e9a41175e3223757ab6a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_18.png": {
+    "mtime": 1793296567.5402253,
+    "seen": 1793374326.7177413,
+    "ast_hash": "6f08a310b3b7b68a5d0f26146c0f8933",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_19.png": {
+    "mtime": 1793296567.6060348,
+    "seen": 1793374326.7177424,
+    "ast_hash": "efdab481a22f9bf1133c167b94b4b71a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_20.png": {
+    "mtime": 1793296567.6620471,
+    "seen": 1793374326.7177434,
+    "ast_hash": "7eccb81537218e82bdcef4336d27d69b",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_21.png": {
+    "mtime": 1793296567.728511,
+    "seen": 1793374326.7177446,
+    "ast_hash": "1cf07237ec2dd8f4af6425ee0ee81d72",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_22.png": {
+    "mtime": 1793296567.792564,
+    "seen": 1793374326.717746,
+    "ast_hash": "0471d63fc1a26998324344fbe9bde744",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_23.png": {
+    "mtime": 1793296567.847486,
+    "seen": 1793374326.717747,
+    "ast_hash": "98ba920137afbbf2bd458cf6ca253948",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_24.png": {
+    "mtime": 1793296567.9035878,
+    "seen": 1793374326.717748,
+    "ast_hash": "2e008c42f23f8f53bcd92d0c6f0358d6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_25.png": {
+    "mtime": 1793296567.9542718,
+    "seen": 1793374326.7177489,
+    "ast_hash": "f0b91616b251d1d7234f969c7bcdbc1d",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_26.png": {
+    "mtime": 1793296568.008963,
+    "seen": 1793374326.7177508,
+    "ast_hash": "6ce3c1e94da3dd0ecd49c97d41d7fb39",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_27.png": {
+    "mtime": 1793296568.0630755,
+    "seen": 1793374326.7177517,
+    "ast_hash": "7b5514edfa01a2def77b20030f620a09",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_28.png": {
+    "mtime": 1793296568.1115801,
+    "seen": 1793374326.7177532,
+    "ast_hash": "7936f8a4b771424d6025db8f0eea0103",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/main_page_29.png": {
+    "mtime": 1793296568.1654613,
+    "seen": 1793374326.7177544,
+    "ast_hash": "cfd4656aa3b54989bfb963ca5e9ed6e9",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_01.png": {
+    "mtime": 1793294589.5485537,
+    "seen": 1793374326.7177553,
+    "ast_hash": "3e0de430d09202bfc79239e79473f2b3",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_02.png": {
+    "mtime": 1793294589.6038566,
+    "seen": 1793374326.7177565,
+    "ast_hash": "01f25454b68e78c98ec328ab415e6e11",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_03.png": {
+    "mtime": 1793294589.6534374,
+    "seen": 1793374326.7177577,
+    "ast_hash": "bbcb04753f929285139f81b6083ced11",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_04.png": {
+    "mtime": 1793294589.7136748,
+    "seen": 1793374326.717759,
+    "ast_hash": "846a14b2e62f4680f03c58629265d0f0",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_05.png": {
+    "mtime": 1793294589.767904,
+    "seen": 1793374326.71776,
+    "ast_hash": "84a7cfb07aa23f7314bafeb2848c6345",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_06.png": {
+    "mtime": 1793294589.8189,
+    "seen": 1793374326.7177613,
+    "ast_hash": "8508a55f817c3cf01b06faee47c599fa",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_07.png": {
+    "mtime": 1793294589.8779001,
+    "seen": 1793374326.7177622,
+    "ast_hash": "8dc2b8be0fe0edca500aa1441f235bce",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_08.png": {
+    "mtime": 1793294589.9606593,
+    "seen": 1793374326.7177634,
+    "ast_hash": "68eaffcab314508b178b18d137bf0680",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_09.png": {
+    "mtime": 1793294590.0416632,
+    "seen": 1793374326.7177644,
+    "ast_hash": "4db12dd948138140370afcb8514a9742",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_10.png": {
+    "mtime": 1793294590.13928,
+    "seen": 1793374326.7177653,
+    "ast_hash": "bdb0b12bc87e019f2ee55b7191acff73",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_11.png": {
+    "mtime": 1793294590.2267916,
+    "seen": 1793374326.7177668,
+    "ast_hash": "8974c30abdb89cfa4554f28a2e62fa23",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_12.png": {
+    "mtime": 1793294590.2822232,
+    "seen": 1793374326.7177677,
+    "ast_hash": "a817cab7a655ce71d2e2a70327657b6f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_13.png": {
+    "mtime": 1793294590.3396475,
+    "seen": 1793374326.7177687,
+    "ast_hash": "2a4c20b780c345e9290cc2f232d641b3",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_14.png": {
+    "mtime": 1793294590.397694,
+    "seen": 1793374326.71777,
+    "ast_hash": "137801a144c965697041e79c4844c690",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_15.png": {
+    "mtime": 1793294590.4684813,
+    "seen": 1793374326.717771,
+    "ast_hash": "00ed77ec3909f50db0fc532b0215e42c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_16.png": {
+    "mtime": 1793294590.5799794,
+    "seen": 1793374326.7177722,
+    "ast_hash": "4b8d8d7cc5eb5f9845dc62a63bcf7507",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_17.png": {
+    "mtime": 1793294590.6444035,
+    "seen": 1793374326.7177732,
+    "ast_hash": "bfded03db45ce89b459761ed2d340492",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_18.png": {
+    "mtime": 1793294590.703097,
+    "seen": 1793374326.7177744,
+    "ast_hash": "cb7f5f3494b7150439b4e3031486cf25",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_19.png": {
+    "mtime": 1793294590.7706366,
+    "seen": 1793374326.7177756,
+    "ast_hash": "71557fbeba4624d2b4b91aa1a2cc0364",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_20.png": {
+    "mtime": 1793294590.8369927,
+    "seen": 1793374326.717777,
+    "ast_hash": "bafad66451c4ba1709b1c6e28d2bbdd0",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_21.png": {
+    "mtime": 1793294590.8938174,
+    "seen": 1793374326.717778,
+    "ast_hash": "ae1a5fd098f82e924821a0568d913654",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_22.png": {
+    "mtime": 1793294590.950578,
+    "seen": 1793374326.7177792,
+    "ast_hash": "70c30a457207dc5d3fe725cc5d8cdb51",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_23.png": {
+    "mtime": 1793294591.0019176,
+    "seen": 1793374326.71778,
+    "ast_hash": "52bf44dd82faf356086ae3f283723f90",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_24.png": {
+    "mtime": 1793294591.056181,
+    "seen": 1793374326.717782,
+    "ast_hash": "6050d738c28a379894a6a33628dc0881",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_25.png": {
+    "mtime": 1793294591.1099305,
+    "seen": 1793374326.717783,
+    "ast_hash": "850cd10784355efa1ebd64022a966f4c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_26.png": {
+    "mtime": 1793294591.1590035,
+    "seen": 1793374326.7177844,
+    "ast_hash": "e9b1d042dcb5b0a042fdccf9b4b90633",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/page_27.png": {
+    "mtime": 1793294591.2120442,
+    "seen": 1793374326.7177854,
+    "ast_hash": "72ee834159080d4a9f505ba347e86532",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_caesar_tight.png": {
+    "mtime": 1793295958.3486917,
+    "seen": 1793374326.7177866,
+    "ast_hash": "85f8322232f615e24bcfdcd32d98d99a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_font_p10.png": {
+    "mtime": 1793297213.8568094,
+    "seen": 1793374326.7177882,
+    "ast_hash": "6e873a120f307712f1a195a02c714a80",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_font_p11.png": {
+    "mtime": 1793297213.9437234,
+    "seen": 1793374326.7177894,
+    "ast_hash": "f0a6e9994e2959ba5f3450487daa9201",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_font_p16.png": {
+    "mtime": 1793297311.4160554,
+    "seen": 1793374326.7177906,
+    "ast_hash": "be6107f624f3e25c572f22fd7b4cf757",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_font_p17.png": {
+    "mtime": 1793297341.3444188,
+    "seen": 1793374326.717792,
+    "ast_hash": "807619db889767802d350338f8b80c16",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_font_p18.png": {
+    "mtime": 1793297341.4582722,
+    "seen": 1793374326.7177932,
+    "ast_hash": "8b1b0f092d85afdf0d870fe24bcad578",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_font_p7.png": {
+    "mtime": 1793297271.382536,
+    "seen": 1793374326.7177944,
+    "ast_hash": "ec377fd254ae1220bfaa1b20f5745767",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_font_p8.png": {
+    "mtime": 1793297213.6938498,
+    "seen": 1793374326.7177956,
+    "ast_hash": "628e79d640c2db6b0744ceea916dc9a0",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/rendered_pages/test_font_p9.png": {
+    "mtime": 1793297213.7745311,
+    "seen": 1793374326.7177968,
+    "ast_hash": "d089aec869f1398b9d4e1dd8a3a02f93",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/sample_pages/page_1.png": {
+    "mtime": 1792683275.0016062,
+    "seen": 1793374326.717798,
+    "ast_hash": "c6e4af7a852e1d362791f8def0a0b67e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/sample_pages/page_10.png": {
+    "mtime": 1792683275.2946305,
+    "seen": 1793374326.7177992,
+    "ast_hash": "4658ac70efa98b81b945f9bbe43ca428",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/sample_pages/page_15.png": {
+    "mtime": 1792683275.354878,
+    "seen": 1793374326.7178001,
+    "ast_hash": "af6eba46a4c1656987ddb0b019ca321f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/sample_pages/page_20.png": {
+    "mtime": 1792683275.4198215,
+    "seen": 1793374326.7178016,
+    "ast_hash": "c52c100a09c16e41c2587ffe8ff9184e",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/sample_pages/page_5.png": {
+    "mtime": 1792683275.0727103,
+    "seen": 1793374326.7178025,
+    "ast_hash": "0eb7ae89bb35d50312671980fd16f32b",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/sample_pages/page_6.png": {
+    "mtime": 1792683275.1427662,
+    "seen": 1793374326.7178035,
+    "ast_hash": "b992050b653233323b1f0b625425d12f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/samples/network-security-report/sample_pages/page_9.png": {
+    "mtime": 1792683275.2152884,
+    "seen": 1793374326.717805,
+    "ast_hash": "896f1a775f857c2cd862187293f91476",
+    "semantic_hash": ""
+  },
+  "scripts/export_academic_report_docx.py": {
+    "mtime": 1793375703.493506,
+    "seen": 1793375781.6199853,
+    "ast_hash": "594813c6b28a081ff69151602dbc72e5",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/QuantNiti_Complete_Academic_Report.md": {
+    "mtime": 1793375732.0050929,
+    "seen": 1793375781.620367,
+    "ast_hash": "55a115dd981b73ab23418e6b3fa5df2d",
+    "semantic_hash": ""
+  },
+  "temp_pages_12_26.txt": {
+    "mtime": 1793377664.3150074,
+    "seen": 1793379381.1372135,
+    "ast_hash": "5415dab2c5ca0144f6ddaa35c27add78",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig4_1_architecture.png": {
+    "mtime": 1793377827.244532,
+    "seen": 1793379381.1372566,
+    "ast_hash": "a1a920c9254b5c9a2eeb67c88a3b2b84",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig4_2_dfd_context.png": {
+    "mtime": 1793377814.5316036,
+    "seen": 1793379381.137258,
+    "ast_hash": "58bc11fc48f12f5f7cdfcfb1bd7b4449",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig5_1_hrp_dendrogram.png": {
+    "mtime": 1793377814.2131567,
+    "seen": 1793379381.1372595,
+    "ast_hash": "9847eab025ebaeb903cb0f17fcbba727",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig5_2_discrete_flowchart.png": {
+    "mtime": 1793377843.4151566,
+    "seen": 1793379381.137261,
+    "ast_hash": "a2d7d73e5508f18e41f0905592609a79",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig6_1_equity_curves.png": {
+    "mtime": 1793377813.3398092,
+    "seen": 1793379381.1372619,
+    "ast_hash": "9bfe84c16e356c130d6e5c93820bc2eb",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig6_2_drawdown_profile.png": {
+    "mtime": 1793377813.7874885,
+    "seen": 1793379381.1372626,
+    "ast_hash": "eff66350be3f31087c190358bcde82cc",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/build_clean_latex.py": {
+    "mtime": 1793414104.6439226,
+    "seen": 1793414695.2367728,
+    "ast_hash": "439ed363f26efd75c5f11f8ed7c2d431",
+    "semantic_hash": ""
+  },
+  "scripts/generate_academic_figures.py": {
+    "mtime": 1793381903.8126423,
+    "seen": 1793383069.2891695,
+    "ast_hash": "6e3f3c89318c3e9f51a375ba356d18c9",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/cumulative_equity_curves.png": {
+    "mtime": 1793381914.4019356,
+    "seen": 1793383069.2896533,
+    "ast_hash": "32d1d7be93efbd0b503f2c7feaa5cd53",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/data_flow_diagram.png": {
+    "mtime": 1793381915.958979,
+    "seen": 1793383069.2896547,
+    "ast_hash": "104f002b16652a4427752a652d89adce",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/discrete_allocation_flowchart.png": {
+    "mtime": 1793381916.2513587,
+    "seen": 1793383069.289656,
+    "ast_hash": "2ececb3900cda787a777d97618524de6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/drawdown_comparison.png": {
+    "mtime": 1793381914.8265097,
+    "seen": 1793383069.2896569,
+    "ast_hash": "c6de9fa8e4cdc28c933897a9118ad883",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/execution_sequence_flowchart.png": {
+    "mtime": 1793382474.9026732,
+    "seen": 1793383069.2896578,
+    "ast_hash": "56ba5bd3ab8901245f38401fbd67da30",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/hrp_dendrogram.png": {
+    "mtime": 1793381915.2039087,
+    "seen": 1793383069.289669,
+    "ast_hash": "958d634bf9edba63b84ddbfc236b6e8a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/system_architecture_5layer.png": {
+    "mtime": 1793381915.5716178,
+    "seen": 1793383069.2896814,
+    "ast_hash": "f658fb8ff6efaa558a83483df34875f2",
+    "semantic_hash": ""
+  },
+  "test_script.py": {
+    "mtime": 1793385700.5148096,
+    "seen": 1793386297.1653085,
+    "ast_hash": "75b2db0edefa8f004d318b2aed5cf65c",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/test_tikz.pdf": {
+    "mtime": 1793385707.5139747,
+    "seen": 1793386297.1654925,
+    "ast_hash": "505cdff731ca94528f2bb2ff90c1c267",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/templates/final_review_ppt_template.pdf": {
+    "mtime": 1793385615.4819775,
+    "seen": 1793386297.1655016,
+    "ast_hash": "5e19a094d0e67141d9753ac3c74a720f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/quantniti_architecture_overview.png": {
+    "mtime": 1793385476.2133384,
+    "seen": 1793386297.1655588,
+    "ast_hash": "49d2ba7e7bba572e4300f22e719ab759",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/formula_crops/eq_2_1.png": {
+    "mtime": 1793386181.4380832,
+    "seen": 1793386297.1655731,
+    "ast_hash": "55d4d14622c73be84340d0633add52e5",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/formula_crops/eq_2_2.png": {
+    "mtime": 1793386181.4492006,
+    "seen": 1793386297.1655743,
+    "ast_hash": "a0255a56cf53954dead56845593889dc",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/formula_crops/eq_5_1.png": {
+    "mtime": 1793386181.4609895,
+    "seen": 1793386297.1655757,
+    "ast_hash": "752d1bddf19cabbcf7ad5585f6f7efa9",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/formula_crops/eq_5_2.png": {
+    "mtime": 1793386181.470678,
+    "seen": 1793386297.1655767,
+    "ast_hash": "70b6cd6e262255d27caae4e6bc2b77be",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/formula_crops/eq_5_3.png": {
+    "mtime": 1793386181.4805558,
+    "seen": 1793386297.165578,
+    "ast_hash": "197b8a30fa3606cf0c074ec1a7637b85",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/formula_crops/eq_5_4.png": {
+    "mtime": 1793386181.4918494,
+    "seen": 1793386297.165579,
+    "ast_hash": "bdc4b74a684040575ac81cf62db52221",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/formula_crops/eq_5_5.png": {
+    "mtime": 1793386181.501021,
+    "seen": 1793386297.1655803,
+    "ast_hash": "0fe6c6f5c651eddf51f5245808ecc140",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/test_tikz.png": {
+    "mtime": 1793385715.3209553,
+    "seen": 1793386297.16564,
+    "ast_hash": "7e38b310033b07bf4a76070aa3535238",
+    "semantic_hash": ""
+  },
+  "scripts/build_final_presentation.py": {
+    "mtime": 1793388377.402295,
+    "seen": 1793389092.6694224,
+    "ast_hash": "8bdaffe3da1afda337f0e1b62a9867be",
+    "semantic_hash": ""
+  },
+  "scripts/capture_live_android.py": {
+    "mtime": 1793388331.7985942,
+    "seen": 1793389092.6694286,
+    "ast_hash": "6eab4ed5a5ebc484adb4a76d82d3f409",
+    "semantic_hash": ""
+  },
+  "scripts/render_exhibition_pdf.py": {
+    "mtime": 1793389036.9393566,
+    "seen": 1793389092.6694818,
+    "ast_hash": "3aac25acae34484309dee27f7aad0548",
+    "semantic_hash": ""
+  },
+  "docs/QUANTNITI_MASTER_EXHIBITION_DOCUMENT.html": {
+    "mtime": 1793389041.3899233,
+    "seen": 1793389092.6701133,
+    "ast_hash": "b4b928e531dc37f40aeefb53ada88a23",
+    "semantic_hash": ""
+  },
+  "docs/QUANTNITI_MASTER_EXHIBITION_DOCUMENT.md": {
+    "mtime": 1793388969.5550377,
+    "seen": 1793389092.6701155,
+    "ast_hash": "d350ce91b41b3ba07f1c763f96bbc86e",
+    "semantic_hash": ""
+  },
+  "docs/QUANTNITI_MASTER_EXHIBITION_DOCUMENT.pdf": {
+    "mtime": 1793389050.697309,
+    "seen": 1793389092.6701708,
+    "ast_hash": "e9f1b5bc50748c1237e91d51e8f05cfe",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/test_tikz_fig42.pdf": {
+    "mtime": 1793388765.1735609,
+    "seen": 1793389092.6701763,
+    "ast_hash": "81222e693f6e10f06d2162aa22fe5eec",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_01_market_pulse.png": {
+    "mtime": 1793388528.210611,
+    "seen": 1793389092.6702273,
+    "ast_hash": "de57564a913315477d9595d11a61e0c7",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_02_grow_donut.png": {
+    "mtime": 1793388668.1869657,
+    "seen": 1793389092.6702287,
+    "ast_hash": "88df77d70608f05a349cf59dab2d35e0",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_02_grow_step1.png": {
+    "mtime": 1793388531.840353,
+    "seen": 1793389092.6702304,
+    "ast_hash": "e61f839fd955adc70e1c0d6e3bcc74f1",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/00_test_chrome_10022.png": {
+    "mtime": 1793388473.3506885,
+    "seen": 1793389092.6702316,
+    "ast_hash": "fe5e42cf4e294add8ba8272667967bc6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/01_android_market_pulse.png": {
+    "mtime": 1793388353.7293549,
+    "seen": 1793389092.6702325,
+    "ast_hash": "fda2019e32ee3412ed35f5724577f3f6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/01_live_screen.png": {
+    "mtime": 1793388258.5893211,
+    "seen": 1793389092.670234,
+    "ast_hash": "3444767e949766716b334187e0d63231",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/02_android_grow_step1.png": {
+    "mtime": 1793388358.557108,
+    "seen": 1793389092.6702354,
+    "ast_hash": "fda2019e32ee3412ed35f5724577f3f6",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/02_chrome_screen.png": {
+    "mtime": 1793388299.3185163,
+    "seen": 1793389092.6702368,
+    "ast_hash": "8294bf6fd486b09a6e63e2af6d2b997b",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/02b_android_grow_step2.png": {
+    "mtime": 1793388361.1907744,
+    "seen": 1793389092.6702385,
+    "ast_hash": "26f98372912e7eb2a64197832061e2c5",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/03_android_grow_donut.png": {
+    "mtime": 1793388368.195054,
+    "seen": 1793389092.67024,
+    "ast_hash": "26f98372912e7eb2a64197832061e2c5",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/03b_android_grow_scenarios.png": {
+    "mtime": 1793388371.1981857,
+    "seen": 1793389092.6702414,
+    "ast_hash": "032ee381fd5edbc1a0869179989eee36",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/04_android_portfolio.png": {
+    "mtime": 1793388375.0263755,
+    "seen": 1793389092.6702428,
+    "ast_hash": "a7d18c7afc2ae4fde74c6f8ed1673154",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/05_android_explore.png": {
+    "mtime": 1793388378.814652,
+    "seen": 1793389092.670244,
+    "ast_hash": "a7d18c7afc2ae4fde74c6f8ed1673154",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/android_live/06_android_learn.png": {
+    "mtime": 1793388382.6482444,
+    "seen": 1793389092.6702454,
+    "ast_hash": "a7d18c7afc2ae4fde74c6f8ed1673154",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig_4_2_rendered_clean.png": {
+    "mtime": 1793389077.6494966,
+    "seen": 1793389092.6702762,
+    "ast_hash": "46559ef067dcf049fdbb8fd55d919f0f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig_7_1_market_pulse.png": {
+    "mtime": 1793388715.4551857,
+    "seen": 1793389092.6702776,
+    "ast_hash": "5b43523a5893d90f6ca1bd770b1a2223",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig_7_2_grow_donut.png": {
+    "mtime": 1793388668.1869657,
+    "seen": 1793389092.670279,
+    "ast_hash": "88df77d70608f05a349cf59dab2d35e0",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig_7_3_trust_card.png": {
+    "mtime": 1793388703.3892462,
+    "seen": 1793389092.6702807,
+    "ast_hash": "357d5e3ab6bd893a982c6e04cc304b25",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig_7_4_portfolio_tracker.png": {
+    "mtime": 1793388706.9852388,
+    "seen": 1793389092.670282,
+    "ast_hash": "9bf0b2d20fd8ad6db67ea41f1ca59677",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/figures/fig_7_5_nitibot.png": {
+    "mtime": 1793388710.5761976,
+    "seen": 1793389092.6702833,
+    "ast_hash": "9605ce9272607423f57f280e45a39c08",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/verify_feb/page_02.png": {
+    "mtime": 1793389048.6524556,
+    "seen": 1793389092.6703904,
+    "ast_hash": "3ca533cda4bef89d443b713557f093a3",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/verify_feb/page_03.png": {
+    "mtime": 1793389048.7326734,
+    "seen": 1793389092.6703932,
+    "ast_hash": "370b833a8aac2d9e438ec03e0ab8082d",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/verify_feb/page_16.png": {
+    "mtime": 1793389048.792145,
+    "seen": 1793389092.6703951,
+    "ast_hash": "ca1a3663cfe0220aebc150dd7833d584",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/verify_feb/page_26.png": {
+    "mtime": 1793389048.8591197,
+    "seen": 1793389092.6703966,
+    "ast_hash": "a60ab4040f1a9b8069bbe12119b2cb87",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/verify_feb/page_27.png": {
+    "mtime": 1793389048.9303598,
+    "seen": 1793389092.670399,
+    "ast_hash": "3fa145bc55d4a9628accd04efa47d996",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/verify_feb/page_28.png": {
+    "mtime": 1793389049.066591,
+    "seen": 1793389092.6704009,
+    "ast_hash": "22834a2054cb463900bec84bbe74ee6a",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/verify_feb/page_29.png": {
+    "mtime": 1793389049.2264924,
+    "seen": 1793389092.670402,
+    "ast_hash": "341102a374c3317687d2395ccbac4635",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/rendered_pages/verify_feb/page_30.png": {
+    "mtime": 1793389049.3042371,
+    "seen": 1793389092.6704047,
+    "ast_hash": "b99d49eb478527baa4bc2a58ceabdbee",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/test_tikz_fig42.png": {
+    "mtime": 1793388775.7232919,
+    "seen": 1793389092.6704075,
+    "ast_hash": "efe257373339b6a60e2484ccb274143c",
+    "semantic_hash": ""
+  },
+  "scripts/serve_apk.py": {
+    "mtime": 1793423150.875035,
+    "seen": 1793423211.294615,
+    "ast_hash": "777fc2b190be4c033b5ccac8bd5f7b3f",
+    "semantic_hash": ""
+  },
+  "review2_slides_dump.txt": {
+    "mtime": 1793420277.4284477,
+    "seen": 1793423211.2950308,
+    "ast_hash": "1970b26a9fab3dd37b7a39be45502136",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/ProjectReportFrontPages.pdf": {
+    "mtime": 1793413484.185615,
+    "seen": 1793423211.2950366,
+    "ast_hash": "7f271880c38b19b9253d63f51e75f29f",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/QuantNiti_Final_Project_Report.pdf": {
+    "mtime": 1793414834.623146,
+    "seen": 1793423211.2950382,
+    "ast_hash": "907e30271cc6360c3c8baf4cbbc0e493",
+    "semantic_hash": ""
+  },
+  "docs/academic_docs/project_phase_2_report/final_report.pdf": {
+    "mtime": 1793414834.626059,
+    "seen": 1793423211.2950394,
+    "ast_hash": "06519c5dda288c11eb721ca91c9323c2",
     "semantic_hash": ""
   }
 }

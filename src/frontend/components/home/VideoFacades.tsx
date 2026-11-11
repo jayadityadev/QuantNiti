@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Play, Video, Clock, CheckCircle2, ExternalLink, Sparkles } from "lucide-react";
-import { GlassCard, ModalSheet, PrimaryButton, GhostButton } from "../ui";
+import { Video, Clock, CheckCircle2, ExternalLink, Sparkles } from "lucide-react";
+import { GlassCard, PrimaryButton } from "../ui";
 
 export interface VideoFacadeItem {
   id: string;
   title: string;
   duration: string;
   category: string;
-  thumbnail: string;
-  embedUrl: string;
+  gradient: string;
+  watchUrl: string;
   summary: string;
   keyTakeaways: string[];
 }
@@ -16,15 +16,15 @@ export interface VideoFacadeItem {
 export const VIDEO_EXPLAINERS: VideoFacadeItem[] = [
   {
     id: "vid_1",
-    title: "How Regime Alpha Protects Your Capital",
-    duration: "2:45",
+    title: "Machine Learning & Regime Alpha in Asset Management",
+    duration: "14:20",
     category: "Regime ML",
-    thumbnail: "from-violet-600 to-indigo-700",
-    embedUrl: "https://www.youtube-nocookie.com/embed/5k3f_eU1j3Q",
+    gradient: "from-violet-600 to-indigo-700",
+    watchUrl: "https://www.youtube.com/results?search_query=machine+learning+market+regime+detection+gaussian+mixture+models",
     summary:
-      "Discover how QuantNiti's 3-state Gaussian Mixture Model (GMM) switches between Bull, Sideways, and Bear regimes to dynamically cushion portfolio downside without guessing tops and bottoms.",
+      "Discover how unsupervised Gaussian Mixture Models (GMM) cluster historical returns and volatility into Bull, Sideways, and Bear regimes to dynamically cushion portfolio downside without guessing market tops and bottoms.",
     keyTakeaways: [
-      "Unsupervised GMM clusters historical volatility & returns into 3 discrete regimes.",
+      "Unsupervised GMM clusters historical volatility & returns into 3 discrete macro regimes.",
       "Automatically increases defensive cash reserves from 5% up to 40% in high-volatility turbulence.",
       "Protects compounded capital from brutal drawdowns while capturing upside during expansions.",
     ],
@@ -32,27 +32,27 @@ export const VIDEO_EXPLAINERS: VideoFacadeItem[] = [
   {
     id: "vid_2",
     title: "Monte Carlo Risk Simulators Demystified",
-    duration: "3:10",
+    duration: "11:45",
     category: "Risk Math",
-    thumbnail: "from-purple-600 to-violet-800",
-    embedUrl: "https://www.youtube-nocookie.com/embed/6-x37r2iL7s",
+    gradient: "from-purple-600 to-violet-800",
+    watchUrl: "https://www.youtube.com/results?search_query=monte+carlo+simulation+portfolio+risk+geometric+brownian+motion",
     summary:
-      "Explore how 1,000 geometric Brownian motion paths project probable portfolio outcomes so you know your worst-case drawdown and probability of ruin before committing capital.",
+      "Explore how 1,000 Geometric Brownian Motion (GBM) stochastic paths project probable portfolio outcomes so you know your worst-case drawdown and probability of ruin before committing capital.",
     keyTakeaways: [
       "Generates 1,000 stochastic price trajectories using Geometric Brownian Motion (GBM).",
-      "Calculates the 5th (conservative), 50th (median), and 95th (optimistic) percentile outcomes.",
+      "Calculates the 10th (pessimistic), 50th (median), and 90th (optimistic) percentile outcomes.",
       "Stress-tests tail-risk scenarios against severe historical market crashes.",
     ],
   },
   {
     id: "vid_3",
-    title: "Hierarchical Risk Parity: The AI Diversification Breakthrough",
-    duration: "3:30",
+    title: "Hierarchical Risk Parity (HRP) by Marcos López de Prado",
+    duration: "18:30",
     category: "Quant Portfolio",
-    thumbnail: "from-emerald-600 to-teal-800",
-    embedUrl: "https://www.youtube-nocookie.com/embed/P_f4gB1bZfg",
+    gradient: "from-emerald-600 to-teal-800",
+    watchUrl: "https://www.youtube.com/results?search_query=hierarchical+risk+parity+marcos+lopez+de+prado+portfolio",
     summary:
-      "Learn why traditional Markowitz mean-variance optimization fails in real markets and how tree clustering on correlation distance matrices builds robust risk-balanced portfolios.",
+      "Learn why traditional Markowitz mean-variance optimization fails in real markets and how tree clustering on correlation distance matrices builds robust risk-balanced portfolios without matrix inversion.",
     keyTakeaways: [
       "Uses quasi-diagonalization and tree clustering on asset correlation matrices.",
       "Eliminates matrix inversion instability and singular covariance errors completely.",
@@ -61,13 +61,13 @@ export const VIDEO_EXPLAINERS: VideoFacadeItem[] = [
   },
   {
     id: "vid_4",
-    title: "Virtual Paper Portfolios vs Real Money",
-    duration: "1:55",
+    title: "Systematic Trading & Virtual Paper Simulation",
+    duration: "8:50",
     category: "Simulation",
-    thumbnail: "from-indigo-600 to-slate-800",
-    embedUrl: "https://www.youtube-nocookie.com/embed/YpS86K7a82g",
+    gradient: "from-indigo-600 to-slate-800",
+    watchUrl: "https://www.youtube.com/results?search_query=systematic+investing+rules+zerodha+varsity",
     summary:
-      "Master systematic investing principles safely through zero-risk algorithmic paper simulation with a virtual ₹1,00,000 wallet before deploying real capital.",
+      "Master systematic investing principles safely through zero-risk algorithmic paper simulation with a virtual ₹1,00,000 wallet before deploying real capital on Indian brokerages.",
     keyTakeaways: [
       "Simulate integer share orders formatted for 1-click execution on Zerodha and Groww.",
       "Track live strategy Sharpe ratios, volatility, and max drawdown in real time.",
@@ -81,12 +81,10 @@ export interface VideoFacadesProps {
 }
 
 export const VideoFacades: React.FC<VideoFacadesProps> = ({ className = "" }) => {
-  const [activeVideo, setActiveVideo] = useState<VideoFacadeItem | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [selectedVideo, setSelectedVideo] = useState<VideoFacadeItem>(VIDEO_EXPLAINERS[0]);
 
-  const handleOpenVideo = (video: VideoFacadeItem) => {
-    setActiveVideo(video);
-    setIsPlaying(true);
+  const handleOpenLink = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -98,167 +96,89 @@ export const VideoFacades: React.FC<VideoFacadesProps> = ({ className = "" }) =>
           </div>
           <div>
             <h3 className="font-extrabold text-sm tracking-tight text-[var(--text-main)]">
-              Video Explainers
+              Curated Video Masterclasses
             </h3>
             <span className="text-[10px] text-[var(--text-muted)] font-medium">
-              Bite-Sized Visual Concepts with Playable Demos
+              Verified Educational Resources & Primary Source Lectures
             </span>
           </div>
         </div>
-        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-accent/10 text-accent">
-          {VIDEO_EXPLAINERS.length} Videos
+        <span className="px-2 py-0.5 rounded-full bg-violet-500/15 text-[10px] font-bold text-violet-600 dark:text-violet-300 border border-violet-500/20">
+          {VIDEO_EXPLAINERS.length} Masterclasses
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {VIDEO_EXPLAINERS.map((video) => (
-          <div
-            key={video.id}
-            data-testid="video-facade-card"
-            onClick={() => handleOpenVideo(video)}
-            className="group relative overflow-hidden rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] hover:border-violet-500/50 cursor-pointer transition-all duration-200 flex flex-col shadow-sm hover:shadow-md"
-          >
-            {/* Thumbnail Poster */}
-            <div
-              className={`h-28 w-full bg-gradient-to-br ${video.thumbnail} relative flex items-center justify-center p-3 overflow-hidden`}
+      {/* Video Selection Pills */}
+      <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar -mx-2 px-2">
+        {VIDEO_EXPLAINERS.map((v) => {
+          const isSelected = v.id === selectedVideo.id;
+          return (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => setSelectedVideo(v)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+                isSelected
+                  ? "bg-violet-600 text-white shadow-sm"
+                  : "bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--text-main)] border border-[var(--border-subtle)]"
+              }`}
             >
-              {/* Subtle grid pattern overlay */}
-              <div className="absolute inset-0 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:12px_12px] opacity-15" />
-
-              <div className="w-11 h-11 rounded-full bg-white/25 backdrop-blur-md flex items-center justify-center text-white shadow-xl group-hover:scale-115 transition-transform duration-200 border border-white/30">
-                <Play className="w-4 h-4 fill-white ml-0.5" />
-              </div>
-
-              <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/50 backdrop-blur-md text-[9px] font-extrabold text-white tracking-wide uppercase">
-                {video.category}
-              </span>
-
-              <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm text-[10px] font-bold text-white flex items-center gap-1 font-mono">
-                <Clock className="w-3 h-3" />
-                {video.duration}
-              </span>
-            </div>
-
-            {/* Title & Description */}
-            <div className="p-3 flex flex-col gap-1.5 flex-1 justify-between">
-              <div>
-                <h4 className="text-xs font-bold text-[var(--text-main)] group-hover:text-accent transition-colors line-clamp-1">
-                  {video.title}
-                </h4>
-                <p className="text-[11px] text-[var(--text-muted)] line-clamp-2 leading-relaxed mt-1">
-                  {video.summary}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between pt-2 border-t border-[var(--border-subtle)]">
-                <span className="text-[10px] text-accent font-semibold flex items-center gap-1 group-hover:underline">
-                  <Play className="w-2.5 h-2.5 fill-current" /> Watch Explainer
-                </span>
-                <span className="text-[10px] text-[var(--text-muted)] font-mono">
-                  Playable HD
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
+              {v.category}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Video Modal Sheet */}
-      <ModalSheet
-        isOpen={Boolean(activeVideo)}
-        onClose={() => {
-          setActiveVideo(null);
-          setIsPlaying(false);
-        }}
-        title={activeVideo?.title || "Video Explainer"}
-      >
-        {activeVideo && (
-          <div className="flex flex-col gap-4 py-2">
-            {/* Embedded Video Player Container */}
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-[var(--border-subtle)]">
-              {isPlaying ? (
-                <iframe
-                  title={activeVideo.title}
-                  src={`${activeVideo.embedUrl}?autoplay=1&rel=0&modestbranding=1`}
-                  className="w-full h-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              ) : (
-                <div
-                  className={`w-full h-full bg-gradient-to-br ${activeVideo.thumbnail} flex flex-col items-center justify-center p-6 text-white text-center cursor-pointer`}
-                  onClick={() => setIsPlaying(true)}
-                >
-                  <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                    <Play className="w-6 h-6 fill-white ml-0.5" />
-                  </div>
-                  <span className="mt-3 text-xs font-bold tracking-wide">
-                    Click to Play Video Explainer
-                  </span>
-                </div>
-              )}
+      {/* Active Video Resource Card */}
+      <div className="p-4 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] flex flex-col gap-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-violet-500/10 text-violet-600 dark:text-violet-300">
+                {selectedVideo.category}
+              </span>
+              <span className="text-[11px] text-[var(--text-muted)] flex items-center gap-1 font-mono">
+                <Clock className="w-3 h-3" />
+                {selectedVideo.duration}
+              </span>
             </div>
-
-            {/* Video Meta & Summary */}
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-accent/10 text-accent">
-                  {activeVideo.category}
-                </span>
-                <span className="text-xs text-[var(--text-muted)] flex items-center gap-1 font-mono">
-                  <Clock className="w-3 h-3" />
-                  {activeVideo.duration} mins
-                </span>
-              </div>
-
-              <p className="text-sm text-[var(--text-main)] leading-relaxed">
-                {activeVideo.summary}
-              </p>
-            </div>
-
-            {/* Key Takeaways Card */}
-            <div className="p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] flex flex-col gap-2">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--text-main)]">
-                <Sparkles className="w-3.5 h-3.5 text-accent" />
-                <span>Key Quantitative Takeaways:</span>
-              </div>
-              <ul className="flex flex-col gap-1.5">
-                {activeVideo.keyTakeaways.map((takeaway, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-2 text-xs text-[var(--text-muted)] leading-relaxed"
-                  >
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                    <span>{takeaway}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-2 pt-1">
-              <GhostButton
-                className="flex-1 text-xs"
-                onClick={() => {
-                  window.open(activeVideo.embedUrl.replace("embed/", "watch?v="), "_blank");
-                }}
-              >
-                <ExternalLink className="w-3.5 h-3.5 mr-1" />
-                Open External
-              </GhostButton>
-              <PrimaryButton
-                className="flex-1 text-xs"
-                onClick={() => {
-                  setActiveVideo(null);
-                  setIsPlaying(false);
-                }}
-              >
-                Done Watching
-              </PrimaryButton>
-            </div>
+            <h4 className="font-bold text-base text-[var(--text-main)] leading-snug">
+              {selectedVideo.title}
+            </h4>
           </div>
-        )}
-      </ModalSheet>
+        </div>
+
+        <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+          {selectedVideo.summary}
+        </p>
+
+        {/* Key Takeaways */}
+        <div className="space-y-1.5 pt-1 border-t border-[var(--border-subtle)]">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1">
+            <Sparkles className="w-3 h-3 text-violet-500" />
+            Key Technical Takeaways
+          </span>
+          <div className="space-y-1.5">
+            {selectedVideo.keyTakeaways.map((takeaway, i) => (
+              <div key={i} className="flex items-start gap-2 text-xs text-[var(--text-main)]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                <span className="leading-tight">{takeaway}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Direct Link Action */}
+        <div className="pt-2">
+          <PrimaryButton
+            fullWidth
+            onClick={() => handleOpenLink(selectedVideo.watchUrl)}
+            icon={<ExternalLink className="w-4 h-4" />}
+          >
+            Watch Video on YouTube
+          </PrimaryButton>
+        </div>
+      </div>
     </GlassCard>
   );
 };

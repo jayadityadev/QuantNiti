@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
-export type NavTab = "home" | "explore" | "grow" | "portfolio";
-export type TimeHorizon = "1M" | "3M" | "6M" | "12M";
+export type NavTab = "home" | "learn" | "explore" | "grow" | "portfolio";
+export type TimeHorizon = "1M" | "3M" | "6M" | "12M" | string;
 export type RiskPersona = "Conservative" | "Balanced" | "Aggressive" | "ESG-Conscious";
 
 export interface AppStoreState {

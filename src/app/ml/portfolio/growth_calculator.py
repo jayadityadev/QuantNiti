@@ -47,7 +47,22 @@ def calculate_basket_growth_projections(
     regime: MarketRegimeType = MarketRegimeType.LOW_VOLATILITY_BULL,
 ) -> BasketGrowthProjections:
     """Calculate 3-tier expected rupee growth cones and stress drawdown for the basket."""
-    attr = HORIZON_ATTR.get(horizon, "m6")
+    # Map custom horizon (e.g. '9M', '18M', '24M') to closest cone or scaled
+    clean_h = str(horizon).upper().replace(" ", "").replace("MONTHS", "M").replace("MONTH", "M")
+    if clean_h in HORIZON_ATTR:
+        attr = HORIZON_ATTR[clean_h]
+    else:
+        # Extract integer months
+        digits = "".join(filter(str.isdigit, clean_h))
+        m_count = int(digits) if digits else 6
+        if m_count <= 2:
+            attr = "m1"
+        elif m_count <= 4:
+            attr = "m3"
+        elif m_count <= 8:
+            attr = "m6"
+        else:
+            attr = "m12"
     
     total_weight = sum(allocations.values())
     if total_weight <= 0:

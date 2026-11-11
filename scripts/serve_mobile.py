@@ -33,6 +33,11 @@ def get_lan_ip() -> str:
 def print_qr_code(url: str) -> None:
     """Print an ASCII QR code in the terminal if qrcode is available, or instructions."""
     try:
+        if hasattr(sys.stdout, "reconfigure"):
+            try:
+                sys.stdout.reconfigure(encoding="utf-8")
+            except Exception:
+                pass
         import qrcode
         qr = qrcode.QRCode(
             version=1,
@@ -44,7 +49,7 @@ def print_qr_code(url: str) -> None:
         qr.make(fit=True)
         print("\n  [Scan QR code on your mobile camera]:")
         qr.print_ascii(invert=True)
-    except ImportError:
+    except Exception:
         # Fallback: simple text banner
         pass
 
@@ -57,6 +62,7 @@ def main():
     port = int(os.getenv("PORT", "8000"))
     local_url = f"http://localhost:{port}/"
     mobile_url = f"http://{lan_ip}:{port}/"
+    apk_url = f"http://{lan_ip}:{port}/download/apk"
 
     banner = f"""
 ======================================================================
@@ -65,14 +71,16 @@ def main():
   [Local Machine]   : {local_url}
   [Mobile on LAN]   : {mobile_url}
   [Vite Client]     : {mobile_url}app
+  [APK Download]    : {apk_url}
   [Binding]         : 0.0.0.0:{port} (All Network Interfaces)
 ======================================================================
   * Mobile Device Setup:
     1. Ensure your smartphone is connected to the SAME Wi-Fi network.
     2. Open your mobile browser (Chrome / Safari) and navigate to:
        {mobile_url}
-    3. If prompted by Windows Defender Firewall, click 'Allow Access'.
-    4. To install as PWA: tap 'Add to Home Screen' or install prompt.
+    3. To download the Android APK directly, scan the QR code or visit:
+       {apk_url}
+    4. If prompted by Windows Defender Firewall, click 'Allow Access'.
 ======================================================================
 """
     print(banner)

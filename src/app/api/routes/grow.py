@@ -57,7 +57,7 @@ async def recommend_basket_post(
 async def recommend_basket_get(
     request: Request,
     capital: float = Query(default=50000.0, ge=1000.0, le=10000000.0, description="Investment capital in INR"),
-    horizon: str = Query(default="6M", pattern="^(1M|3M|6M|12M)$", description="Investment horizon"),
+    horizon: str = Query(default="6M", description="Investment horizon"),
     risk_persona: RiskPersona = Query(default=RiskPersona.BALANCED, description="Investor risk persona"),
 ) -> BasketRecommendationResponse:
     """Generate curated AI portfolio basket via GET query params."""

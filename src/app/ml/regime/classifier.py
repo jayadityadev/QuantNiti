@@ -119,8 +119,13 @@ class MarketRegimeClassifier:
         X_scaled = self._format_input(X)
         raw_proba = self.gmm.predict_proba(X_scaled)
 
-        # Normalize rows strictly
-        raw_proba = raw_proba / raw_proba.sum(axis=1, keepdims=True)
+        # Apply temperature-scaled softmax smoothing to avoid extreme 99.9% probability collapse
+        temperature = 2.5
+        # Convert likelihoods to log-space with clipping
+        log_p = np.log(np.clip(raw_proba, 1e-12, 1.0))
+        scaled_logits = log_p / temperature
+        scaled_exp = np.exp(scaled_logits - np.max(scaled_logits, axis=1, keepdims=True))
+        raw_proba = scaled_exp / np.sum(scaled_exp, axis=1, keepdims=True)
 
         # Remap columns to semantic regime names
         cols = [

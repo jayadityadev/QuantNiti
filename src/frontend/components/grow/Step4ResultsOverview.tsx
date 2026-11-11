@@ -139,14 +139,18 @@ export const Step4ResultsOverview: React.FC<Step4ResultsOverviewProps> = ({
               Pessimistic (Q10)
             </span>
             <p className="text-xs sm:text-sm font-bold text-[var(--text-main)] mt-1">
-              {growth?.pessimistic_q10?.final_value
-                ? formatRupees(growth.pessimistic_q10.final_value)
-                : formatRupees(basket?.capital * 0.96)}
+              {growth?.pessimistic?.projected_value
+                ? formatRupees(growth.pessimistic.projected_value)
+                : (growth?.pessimistic_q10?.final_value
+                    ? formatRupees(growth.pessimistic_q10.final_value)
+                    : formatRupees(basket?.capital ? basket.capital * 0.96 : 96000))}
             </p>
             <span className="text-[11px] text-rose-600 dark:text-rose-400 font-medium block">
-              {growth?.pessimistic_q10?.return_pct
-                ? `${growth.pessimistic_q10.return_pct > 0 ? "+" : ""}${growth.pessimistic_q10.return_pct.toFixed(1)}%`
-                : "-4.0%"}
+              {growth?.pessimistic?.expected_return_pct !== undefined
+                ? `${growth.pessimistic.expected_return_pct > 0 ? "+" : ""}${growth.pessimistic.expected_return_pct.toFixed(1)}%`
+                : (growth?.pessimistic_q10?.return_pct !== undefined
+                    ? `${growth.pessimistic_q10.return_pct > 0 ? "+" : ""}${growth.pessimistic_q10.return_pct.toFixed(1)}%`
+                    : "-4.0%")}
             </span>
           </div>
 
@@ -157,14 +161,18 @@ export const Step4ResultsOverview: React.FC<Step4ResultsOverviewProps> = ({
               Base Case (Q50)
             </span>
             <p className="text-xs sm:text-sm font-bold text-[var(--text-main)] mt-1">
-              {growth?.base_q50?.final_value
-                ? formatRupees(growth.base_q50.final_value)
-                : formatRupees(basket?.capital * 1.08)}
+              {growth?.base?.projected_value
+                ? formatRupees(growth.base.projected_value)
+                : (growth?.base_q50?.final_value
+                    ? formatRupees(growth.base_q50.final_value)
+                    : formatRupees(basket?.capital ? basket.capital * 1.08 : 108000))}
             </p>
             <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium block">
-              {growth?.base_q50?.return_pct
-                ? `+${growth.base_q50.return_pct.toFixed(1)}%`
-                : "+8.2%"}
+              {growth?.base?.expected_return_pct !== undefined
+                ? `+${growth.base.expected_return_pct.toFixed(1)}%`
+                : (growth?.base_q50?.return_pct !== undefined
+                    ? `+${growth.base_q50.return_pct.toFixed(1)}%`
+                    : "+8.2%")}
             </span>
           </div>
 
@@ -174,14 +182,18 @@ export const Step4ResultsOverview: React.FC<Step4ResultsOverviewProps> = ({
               Optimistic (Q90)
             </span>
             <p className="text-xs sm:text-sm font-bold text-[var(--text-main)] mt-1">
-              {growth?.optimistic_q90?.final_value
-                ? formatRupees(growth.optimistic_q90.final_value)
-                : formatRupees(basket?.capital * 1.16)}
+              {growth?.optimistic?.projected_value
+                ? formatRupees(growth.optimistic.projected_value)
+                : (growth?.optimistic_q90?.final_value
+                    ? formatRupees(growth.optimistic_q90.final_value)
+                    : formatRupees(basket?.capital ? basket.capital * 1.16 : 116000))}
             </p>
             <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium block">
-              {growth?.optimistic_q90?.return_pct
-                ? `+${growth.optimistic_q90.return_pct.toFixed(1)}%`
-                : "+16.5%"}
+              {growth?.optimistic?.expected_return_pct !== undefined
+                ? `+${growth.optimistic.expected_return_pct.toFixed(1)}%`
+                : (growth?.optimistic_q90?.return_pct !== undefined
+                    ? `+${growth.optimistic_q90.return_pct.toFixed(1)}%`
+                    : "+16.5%")}
             </span>
           </div>
         </div>

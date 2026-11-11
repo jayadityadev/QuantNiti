@@ -3,7 +3,7 @@
 from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class AssetClass(str, Enum):
@@ -338,7 +338,7 @@ class BenchmarkComparisonItem(BaseModel):
 
 class BasketRecommendationRequest(BaseModel):
     capital: float = Field(default=50000.0, ge=1000.0, le=10000000.0)
-    horizon: str = Field(default="6M", pattern="^(1M|3M|6M|12M)$")
+    horizon: str = Field(default="6M", description="Investment timeframe, e.g. 1M, 6M, 12M or custom months")
     risk_persona: RiskPersona = Field(default=RiskPersona.BALANCED)
 
 
@@ -437,6 +437,19 @@ class BacktestRequest(BaseModel):
     cost_bps: float = Field(default=5.0, ge=0.0, le=100.0, description="Transaction fee in basis points")
     slippage_bps: float = Field(default=5.0, ge=0.0, le=100.0, description="Slippage in basis points")
     parameters: Optional[Dict[str, Any]] = None
+
+    @field_validator("strategy", mode="before")
+    @classmethod
+    def parse_strategy(cls, v: Any) -> Any:
+        if isinstance(v, StrategyType):
+            return v
+        s = str(v).strip().lower().replace("_", "").replace(" ", "").replace("&", "and")
+        for st in StrategyType:
+            cand = st.value.lower().replace("_", "").replace(" ", "").replace("&", "and")
+            cand_name = st.name.lower().replace("_", "")
+            if s == cand or s == cand_name:
+                return st
+        return v
 
 
 class BacktestResponse(BaseModel):
@@ -559,7 +572,7 @@ class CreatePortfolioRequest(BaseModel):
     name: str = Field(default="My AI Portfolio", min_length=1)
     capital: float = Field(default=50000.0, ge=1000.0, le=100000000.0)
     basket_id: Optional[str] = None
-    horizon: str = Field(default="6M", pattern="^(1M|3M|6M|12M)$")
+    horizon: str = Field(default="6M", description="Investment timeframe, e.g. 1M, 6M, 12M or custom months")
     risk_persona: RiskPersona = Field(default=RiskPersona.BALANCED)
     custom_allocations: Optional[List[Dict[str, Any]]] = None
 

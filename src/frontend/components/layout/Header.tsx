@@ -56,9 +56,7 @@ export function Header({
           className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-squircle-sm"
           aria-label="QuantNiti Home"
         >
-          <div className="w-8 h-8 rounded-squircle-sm bg-gradient-to-tr from-violet-600 via-violet-500 to-indigo-500 flex items-center justify-center text-white font-black text-sm shadow-md shadow-violet-500/25 group-hover:scale-105 transition-transform duration-150">
-            Q
-          </div>
+          <img src="/icon.svg" alt="QuantNiti Logo" className="w-8 h-8 rounded-squircle-sm shadow-md shadow-violet-500/25 group-hover:scale-105 transition-transform duration-150 object-cover" />
           <div className="flex flex-col">
             <span className="font-extrabold text-sm tracking-tight leading-none text-[var(--text-main)] group-hover:text-accent transition-colors">
               QuantNiti

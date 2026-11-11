@@ -41,6 +41,7 @@ class AlertService:
         cooldown_seconds: float = 600.0,  # 10 minutes deduplication window
         vapid_public_key: str = DEFAULT_VAPID_PUBLIC_KEY,
         vapid_private_key: str = DEFAULT_VAPID_PRIVATE_KEY,
+        seed_defaults: bool = False,
     ):
         self.cooldown_seconds = cooldown_seconds
         self.vapid_public_key = vapid_public_key
@@ -51,6 +52,69 @@ class AlertService:
         self._last_regime: Optional[MarketRegimeType] = None
         self._push_subscriptions: List[PushSubscriptionRequest] = []
         self._push_dispatch_log: List[Dict[str, Any]] = []
+        if seed_defaults:
+            self._seed_initial_alerts()
+
+    def _seed_initial_alerts(self) -> None:
+        """Seed representative real-time quantitative alerts and buy/sell signals for live demonstration."""
+        from app.core.models import AlertSeverity, SmartAlert, SmartAlertType
+
+        seeds = [
+            SmartAlert(
+                id="alert-sell-trent-1",
+                type=SmartAlertType.RSI_EXTREME,
+                severity=AlertSeverity.HIGH,
+                title="⚡ SELL SIGNAL / Profit Taking: TRENT.NS",
+                message="14-Day RSI reached 78.4 (>72.0 extreme overbought). Algorithmic momentum exhausted; recommended setting trailing stop-loss or booking partial profits.",
+                timestamp=datetime.now(timezone.utc).isoformat(),
+                symbol="TRENT",
+                metric_value=78.4,
+                threshold_value=72.0,
+                trust_card_context="Wilder's RSI Momentum exhaustion. High probability of mean-reverting pullback.",
+                read=False,
+            ),
+            SmartAlert(
+                id="alert-buy-hdfc-2",
+                type=SmartAlertType.RSI_EXTREME,
+                severity=AlertSeverity.MEDIUM,
+                title="📈 BUY SIGNAL / Oversold Entry: HDFCBANK.NS",
+                message="14-Day RSI reached 26.2 (<28.0 oversold). Favorable statistical risk-reward accumulation level near major moving average support.",
+                timestamp=datetime.now(timezone.utc).isoformat(),
+                symbol="HDFCBANK",
+                metric_value=26.2,
+                threshold_value=28.0,
+                trust_card_context="Mean-reversion entry signal. Historically rebounds within 15 trading days.",
+                read=False,
+            ),
+            SmartAlert(
+                id="alert-rebalance-gold-3",
+                type=SmartAlertType.REGIME_TRANSITION,
+                severity=AlertSeverity.HIGH,
+                title="🛡️ DEFENSIVE HEDGE SIGNAL: Rotate into Gold",
+                message="Macro Regime shifted into Sideways / Elevated Volatility. Hierarchical Risk Parity model recommends rotating 10% equity exposure into GOLDBEES.",
+                timestamp=datetime.now(timezone.utc).isoformat(),
+                symbol="GOLDBEES",
+                metric_value=15.4,
+                threshold_value=15.0,
+                trust_card_context="Safe-haven asset allocation rule. Minimizes portfolio drawdown during market chop.",
+                read=False,
+            ),
+            SmartAlert(
+                id="alert-breakout-bharti-4",
+                type=SmartAlertType.WEEK_52_HIGH,
+                severity=AlertSeverity.LOW,
+                title="🚀 52-Week High Breakout: BHARTIARTL.NS",
+                message="Bharti Airtel printed fresh 52-week highs with +28% volume expansion over 20-day moving average.",
+                timestamp=datetime.now(timezone.utc).isoformat(),
+                symbol="BHARTIARTL",
+                metric_value=1965.0,
+                threshold_value=1950.0,
+                trust_card_context="Momentum expansion factor. Signals institutional accumulation.",
+                read=True,
+            ),
+        ]
+        self._alerts.extend(seeds)
+
 
     def _make_dedup_key(self, alert: SmartAlert) -> Tuple[str, Optional[str], Optional[str]]:
         """Deduplication key consisting of (alert_type, symbol, portfolio_id)."""

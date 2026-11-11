@@ -83,7 +83,7 @@ def create_app(
         grow_service=grow_svc,
     )
 
-    alert_svc = alert_service or AlertService()
+    alert_svc = alert_service or AlertService(seed_defaults=True)
     review_svc = review_service or ReviewService(
         agent=ReviewVerificationAgent(
             grow_service=grow_svc,
@@ -140,6 +140,25 @@ def create_app(
         async def serve_offline():
             return FileResponse(static_dir / "offline.html", media_type="text/html")
 
+        @app.get("/download/apk", include_in_schema=False)
+        @app.get("/apk", include_in_schema=False)
+        async def download_apk():
+            root_dir = Path(__file__).resolve().parents[3]
+            candidates = [
+                root_dir / "build" / "apk" / "QuantNiti-debug.apk",
+                root_dir / "build" / "apk" / "QuantNiti-Android-APK" / "QuantNiti-debug.apk",
+                static_dir / "QuantNiti-debug.apk",
+            ]
+            for apk in candidates:
+                if apk.is_file():
+                    return FileResponse(
+                        str(apk),
+                        media_type="application/vnd.android.package-archive",
+                        filename="QuantNiti-debug.apk",
+                        headers={"Content-Disposition": 'attachment; filename="QuantNiti-debug.apk"'}
+                    )
+            return HTMLResponse("<h3>APK not found. Please place QuantNiti-debug.apk in build/apk/</h3>", status_code=404)
+
 
 
     # Register routers under api prefixes (supporting both default /api and /api/v1)
@@ -170,6 +189,17 @@ def create_app(
         asset_class: Optional[str] = None,
     ):
         return app.state.explore_service.list_explore_stocks(sector=sector, search=search, asset_class=asset_class)
+
+    if static_dir.exists() and vite_index.exists():
+        @app.get("/{full_path:path}", response_class=FileResponse, include_in_schema=False)
+        async def serve_spa_fallback(full_path: str):
+            potential_dist = dist_dir / full_path
+            if potential_dist.is_file():
+                return FileResponse(potential_dist)
+            potential_static = static_dir / full_path
+            if potential_static.is_file():
+                return FileResponse(potential_static)
+            return FileResponse(vite_index)
 
     return app
 

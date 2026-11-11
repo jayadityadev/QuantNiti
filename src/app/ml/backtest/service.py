@@ -1,7 +1,7 @@
 """BacktestService domain orchestrator for Quant Lab Strategy Backtesting."""
 
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 import uuid
 import pandas as pd
 
@@ -21,6 +21,30 @@ from app.ml.regime.service import RegimeService
 from app.universe import _SYMBOL_MAP, is_valid_symbol, normalize_symbol
 
 
+def resolve_strategy_enum(strategy: Union[str, StrategyType]) -> StrategyType:
+    """Safely map any string slug or enum into StrategyType."""
+    if isinstance(strategy, StrategyType):
+        return strategy
+    if isinstance(strategy, str):
+        cleaned = strategy.strip().upper().replace(" ", "_").replace("&", "AND")
+        for s in StrategyType:
+            s_clean = s.name.upper()
+            s_val = s.value.upper()
+            if cleaned == s_clean or cleaned == s_val or s_clean in cleaned or cleaned in s_clean:
+                return s
+            if "MA" in cleaned or "CROSSOVER" in cleaned:
+                return StrategyType.MA_CROSSOVER
+            if "RSI" in cleaned or "REVERSION" in cleaned:
+                return StrategyType.RSI_MEAN_REVERSION
+            if "BOLLINGER" in cleaned or "BAND" in cleaned:
+                return StrategyType.BOLLINGER_BANDS
+            if "MOMENTUM" in cleaned:
+                return StrategyType.DUAL_MOMENTUM
+            if "BUY" in cleaned or "HOLD" in cleaned:
+                return StrategyType.BUY_AND_HOLD
+    return StrategyType.BUY_AND_HOLD
+
+
 class BacktestService:
     """Core domain service for technical strategy backtesting and quant analytics."""
 
@@ -37,7 +61,7 @@ class BacktestService:
     def run_backtest(
         self,
         symbol: str = "^NSEI",
-        strategy: StrategyType = StrategyType.BUY_AND_HOLD,
+        strategy: Union[str, StrategyType] = StrategyType.BUY_AND_HOLD,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
         initial_capital: float = 100000.0,
@@ -46,6 +70,7 @@ class BacktestService:
         parameters: Optional[Dict[str, Any]] = None,
     ) -> BacktestResponse:
         """Run technical strategy backtest simulation with performance and regime analytics."""
+        strategy_enum = resolve_strategy_enum(strategy)
         canonical = normalize_symbol(symbol)
         if not is_valid_symbol(canonical):
             raise ValueError(f"Symbol '{symbol}' is not recognized in NIFTY 50 universe or benchmark indices.")
@@ -71,7 +96,7 @@ class BacktestService:
         # 3. Execute Vectorized Backtest
         result = self.engine.run(
             df=stock_df,
-            strategy=strategy,
+            strategy=strategy_enum,
             parameters=parameters,
             benchmark_df=benchmark_df,
             initial_capital=initial_capital,
@@ -126,7 +151,7 @@ class BacktestService:
             backtest_id=backtest_id,
             symbol=canonical,
             name=name,
-            strategy=strategy,
+            strategy=strategy_enum,
             start_date=start_dt_str,
             end_date=end_dt_str,
             initial_capital=initial_capital,
@@ -134,5 +159,80 @@ class BacktestService:
             equity_curve=equity_curve,
             trades=result.trades,
             regime_breakdown=regime_breakdown,
-            parameters_used=parameters or self.engine.DEFAULT_PARAMS.get(strategy, {}),
+            parameters_used=parameters or self.engine.DEFAULT_PARAMS.get(strategy_enum, {}),
         )
+
+    def compare_all_strategies(
+        self,
+        symbol: str = "RELIANCE",
+        initial_capital: float = 100000.0,
+    ) -> Dict[str, Any]:
+        """Execute all 5 quant strategies side-by-side and recommend optimal stance."""
+        canonical = normalize_symbol(symbol)
+        strategies = [
+            StrategyType.BUY_AND_HOLD,
+            StrategyType.MA_CROSSOVER,
+            StrategyType.RSI_MEAN_REVERSION,
+            StrategyType.BOLLINGER_BANDS,
+            StrategyType.DUAL_MOMENTUM,
+        ]
+
+        comparisons = []
+        best_strategy = StrategyType.BUY_AND_HOLD
+        best_score = -999.0
+
+        for strat in strategies:
+            try:
+                res = self.run_backtest(
+                    symbol=canonical,
+                    strategy=strat,
+                    initial_capital=initial_capital,
+                )
+                m = res.metrics
+                # Scoring based on risk-adjusted return (Sharpe with positive return bonus)
+                score = (m.sharpe_ratio or 0.0) + (m.total_return_pct / 50.0)
+                if score > best_score:
+                    best_score = score
+                    best_strategy = strat
+
+                comparisons.append({
+                    "strategy": strat.value,
+                    "strategy_key": strat.name,
+                    "total_return_pct": m.total_return_pct,
+                    "cagr": m.cagr,
+                    "sharpe_ratio": m.sharpe_ratio,
+                    "max_drawdown_pct": m.max_drawdown_pct,
+                    "win_rate_pct": m.win_rate_pct,
+                    "profit_factor": m.profit_factor,
+                    "final_equity": m.final_equity,
+                })
+            except Exception as e:
+                comparisons.append({
+                    "strategy": strat.value,
+                    "strategy_key": strat.name,
+                    "error": str(e),
+                })
+
+        # Get active market regime context
+        try:
+            curr_regime = self.regime_service.get_current_regime()
+            regime_name = curr_regime.regime.value if hasattr(curr_regime.regime, "value") else str(curr_regime.regime)
+        except Exception:
+            regime_name = "Sideways Consolidation"
+
+        # Formulate contextual AI recommendation
+        recommendation_reason = (
+            f"Under current {regime_name} conditions, {best_strategy.value} yields the superior "
+            f"risk-adjusted alpha with resilient drawdown controls for {canonical}."
+        )
+
+        return {
+            "symbol": canonical,
+            "name": _SYMBOL_MAP.get(canonical, {}).get("name", canonical),
+            "initial_capital": initial_capital,
+            "active_regime": regime_name,
+            "recommended_strategy": best_strategy.value,
+            "recommended_strategy_key": best_strategy.name,
+            "recommendation_reason": recommendation_reason,
+            "strategies": comparisons,
+        }

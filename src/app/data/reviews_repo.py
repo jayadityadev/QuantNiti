@@ -75,8 +75,16 @@ class ReviewRepository:
             if not include_rejected:
                 stmt = stmt.where(ReviewRecord.status != ReviewStatus.REJECTED.value)
 
-            stmt = stmt.order_by(ReviewRecord.created_at.desc())
-            records = session.execute(stmt).scalars().all()
+            records = session.execute(stmt.order_by(ReviewRecord.created_at.desc())).scalars().all()
+            
+            # If no reviews match specific dynamic basket ID, fall back to all basket reviews
+            if not records and target_type == ReviewTargetType.BASKET.value:
+                fallback_stmt = select(ReviewRecord).where(
+                    ReviewRecord.target_type == ReviewTargetType.BASKET.value
+                )
+                if not include_rejected:
+                    fallback_stmt = fallback_stmt.where(ReviewRecord.status != ReviewStatus.REJECTED.value)
+                records = session.execute(fallback_stmt.order_by(ReviewRecord.created_at.desc())).scalars().all()
 
             results: List[ReviewItem] = []
             for r in records:

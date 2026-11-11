@@ -35,9 +35,9 @@ export function isIndianMarketOpen(): boolean {
 }
 
 export const MarketPulse: React.FC<MarketPulseProps> = ({ className = "" }) => {
-  const [niftyPrice, setNiftyPrice] = useState(22511.8);
-  const [niftyChange, setNiftyChange] = useState(280.0);
-  const [niftyChangePct, setNiftyChangePct] = useState(1.26);
+  const [niftyPrice, setNiftyPrice] = useState(23010.0);
+  const [niftyChange, setNiftyChange] = useState(73.25);
+  const [niftyChangePct, setNiftyChangePct] = useState(0.32);
   const [lastUpdated, setLastUpdated] = useState<string>("Live");
   const [isMarketOpen, setIsMarketOpen] = useState<boolean>(isIndianMarketOpen());
   const { request } = useAbortableRequest();

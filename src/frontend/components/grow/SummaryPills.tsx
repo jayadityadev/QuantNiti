@@ -65,11 +65,11 @@ export const SummaryPills: React.FC<SummaryPillsProps> = ({
           whileTap={{ scale: 0.96 }}
           onClick={() => onEditStep(item.stepNumber)}
           aria-label={`Edit ${item.label}: ${item.value}`}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-violet-500/10 hover:bg-violet-500/20 text-violet-300 border border-violet-500/30 transition-all duration-150 group cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-violet-500/10 hover:bg-violet-500/20 text-violet-700 dark:text-violet-300 border border-violet-500/30 transition-all duration-150 group cursor-pointer"
         >
           <Check className="w-3 h-3 text-emerald-400" />
           <span>
-            {item.label}: <strong className="font-semibold text-white">{item.value}</strong>
+            {item.label}: <strong className="font-semibold text-[var(--text-main)]">{item.value}</strong>
           </span>
           <span className="text-violet-400/60 group-hover:text-violet-300 flex items-center gap-0.5 ml-0.5">
             • Edit
