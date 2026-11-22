@@ -83,7 +83,7 @@ export const TopRecommendations: React.FC<TopRecommendationsProps> = ({ classNam
               <Link
                 to="/explore"
                 onClick={() => setSelectedStockSymbol(stock.symbol)}
-                className="flex items-center justify-between p-3 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] hover:border-violet-500/30 hover:bg-violet-500/5 transition-all duration-150 group"
+                className="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-150 group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-accent/10 text-accent font-extrabold text-xs flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors duration-150">

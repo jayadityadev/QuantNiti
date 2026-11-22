@@ -44,7 +44,7 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({
             icon={<ArrowRight className="w-3.5 h-3.5" />}
             className="text-xs py-2 px-3.5 shrink-0 self-start sm:self-center whitespace-nowrap"
           >
-            Build Your Own →
+            Build your own
           </PrimaryButton>
         </div>
       </GlassCard>
@@ -53,7 +53,11 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({
       <PortfolioHeroCard portfolio={demoPortfolio} isDemo={true} />
 
       {/* 3. Holdings Table */}
-      <HoldingsTable holdings={demoPortfolio.holdings} isDemo={true} />
+      <HoldingsTable
+        holdings={demoPortfolio.holdings}
+        isDemo={true}
+        riskMetrics={demoPortfolio.risk_metrics}
+      />
 
       {/* 4. Compounding Trajectory Chart */}
       <CompoundingTrajectoryChart trajectory={demoTrajectory} isDemo={true} />

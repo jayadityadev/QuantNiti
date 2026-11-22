@@ -1,3 +1,4 @@
+/* Hallmark · modern-minimal · shape: app screen · posture: restrained · copy: verbatim */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,31 +10,32 @@
   --bg-card-subtle: #F1F5F9;
   --text-main: #0F172A;
   --text-muted: #475569;
-  --border-subtle: rgba(124, 58, 237, 0.14);
-  --accent-primary: #7C3AED;
-  --accent-secondary: #6366F1;
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --accent-primary: #0F766E;
+  --accent-secondary: #0284C7;
   --color-profit: #059669;
   --color-loss: #E11D48;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg-primary: #0A0D14;
-  --bg-card: #121124;
-  --bg-card-subtle: #181730;
+  --bg-primary: #080C14;
+  --bg-card: #0F172A;
+  --bg-card-subtle: #1E293B;
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
-  --border-subtle: rgba(124, 58, 237, 0.20);
-  --accent-primary: #7C3AED;
-  --accent-secondary: #6366F1;
+  --border-subtle: rgba(148, 163, 184, 0.16);
+  --accent-primary: #14B8A6;
+  --accent-secondary: #38BDF8;
   --color-profit: #10B981;
-  --color-loss: #EB5B3C;
+  --color-loss: #F43F5E;
 }
 
 html {
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 *, *::before, *::after {
@@ -45,14 +47,38 @@ body {
   padding: 0;
   background-color: var(--bg-primary);
   color: var(--text-main);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-tap-highlight-color: transparent;
   min-height: 100vh;
   min-height: 100dvh;
-  overflow-x: hidden;
+  overflow-x: clip;
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Modern Web Guidance: prevent underlying page scroll when modal open */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Mobile Safe Area Utility Classes */
@@ -84,4 +110,3 @@ body {
 .content-bottom-safe {
   padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
 }
-

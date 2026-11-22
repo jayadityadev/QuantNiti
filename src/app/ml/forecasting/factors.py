@@ -62,7 +62,7 @@ def compute_max_drawdown(series: pd.Series) -> float:
 def compute_stock_beta_and_alpha(
     stock_returns: pd.Series,
     benchmark_returns: pd.Series,
-    risk_free_rate: float = 0.065,
+    risk_free_rate: float = 0.055,  # 5.50% current RBI repo rate benchmark
 ) -> Tuple[float, float, float]:
     """Compute Capital Asset Pricing Model (CAPM) Beta, Annualized Alpha, and Correlation."""
     aligned = pd.concat([stock_returns, benchmark_returns], axis=1, sort=False).dropna()

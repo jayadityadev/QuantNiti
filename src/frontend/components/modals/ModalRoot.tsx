@@ -101,10 +101,10 @@ export const ModalRoot: React.FC = () => {
           onClick={() => openModal("nitibot")}
           aria-label="Ask NitiBot AI"
           title="Ask NitiBot AI"
-          className="group relative flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600 via-violet-500 to-indigo-500 text-white shadow-xl shadow-violet-600/30 hover:scale-105 active:scale-95 transition-all duration-150 border border-violet-400/40"
+          className="group relative flex items-center justify-center w-12 h-12 rounded-xl bg-slate-900 text-white dark:bg-teal-600 shadow-md hover:scale-105 active:scale-95 transition-transform duration-150 border border-slate-700 dark:border-teal-500 focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none"
         >
           <Bot className="w-5 h-5 transition-transform group-hover:rotate-6" />
-          <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[var(--bg-primary)] animate-pulse" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-[var(--bg-primary)]" />
         </button>
       </div>
     </>

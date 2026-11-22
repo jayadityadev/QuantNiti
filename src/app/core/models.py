@@ -10,6 +10,7 @@ class AssetClass(str, Enum):
     EQUITY = "EQUITY"
     COMMODITY_ETF = "COMMODITY_ETF"
     SECTORAL = "SECTORAL"
+    FIXED_INCOME = "FIXED_INCOME"
 
 
 class UniverseStock(BaseModel):
@@ -107,6 +108,15 @@ class RegimeProbabilities(BaseModel):
     sideways: float = Field(..., ge=0.0, le=1.0)
 
 
+class MarkovTransitionStats(BaseModel):
+    transition_matrix: Dict[str, Dict[str, float]] = Field(default_factory=dict)
+    expected_durations_days: Dict[str, float] = Field(default_factory=dict)
+    stationary_distribution: Dict[str, float] = Field(default_factory=dict)
+    hurst_exponent: float = 0.50
+    market_memory: str = "Random Walk"
+    next_day_forecast: Dict[str, float] = Field(default_factory=dict)
+
+
 class CurrentRegimeResponse(BaseModel):
     regime: MarketRegimeType
     regime_id: int
@@ -116,6 +126,7 @@ class CurrentRegimeResponse(BaseModel):
     description: str
     recommended_strategy: str
     as_of_date: str
+    markov_analysis: Optional[MarkovTransitionStats] = None
 
 
 class RegimeHistoricalPoint(BaseModel):
@@ -156,6 +167,8 @@ class HorizonForecastCone(BaseModel):
     pessimistic_price: float
     base_price: float
     optimistic_price: float
+    conformal_coverage_pct: Optional[float] = 80.0
+    factor_attributions: Optional[Dict[str, float]] = None
 
 
 class MultiHorizonGrowthForecast(BaseModel):
@@ -338,8 +351,16 @@ class BenchmarkComparisonItem(BaseModel):
 
 class BasketRecommendationRequest(BaseModel):
     capital: float = Field(default=50000.0, ge=1000.0, le=10000000.0)
-    horizon: str = Field(default="6M", description="Investment timeframe, e.g. 1M, 6M, 12M or custom months")
+    horizon: str = Field(default="6M", description="Investment timeframe, e.g. 1M, 3M, 6M, 12M")
     risk_persona: RiskPersona = Field(default=RiskPersona.BALANCED)
+
+    @field_validator("horizon")
+    @classmethod
+    def validate_horizon(cls, v: str) -> str:
+        clean = str(v).strip().upper()
+        if clean not in {"1M", "3M", "6M", "12M"}:
+            raise ValueError(f"Invalid horizon '{v}'. Allowed values are: 1M, 3M, 6M, 12M.")
+        return clean
 
 
 class BasketRecommendationResponse(BaseModel):
@@ -359,6 +380,9 @@ class BasketRecommendationResponse(BaseModel):
     portfolio_esg_score: float = 0.0
     portfolio_esg_badge: str = "🟡 Moderate ESG"
     portfolio_esg_breakdown: Dict[str, float] = Field(default_factory=dict)
+    cvar_95_pct: Optional[float] = None
+    diversification_ratio: Optional[float] = None
+    cluster_dendrogram: Optional[Dict[str, Any]] = None
 
 
 # ==========================================
@@ -813,13 +837,13 @@ class ReviewTargetType(str, Enum):
 
 class ReviewSubmissionRequest(BaseModel):
     target_type: ReviewTargetType = ReviewTargetType.BASKET
-    target_id: str
-    user_name: str
+    target_id: str = Field(..., min_length=1, max_length=100)
+    user_name: str = Field(..., min_length=1, max_length=100)
     rating: int = Field(..., ge=1, le=5)
     review_text: str = Field(..., min_length=5, max_length=2000)
-    title: Optional[str] = None
+    title: Optional[str] = Field(default=None, max_length=150)
     claimed_return_pct: Optional[float] = None
-    claimed_duration: Optional[str] = None
+    claimed_duration: Optional[str] = Field(default=None, max_length=50)
 
 
 class ReviewItem(BaseModel):

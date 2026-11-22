@@ -50,7 +50,27 @@ export interface PortfolioData {
   created_at: string;
   as_of_date: string;
   is_demo?: boolean;
+  alpha?: number;
+  beta?: number;
+  var_1d_pct?: number;
+  target_drift_pct?: number;
+  risk_metrics?: {
+    syncStatus?: string;
+    isLive?: boolean;
+    sourceTag?: string;
+    beta?: number;
+    var1d?: number;
+    maxSectorConcentration?: {
+      sector: string;
+      weightPct: number;
+    };
+    targetDriftPct?: number;
+    targetDriftStatus?: "in_bounds" | "warning" | "breached";
+  };
 }
+
+export type PortfolioHolding = PortfolioHoldingItem;
+export type Portfolio = PortfolioData;
 
 export interface CompoundingYearlyPoint {
   year: number;
@@ -223,6 +243,22 @@ export function getDemoPortfolio(): PortfolioData {
     created_at: new Date().toISOString(),
     as_of_date: new Date().toISOString().split("T")[0],
     is_demo: true,
+    beta: 0.88,
+    var_1d_pct: -1.42,
+    target_drift_pct: 1.2,
+    risk_metrics: {
+      syncStatus: "Synced 15:30 IST",
+      isLive: false,
+      sourceTag: "NSE/BSE EOD + Tick Engine",
+      beta: 0.88,
+      var1d: -1.42,
+      maxSectorConcentration: {
+        sector: "Financials",
+        weightPct: 31.5,
+      },
+      targetDriftPct: 1.2,
+      targetDriftStatus: "in_bounds",
+    },
   };
 }
 

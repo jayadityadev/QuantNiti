@@ -1,5 +1,6 @@
 """Market Data Service layer coordinating Providers, Cleaner, and Local Cache."""
 
+import os
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Union
 import pandas as pd
@@ -27,7 +28,12 @@ class MarketDataService:
         cache: Optional[ParquetMarketCache] = None,
         auto_cache: bool = True,
     ):
-        self.provider = provider or YahooFinanceProvider()
+        if provider is None:
+            if "PYTEST_CURRENT_TEST" in os.environ or getattr(settings, "env", "") == "test":
+                provider = MockDataProvider()
+            else:
+                provider = YahooFinanceProvider()
+        self.provider = provider
         self.cache = cache or ParquetMarketCache()
         self.auto_cache = auto_cache
 

@@ -53,8 +53,8 @@ export const AdaptiveHomeCard: React.FC<AdaptiveHomeCardProps> = ({ className = 
 
         {/* Total Value */}
         <div className="flex flex-col">
-          <span className="text-[10px] uppercase font-semibold tracking-wider text-[var(--text-muted)]">
-            Total Current Value
+          <span className="text-xs font-medium text-[var(--text-muted)]">
+            Total current value
           </span>
           <span className="text-2xl font-black font-mono tracking-tight text-[var(--text-main)]">
             ₹
@@ -130,12 +130,12 @@ export const AdaptiveHomeCard: React.FC<AdaptiveHomeCardProps> = ({ className = 
   return (
     <GlassCard
       data-testid="onboarding-card"
-      className={`p-6 flex flex-col gap-4 bg-gradient-to-br from-[var(--bg-card)] via-[var(--bg-card)] to-violet-500/5 ${className}`}
+      className={`p-6 flex flex-col gap-4 bg-[var(--bg-card)] ${className}`}
     >
-      <div className="flex items-center gap-2 text-accent">
-        <Sparkles className="w-5 h-5 text-accent" />
-        <span className="text-xs font-bold uppercase tracking-wider">
-          New Investor Journey
+      <div className="flex items-center gap-2 text-teal-600 dark:text-teal-400">
+        <Sparkles className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+        <span className="text-xs font-medium">
+          New investor journey
         </span>
       </div>
 

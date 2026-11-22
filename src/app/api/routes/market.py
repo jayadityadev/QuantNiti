@@ -121,6 +121,8 @@ def get_returns_matrix(
     symbol_list = [s.strip() for s in symbols.split(",") if s.strip()]
     if not symbol_list:
         raise HTTPException(status_code=400, detail="Must provide at least one valid symbol")
+    if len(symbol_list) > 100:
+        raise HTTPException(status_code=400, detail="Maximum 100 symbols allowed in returns matrix")
 
     aligned_df = service.get_aligned_dataset(symbol_list, start_date=start_date, end_date=end_date, field="adj_close")
     if aligned_df.empty:
@@ -157,6 +159,8 @@ def sync_universe(
 ):
     """Trigger ingestion and caching for universe stocks."""
     syms = payload.symbols if payload and payload.symbols else None
+    if syms and len(syms) > 100:
+        raise HTTPException(status_code=400, detail="Maximum 100 symbols allowed per sync batch")
     start = payload.start_date if payload else None
     end = payload.end_date if payload else None
 

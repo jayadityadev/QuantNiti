@@ -35,9 +35,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
             disabled={!onStepClick}
             onClick={() => onStepClick?.(stepNum)}
             aria-label={`Step ${stepNum} of ${totalSteps}`}
-            className={`relative flex-1 h-1.5 rounded-full overflow-hidden transition-all duration-200 ${
+            className={`relative flex-1 h-1.5 rounded-full overflow-hidden transition-colors duration-200 ${
               onStepClick ? "cursor-pointer hover:opacity-80" : "cursor-default"
-            } bg-violet-400/20 dark:bg-violet-500/15`}
+            } bg-slate-200 dark:bg-slate-800`}
           >
             <motion.div
               initial={false}
@@ -47,10 +47,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
               }}
               transition={{ duration: 0.35, ease: "easeInOut" }}
               className={`h-full rounded-full ${
-                isCompleted
-                  ? "bg-gradient-to-r from-violet-600 to-indigo-600"
-                  : isCurrent
-                  ? "bg-accent shadow-sm shadow-violet-500/50"
+                isCompleted || isCurrent
+                  ? "bg-teal-600 dark:bg-teal-500"
                   : "bg-transparent"
               }`}
             />

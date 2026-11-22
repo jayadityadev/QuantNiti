@@ -1,0 +1,11 @@
+You are an independent adversarial reviewer, from a different team/model than the original auditor. READ-ONLY: do NOT modify source. The ML auditor's report is at .scratch/audit-main/ml.md.
+
+Your job is NOT to redo the audit but to STRESS-TEST it. Read ml.md, then independently verify its top findings by reading the cited code (file:line) and running small targeted read-only checks:
+- Confirm/refute "no LightGBM code anywhere" (grep the whole repo) and that the forecaster is a deterministic CAPM/momentum formula, not a trained model.
+- Confirm/refute the volatility-scaling bug (vol*tau vs vol*sqrt(tau)); show the actual code and compute the factor.
+- Confirm/refute the GMM negative-return cluster inversion with a concrete numeric example taken from the code.
+- Confirm/refute "in-sample fit / no train-test split" and the temperature-softmax distortion.
+- Confirm/refute the HRP/Ledoit-Wolf "sound" verdict and the Sortino denominator bug.
+- Flag any FALSE POSITIVE, OVERSTATEMENT, wrong severity, or important MISSED issue.
+
+Output to .scratch/audit-main/ml-critique.md: per top finding -> AGREE / TIGHTEN / CORRECT, each with the evidence you personally checked; then a short list of corrections the fix phase must account for. Report worker_done with the verdict for each top finding.

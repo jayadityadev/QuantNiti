@@ -114,7 +114,7 @@ describe("Modals and Overlays Suite", () => {
     render(<PortfolioReportCard isOpen={true} onClose={() => {}} portfolio={portfolio} />);
 
     expect(screen.getByText("QuantNiti Portfolio Audit Card")).toBeInTheDocument();
-    expect(screen.getByText("Certified Strategy")).toBeInTheDocument();
+    expect(screen.getByText(/Certified Strategy/i)).toBeInTheDocument();
     expect(screen.getByText("Algorithmic Trust & Audit Attestation")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Print or Save PDF Report Card/i })).toBeInTheDocument();
   });

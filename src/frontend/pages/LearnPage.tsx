@@ -81,13 +81,13 @@ export const LearnPage: React.FC = () => {
     <div className="flex flex-col gap-5 p-4 max-w-[520px] mx-auto pb-8">
       {/* Page Header */}
       <div className="pb-1">
-        <div className="flex items-center gap-1.5 text-accent mb-0.5">
-          <GraduationCap className="w-4 h-4 text-violet-500" />
-          <span className="text-[11px] font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
-            Knowledge & Strategy Center
+        <div className="flex items-center gap-1.5 text-teal-600 dark:text-teal-400 mb-0.5">
+          <GraduationCap className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+          <span className="text-xs font-medium text-teal-600 dark:text-teal-400">
+            Knowledge and strategy center
           </span>
         </div>
-        <h1 className="text-2xl font-black text-[var(--text-main)] tracking-tight">
+        <h1 className="text-2xl font-bold text-[var(--text-main)] tracking-tight">
           Quant Mastery Lab
         </h1>
         <p className="text-xs text-[var(--text-muted)] mt-0.5">
@@ -118,8 +118,8 @@ export const LearnPage: React.FC = () => {
 
         {/* Stock Selector */}
         <div className="space-y-1.5">
-          <label className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wider block">
-            Select Asset from Universe (58 Assets)
+          <label className="text-xs font-medium text-[var(--text-muted)] block">
+            Select asset from universe (58 assets)
           </label>
           <select
             value={selectedSymbol}
@@ -146,12 +146,12 @@ export const LearnPage: React.FC = () => {
         ) : comparisonResult ? (
           <div className="space-y-3.5">
             {/* AI Recommendation Banner */}
-            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-violet-600/15 via-indigo-600/15 to-emerald-600/15 border border-violet-500/30">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-violet-600 dark:text-violet-300 mb-1">
+            <div className="p-3.5 rounded-xl bg-teal-500/10 border border-teal-500/20">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-teal-800 dark:text-teal-300 mb-1">
                 <Award className="w-4 h-4 text-amber-500" />
-                <span>Recommended Trading Stance Right Now:</span>
+                <span>Recommended trading stance:</span>
               </div>
-              <p className="text-sm font-black text-[var(--text-main)]">
+              <p className="text-sm font-bold text-[var(--text-main)]">
                 {comparisonResult.recommended_strategy}
               </p>
               <p className="text-xs text-[var(--text-muted)] mt-1 leading-relaxed">
@@ -163,7 +163,7 @@ export const LearnPage: React.FC = () => {
             <div className="overflow-x-auto -mx-2 px-2">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-[var(--border-subtle)] text-[10px] font-bold text-[var(--text-muted)] uppercase">
+                  <tr className="border-b border-[var(--border-subtle)] text-xs font-medium text-[var(--text-muted)]">
                     <th className="py-2 pr-2">Strategy</th>
                     <th className="py-2 px-2 text-right">Return</th>
                     <th className="py-2 px-2 text-right">Sharpe</th>
@@ -206,8 +206,8 @@ export const LearnPage: React.FC = () => {
               </table>
             </div>
 
-            <div className="text-[10px] text-[var(--text-muted)] font-mono text-center">
-              Simulation capital: ₹1,00,000 • 5 bps transaction costs • Daily EOD data
+            <div className="text-xs text-[var(--text-muted)] font-mono text-center">
+              Simulation capital: ₹1,00,000, 5 bps transaction costs, daily EOD data
             </div>
           </div>
         ) : null}

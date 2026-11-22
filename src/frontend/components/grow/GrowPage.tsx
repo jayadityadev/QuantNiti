@@ -165,11 +165,11 @@ export function GrowPage() {
       {/* Top Header / Progress Area */}
       <div className="space-y-3">
         {/* Step indicator pills */}
-        <div className="flex items-center justify-between text-xs font-semibold">
-          <span className="text-violet-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-violet-400" />
+        <div className="flex items-center justify-between text-xs font-medium">
+          <span className="text-teal-600 dark:text-teal-400 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
             <span>
-              Grow Page • {step <= 3 ? `Wizard Step ${step} of 3` : step === 4 ? "Results Overview" : "Deep Dive"}
+              Grow Page • {step <= 3 ? `Wizard step ${step} of 3` : step === 4 ? "Results overview" : "Deep dive"}
             </span>
           </span>
 

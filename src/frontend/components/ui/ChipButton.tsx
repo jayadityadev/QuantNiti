@@ -27,10 +27,10 @@ export const ChipButton: React.FC<ChipButtonProps> = ({
       whileTap={disabled ? undefined : { scale: 0.97 }}
       disabled={disabled}
       type={type}
-      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 border disabled:opacity-50 disabled:pointer-events-none ${
+      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors transition-transform duration-150 border disabled:opacity-50 disabled:pointer-events-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none ${
         isSelected
-          ? "bg-accent text-white border-accent shadow-sm shadow-violet-500/20"
-          : "bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-subtle)] hover:border-violet-400/40 hover:bg-violet-500/5"
+          ? "bg-slate-900 text-white border-slate-900 dark:bg-teal-600 dark:border-teal-500 shadow-sm"
+          : "bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-subtle)] hover:border-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
       } ${className}`}
       {...props}
     >

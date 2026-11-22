@@ -111,9 +111,6 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
     <div className="space-y-6">
       {/* Step Header */}
       <div className="space-y-1">
-        <span className="text-xs font-semibold text-violet-400 uppercase tracking-wider block">
-          Step 5: Explainable Deep Dive
-        </span>
         <h2 className="text-2xl font-bold text-[var(--text-main)] tracking-tight">
           Trust & Intelligence Card
         </h2>
@@ -147,8 +144,8 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
         {/* ESG Breakdown */}
         <div className="grid grid-cols-3 gap-2 pt-2 border-t border-teal-500/20">
           {Object.entries(esgBreakdown).map(([key, val]: [string, any]) => (
-            <div key={key} className="text-center p-2 rounded-lg bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)]">
-              <span className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider block">{key}</span>
+            <div key={key} className="text-center p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+              <span className="text-xs text-[var(--text-muted)] font-medium capitalize block">{key}</span>
               <span className="text-xs font-bold text-teal-600 dark:text-teal-200 mt-0.5 block">{Number(val).toFixed(0)}%</span>
             </div>
           ))}
@@ -158,61 +155,61 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
       {/* 2. 4-Pillar Explainable AI Trust Card */}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-violet-600 dark:text-violet-400" />
-          <h3 className="text-xs font-semibold text-[var(--text-main)] uppercase tracking-wider">
-            4-Pillar Explainable AI Trust Card
+          <ShieldCheck className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+          <h3 className="text-xs font-semibold text-[var(--text-main)]">
+            4-pillar explainable AI trust card
           </h3>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Pillar 1 */}
-          <div className="p-3.5 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-1">
-            <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider">
-              Pillar 1: Regime Suitability
+          <div className="p-3.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-1">
+            <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
+              Pillar 1: Regime suitability
             </span>
             <p className="text-xs font-bold text-[var(--text-main)]">
               {trustCard?.pillar_1_regime_suitability || `${basket?.active_regime || "Bull"} Adaptive`}
             </p>
-            <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
               Factor tilts conditioned on macroeconomic volatility and price dispersion.
             </p>
           </div>
 
           {/* Pillar 2 */}
-          <div className="p-3.5 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-1">
-            <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider">
-              Pillar 2: Directional Hit Rate
+          <div className="p-3.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-1">
+            <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
+              Pillar 2: Directional hit rate
             </span>
             <p className="text-xs font-bold text-[var(--text-main)]">
               {trustCard?.pillar_2_hit_rate || "68.4% Backtested Win Rate"}
             </p>
-            <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
               Based on historical outperformance across identical market regimes.
             </p>
           </div>
 
           {/* Pillar 3 */}
-          <div className="p-3.5 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-1">
-            <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider">
-              Pillar 3: Stress Drawdown Limit
+          <div className="p-3.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-1">
+            <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
+              Pillar 3: Stress drawdown limit
             </span>
             <p className="text-xs font-bold text-[var(--text-main)]">
               {trustCard?.pillar_3_drawdown || "Capped at < 12% Drawdown"}
             </p>
-            <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
               Strict HRP asset clustering prevents single-sector contagion risks.
             </p>
           </div>
 
           {/* Pillar 4 */}
-          <div className="p-3.5 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-1">
-            <span className="text-[10px] font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider">
-              Pillar 4: Fee Savings
+          <div className="p-3.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-1">
+            <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
+              Pillar 4: Fee savings
             </span>
             <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
               {trustCard?.pillar_4_fee_savings || "Save ~₹3,200/yr vs Traditional PMS"}
             </p>
-            <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
               Zero distributor commission drag using direct low-cost ETF instruments.
             </p>
           </div>
@@ -222,9 +219,9 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
       {/* 3. Benchmark Comparison */}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <BarChart3 className="w-4 h-4 text-violet-600 dark:text-violet-400" />
-          <h3 className="text-xs font-semibold text-[var(--text-main)] uppercase tracking-wider">
-            Benchmark Comparison ({basket?.horizon || "6M"})
+          <BarChart3 className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+          <h3 className="text-xs font-semibold text-[var(--text-main)]">
+            Benchmark comparison ({basket?.horizon || "6M"})
           </h3>
         </div>
 
@@ -263,9 +260,9 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-violet-600 dark:text-violet-400" />
-            <h3 className="text-xs font-semibold text-[var(--text-main)] uppercase tracking-wider">
-              Community Reviews & Legitimacy
+            <Users className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+            <h3 className="text-xs font-semibold text-[var(--text-main)]">
+              Community reviews and legitimacy
             </h3>
           </div>
           <div className="flex items-center gap-2">
@@ -285,7 +282,7 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
                   onSuccess: fetchBasketReviews,
                 })
               }
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-violet-600/15 hover:bg-violet-600/25 text-violet-700 dark:text-violet-300 text-xs font-semibold border border-violet-500/30 transition-all hover:scale-105 shadow-sm"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-700 dark:text-teal-300 text-xs font-medium border border-teal-500/20 transition-colors shadow-sm focus-visible:ring-1 focus-visible:ring-teal-500 focus-visible:outline-none"
             >
               <MessageSquarePlus className="w-3 h-3" />
               <span>Write</span>

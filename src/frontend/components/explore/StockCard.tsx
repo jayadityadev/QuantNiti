@@ -152,11 +152,11 @@ export const StockCard: React.FC<StockCardProps> = ({ stock, onSelect }) => {
           {/* Visual Progress / Range Bar */}
           <div
             data-testid="forecast-6m-bar"
-            className="w-full h-2 rounded-full bg-violet-500/10 dark:bg-violet-950/40 relative overflow-hidden flex items-center"
+            className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 relative overflow-hidden flex items-center"
             title={`6M Forecast: Pessimistic ${pessimisticPct}% to Optimistic ${optimisticPct}%`}
           >
             <div
-              className="h-full rounded-full bg-gradient-to-r from-violet-500 via-indigo-500 to-emerald-400 transition-all duration-500"
+              className="h-full rounded-full bg-teal-600 dark:bg-teal-500 transition-transform duration-300"
               style={{ width: `${baseOffsetPct}%` }}
             />
             {/* Base indicator pin */}

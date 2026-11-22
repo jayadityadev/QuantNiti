@@ -1,0 +1,13 @@
+You are the senior developer who inherited this repo and will be paged when it breaks. READ-ONLY. Write report to .scratch/audit-main/architecture.md. Follow the ponytail-audit skill exactly.
+
+WHOLE REPO D:\Codebase\QuantNiti. Read README.md, CONTEXT.md, AGENTS.md, pyproject.toml, package.json, Dockerfile, CI workflows, .gitignore, .graphifyignore, and the 16 ADRs in docs/adr. Trace flows: onboarding -> grow wizard -> portfolio -> explore -> alerts -> reviews -> chat.
+Focus:
+- Doc claims vs reality: README says 99% backend coverage, 132/132 frontend tests, 272 backend tests — verify.
+- Dead code / duplicated modules (e.g. multiple simulation vs portfolio paths, duplicated statutory rates), speculative abstraction.
+- Dependency bloat (lightgbm, matplotlib, pyarrow, google-genai — used?).
+- Test suite health/speed/flakiness; missing critical tests.
+- Git hygiene: tracked generated artifacts (graphify-out ~30MB graph.json), deleted docs, large binaries, committed secrets/.env.
+- Deploy config correctness.
+EXECUTE `npm run build` only; a baseline full-suite run is in progress elsewhere — do NOT run the full pytest/vitest suites.
+
+Output EXACTLY per ponytail-audit: `What this repo does:` + assumed load; numbered findings (max 20) in Must fix / Should fix / Nice to have, each with What this is / Problem / Fix / If we skip it; `Verdict:`; `Lean:`; `Not checked:`. Report worker_done when written, with the verdict.

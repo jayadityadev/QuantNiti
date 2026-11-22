@@ -189,10 +189,10 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
               return (
                 <div
                   key={item.id}
-                  className={`p-3.5 rounded-2xl border transition-all ${
+                  className={`p-3.5 rounded-xl border transition-colors duration-150 ${
                     !item.read
-                      ? "bg-[var(--bg-card)] dark:bg-slate-900/90 border-violet-500/40 shadow-sm"
-                      : "bg-[var(--bg-card-subtle)] dark:bg-slate-900/40 border-[var(--border-subtle)] text-[var(--text-muted)]"
+                      ? "bg-[var(--bg-card)] dark:bg-slate-900 border-teal-500/40 shadow-sm"
+                      : "bg-[var(--bg-primary)] border-[var(--border-subtle)] text-[var(--text-muted)]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">

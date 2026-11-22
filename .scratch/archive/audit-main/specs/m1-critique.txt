@@ -1,0 +1,11 @@
+You are an independent adversarial reviewer verifying a SECURITY FIX. READ-ONLY: do NOT modify source. The fix is in src/app/api/app.py (commit on feat/main-audit-hardening): added ``_resolve_static_file`` and rewrote ``serve_spa_fallback`` to contain path traversal; added tests/integration/test_spa_path_traversal.py.
+
+Independently verify:
+1. Read src/app/api/app.py fully; confirm the containment logic is correct and complete (dist_root + static_root both checked; resolve() + relative_to; NUL rejection; traversal returns 404; SPA fallback still serves index.html for normal client routes).
+2. Try to find bypasses: encoded traversal (%2e%2e, %2F, mixed case, double-encoding, backslashes, absolute paths, NUL, symlink escape, empty string, "." segments). Reason about whether Starlette decodes before the handler sees full_path. Confirm the helper handles each.
+3. Run the new tests: ``.venv\\Scripts\\python.exe -m pytest tests/integration/test_spa_path_traversal.py tests/integration/test_client_serving.py -q``. Confirm green.
+4. Check for regressions: does the fix break legitimate static asset serving (manifest.json, sw.js, /static/*, /vite, dist assets)? Run a broader smoke of client_serving tests.
+5. Verify the fix does not introduce a new issue: e.g. HTTPException import present, no syntax issues, app imports cleanly.
+6. Confirm the production deployment note: the fix is code-only; deployment still needed (user deploys separately). Key rotation is separate.
+
+Output to .scratch/audit-main/m1-critique.md: VERIFIED / NEEDS-CHANGE with evidence (test output, code refs). Flag any bypass or regression found. Report worker_done when done.

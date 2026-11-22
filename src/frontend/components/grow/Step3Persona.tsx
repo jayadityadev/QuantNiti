@@ -8,7 +8,6 @@ import {
   Check,
   ChevronLeft,
   ArrowRight,
-  Sliders,
   Info,
 } from "lucide-react";
 import { RiskPersona } from "../../store/useAppStore";
@@ -79,10 +78,9 @@ export const Step3Persona: React.FC<Step3PersonaProps> = ({
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-400 uppercase tracking-wider">
-          <Sliders className="w-3.5 h-3.5" />
-          <span>Step 3: Risk Persona</span>
-        </div>
+        <span className="text-xs font-medium text-teal-600 dark:text-teal-400">
+          Step 3 of 4
+        </span>
         <h2 className="text-2xl font-bold text-[var(--text-main)] tracking-tight">
           Select your risk tolerance
         </h2>
@@ -92,8 +90,8 @@ export const Step3Persona: React.FC<Step3PersonaProps> = ({
       </div>
 
       {/* Advisory notice */}
-      <div className="flex items-center gap-2 p-3 rounded-xl bg-violet-500/10 border border-violet-500/20 text-xs text-violet-700 dark:text-violet-300">
-        <Info className="w-4 h-4 text-violet-600 dark:text-violet-400 shrink-0" />
+      <div className="flex items-center gap-2 p-3 rounded-xl bg-teal-500/10 border border-teal-500/20 text-xs text-teal-800 dark:text-teal-200">
+        <Info className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
         <span>Pre-selected from your onboarding preferences. Feel free to adjust anytime.</span>
       </div>
 
@@ -109,10 +107,10 @@ export const Step3Persona: React.FC<Step3PersonaProps> = ({
               whileTap={{ scale: 0.98 }}
               onClick={() => onPersonaChange(p.id)}
               aria-label={`${p.name} - ${p.guardrail}`}
-              className={`w-full p-4 rounded-2xl border text-left flex items-start justify-between gap-3.5 transition-all duration-200 cursor-pointer ${
+              className={`w-full p-4 rounded-xl border text-left flex items-start justify-between gap-3.5 transition-colors duration-150 cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none ${
                 isSelected
-                  ? "bg-violet-600/20 border-violet-500 shadow-md shadow-violet-500/20 text-[var(--text-main)]"
-                  : "bg-[var(--bg-card-subtle)] hover:border-violet-500/40 border-[var(--border-subtle)] text-[var(--text-main)]"
+                  ? "bg-teal-50 dark:bg-teal-950/40 border-teal-500 shadow-sm text-[var(--text-main)]"
+                  : "bg-[var(--bg-card)] hover:border-slate-300 dark:hover:border-slate-700 border-[var(--border-subtle)] text-[var(--text-main)]"
               }`}
             >
               <div className="flex items-start gap-3.5">

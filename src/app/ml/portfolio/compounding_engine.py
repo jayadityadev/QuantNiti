@@ -173,11 +173,19 @@ def compute_gbm_quantile_cones(
         base_val = v0 * math.exp(drift_term + diff_term * Z_50)
         opt_val = v0 * math.exp(drift_term + diff_term * Z_90)
 
+        pess_r = round(pess_val, 2)
+        base_r = round(base_val, 2)
+        opt_r = round(opt_val, 2)
+
+        # Enforce strict quantile monotonicity
+        base_r = max(pess_r, base_r)
+        opt_r = max(base_r, opt_r)
+
         points.append({
             "year": y,
-            "pessimistic_10th": round(pess_val, 2),
-            "base_50th": round(base_val, 2),
-            "optimistic_90th": round(opt_val, 2),
+            "pessimistic_10th": pess_r,
+            "base_50th": base_r,
+            "optimistic_90th": opt_r,
         })
 
     return points

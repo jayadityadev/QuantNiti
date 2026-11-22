@@ -3,6 +3,7 @@ import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Header } from "./Header";
 import { BottomNav } from "./BottomNav";
+import { DesktopSidebar } from "./DesktopSidebar";
 import { useAppStore, NavTab } from "../../store/useAppStore";
 import { abortRegistry } from "../../services/abortRegistry";
 import { OnboardingHero } from "../onboarding/OnboardingHero";
@@ -13,6 +14,7 @@ import { ExplorePage } from "../../pages/ExplorePage";
 import { PortfolioPage } from "../portfolio/PortfolioPage";
 import { ModalRoot } from "../modals/ModalRoot";
 import { IOSInstallBanner } from "../pwa/IOSInstallBanner";
+import { ErrorBoundary } from "../ui/ErrorBoundary";
 
 export function AppShell() {
   const location = useLocation();
@@ -50,7 +52,7 @@ export function AppShell() {
     : { type: "spring", stiffness: 300, damping: 25 };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-main)] flex justify-center transition-colors duration-200">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-main)] flex w-full transition-colors duration-200">
       {/* Full-screen Onboarding Overlay */}
       <AnimatePresence>
         {!isOnboarded && (
@@ -59,44 +61,61 @@ export function AppShell() {
             initial={{ opacity: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 overflow-hidden bg-[#F8FAFC] dark:bg-[#0A0D14]"
+            className="fixed inset-0 z-50 overflow-hidden bg-[var(--bg-primary)]"
           >
             <OnboardingHero />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Container constrained to max-w-[520px] on desktop with centered shadow, full-width on mobile */}
-      <div className="w-full max-w-[520px] min-h-screen flex flex-col bg-[var(--bg-primary)] shadow-2xl shadow-violet-950/5 relative border-x border-[var(--border-subtle)]">
+      {/* Desktop Sidebar (visible on md: and up) */}
+      {isOnboarded && <DesktopSidebar />}
+
+      {/* Main Column: Header + Content + Mobile Bottom Nav */}
+      <div className="flex-1 flex flex-col min-h-screen w-full min-w-0 relative">
         {/* Sticky Header - visible when onboarded */}
         {isOnboarded && <Header />}
 
-        {/* Scrollable Content Area with bottom nav clearance */}
-        <main className={`flex-1 overflow-y-auto content-bottom-safe relative ${!isOnboarded ? "invisible pointer-events-none" : ""}`} aria-hidden={!isOnboarded}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={location.pathname}
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={pageTransition}
-              className="w-full h-full"
-            >
-              <Routes location={location}>
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/learn" element={<LearnPage />} />
-                <Route path="/explore" element={<ExplorePage />} />
-                <Route path="/grow" element={<GrowPage />} />
-                <Route path="/portfolio" element={<PortfolioPage />} />
-                <Route path="*" element={<Navigate to="/home" replace />} />
-              </Routes>
-            </motion.div>
-          </AnimatePresence>
+        {/* Scrollable Content Area with responsive max-w */}
+        <main
+          className={`flex-1 overflow-y-auto content-bottom-safe md:pb-6 relative w-full ${
+            !isOnboarded ? "invisible pointer-events-none" : ""
+          }`}
+          aria-hidden={!isOnboarded}
+        >
+          {/* Inner container: max-w-[520px] on mobile, expanding to max-w-7xl on desktop */}
+          <div className="w-full max-w-[520px] md:max-w-7xl mx-auto min-h-full">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={pageTransition}
+                className="w-full h-full"
+              >
+                <ErrorBoundary>
+                  <Routes location={location}>
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/learn" element={<LearnPage />} />
+                    <Route path="/explore" element={<ExplorePage />} />
+                    <Route path="/grow" element={<GrowPage />} />
+                    <Route path="/portfolio" element={<PortfolioPage />} />
+                    <Route path="*" element={<Navigate to="/home" replace />} />
+                  </Routes>
+                </ErrorBoundary>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </main>
 
-        {/* Fixed Bottom Navigation - visible when onboarded */}
-        {isOnboarded && <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />}
+        {/* Fixed Bottom Navigation (mobile only: md:hidden) */}
+        {isOnboarded && (
+          <div className="md:hidden">
+            <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
+          </div>
+        )}
 
         {/* Global Modals & Overlays Root */}
         {isOnboarded && <ModalRoot />}

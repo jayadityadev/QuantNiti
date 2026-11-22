@@ -27,8 +27,8 @@ export const RebalanceBanner: React.FC<RebalanceBannerProps> = ({
         </div>
         <div className="space-y-1 flex-1">
           <div className="flex items-center gap-2">
-            <h4 className="text-xs font-bold text-amber-300 uppercase tracking-wider">
-              Regime-Shift Rebalance Recommended
+            <h4 className="text-xs font-semibold text-amber-800 dark:text-amber-300">
+              Regime-shift rebalance recommended
             </h4>
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">

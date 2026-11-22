@@ -18,6 +18,7 @@ export const OrderSheetModal: React.FC<OrderSheetModalProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<"zerodha" | "groww">("groww");
   const [isCopied, setIsCopied] = useState(false);
+  const [copyError, setCopyError] = useState<string | null>(null);
 
   if (!portfolio) return null;
 
@@ -36,12 +37,18 @@ export const OrderSheetModal: React.FC<OrderSheetModalProps> = ({
     ),
   ].join("\n");
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     const textToCopy = activeTab === "groww" ? growwText : zerodhaCsv;
+    setCopyError(null);
     if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(textToCopy);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 1800);
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 1800);
+      } catch (err: any) {
+        setIsCopied(false);
+        setCopyError(err?.message ? `Copy failed: ${err.message}` : "Copy failed");
+      }
     }
   };
 
@@ -73,6 +80,11 @@ export const OrderSheetModal: React.FC<OrderSheetModalProps> = ({
       }
     >
       <div className="space-y-4 pt-1">
+        {copyError && (
+          <div role="alert" className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs">
+            {copyError}
+          </div>
+        )}
         {/* Tab switcher: Groww text vs Zerodha CSV */}
         <div className="flex p-1 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] text-xs">
           <button

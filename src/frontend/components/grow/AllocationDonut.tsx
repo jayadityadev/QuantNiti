@@ -87,8 +87,8 @@ export const AllocationDonut: React.FC<AllocationDonutProps> = ({
         <Doughnut data={chartData} options={chartOptions} />
         {/* Center label */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-          <span className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wider">
-            Asset Mix
+          <span className="text-xs font-medium text-[var(--text-muted)]">
+            Asset mix
           </span>
           <span className="text-xs font-bold text-[var(--text-main)]">
             {totalInvested ? formatRupees(totalInvested) : `${allocations.length} Assets`}

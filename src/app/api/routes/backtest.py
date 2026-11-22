@@ -26,8 +26,8 @@ def get_backtest_service(request: Request) -> BacktestService:
 
 
 class StrategyCompareRequest(BaseModel):
-    symbol: str = Field(default="RELIANCE", description="Stock symbol to compare")
-    initial_capital: float = Field(default=100000.0, ge=1000.0, description="Capital in INR")
+    symbol: str = Field(default="RELIANCE", min_length=1, max_length=20, description="Stock symbol to compare")
+    initial_capital: float = Field(default=100000.0, ge=1000.0, le=100000000.0, description="Capital in INR")
 
 
 @router.post(
@@ -101,8 +101,8 @@ async def run_backtest_get(
 )
 async def compare_strategies_get(
     request: Request,
-    symbol: str = Query(default="RELIANCE", description="Symbol to compare"),
-    initial_capital: float = Query(default=100000.0, description="Capital"),
+    symbol: str = Query(default="RELIANCE", min_length=1, max_length=20, description="Symbol to compare"),
+    initial_capital: float = Query(default=100000.0, ge=1000.0, le=100000000.0, description="Capital"),
 ) -> Dict[str, Any]:
     service = get_backtest_service(request)
     try:

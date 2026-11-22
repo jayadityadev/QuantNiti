@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="description" content="AI-Driven Regime-Adaptive Portfolio & Stock Growth Intelligence Platform" />
+    <title>QuantNiti | AI-Driven Regime-Adaptive Market Intelligence</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#7C3AED" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="QuantNiti" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="alternate icon" type="image/svg+xml" href="/favicon.svg" />
+    <script type="module" crossorigin src="/static/dist/assets/index-B-XWNszT.js"></script>
+    <link rel="modulepreload" crossorigin href="/static/dist/assets/vendor-react-DwJhjyed.js">
+    <link rel="modulepreload" crossorigin href="/static/dist/assets/vendor-motion-DIP2Jlov.js">
+    <link rel="modulepreload" crossorigin href="/static/dist/assets/vendor-icons-Cwyrpd3I.js">
+    <link rel="modulepreload" crossorigin href="/static/dist/assets/vendor-charts-ufhugd8P.js">
+    <link rel="stylesheet" crossorigin href="/static/dist/assets/index-BpAaJQGw.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

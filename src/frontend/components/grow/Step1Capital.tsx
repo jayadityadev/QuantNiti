@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Shield, Sparkles } from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 import { GlassCard } from "../ui/GlassCard";
 import { PrimaryButton } from "../ui/PrimaryButton";
 import { ChipButton } from "../ui/ChipButton";
@@ -27,10 +27,9 @@ export const Step1Capital: React.FC<Step1CapitalProps> = ({
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-accent uppercase tracking-wider">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Step 1: Allocation Capital</span>
-        </div>
+        <span className="text-xs font-medium text-teal-600 dark:text-teal-400">
+          Step 1 of 4
+        </span>
         <h2 className="text-2xl font-bold text-[var(--text-main)] tracking-tight">
           How much capital would you like to allocate?
         </h2>
@@ -47,11 +46,11 @@ export const Step1Capital: React.FC<Step1CapitalProps> = ({
             initial={{ scale: 0.95, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-700 via-purple-700 to-indigo-700 dark:from-violet-300 dark:via-fuchsia-200 dark:to-indigo-200 tracking-tight"
+            className="text-4xl sm:text-5xl font-extrabold text-[var(--text-main)] tracking-tight"
           >
             {formatRupees(capital)}
           </motion.div>
-          <p className="text-xs sm:text-sm font-medium text-violet-700 dark:text-violet-300/80">
+          <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400">
             {numberToIndianWords(capital)}
           </p>
         </div>
@@ -66,9 +65,9 @@ export const Step1Capital: React.FC<Step1CapitalProps> = ({
             value={capital}
             aria-label="Allocation Capital Slider"
             onChange={(e) => onCapitalChange(Number(e.target.value))}
-            className="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-violet-600 hover:accent-violet-500 transition-all focus:outline-none focus:ring-2 focus:ring-violet-400/50"
+            className="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-600 hover:accent-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
-          <div className="flex justify-between text-[11px] text-[var(--text-muted)] font-medium">
+          <div className="flex justify-between text-xs text-[var(--text-muted)] font-medium">
             <span>₹5,000 (Min)</span>
             <span>₹5,00,000</span>
             <span>₹10,00,000 (Max)</span>
@@ -77,7 +76,7 @@ export const Step1Capital: React.FC<Step1CapitalProps> = ({
 
         {/* Quick Pick Chips */}
         <div className="space-y-2">
-          <label className="text-xs font-semibold text-[var(--text-main)]">Quick-Pick Amount</label>
+          <label className="text-xs font-semibold text-[var(--text-main)]">Quick-pick amount</label>
           <div className="flex flex-wrap gap-2">
             {QUICK_CHIPS.map((chip) => {
               const isSelected = capital === chip.value;
@@ -96,9 +95,9 @@ export const Step1Capital: React.FC<Step1CapitalProps> = ({
         </div>
 
         {/* Micro-Trust Chip */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 text-xs font-medium">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 text-xs font-medium">
           <Shield className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-          <span>Safe simulated capital • No live trading</span>
+          <span>Simulated capital, risk-free educational environment</span>
         </div>
       </GlassCard>
 

@@ -5,7 +5,7 @@
  * meaning API requests use relative paths (e.g. "/api/...").
  *
  * When compiling standalone native mobile APKs or external web clients,
- * VITE_API_URL can be set to the centralized remote cloud backend (e.g. "https://quantniti.onrender.com").
+ * VITE_API_URL can be set to the centralized remote cloud backend (e.g. "https://quantniti.jayadityadev.tech").
  */
 
 export const API_BASE_URL: string = (
@@ -17,7 +17,7 @@ export const API_BASE_URL: string = (
  *
  * Examples:
  *   apiUrl("/api/explore/stocks") -> "/api/explore/stocks" (when VITE_API_URL is empty)
- *   apiUrl("/api/explore/stocks") -> "https://quantniti.onrender.com/api/explore/stocks" (when VITE_API_URL is configured)
+ *   apiUrl("/api/explore/stocks") -> "https://quantniti.jayadityadev.tech/api/explore/stocks" (when VITE_API_URL is configured)
  */
 export function apiUrl(endpoint: string): string {
   const cleanPath = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;

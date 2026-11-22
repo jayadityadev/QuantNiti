@@ -1,0 +1,13 @@
+You are an independent adversarial reviewer, from a different model family than the original auditor. READ-ONLY: do NOT modify source. The backend auditor's report is at .scratch/audit-main/backend.md.
+
+Read it, then independently verify the MUST-FIX findings:
+- M1 arbitrary file read: read src/app/api/app.py around serve_spa_fallback; verify with a LOCAL TestClient request ONLY (do NOT probe production; make no external network requests). Confirm the containment bug.
+- M2 no auth/identity: confirm there is no auth dependency and no owner/user_id column.
+- M3 silent mock fallback persisted to cache: confirm the code path (data/service.py + provider.py).
+- M4 blocking I/O in async: confirm sync Gemini/yfinance calls inside async routes.
+- M5 data loss on deploy: confirm docker-compose has no data volume and deploy uses `docker compose down`.
+- M6 stored-XSS-shaped reviews + misattribution: confirm.
+- Check the 8 SHOULD-FIX items for false positives/overstatements.
+- Flag anything important MISSED.
+
+Do NOT modify source. Do NOT make external/network requests. Output to .scratch/audit-main/backend-critique.md: per finding AGREE / TIGHTEN / CORRECT with the evidence you personally verified; then corrections the fix phase must account for. Report worker_done with the verdict.

@@ -7,6 +7,8 @@ import { RegimeRadar } from "../components/home/RegimeRadar";
 import { AdaptiveHomeCard } from "../components/home/AdaptiveHomeCard";
 import { TopRecommendations } from "../components/home/TopRecommendations";
 import { CompoundingVisualizer } from "../components/home/CompoundingVisualizer";
+import { LearningHub } from "../components/home/LearningHub";
+import { VideoFacades } from "../components/home/VideoFacades";
 import { GlassCard } from "../components/ui/GlassCard";
 
 const containerVariants = {
@@ -38,32 +40,42 @@ export const HomePage: React.FC = () => {
     >
       <h1 className="sr-only">Home Page</h1>
 
-      {/* 1. Live Market Pulse */}
-      <motion.div variants={itemVariants}>
-        <MarketPulse />
-      </motion.div>
+      {/* Top Grid: Market Pulse & Regime Radar */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <motion.div variants={itemVariants}>
+          <MarketPulse />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <RegimeRadar />
+        </motion.div>
+      </div>
 
-      {/* 2. Market Regime Radar */}
-      <motion.div variants={itemVariants}>
-        <RegimeRadar />
-      </motion.div>
-
-      {/* 3. Adaptive Card (Onboarding CTA vs Portfolio Snapshot) */}
-      <motion.div variants={itemVariants}>
-        <AdaptiveHomeCard />
-      </motion.div>
+      {/* Middle Grid: Adaptive Snapshot & Compounding Visualizer */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <motion.div variants={itemVariants}>
+          <AdaptiveHomeCard />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <CompoundingVisualizer />
+        </motion.div>
+      </div>
 
       {/* 4. Top Curated Recommendations */}
       <motion.div variants={itemVariants}>
         <TopRecommendations />
       </motion.div>
 
-      {/* 5. Systematic Compounding Visualizer */}
-      <motion.div variants={itemVariants}>
-        <CompoundingVisualizer />
-      </motion.div>
+      {/* Learning & Media Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <motion.div variants={itemVariants}>
+          <LearningHub />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <VideoFacades />
+        </motion.div>
+      </div>
 
-      {/* 6. Quick Gateway to Quant Mastery Lab & Learn Tab */}
+      {/* 8. Quick Gateway to Quant Mastery Lab & Learn Tab */}
       <motion.div variants={itemVariants}>
         <Link to="/learn" className="block group">
           <GlassCard className="p-4 flex items-center justify-between border-violet-500/20 group-hover:border-violet-500/50 transition-colors">

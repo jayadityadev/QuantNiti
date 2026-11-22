@@ -266,5 +266,7 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: ["./tests/frontend/setup.ts"],
+    include: ["tests/frontend/**/*.{test,spec}.{ts,tsx}"],
+    exclude: ["node_modules", ".tmp", ".agents", "dist", "build"],
   },
 } as any);

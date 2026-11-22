@@ -199,17 +199,17 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
         ) : profile ? (
           <>
             {/* Header Quote & Badge */}
-            <div className="flex items-start justify-between p-3 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-sm">
+            <div className="flex items-start justify-between p-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-sm">
               <div>
-                <span className="text-xs text-[var(--text-muted)] uppercase tracking-wider font-semibold">
-                  360° Intelligence Profile
+                <span className="text-xs text-[var(--text-muted)] font-medium">
+                  360° intelligence profile
                 </span>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-2xl font-black text-[var(--text-main)] tracking-tight">
+                  <span className="text-2xl font-bold text-[var(--text-main)] tracking-tight">
                     ₹<AnimatedNumber value={profile.current_price} formatter={(v) => v.toFixed(2)} />
                   </span>
                   <span
-                    className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                    className={`text-xs font-semibold px-2 py-0.5 rounded-md ${
                       isPositive
                         ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
                         : "bg-rose-500/10 text-rose-600 dark:text-rose-400"
@@ -219,7 +219,7 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
                     {profile.day_change_pct.toFixed(2)}%
                   </span>
                 </div>
-                <div className="flex items-center gap-3 text-[11px] text-[var(--text-muted)] mt-1 font-mono">
+                <div className="flex items-center gap-3 text-xs text-[var(--text-muted)] mt-1 font-mono">
                   <span>H: ₹{profile.day_high?.toFixed(2) || profile.current_price}</span>
                   <span>L: ₹{profile.day_low?.toFixed(2) || profile.current_price}</span>
                   <span>Sector: {profile.sector}</span>
@@ -228,8 +228,8 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
 
               {/* Regime Suitability Badge */}
               <div className="text-right">
-                <div className="text-[10px] uppercase font-bold text-[var(--text-muted)] mb-1">
-                  Regime Fit
+                <div className="text-xs font-medium text-[var(--text-muted)] mb-1">
+                  Regime fit
                 </div>
                 <RegimeBadge
                   regime={profile.suitability?.primary_regime || "Bullish Momentum"}
@@ -241,9 +241,9 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
             {/* Section 1: Multi-Horizon Forecast Cones */}
             <div>
               <div className="flex items-center gap-2 mb-2.5">
-                <Sparkles className="w-4 h-4 text-accent" />
-                <h4 className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">
-                  Forecast Return Cones
+                <Sparkles className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                <h4 className="text-sm font-semibold text-[var(--text-main)]">
+                  Forecast return cones
                 </h4>
               </div>
 
@@ -254,8 +254,8 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
                   { label: "6 Months", cone: profile.forecast?.m6 },
                   { label: "12 Months", cone: profile.forecast?.m12 },
                 ].map((item, idx) => (
-                  <GlassCard key={idx} className="p-2.5 rounded-xl flex flex-col justify-between">
-                    <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase">
+                  <div key={idx} className="p-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] flex flex-col justify-between">
+                    <span className="text-xs font-medium text-[var(--text-muted)]">
                       {item.label}
                     </span>
                     <div className="my-1.5">
@@ -266,13 +266,13 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
                         ₹{item.cone?.base_price?.toFixed(0) || "0"}
                       </div>
                     </div>
-                    <div className="text-[9px] text-[var(--text-muted)] flex justify-between border-t border-[var(--border-subtle)] pt-1">
+                    <div className="text-xs text-[var(--text-muted)] flex justify-between border-t border-[var(--border-subtle)] pt-1">
                       <span>{item.cone?.pessimistic_pct?.toFixed(0)}%</span>
                       <span className="text-emerald-500 font-semibold">
                         +{item.cone?.optimistic_pct?.toFixed(0)}%
                       </span>
                     </div>
-                  </GlassCard>
+                  </div>
                 ))}
               </div>
             </div>
@@ -280,35 +280,35 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
             {/* Section 2: Technical Factor Snapshot */}
             <div>
               <div className="flex items-center gap-2 mb-2.5">
-                <Activity className="w-4 h-4 text-accent" />
-                <h4 className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">
-                  Technical Factor Snapshot
+                <Activity className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                <h4 className="text-sm font-semibold text-[var(--text-main)]">
+                  Technical factor snapshot
                 </h4>
               </div>
 
               <div className="grid grid-cols-3 gap-2">
-                <GlassCard className="p-2.5 rounded-xl">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-semibold">
+                <div className="p-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+                  <span className="text-xs text-[var(--text-muted)] font-medium">
                     RSI (14D)
                   </span>
-                  <div className="text-base font-black text-[var(--text-main)] mt-0.5">
+                  <div className="text-base font-bold text-[var(--text-main)] mt-0.5">
                     {profile.factors?.rsi_14?.toFixed(1) || "55.0"}
                   </div>
-                  <span className="text-[9px] text-[var(--text-muted)]">
+                  <span className="text-xs text-[var(--text-muted)]">
                     {profile.factors?.rsi_14 > 70
                       ? "Overbought"
                       : profile.factors?.rsi_14 < 30
                       ? "Oversold"
                       : "Neutral"}
                   </span>
-                </GlassCard>
+                </div>
 
-                <GlassCard className="p-2.5 rounded-xl">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-semibold">
+                <div className="p-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+                  <span className="text-xs text-[var(--text-muted)] font-medium">
                     MACD Hist
                   </span>
                   <div
-                    className={`text-base font-black mt-0.5 ${
+                    className={`text-base font-bold mt-0.5 ${
                       (profile.factors?.macd_hist || 0) >= 0
                         ? "text-emerald-500"
                         : "text-rose-500"
@@ -317,48 +317,48 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
                     {profile.factors?.macd_hist > 0 ? "+" : ""}
                     {profile.factors?.macd_hist?.toFixed(2) || "0.00"}
                   </div>
-                  <span className="text-[9px] text-[var(--text-muted)]">Momentum spread</span>
-                </GlassCard>
+                  <span className="text-xs text-[var(--text-muted)]">Momentum spread</span>
+                </div>
 
-                <GlassCard className="p-2.5 rounded-xl">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-semibold">
+                <div className="p-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+                  <span className="text-xs text-[var(--text-muted)] font-medium">
                     Beta (1Y)
                   </span>
-                  <div className="text-base font-black text-[var(--text-main)] mt-0.5">
+                  <div className="text-base font-bold text-[var(--text-main)] mt-0.5">
                     {profile.factors?.beta?.toFixed(2) || "1.00"}
                   </div>
-                  <span className="text-[9px] text-[var(--text-muted)]">vs NIFTY 50</span>
-                </GlassCard>
+                  <span className="text-xs text-[var(--text-muted)]">vs NIFTY 50</span>
+                </div>
 
-                <GlassCard className="p-2.5 rounded-xl">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-semibold">
+                <div className="p-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+                  <span className="text-xs text-[var(--text-muted)] font-medium">
                     Alpha (Ann)
                   </span>
-                  <div className="text-base font-black text-accent mt-0.5">
+                  <div className="text-base font-bold text-teal-600 dark:text-teal-400 mt-0.5">
                     +{profile.factors?.alpha_annualized?.toFixed(1) || "3.5"}%
                   </div>
-                  <span className="text-[9px] text-[var(--text-muted)]">Excess return</span>
-                </GlassCard>
+                  <span className="text-xs text-[var(--text-muted)]">Excess return</span>
+                </div>
 
-                <GlassCard className="p-2.5 rounded-xl">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-semibold">
+                <div className="p-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+                  <span className="text-xs text-[var(--text-muted)] font-medium">
                     Realized Vol
                   </span>
-                  <div className="text-base font-black text-[var(--text-main)] mt-0.5">
+                  <div className="text-base font-bold text-[var(--text-main)] mt-0.5">
                     {profile.factors?.realized_vol_30d?.toFixed(1) || "18.0"}%
                   </div>
-                  <span className="text-[9px] text-[var(--text-muted)]">30-day annualized</span>
-                </GlassCard>
+                  <span className="text-xs text-[var(--text-muted)]">30-day annualized</span>
+                </div>
 
-                <GlassCard className="p-2.5 rounded-xl">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-semibold">
+                <div className="p-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+                  <span className="text-xs text-[var(--text-muted)] font-medium">
                     Max Drawdown
                   </span>
-                  <div className="text-base font-black text-rose-500 mt-0.5">
+                  <div className="text-base font-bold text-rose-500 mt-0.5">
                     {profile.factors?.max_drawdown_1y?.toFixed(1) || "-12.5"}%
                   </div>
-                  <span className="text-[9px] text-[var(--text-muted)]">1-Year peak-to-trough</span>
-                </GlassCard>
+                  <span className="text-xs text-[var(--text-muted)]">1-Year peak-to-trough</span>
+                </div>
               </div>
             </div>
 
@@ -367,12 +367,12 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
               <div className="flex items-center justify-between mb-2.5">
                 <div className="flex items-center gap-2">
                   <Leaf className="w-4 h-4 text-emerald-500" />
-                  <h4 className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">
-                    ESG Sustainability
+                  <h4 className="text-sm font-semibold text-[var(--text-main)]">
+                    ESG sustainability
                   </h4>
                 </div>
                 {profile.esg?.badge && (
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                     {profile.esg.badge}
                   </span>
                 )}
@@ -390,52 +390,52 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
 
                 <div className="space-y-2 pt-1 border-t border-[var(--border-subtle)]">
                   <div>
-                    <div className="flex justify-between text-[11px] text-[var(--text-muted)] mb-1">
+                    <div className="flex justify-between text-xs text-[var(--text-muted)] mb-1">
                       <span>Environmental (E)</span>
                       <span className="font-semibold text-[var(--text-main)]">
                         {profile.esg?.esg_environment?.toFixed(0) || "70"}/100
                       </span>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-violet-500/10 overflow-hidden">
+                    <div className="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-emerald-500 transition-all duration-300"
+                        className="h-full rounded-full bg-emerald-500 transition-colors duration-300"
                         style={{ width: `${Math.min(100, Math.max(0, profile.esg?.esg_environment || 70))}%` }}
                       />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-[11px] text-[var(--text-muted)] mb-1">
+                    <div className="flex justify-between text-xs text-[var(--text-muted)] mb-1">
                       <span>Social (S)</span>
                       <span className="font-semibold text-[var(--text-main)]">
                         {profile.esg?.esg_social?.toFixed(0) || "75"}/100
                       </span>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-violet-500/10 overflow-hidden">
+                    <div className="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-violet-500 transition-all duration-300"
+                        className="h-full rounded-full bg-teal-600 dark:bg-teal-500 transition-colors duration-300"
                         style={{ width: `${Math.min(100, Math.max(0, profile.esg?.esg_social || 75))}%` }}
                       />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-[11px] text-[var(--text-muted)] mb-1">
+                    <div className="flex justify-between text-xs text-[var(--text-muted)] mb-1">
                       <span>Governance (G)</span>
                       <span className="font-semibold text-[var(--text-main)]">
                         {profile.esg?.esg_governance?.toFixed(0) || "80"}/100
                       </span>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-violet-500/10 overflow-hidden">
+                    <div className="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-indigo-500 transition-all duration-300"
+                        className="h-full rounded-full bg-sky-600 dark:bg-sky-500 transition-colors duration-300"
                         style={{ width: `${Math.min(100, Math.max(0, profile.esg?.esg_governance || 80))}%` }}
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="text-[10px] text-[var(--text-muted)] italic pt-1">
+                <div className="text-xs text-[var(--text-muted)] italic pt-1">
                   Source: {profile.esg?.source || "BRSR / CRISIL ESG / NSE Sustainability"}
                 </div>
               </GlassCard>
@@ -445,9 +445,9 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
             <div className="space-y-3 pt-1">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-violet-600 dark:text-violet-400" />
-                  <h4 className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">
-                    Community Reviews & AI Fact-Check
+                  <ShieldCheck className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                  <h4 className="text-sm font-semibold text-[var(--text-main)]">
+                    Community reviews and AI fact-check
                   </h4>
                 </div>
                 <button
@@ -459,7 +459,7 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
                       onSuccess: () => symbol && fetchReviews(symbol),
                     })
                   }
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-violet-600/15 hover:bg-violet-600/25 text-violet-700 dark:text-violet-300 text-xs font-semibold border border-violet-500/30 transition-all hover:scale-105 shadow-sm"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-700 dark:text-teal-300 text-xs font-medium border border-teal-500/20 transition-colors shadow-sm focus-visible:ring-1 focus-visible:ring-teal-500 focus-visible:outline-none"
                 >
                   <MessageSquarePlus className="w-3.5 h-3.5" />
                   <span>Write Review</span>

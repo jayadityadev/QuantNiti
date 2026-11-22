@@ -1,7 +1,7 @@
 """Explore Tab REST API Routes for Stock Intelligence and Multi-Horizon Forecasts."""
 
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, Request
 
 from app.core.models import (
     ESGScoreResponse,
@@ -22,9 +22,9 @@ def get_explore_service(request: Request) -> ExploreService:
 
 @router.get("/stocks", response_model=List[ExploreStockSummary])
 def list_explore_stocks(
-    sector: Optional[str] = Query(None, description="Filter stocks by sector name"),
-    search: Optional[str] = Query(None, description="Search stocks by symbol or company name"),
-    asset_class: Optional[str] = Query(None, description="Filter stocks by asset class (EQUITY, COMMODITY_ETF, SECTORAL)"),
+    sector: Optional[str] = Query(None, max_length=50, description="Filter stocks by sector name"),
+    search: Optional[str] = Query(None, max_length=50, description="Search stocks by symbol or company name"),
+    asset_class: Optional[str] = Query(None, max_length=30, description="Filter stocks by asset class (EQUITY, COMMODITY_ETF, SECTORAL)"),
     service: ExploreService = Depends(get_explore_service),
 ):
     """List all universe assets with quotes, 6M growth projections, and regime suitability."""
@@ -36,7 +36,7 @@ def list_explore_stocks(
 
 @router.get("/profile/{symbol}", response_model=StockIntelligenceProfile)
 def get_stock_profile(
-    symbol: str,
+    symbol: str = Path(..., max_length=30, description="Stock symbol"),
     service: ExploreService = Depends(get_explore_service),
 ):
     """Retrieve 360-degree Stock Intelligence Profile including multi-horizon forecast cones and factors."""
@@ -52,7 +52,7 @@ def get_stock_profile(
 
 @router.get("/forecast/{symbol}", response_model=MultiHorizonGrowthForecast)
 def get_growth_forecast(
-    symbol: str,
+    symbol: str = Path(..., max_length=30, description="Stock symbol"),
     service: ExploreService = Depends(get_explore_service),
 ):
     """Retrieve multi-horizon probabilistic return cones (1M, 3M, 6M, 12M) with quantile percentiles."""
@@ -69,7 +69,7 @@ def get_growth_forecast(
 @router.get("/{ticker}/esg", response_model=ESGScoreResponse)
 @router.get("/esg/{ticker}", response_model=ESGScoreResponse)
 def get_ticker_esg(
-    ticker: str,
+    ticker: str = Path(..., max_length=30, description="Stock ticker"),
     service: ExploreService = Depends(get_explore_service),
 ):
     """Retrieve ESG score triplet (Environment, Social, Governance) and composite for a given ticker."""

@@ -1,14 +1,17 @@
 """FastAPI Application Factory for QuantNiti."""
 
+from contextlib import asynccontextmanager
+import logging
 import os
 from pathlib import Path
 from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.routes.alerts import router as alerts_router
+from app.api.routes.auth import router as auth_router
 from app.api.routes.backtest import router as backtest_router
 from app.api.routes.chat import router as chat_router
 from app.api.routes.explore import router as explore_router
@@ -20,8 +23,10 @@ from app.api.routes.portfolio import router as portfolio_router
 from app.api.routes.regime import router as regime_router
 from app.api.routes.reviews import router as reviews_router
 from app.api.routes.stream import router as stream_router
+from app.api.routes.workspace import router as workspace_router
 from app.core.config import settings
 from app.data.service import MarketDataService
+from app.db import init_db
 from app.ml.alerts.service import AlertService
 from app.ml.assistant.service import NitiBotService
 from app.ml.backtest.service import BacktestService
@@ -45,20 +50,53 @@ def create_app(
     review_service: Optional[ReviewService] = None,
 ) -> FastAPI:
     """Create and configure the FastAPI application instance."""
+    @asynccontextmanager
+    async def lifespan(app_instance: FastAPI):
+        try:
+            await init_db()
+        except Exception as exc:
+            logging.getLogger("uvicorn.error").warning(f"Database auto-init on startup skipped or failed: {exc}")
+        yield
+
     app = FastAPI(
         title="QuantNiti Core API",
         description="AI-Driven Regime-Adaptive Portfolio & Stock Growth Intelligence Platform",
         version="0.1.0",
+        lifespan=lifespan,
     )
 
-    # CORS configuration
+    # CORS configuration - avoid wildcard allow_origins with allow_credentials=True
+    cors_origins = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=cors_origins,
+        allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
         allow_credentials=True,
-        allow_methods=["*"],
+        allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         allow_headers=["*"],
     )
+
+    # Global unhandled exception handler to prevent leaking traces or secrets
+    @app.exception_handler(Exception)
+    async def global_exception_handler(request: Request, exc: Exception):
+        logging.getLogger("uvicorn.error").error(
+            f"Unhandled exception on {request.method} {request.url.path}: {exc}",
+            exc_info=True,
+        )
+        return JSONResponse(
+            status_code=500,
+            content={
+                "error": "Internal Server Error",
+                "detail": "An internal server error occurred. Please try again later.",
+            },
+        )
 
     # Attach Services to state
     market_svc = service or MarketDataService()
@@ -165,6 +203,8 @@ def create_app(
     api_prefixes = tuple(dict.fromkeys([settings.api_v1_prefix, "/api/v1"]))
     for router in [
         health_router,
+        auth_router,
+        workspace_router,
         market_router,
         regime_router,
         explore_router,
@@ -193,12 +233,21 @@ def create_app(
     if static_dir.exists() and vite_index.exists():
         @app.get("/{full_path:path}", response_class=FileResponse, include_in_schema=False)
         async def serve_spa_fallback(full_path: str):
-            potential_dist = dist_dir / full_path
-            if potential_dist.is_file():
-                return FileResponse(potential_dist)
-            potential_static = static_dir / full_path
-            if potential_static.is_file():
-                return FileResponse(potential_static)
+            # Guard against directory traversal attacks (../)
+            try:
+                resolved_dist = (dist_dir / full_path).resolve()
+                if resolved_dist.is_relative_to(dist_dir.resolve()) and resolved_dist.is_file():
+                    return FileResponse(resolved_dist)
+            except (ValueError, RuntimeError):
+                pass
+
+            try:
+                resolved_static = (static_dir / full_path).resolve()
+                if resolved_static.is_relative_to(static_dir.resolve()) and resolved_static.is_file():
+                    return FileResponse(resolved_static)
+            except (ValueError, RuntimeError):
+                pass
+
             return FileResponse(vite_index)
 
     return app

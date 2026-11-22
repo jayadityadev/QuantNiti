@@ -292,14 +292,14 @@ export const ExplorePage: React.FC = () => {
       {/* Header Banner */}
       <div className="flex items-center justify-between pb-1">
         <div>
-          <div className="flex items-center gap-1.5 text-accent mb-0.5">
+          <div className="flex items-center gap-1.5 text-teal-600 dark:text-teal-400 mb-0.5">
             <Compass className="w-4 h-4" />
-            <span className="text-[11px] font-bold uppercase tracking-wider">
-              Market Intelligence
+            <span className="text-xs font-medium">
+              Market intelligence
             </span>
           </div>
-          <h1 className="text-xl font-black text-[var(--text-main)] tracking-tight">
-            Explore Universe
+          <h1 className="text-xl font-bold text-[var(--text-main)] tracking-tight">
+            Explore universe
           </h1>
         </div>
         <div className="text-right">
@@ -350,7 +350,7 @@ export const ExplorePage: React.FC = () => {
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 sm:grid-cols-2 gap-3.5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
         >
           {filteredStocks.map((stock) => (
             <StockCard

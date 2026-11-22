@@ -135,14 +135,14 @@ export const ProToolsBacktester: React.FC = () => {
         type="button"
         data-testid="pro-tools-toggle"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-4 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] hover:border-violet-500/30 transition-all text-left group shadow-sm"
+        className="w-full flex items-center justify-between p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] hover:border-slate-300 dark:hover:border-slate-700 transition-colors text-left group shadow-sm"
       >
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-violet-500/10 text-accent group-hover:bg-violet-500/20 transition-colors">
+          <div className="p-2 rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-400 group-hover:bg-teal-500/20 transition-colors">
             <Wrench className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-bold text-base text-[var(--text-main)] group-hover:text-accent transition-colors">
+            <h3 className="font-bold text-base text-[var(--text-main)] group-hover:text-teal-600 transition-colors">
               Pro Tools: Quant Lab Backtester
             </h3>
             <p className="text-xs text-[var(--text-muted)]">
@@ -151,7 +151,7 @@ export const ProToolsBacktester: React.FC = () => {
           </div>
         </div>
 
-        <div className="text-[var(--text-muted)] group-hover:text-accent transition-colors p-1">
+        <div className="text-[var(--text-muted)] group-hover:text-teal-600 transition-colors p-1">
           {isExpanded ? (
             <ChevronUp className="w-5 h-5" />
           ) : (
@@ -174,7 +174,7 @@ export const ProToolsBacktester: React.FC = () => {
               {/* Backtester Controls */}
               <div data-testid="backtester-controls" className="space-y-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                  <label className="text-xs font-medium text-[var(--text-muted)]">
                     Strategy
                   </label>
                   <SegmentedControl
@@ -257,8 +257,8 @@ export const ProToolsBacktester: React.FC = () => {
                   {/* Results Header */}
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-bold text-sm text-[var(--text-main)] uppercase tracking-wider">
-                        Backtest Simulation Results
+                      <h4 className="font-bold text-sm text-[var(--text-main)]">
+                        Backtest simulation results
                       </h4>
                       <span className="text-xs text-[var(--text-muted)]">
                         {backtestResult.symbol} • {backtestResult.strategy}
@@ -271,8 +271,8 @@ export const ProToolsBacktester: React.FC = () => {
                         onClick={() => setActiveView("equity")}
                         className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-colors ${
                           activeView === "equity"
-                            ? "bg-violet-500 text-white"
-                            : "bg-violet-500/10 text-[var(--text-muted)] hover:text-accent"
+                            ? "bg-teal-600 text-white"
+                            : "bg-teal-500/10 text-[var(--text-muted)] hover:text-teal-600"
                         }`}
                       >
                         Equity Curve
@@ -282,8 +282,8 @@ export const ProToolsBacktester: React.FC = () => {
                         onClick={() => setActiveView("regimes")}
                         className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-colors ${
                           activeView === "regimes"
-                            ? "bg-violet-500 text-white"
-                            : "bg-violet-500/10 text-[var(--text-muted)] hover:text-accent"
+                            ? "bg-teal-600 text-white"
+                            : "bg-teal-500/10 text-[var(--text-muted)] hover:text-teal-600"
                         }`}
                       >
                         Regime Attribution
@@ -291,52 +291,52 @@ export const ProToolsBacktester: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Metrics KPI Cards */}
+                  {/* Metrics KPI Cards (Unboxed clean pattern) */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <GlassCard className="p-3 rounded-xl">
-                      <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">
-                        Total Return
+                    <div className="p-3 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-subtle)]">
+                      <span className="text-xs font-medium text-[var(--text-muted)]">
+                        Total return
                       </span>
-                      <div className="text-base font-black text-emerald-500 mt-0.5">
+                      <div className="text-base font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 tabular-nums">
                         +{backtestResult.metrics?.total_return_pct?.toFixed(1) || "48.5"}%
                       </div>
-                      <span className="text-[9px] text-[var(--text-muted)]">
+                      <span className="text-xs text-[var(--text-muted)]">
                         vs Bmk +{backtestResult.metrics?.benchmark_total_return_pct?.toFixed(1) || "32.0"}%
                       </span>
-                    </GlassCard>
+                    </div>
 
-                    <GlassCard className="p-3 rounded-xl">
-                      <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">
-                        Sharpe Ratio
+                    <div className="p-3 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-subtle)]">
+                      <span className="text-xs font-medium text-[var(--text-muted)]">
+                        Sharpe ratio
                       </span>
-                      <div className="text-base font-black text-accent mt-0.5">
+                      <div className="text-base font-bold text-teal-600 dark:text-teal-400 mt-0.5 tabular-nums">
                         {backtestResult.metrics?.sharpe_ratio?.toFixed(2) || "1.45"}
                       </div>
-                      <span className="text-[9px] text-[var(--text-muted)]">Risk-adjusted</span>
-                    </GlassCard>
+                      <span className="text-xs text-[var(--text-muted)]">Risk-adjusted</span>
+                    </div>
 
-                    <GlassCard className="p-3 rounded-xl">
-                      <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">
-                        Max Drawdown
+                    <div className="p-3 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-subtle)]">
+                      <span className="text-xs font-medium text-[var(--text-muted)]">
+                        Max drawdown
                       </span>
-                      <div className="text-base font-black text-rose-500 mt-0.5">
+                      <div className="text-base font-bold text-rose-500 mt-0.5 tabular-nums">
                         {backtestResult.metrics?.max_drawdown_pct?.toFixed(1) || "-8.4"}%
                       </div>
-                      <span className="text-[9px] text-[var(--text-muted)]">Peak stress</span>
-                    </GlassCard>
+                      <span className="text-xs text-[var(--text-muted)]">Peak stress</span>
+                    </div>
 
-                    <GlassCard className="p-3 rounded-xl">
-                      <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">
-                        Win Rate
+                    <div className="p-3 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-subtle)]">
+                      <span className="text-xs font-medium text-[var(--text-muted)]">
+                        Win rate
                       </span>
-                      <div className="text-base font-black text-[var(--text-main)] mt-0.5">
+                      <div className="text-base font-bold text-[var(--text-main)] mt-0.5 tabular-nums">
                         {backtestResult.metrics?.win_rate_pct?.toFixed(0) || "64"}%
                       </div>
-                      <span className="text-[9px] text-[var(--text-muted)]">
+                      <span className="text-xs text-[var(--text-muted)]">
                         {backtestResult.metrics?.winning_trades || 18}W /{" "}
                         {backtestResult.metrics?.losing_trades || 10}L
                       </span>
-                    </GlassCard>
+                    </div>
                   </div>
 
                   {/* View 1: Interactive SVG Equity Curve */}
@@ -365,11 +365,11 @@ export const ProToolsBacktester: React.FC = () => {
                       </div>
 
                       {/* SVG Mini Chart */}
-                      <svg className="w-full h-36 overflow-visible" viewBox="0 0 400 120">
+                      <svg className="w-full h-36 overflow-visible" viewBox="0 0 400 120" aria-hidden="true">
                         <defs>
                           <linearGradient id="equityGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.3" />
-                            <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.0" />
+                            <stop offset="0%" stopColor="#0D9488" stopOpacity="0.3" />
+                            <stop offset="100%" stopColor="#0D9488" stopOpacity="0.0" />
                           </linearGradient>
                         </defs>
                         {/* Grid lines */}
@@ -392,16 +392,16 @@ export const ProToolsBacktester: React.FC = () => {
                           fill="url(#equityGrad)"
                         />
 
-                        {/* Strategy curve (violet line) */}
+                        {/* Strategy curve */}
                         <path
                           d="M 10 100 Q 100 80 200 48 T 390 20"
                           fill="none"
-                          stroke="#7c3aed"
+                          stroke="#0D9488"
                           strokeWidth="2.5"
                         />
 
                         {/* End marker dot */}
-                        <circle cx="390" cy="20" r="4" fill="#7c3aed" />
+                        <circle cx="390" cy="20" r="4" fill="#0D9488" />
                       </svg>
                     </div>
                   )}
@@ -410,7 +410,7 @@ export const ProToolsBacktester: React.FC = () => {
                   {activeView === "regimes" && (
                     <div className="overflow-x-auto rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-primary)]">
                       <table className="w-full text-left text-xs">
-                        <thead className="bg-violet-500/5 border-b border-[var(--border-subtle)] text-[10px] uppercase font-bold text-[var(--text-muted)]">
+                        <thead className="bg-slate-100 dark:bg-slate-800 border-b border-[var(--border-subtle)] text-xs font-medium text-[var(--text-muted)]">
                           <tr>
                             <th className="p-2.5">Regime</th>
                             <th className="p-2.5">Days</th>

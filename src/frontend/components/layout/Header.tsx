@@ -45,7 +45,7 @@ export function Header({
   }, [isMenuOpen]);
 
   // Regime display determination
-  const regimeLabel = activeRegime?.regime || activeRegime?.name || "Bull Market";
+  const regimeLabel = activeRegime?.regime || activeRegime?.name || "Bull market";
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[var(--bg-primary)]/80 backdrop-blur-md border-b border-[var(--border-subtle)] px-4 py-2.5 transition-colors duration-200">
@@ -53,15 +53,15 @@ export function Header({
         {/* Brand Badge (Clickable -> Home) */}
         <Link
           to="/home"
-          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-squircle-sm"
+          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 rounded-xl"
           aria-label="QuantNiti Home"
         >
-          <img src="/icon.svg" alt="QuantNiti Logo" className="w-8 h-8 rounded-squircle-sm shadow-md shadow-violet-500/25 group-hover:scale-105 transition-transform duration-150 object-cover" />
+          <img src="/icon.svg" alt="QuantNiti Logo" className="w-8 h-8 rounded-xl shadow-sm group-hover:scale-105 transition-transform duration-150 object-cover" />
           <div className="flex flex-col">
-            <span className="font-extrabold text-sm tracking-tight leading-none text-[var(--text-main)] group-hover:text-accent transition-colors">
+            <span className="font-bold text-sm tracking-tight leading-none text-[var(--text-main)] group-hover:text-teal-600 transition-colors">
               QuantNiti
             </span>
-            <span className="text-[9px] text-accent font-semibold tracking-wider uppercase mt-0.5">
+            <span className="text-xs text-teal-600 dark:text-teal-400 font-medium mt-0.5">
               Intelligence
             </span>
           </div>
@@ -72,10 +72,10 @@ export function Header({
           {/* Market Regime Pill */}
           <div
             data-testid="regime-pill-badge"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-[11px] font-semibold tracking-tight shadow-sm"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-medium tracking-tight shadow-sm"
             title={`Active Market Regime: ${regimeLabel}`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             <span className="truncate max-w-[90px] sm:max-w-[120px]">{regimeLabel}</span>
           </div>
 
@@ -84,14 +84,14 @@ export function Header({
             data-testid="notification-bell-btn"
             type="button"
             onClick={() => openModal("notifications")}
-            className="relative p-2 rounded-squircle-sm text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-150"
+            className="relative p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 transition-colors duration-150"
             aria-label="Notifications"
             title="Notifications"
           >
             <Bell className="w-4 h-4" />
             <span
               data-testid="notification-unread-dot"
-              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent ring-2 ring-[var(--bg-primary)]"
+              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-teal-600 ring-2 ring-[var(--bg-primary)]"
             />
           </button>
 
@@ -100,7 +100,7 @@ export function Header({
             data-testid="theme-toggle-btn"
             type="button"
             onClick={toggleTheme}
-            className="p-2 rounded-squircle-sm text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-150"
+            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 transition-colors duration-150"
             aria-label="Toggle Theme"
             title={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
           >
@@ -113,7 +113,7 @@ export function Header({
               data-testid="overflow-menu-btn"
               type="button"
               onClick={() => setIsMenuOpen((prev) => !prev)}
-              className="p-2 rounded-squircle-sm text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-150"
+              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 transition-colors duration-150"
               aria-label="More options"
               aria-haspopup="menu"
               aria-expanded={isMenuOpen}
@@ -132,7 +132,7 @@ export function Header({
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -4 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 mt-2 w-52 rounded-squircle-md bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-xl py-1.5 z-50 text-xs font-medium"
+                  className="absolute right-0 mt-2 w-52 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-xl py-1.5 z-50 text-xs font-medium"
                 >
                   <button
                     type="button"
@@ -142,10 +142,10 @@ export function Header({
                       if (onCompareClick) onCompareClick();
                       else openModal("competitors");
                     }}
-                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[var(--text-main)] hover:bg-accent/10 hover:text-accent transition-colors"
+                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[var(--text-main)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   >
-                    <Layers className="w-4 h-4 text-accent" />
-                    <span>Compare vs Competitors</span>
+                    <Layers className="w-4 h-4 text-teal-600" />
+                    <span>Compare vs competitors</span>
                   </button>
 
                   <button
@@ -161,9 +161,9 @@ export function Header({
                         promptPWAInstall();
                       }
                     }}
-                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[var(--text-main)] hover:bg-accent/10 hover:text-accent transition-colors"
+                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[var(--text-main)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   >
-                    <Download className="w-4 h-4 text-accent" />
+                    <Download className="w-4 h-4 text-teal-600" />
                     <span>Install PWA</span>
                   </button>
 
@@ -174,10 +174,10 @@ export function Header({
                       setIsMenuOpen(false);
                       onViewportToggle?.();
                     }}
-                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[var(--text-main)] hover:bg-accent/10 hover:text-accent transition-colors"
+                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[var(--text-main)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   >
-                    <Maximize2 className="w-4 h-4 text-accent" />
-                    <span>Toggle Viewport</span>
+                    <Maximize2 className="w-4 h-4 text-teal-600" />
+                    <span>Toggle viewport</span>
                   </button>
                 </motion.div>
               )}

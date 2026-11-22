@@ -95,7 +95,7 @@ describe("Shared UI Component Library (Ticket 03)", () => {
           ₹10,000
         </ChipButton>
       );
-      expect(chip.className).toContain("bg-accent");
+      expect(chip.className).toContain("bg-slate-900");
     });
   });
 

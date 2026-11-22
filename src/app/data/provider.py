@@ -156,13 +156,13 @@ class MockDataProvider(MarketDataProvider):
         canonical = normalize_symbol(symbol)
         rng = np.random.default_rng(self._get_symbol_seed(canonical))
 
-        # Base prices per asset class
+        # Base prices per asset class grounded to live Indian macro baseline
         if canonical == "^NSEI":
-            base_price = 24000.0
+            base_price = 25800.0
             volatility = 0.010
             drift = 0.0004
         elif canonical == "^INDIAVIX":
-            base_price = 14.5
+            base_price = 16.80
             volatility = 0.035
             drift = 0.0000
         else:
@@ -187,7 +187,10 @@ class MockDataProvider(MarketDataProvider):
         if canonical not in ("^NSEI", "^INDIAVIX"):
             mkt_rng = np.random.default_rng(self._get_symbol_seed("^NSEI"))
             mkt_returns = mkt_rng.normal(loc=0.0004, scale=0.010, size=n)
-            target_beta = float(rng.uniform(0.75, 1.35))
+            if "GOLD" in canonical or "SILVER" in canonical:
+                target_beta = float(rng.uniform(0.10, 0.30))
+            else:
+                target_beta = float(rng.uniform(0.75, 1.35))
             idio_returns = rng.normal(loc=drift, scale=volatility * 0.7, size=n)
             daily_returns = target_beta * mkt_returns + idio_returns
         else:

@@ -2,7 +2,7 @@
 
 import asyncio
 from typing import Optional
-from fastapi import APIRouter, Query, Request
+from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import StreamingResponse
 
 from app.data.streaming import MarketTickGenerator
@@ -35,6 +35,8 @@ async def stream_ticks(
     sym_list = None
     if symbols:
         sym_list = [normalize_symbol(s.strip()) for s in symbols.split(",") if s.strip()]
+        if len(sym_list) > 100:
+            raise HTTPException(status_code=400, detail="Maximum 100 symbols allowed for streaming")
 
     async def event_publisher():
         try:

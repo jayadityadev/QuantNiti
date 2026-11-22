@@ -45,13 +45,13 @@ export const PortfolioReportCard: React.FC<PortfolioReportCardProps> = ({
         {/* Printable Card Area */}
         <div
           id="quantniti-printable-report"
-          className="p-5 rounded-3xl bg-[var(--bg-card)] dark:bg-slate-950 border-2 border-violet-500/30 space-y-4 shadow-xl text-[var(--text-main)]"
+          className="p-5 rounded-2xl bg-[var(--bg-card)] dark:bg-slate-950 border border-slate-300 dark:border-slate-700 space-y-4 shadow-sm text-[var(--text-main)]"
         >
           {/* Header */}
           <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
             <div>
-              <span className="text-[10px] uppercase font-bold text-accent tracking-wider">
-                Certified Strategy
+              <span className="text-xs font-medium text-teal-600 dark:text-teal-400">
+                Certified strategy
               </span>
               <h4 className="text-base font-black text-[var(--text-main)]">{portfolio.name}</h4>
             </div>

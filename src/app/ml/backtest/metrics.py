@@ -16,7 +16,7 @@ from app.ml.backtest.engine import BacktestResultData
 def calculate_backtest_metrics(
     result: BacktestResultData,
     benchmark_returns: Optional[pd.Series] = None,
-    risk_free_rate: float = 0.065,  # 6.5% standard Indian risk-free rate
+    risk_free_rate: float = 0.055,  # 5.50% current RBI repo rate benchmark
 ) -> BacktestMetrics:
     """Compute comprehensive risk-adjusted performance metrics."""
     n_days = len(result.strategy_returns)
@@ -58,10 +58,14 @@ def calculate_backtest_metrics(
     excess_rets = daily_rets - daily_rf
     sharpe = float((excess_rets.mean() / daily_rets.std() * np.sqrt(252.0))) if daily_rets.std() > 1e-8 else 0.0
 
-    # 4. Sortino Ratio (Downside deviation only)
-    downside_rets = daily_rets[daily_rets < daily_rf] - daily_rf
-    downside_std = float(np.sqrt(np.mean(downside_rets ** 2)) * np.sqrt(252.0)) if len(downside_rets) > 0 else 1e-6
-    sortino = float(excess_rets.mean() * 252.0 / downside_std) if downside_std > 1e-8 else 0.0
+    # 4. Sortino Ratio (Standard downside semi-deviation over all T periods)
+    downside_diff = np.minimum(0.0, daily_rets.values - daily_rf)
+    downside_var = float(np.mean(downside_diff ** 2))
+    downside_std = float(np.sqrt(downside_var) * np.sqrt(252.0)) if downside_var > 0 else 0.0
+    if downside_std > 1e-8:
+        sortino = float((excess_rets.mean() * 252.0) / downside_std)
+    else:
+        sortino = 0.0 if excess_rets.mean() <= 0 else 10.0
 
     # 5. Max Drawdown & Calmar
     max_dd = float(result.drawdown_series.min())
@@ -94,12 +98,16 @@ def calculate_backtest_metrics(
         bench_dd = (bench_cum - bench_cum.cummax()) / bench_cum.cummax()
         bench_max_dd = float(bench_dd.min())
 
-        # Covariance & Beta
-        cov_matrix = np.cov(daily_rets.values, b_rets.values)
-        bench_var = cov_matrix[1, 1]
-        if bench_var > 1e-8:
-            beta = float(cov_matrix[0, 1] / bench_var)
-            alpha = float(cagr - (risk_free_rate + beta * (bench_cagr - risk_free_rate)))
+        # Covariance & Beta with finite data validation
+        s_vals = daily_rets.values
+        b_vals = b_rets.values
+        valid_mask = np.isfinite(s_vals) & np.isfinite(b_vals)
+        if np.sum(valid_mask) >= 2:
+            cov_matrix = np.cov(s_vals[valid_mask], b_vals[valid_mask])
+            bench_var = cov_matrix[1, 1]
+            if bench_var > 1e-8:
+                beta = float(cov_matrix[0, 1] / bench_var)
+                alpha = float(cagr - (risk_free_rate + beta * (bench_cagr - risk_free_rate)))
 
     return BacktestMetrics(
         initial_capital=result.initial_capital,

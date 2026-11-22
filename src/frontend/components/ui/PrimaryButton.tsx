@@ -25,10 +25,10 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 
   return (
     <motion.button
-      whileTap={isDisabled ? undefined : { scale: 0.97 }}
+      whileTap={isDisabled ? undefined : { scale: 0.98 }}
       disabled={isDisabled}
       type={type}
-      className={`relative inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl font-semibold text-sm text-white bg-gradient-to-r from-violet-600 via-violet-500 to-indigo-500 hover:from-violet-500 hover:to-indigo-400 active:from-violet-700 active:to-indigo-600 shadow-md shadow-violet-500/25 disabled:opacity-60 disabled:pointer-events-none disabled:shadow-none transition-all duration-150 ${
+      className={`relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm text-white bg-slate-900 hover:bg-slate-800 dark:bg-teal-600 dark:hover:bg-teal-500 active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:pointer-events-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none transition-colors transition-transform duration-150 ${
         fullWidth ? "w-full" : ""
       } ${className}`}
       {...props}

@@ -90,3 +90,17 @@ def test_forecast_cone_widening_over_longer_horizons(sample_stock_and_index):
 
     # As horizon extends, uncertainty cone widens
     assert cone_width_12m > cone_width_6m > cone_width_1m
+
+
+def test_conformal_coverage_and_factor_attributions(sample_stock_and_index):
+    stock_df, index_df = sample_stock_and_index
+    forecaster = MultiHorizonForecaster()
+    current_price = float(stock_df["close"].iloc[-1])
+
+    forecast = forecaster.predict_growth_cones(stock_df, index_df, current_price=current_price)
+    cone = forecast.m6
+    assert cone.conformal_coverage_pct == 80.0
+    assert cone.factor_attributions is not None
+    assert "capm_beta_drift" in cone.factor_attributions
+    assert "momentum_drift" in cone.factor_attributions
+    assert "trend_alignment" in cone.factor_attributions

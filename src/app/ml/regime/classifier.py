@@ -69,11 +69,17 @@ class MarketRegimeClassifier:
 
         scores = {}
         for c_idx in range(self.n_components):
-            c_ret = centroids_df.loc[c_idx, ret_col]
-            c_vol = max(centroids_df.loc[c_idx, vol_col], 1e-4)
-            scores[c_idx] = c_ret / c_vol
+            c_ret = float(centroids_df.loc[c_idx, ret_col])
+            c_vol = float(centroids_df.loc[c_idx, vol_col])
+            if not np.isfinite(c_ret):
+                c_ret = 0.0
+            if not np.isfinite(c_vol) or c_vol < 1e-4:
+                c_vol = 1e-4
+            score = c_ret / c_vol
+            scores[c_idx] = score if np.isfinite(score) else 0.0
 
-        sorted_clusters = sorted(scores.items(), key=lambda item: item[1], reverse=True)
+        # Deterministic sorting with stable tie-breaking: score descending, cluster index ascending
+        sorted_clusters = sorted(scores.items(), key=lambda item: (item[1], -item[0]), reverse=True)
 
         # Deterministic assignment
         bull_cluster = sorted_clusters[0][0]
@@ -92,9 +98,15 @@ class MarketRegimeClassifier:
     def _format_input(self, X: Union[pd.DataFrame, pd.Series]) -> np.ndarray:
         if isinstance(X, pd.Series):
             X = X.to_frame().T
+        else:
+            X = X.copy()
         if self.feature_columns:
+            for col in self.feature_columns:
+                if col not in X.columns:
+                    X[col] = 0.0
             # Reorder columns to match training
             X = X[self.feature_columns]
+        X = X.fillna(0.0).replace([np.inf, -np.inf], 0.0)
         return self.scaler.transform(X)
 
     def predict(self, X: pd.DataFrame) -> List[MarketRegimeType]:
@@ -118,6 +130,7 @@ class MarketRegimeClassifier:
 
         X_scaled = self._format_input(X)
         raw_proba = self.gmm.predict_proba(X_scaled)
+        raw_proba = np.nan_to_num(raw_proba, nan=1.0 / self.n_components, posinf=1.0, neginf=0.0)
 
         # Apply temperature-scaled softmax smoothing to avoid extreme 99.9% probability collapse
         temperature = 2.5
@@ -125,7 +138,8 @@ class MarketRegimeClassifier:
         log_p = np.log(np.clip(raw_proba, 1e-12, 1.0))
         scaled_logits = log_p / temperature
         scaled_exp = np.exp(scaled_logits - np.max(scaled_logits, axis=1, keepdims=True))
-        raw_proba = scaled_exp / np.sum(scaled_exp, axis=1, keepdims=True)
+        scaled_sums = np.maximum(np.sum(scaled_exp, axis=1, keepdims=True), 1e-12)
+        raw_proba = scaled_exp / scaled_sums
 
         # Remap columns to semantic regime names
         cols = [

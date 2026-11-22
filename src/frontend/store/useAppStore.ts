@@ -66,7 +66,8 @@ function loadPortfolios(): any[] {
     try {
       const saved = window.localStorage.getItem(PORTFOLIOS_STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        return Array.isArray(parsed) ? parsed : [];
       }
     } catch {
       // Ignore JSON parse errors
@@ -91,7 +92,8 @@ function loadLearnedConcepts(): Set<string> {
     try {
       const saved = window.localStorage.getItem(LEARNED_CONCEPTS_STORAGE_KEY);
       if (saved) {
-        return new Set(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        return new Set(Array.isArray(parsed) ? parsed : []);
       }
     } catch {
       // Ignore parse errors
@@ -102,21 +104,29 @@ function loadLearnedConcepts(): Set<string> {
 
 function loadIsOnboarded(): boolean {
   if (typeof window !== "undefined" && window.localStorage) {
-    return window.localStorage.getItem(ONBOARDED_STORAGE_KEY) === "true";
+    try {
+      return window.localStorage.getItem(ONBOARDED_STORAGE_KEY) === "true";
+    } catch {
+      return false;
+    }
   }
   return false;
 }
 
 function loadRiskPersona(): RiskPersona {
   if (typeof window !== "undefined" && window.localStorage) {
-    const saved = window.localStorage.getItem(RISK_PERSONA_STORAGE_KEY);
-    if (
-      saved === "Conservative" ||
-      saved === "Balanced" ||
-      saved === "Aggressive" ||
-      saved === "ESG-Conscious"
-    ) {
-      return saved as RiskPersona;
+    try {
+      const saved = window.localStorage.getItem(RISK_PERSONA_STORAGE_KEY);
+      if (
+        saved === "Conservative" ||
+        saved === "Balanced" ||
+        saved === "Aggressive" ||
+        saved === "ESG-Conscious"
+      ) {
+        return saved as RiskPersona;
+      }
+    } catch {
+      return "Balanced";
     }
   }
   return "Balanced";

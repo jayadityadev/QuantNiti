@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import { useNavigate } from "react-router-dom";
-import { Home, GraduationCap, TrendingUp, PieChart } from "lucide-react";
+import { Home, Compass, GraduationCap, TrendingUp, PieChart } from "lucide-react";
 import { motion } from "framer-motion";
 import { NavTab } from "../../store/useAppStore";
 
@@ -18,9 +18,10 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { id: "home", label: "Home", path: "/home", icon: Home },
-  { id: "learn", label: "Learn", path: "/learn", icon: GraduationCap },
+  { id: "explore", label: "Explore", path: "/explore", icon: Compass },
   { id: "grow", label: "Grow", path: "/grow", icon: TrendingUp },
   { id: "portfolio", label: "Portfolio", path: "/portfolio", icon: PieChart },
+  { id: "learn", label: "Learn", path: "/learn", icon: GraduationCap },
 ];
 
 function triggerHaptic() {
@@ -49,7 +50,7 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
       className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pointer-events-none"
     >
       <div className="w-full max-w-[520px] px-3 bottom-nav-safe pointer-events-auto">
-        <div className="flex items-center justify-around py-1 px-1.5 rounded-squircle-lg bg-[var(--bg-card)]/90 backdrop-blur-lg border border-[var(--border-subtle)] shadow-lg shadow-violet-950/10 transition-colors duration-200">
+        <div className="flex items-center justify-around py-1 px-1.5 rounded-2xl bg-[var(--bg-card)]/90 backdrop-blur-lg border border-[var(--border-subtle)] shadow-md transition-colors duration-200">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -62,9 +63,9 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
                 aria-selected={isActive}
                 aria-label={item.label}
                 onClick={() => handleTabClick(item)}
-                className={`relative flex-1 flex flex-col items-center justify-center py-2 px-1 min-h-[48px] rounded-squircle-md transition-colors duration-150 select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                className={`relative flex-1 flex flex-col items-center justify-center py-2 px-1 min-h-[48px] rounded-xl transition-colors duration-150 select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
                   isActive
-                    ? "text-accent font-bold"
+                    ? "text-teal-700 dark:text-teal-400 font-semibold"
                     : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
                 }`}
               >
@@ -73,7 +74,7 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
                   <motion.div
                     layoutId="active-tab-indicator"
                     data-testid="active-tab-indicator"
-                    className="absolute inset-0 bg-accent/10 border border-accent/20 rounded-squircle-md -z-10 shadow-sm"
+                    className="absolute inset-0 bg-teal-500/10 border border-teal-500/20 rounded-xl -z-10 shadow-sm"
                     transition={{
                       type: "spring",
                       stiffness: 400,
@@ -87,7 +88,7 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
                     isActive ? "scale-110" : "group-hover:scale-105"
                   }`}
                 />
-                <span className="text-[11px] tracking-tight mt-1 leading-none font-medium">
+                <span className="text-xs tracking-normal mt-1 leading-none font-medium">
                   {item.label}
                 </span>
               </button>

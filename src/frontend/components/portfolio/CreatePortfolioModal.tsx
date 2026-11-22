@@ -34,11 +34,13 @@ export const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
   const [capital, setCapital] = useState(100000);
   const [persona, setPersona] = useState<RiskPersona>("Balanced");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
     setIsSubmitting(true);
+    setError(null);
     try {
       await onCreate({
         name: name.trim(),
@@ -46,6 +48,8 @@ export const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
         riskPersona: persona,
       });
       onClose();
+    } catch (err: any) {
+      setError(err?.message || "Failed to create portfolio");
     } finally {
       setIsSubmitting(false);
     }
@@ -54,13 +58,19 @@ export const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
   return (
     <ModalSheet isOpen={isOpen} onClose={onClose} title="Create New Goal Portfolio">
       <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+        {error && (
+          <div role="alert" className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs">
+            {error}
+          </div>
+        )}
         {/* Portfolio Name */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5">
+          <label htmlFor="portfolio-name-input" className="text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5">
             <Target className="w-3.5 h-3.5 text-accent" />
             Portfolio / Goal Name
           </label>
           <input
+            id="portfolio-name-input"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -72,11 +82,12 @@ export const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
 
         {/* Initial Capital */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5">
+          <label htmlFor="initial-capital-input" className="text-xs font-semibold text-[var(--text-main)] flex items-center gap-1.5">
             <Wallet className="w-3.5 h-3.5 text-accent" />
             Initial Virtual Capital (₹)
           </label>
           <input
+            id="initial-capital-input"
             type="number"
             value={capital}
             onChange={(e) => setCapital(Math.max(1000, Number(e.target.value)))}
@@ -120,7 +131,7 @@ export const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
                 onOpenGrowWizard();
               }}
             >
-              Or Build Guided Basket via Grow Wizard →
+              Build guided basket via Grow Wizard
             </GhostButton>
           )}
         </div>

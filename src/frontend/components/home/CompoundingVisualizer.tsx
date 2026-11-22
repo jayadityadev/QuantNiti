@@ -59,10 +59,10 @@ export const CompoundingVisualizer: React.FC<CompoundingVisualizerProps> = ({ cl
         <button
           type="button"
           onClick={() => setStepUp(!stepUp)}
-          className={`text-[10px] font-bold px-2.5 py-1 rounded-full border transition-all ${
+          className={`text-xs font-medium px-2.5 py-1 rounded-md border transition-colors ${
             stepUp
-              ? "bg-accent text-white border-accent shadow-sm shadow-violet-500/25"
-              : "bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-subtle)]"
+              ? "bg-slate-900 text-white dark:bg-teal-600 border-slate-900 dark:border-teal-600 shadow-sm"
+              : "bg-[var(--bg-card)] text-[var(--text-muted)] border-[var(--border-subtle)]"
           }`}
         >
           +10% Annual Step-up
@@ -133,10 +133,10 @@ export const CompoundingVisualizer: React.FC<CompoundingVisualizerProps> = ({ cl
       </div>
 
       {/* Projection Results */}
-      <div className="p-4 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] flex flex-col gap-3">
+      <div className="p-4 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-subtle)] flex flex-col gap-3">
         <div className="flex flex-col">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">
-            Projected Total Wealth
+          <span className="text-xs font-medium text-[var(--text-muted)]">
+            Projected total wealth
           </span>
           <span
             data-testid="compounding-future-value"

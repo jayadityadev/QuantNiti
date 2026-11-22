@@ -56,7 +56,14 @@ async def post_chat_message(
     try:
         return service.chat(payload)
     except Exception as exc:
+        err_msg = str(exc)
+        api_key = getattr(service, "api_key", None)
+        if api_key and api_key in err_msg:
+            err_msg = err_msg.replace(api_key, "[REDACTED]")
+        import re
+        err_msg = re.sub(r"AIza[0-9A-Za-z\-_]{35}", "[REDACTED]", err_msg)
+        err_msg = re.sub(r"key=[^&\s]+", "key=[REDACTED]", err_msg)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Error generating NitiBot response: {str(exc)}",
+            detail=f"Error generating NitiBot response: {err_msg}",
         )

@@ -65,10 +65,9 @@ class GrowService:
         if capital < 1000.0 or capital > 10000000.0:
             raise ValueError(f"Capital ₹{capital:,.2f} is out of allowable range [₹1,000, ₹1,00,00,000]")
 
-        clean_h = str(horizon).upper().replace(" ", "").replace("MONTHS", "M").replace("MONTH", "M")
-        digits = "".join(filter(str.isdigit, clean_h))
-        if not digits and clean_h not in HORIZON_DAYS:
-            raise ValueError(f"Horizon '{horizon}' invalid. Must be a valid timeframe like 1M, 6M, 12M or custom months.")
+        clean_h = str(horizon).upper().strip().replace(" ", "").replace("MONTHS", "M").replace("MONTH", "M")
+        if clean_h not in HORIZON_DAYS:
+            raise ValueError(f"Horizon '{horizon}' invalid. Must be a valid timeframe: 1M, 3M, 6M, 12M.")
 
         # 1. Current Market Regime
         regime_info = self.regime_service.get_current_regime()
@@ -174,8 +173,8 @@ class GrowService:
 
         returns_df = pd.DataFrame(returns_dict).dropna()
 
-        # 4. HRP Optimization
-        raw_weights = self.hrp_optimizer.optimize(
+        # 4. HRP Optimization with tail-risk diagnostics
+        raw_weights, port_cvar, port_dr, dendrogram = self.hrp_optimizer.optimize_with_diagnostics(
             returns_df=returns_df,
             risk_persona=risk_persona,
         )
@@ -297,4 +296,7 @@ class GrowService:
             portfolio_esg_score=portfolio_esg_score,
             portfolio_esg_badge=portfolio_esg_badge,
             portfolio_esg_breakdown=portfolio_esg_breakdown,
+            cvar_95_pct=port_cvar,
+            diversification_ratio=port_dr,
+            cluster_dendrogram=dendrogram,
         )

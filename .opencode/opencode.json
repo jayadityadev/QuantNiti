@@ -1,5 +1,6 @@
 {
-  "plugin": [
-    ".opencode/plugins/graphify.js"
+  "instructions": [
+    ".opencode/pstack-models.md",
+    ".agents/skills/poteto-mode/SKILL.md"
   ]
 }

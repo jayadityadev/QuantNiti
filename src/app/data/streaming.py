@@ -11,10 +11,10 @@ from app.data.service import MarketDataService
 from app.universe import get_universe_symbols, normalize_symbol
 
 
-# Default baseline prices calibrated from current live market levels
+# Default baseline prices calibrated from current live market levels (NIFTY ~25,800, VIX ~16.8)
 _BASELINE_PRICES: Dict[str, float] = {
-    "^NSEI": 23010.00,
-    "^INDIAVIX": 15.20,
+    "^NSEI": 25800.00,
+    "^INDIAVIX": 16.80,
     "RELIANCE": 1285.00,
     "TCS": 4120.00,
     "HDFCBANK": 1680.00,
@@ -27,6 +27,7 @@ _BASELINE_PRICES: Dict[str, float] = {
     "HINDUNILVR": 2680.90,
     "GOLDBEES": 62.40,
     "SILVERBEES": 85.10,
+    "LIQUIDBEES": 1000.00,
     "NIFTYBEES": 265.80,
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronLeft, Check, Clock, Star, Sliders } from "lucide-react";
+import { ArrowRight, ChevronLeft, Check, Star, Sliders } from "lucide-react";
 import { TimeHorizon } from "../../store/useAppStore";
 import { PrimaryButton } from "../ui/PrimaryButton";
 import { GhostButton } from "../ui/GhostButton";
@@ -81,10 +81,9 @@ export const Step2Horizon: React.FC<Step2HorizonProps> = ({
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-400 uppercase tracking-wider">
-          <Clock className="w-3.5 h-3.5" />
-          <span>Step 2: Time Horizon</span>
-        </div>
+        <span className="text-xs font-medium text-teal-600 dark:text-teal-400">
+          Step 2 of 4
+        </span>
         <h2 className="text-2xl font-bold text-[var(--text-main)] tracking-tight">
           Choose your investment horizon
         </h2>
@@ -104,10 +103,10 @@ export const Step2Horizon: React.FC<Step2HorizonProps> = ({
               whileTap={{ scale: 0.98 }}
               onClick={() => handleSelectPreset(opt.id)}
               aria-label={`${opt.title} - ${opt.stance}`}
-              className={`relative p-4 rounded-2xl border text-left flex flex-col justify-between gap-3 transition-all duration-200 cursor-pointer ${
+              className={`relative p-4 rounded-xl border text-left flex flex-col justify-between gap-3 transition-colors duration-150 cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none ${
                 isSelected
-                  ? "bg-violet-600/20 border-violet-500 shadow-md shadow-violet-500/20 text-[var(--text-main)]"
-                  : "bg-[var(--bg-card-subtle)] hover:border-violet-500/40 border-[var(--border-subtle)] text-[var(--text-main)]"
+                  ? "bg-teal-50 dark:bg-teal-950/40 border-teal-500 shadow-sm text-[var(--text-main)]"
+                  : "bg-[var(--bg-card)] hover:border-slate-300 dark:hover:border-slate-700 border-[var(--border-subtle)] text-[var(--text-main)]"
               }`}
             >
               {/* Top Row: Title + Badge/Check */}
@@ -148,20 +147,20 @@ export const Step2Horizon: React.FC<Step2HorizonProps> = ({
 
       {/* Manual / Custom Horizon Input Section */}
       <div
-        className={`p-4 rounded-2xl border transition-all duration-200 ${
+        className={`p-4 rounded-xl border transition-colors duration-150 ${
           isCustomMode
-            ? "bg-violet-600/15 border-violet-500 shadow-md shadow-violet-500/10"
-            : "bg-[var(--bg-card-subtle)] border-[var(--border-subtle)]"
+            ? "bg-teal-50 dark:bg-teal-950/40 border-teal-500 shadow-sm"
+            : "bg-[var(--bg-card)] border-[var(--border-subtle)]"
         }`}
       >
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-violet-500" />
-            <span className="text-sm font-bold text-[var(--text-main)]">
-              Manual Custom Horizon
+            <Sliders className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+            <span className="text-sm font-semibold text-[var(--text-main)]">
+              Custom horizon
             </span>
           </div>
-          <span className="font-mono text-sm font-bold px-3 py-1 rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-300 border border-violet-500/30">
+          <span className="font-mono text-sm font-semibold px-3 py-1 rounded-md bg-teal-500/10 text-teal-700 dark:text-teal-300 border border-teal-500/20">
             {customMonths} Months ({customMonths >= 12 ? (customMonths / 12).toFixed(1) + " Y" : `${customMonths * 30} Days`})
           </span>
         </div>

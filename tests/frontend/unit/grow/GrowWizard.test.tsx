@@ -24,7 +24,7 @@ describe("Grow Wizard Subcomponents Seam", () => {
 
       expect(screen.getByText("₹50,000")).toBeInTheDocument();
       expect(screen.getByText("Fifty Thousand Only")).toBeInTheDocument();
-      expect(screen.getByText(/Safe simulated capital • No live trading/i)).toBeInTheDocument();
+      expect(screen.getByText(/Simulated capital, risk-free educational environment/i)).toBeInTheDocument();
 
       // Quick-pick chips
       const chip10k = screen.getByRole("button", { name: /₹10k/i });
@@ -58,10 +58,10 @@ describe("Grow Wizard Subcomponents Seam", () => {
         />
       );
 
-      expect(screen.getByText(/6 Months/i)).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /6 Months/i })).toBeInTheDocument();
       expect(screen.getByText(/Recommended/i)).toBeInTheDocument();
-      expect(screen.getByText(/1 Month/i)).toBeInTheDocument();
-      expect(screen.getByText(/12 Months/i)).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /1 Month/i })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /12 Months/i })).toBeInTheDocument();
 
       // Select 12M
       const card12M = screen.getByRole("button", { name: /12 Months/i });

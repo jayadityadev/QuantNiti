@@ -6,6 +6,8 @@ from app.core.models import (
     MarketRegimeType,
     RiskPersona,
 )
+from app.data.cache import ParquetMarketCache
+from app.data.provider import MockDataProvider
 from app.data.service import MarketDataService
 from app.ml.forecasting.service import ExploreService
 from app.ml.portfolio.service import GrowService
@@ -13,9 +15,11 @@ from app.ml.regime.service import RegimeService
 
 
 @pytest.fixture
-def grow_service():
-    """Construct a real GrowService instance with market, regime, and explore services."""
-    market_svc = MarketDataService()
+def grow_service(tmp_path):
+    """Construct a real GrowService instance with mock market provider."""
+    cache = ParquetMarketCache(cache_dir=tmp_path / "cache")
+    provider = MockDataProvider()
+    market_svc = MarketDataService(provider=provider, cache=cache)
     regime_svc = RegimeService(market_service=market_svc)
     explore_svc = ExploreService(market_service=market_svc, regime_service=regime_svc)
     return GrowService(

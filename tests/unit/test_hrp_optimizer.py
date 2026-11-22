@@ -270,3 +270,26 @@ def test_hrp_optimizer_esg_conscious_favors_high_esg_stocks(sample_returns_df: p
     low_esg_conscious_total = sum(esg_weights[s] for s in low_esg_symbols)
     low_esg_balanced_total = sum(balanced_weights[s] for s in low_esg_symbols)
     assert low_esg_conscious_total < low_esg_balanced_total
+
+
+def test_hrp_optimizer_with_diagnostics(sample_returns_df: pd.DataFrame):
+    """optimize_with_diagnostics returns weights, CVaR 95, Diversification Ratio, and Dendrogram."""
+    from app.ml.portfolio.hrp import compute_portfolio_cvar, compute_diversification_ratio
+
+    optimizer = HRPOptimizer()
+    weights, cvar, dr, dendrogram = optimizer.optimize_with_diagnostics(
+        sample_returns_df, risk_persona=RiskPersona.BALANCED
+    )
+
+    assert sum(weights.values()) == pytest.approx(1.0, rel=1e-5)
+    assert cvar > 0.0, "CVaR 95% must be strictly positive"
+    assert dr >= 1.0, "Diversification Ratio must be >= 1.0 (Choueifaty theorem)"
+    assert dendrogram is not None
+    assert "name" in dendrogram
+    assert "children" in dendrogram
+
+    # Test direct metric functions
+    direct_cvar = compute_portfolio_cvar(sample_returns_df, weights, confidence=0.95)
+    direct_dr = compute_diversification_ratio(sample_returns_df, weights)
+    assert direct_cvar == cvar
+    assert direct_dr == dr

@@ -119,10 +119,10 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
 
       {/* Mastery Progress Bar */}
       <div className="flex flex-col gap-1">
-        <div className="h-1.5 w-full rounded-full bg-violet-400/20 dark:bg-violet-500/15 overflow-hidden">
+        <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
           <div
             style={{ width: `${progressPct}%` }}
-            className="h-full rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 transition-all duration-300"
+            className="h-full rounded-full bg-teal-600 transition-transform duration-300"
           />
         </div>
         <div className="flex justify-between items-center text-[10px] text-[var(--text-muted)] font-medium">
@@ -156,11 +156,11 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
             <div
               key={card.key}
               onClick={() => setActiveConcept(card)}
-              className="snap-start shrink-0 w-[240px] p-4 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] hover:border-violet-500/40 flex flex-col justify-between gap-3 cursor-pointer transition-all duration-150 shadow-sm hover:shadow-md"
+              className="snap-start shrink-0 w-[240px] p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] hover:border-slate-300 dark:hover:border-slate-700 flex flex-col justify-between gap-3 cursor-pointer transition-colors duration-150 shadow-sm"
             >
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-accent/10 text-accent">
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-teal-500/10 text-teal-700 dark:text-teal-300">
                     {card.category || "Concept"}
                   </span>
                   <div className="flex items-center gap-1">
@@ -210,7 +210,7 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
             {/* Badges */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-accent/10 text-accent">
+                <span className="text-xs font-medium px-2.5 py-0.5 rounded-md bg-teal-500/10 text-teal-700 dark:text-teal-300">
                   {activeConcept.category || "Education"}
                 </span>
                 <span className="text-xs text-[var(--text-muted)] flex items-center gap-1 font-mono">
@@ -226,9 +226,9 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
             </div>
 
             {/* Core Explanation */}
-            <div className="p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)]">
-              <span className="text-[10px] font-bold tracking-wider uppercase text-accent mb-1 block">
-                Quantitative Concept
+            <div className="p-3.5 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-subtle)]">
+              <span className="text-xs font-medium text-teal-700 dark:text-teal-400 mb-1 block">
+                Quantitative concept
               </span>
               <p className="text-sm text-[var(--text-main)] leading-relaxed">
                 {activeConcept.explanation || activeConcept.detail || activeConcept.summary}
@@ -279,8 +279,8 @@ export const LearningHub: React.FC<LearningHubProps> = ({ className = "" }) => {
             {/* Related concepts */}
             {Array.isArray(activeConcept.related_keys) && activeConcept.related_keys.length > 0 && (
               <div className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider flex items-center gap-1">
-                  <Tag className="w-3 h-3" /> Related Concepts
+                <span className="text-xs font-medium text-[var(--text-muted)] flex items-center gap-1">
+                  <Tag className="w-3 h-3" /> Related concepts
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {activeConcept.related_keys.map((k: string) => (

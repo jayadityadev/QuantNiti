@@ -192,8 +192,8 @@ export const CompoundingTrajectoryChart: React.FC<CompoundingTrajectoryChartProp
         <div>
           <div className="flex items-center gap-2">
             <TrendingUp className="w-4 h-4 text-accent" />
-            <h3 className="text-xs font-bold text-[var(--text-main)] uppercase tracking-wider">
-              10-Year Compounding Wealth Trajectory
+            <h3 className="text-xs font-semibold text-[var(--text-main)]">
+              10-year compounding wealth trajectory
             </h3>
           </div>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">

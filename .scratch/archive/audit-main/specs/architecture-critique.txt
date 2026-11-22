@@ -1,0 +1,13 @@
+You are an independent adversarial reviewer, from a different model family than the original auditor. READ-ONLY: do NOT modify source. Report at .scratch/audit-main/architecture.md (ponytail-audit format).
+
+Verify its top findings by reading the cited code:
+- Explore/Home make ~58 uncached Yahoo calls per page load + silent synthetic fallback.
+- The "live" SSE feed is a random walk that overwrites real mark-to-market.
+- Alerts/notifications are hardcoded fake numbers.
+- Review fact-checker grades against a hardcoded rate table and multiplies portfolio returns by 100 twice.
+- No auth (cross-tenant read/delete).
+- 9 frontend call sites bypass apiUrl() so the shipped Android APK cannot reach Grow/NitiBot/alerts/regime/learning/ticker.
+- No CI job runs a single test; lightgbm is unused; SQLite WAL is claimed in docs but never enabled.
+Independently verify each with read-only greps/checks. Flag false positives/overstatements/missed issues. Do NOT modify source and do NOT run the full test suite.
+
+Output .scratch/audit-main/architecture-critique.md: per finding AGREE / TIGHTEN / CORRECT with the evidence you checked; then corrections the fix phase must account for. Report worker_done with the verdict.

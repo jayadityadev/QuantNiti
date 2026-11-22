@@ -13,37 +13,32 @@ export interface RegimeBadgeProps {
 export const RegimeBadge: React.FC<RegimeBadgeProps> = ({
   regime,
   size = "md",
-  showDot = true,
+  showDot = false,
   onClick,
   className = "",
 }) => {
   const normalized = regime.toUpperCase();
 
-  let colorClasses = "bg-violet-500/10 text-accent border-violet-500/20";
-  let dotColor = "bg-accent";
+  let colorClasses = "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-300 dark:border-slate-700";
   let displayLabel = regime;
 
   if (normalized.includes("BULL")) {
-    colorClasses = "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20";
-    dotColor = "bg-emerald-500";
-    displayLabel = "Bull Market";
+    colorClasses = "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20";
+    displayLabel = "Bull market";
   } else if (normalized.includes("BEAR")) {
-    colorClasses = "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20";
-    dotColor = "bg-rose-500";
-    displayLabel = "Bear Market";
+    colorClasses = "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/20";
+    displayLabel = "Bear market";
   } else if (normalized.includes("SIDEWAYS") || normalized.includes("NEUTRAL")) {
-    colorClasses = "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20";
-    dotColor = "bg-amber-500";
-    displayLabel = "Sideways / Range";
+    colorClasses = "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20";
+    displayLabel = "Sideways range";
   } else if (normalized.includes("VOLATIL")) {
-    colorClasses = "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20";
-    dotColor = "bg-purple-500";
-    displayLabel = "High Volatility";
+    colorClasses = "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border-cyan-500/20";
+    displayLabel = "High volatility";
   }
 
   const sizeClasses =
     size === "sm"
-      ? "text-[11px] px-2.5 py-0.5 gap-1.5"
+      ? "text-xs px-2.5 py-0.5 gap-1.5"
       : "text-xs px-3 py-1 gap-2";
 
   return (
@@ -52,17 +47,12 @@ export const RegimeBadge: React.FC<RegimeBadgeProps> = ({
       role={onClick ? "button" : "status"}
       onClick={onClick}
       tabIndex={onClick ? 0 : undefined}
-      className={`inline-flex items-center rounded-full font-semibold border backdrop-blur-sm transition-all duration-150 ${
-        onClick ? "cursor-pointer hover:opacity-85" : ""
+      className={`inline-flex items-center rounded-md font-medium border transition-colors duration-150 ${
+        onClick ? "cursor-pointer hover:opacity-85 focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none" : ""
       } ${colorClasses} ${sizeClasses} ${className}`}
     >
       {showDot && (
-        <span className="relative flex h-2 w-2">
-          <span
-            className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${dotColor}`}
-          />
-          <span className={`relative inline-flex rounded-full h-2 w-2 ${dotColor}`} />
-        </span>
+        <span className="w-1.5 h-1.5 rounded-full bg-current" aria-hidden="true" />
       )}
       <span>{displayLabel}</span>
     </span>

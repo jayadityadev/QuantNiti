@@ -6,6 +6,7 @@ import pandas as pd
 
 from app.core.models import (
     CurrentRegimeResponse,
+    MarkovTransitionStats,
     MarketRegimeType,
     RegimeHistoricalPoint,
     RegimeHistoryResponse,
@@ -15,6 +16,7 @@ from app.core.models import (
 from app.data.service import MarketDataService
 from app.ml.regime.classifier import MarketRegimeClassifier, REGIME_METADATA
 from app.ml.regime.features import extract_regime_features
+from app.ml.regime.markov import MarkovRegimeModel
 
 
 class RegimeService:
@@ -24,9 +26,11 @@ class RegimeService:
         self,
         market_service: MarketDataService,
         classifier: Optional[MarketRegimeClassifier] = None,
+        markov_model: Optional[MarkovRegimeModel] = None,
     ):
         self.market_service = market_service
         self.classifier = classifier or MarketRegimeClassifier()
+        self.markov_model = markov_model or MarkovRegimeModel()
 
     def _ensure_fitted(self, start_date: Optional[str] = None, end_date: Optional[str] = None) -> pd.DataFrame:
         """Fetch index & vix data, compute features, and ensure classifier is trained."""
@@ -79,6 +83,24 @@ class RegimeService:
 
         confidence = max(bull_prob, bear_prob, sideways_prob)
 
+        # Fit Markov regime transition model over historical predictions
+        hist_labels = self.classifier.predict(features_df)
+        self.markov_model.fit_from_sequence(hist_labels)
+
+        # Compute Hurst exponent and market memory from index close series
+        index_df = self.market_service.get_history("^NSEI")
+        price_series = index_df["close"] if not index_df.empty and "close" in index_df.columns else pd.Series(dtype=float)
+        hurst, memory_type = self.markov_model.analyze_market_memory(price_series)
+
+        markov_stats = MarkovTransitionStats(
+            transition_matrix=self.markov_model.get_transition_dict(),
+            expected_durations_days=self.markov_model.expected_durations,
+            stationary_distribution=self.markov_model.get_stationary_dict(),
+            hurst_exponent=hurst,
+            market_memory=memory_type,
+            next_day_forecast=self.markov_model.predict_next_step(probs),
+        )
+
         return CurrentRegimeResponse(
             regime=pred_regime,
             regime_id=regime_id_map[pred_regime],
@@ -88,6 +110,7 @@ class RegimeService:
             description=regime_meta.get("description", ""),
             recommended_strategy=regime_meta.get("recommended_strategy", ""),
             as_of_date=latest_date,
+            markov_analysis=markov_stats,
         )
 
     def get_regime_history(

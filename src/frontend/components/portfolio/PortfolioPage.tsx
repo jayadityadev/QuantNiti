@@ -353,16 +353,20 @@ export const PortfolioPage: React.FC = () => {
             />
           )}
 
-          {/* Hero Metric Card */}
-          <PortfolioHeroCard portfolio={activePortfolio} isDemo={false} />
+          {/* Hero Metric Card and Compounding Trajectory Chart in responsive grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <PortfolioHeroCard portfolio={activePortfolio} isDemo={false} />
+            {trajectoryData && (
+              <CompoundingTrajectoryChart trajectory={trajectoryData} isDemo={false} />
+            )}
+          </div>
 
           {/* Holdings Table */}
-          <HoldingsTable holdings={activePortfolio.holdings} isDemo={false} />
-
-          {/* 10-Year Compounding Wealth Trajectory */}
-          {trajectoryData && (
-            <CompoundingTrajectoryChart trajectory={trajectoryData} isDemo={false} />
-          )}
+          <HoldingsTable
+            holdings={activePortfolio.holdings}
+            isDemo={false}
+            riskMetrics={activePortfolio.risk_metrics}
+          />
         </div>
       )}
 

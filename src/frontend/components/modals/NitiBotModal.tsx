@@ -258,7 +258,7 @@ export const NitiBotModal: React.FC<NitiBotModalProps> = ({ isOpen, onClose }) =
             type="submit"
             disabled={isLoading || !input.trim()}
             aria-label="Send message"
-            className="p-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md shadow-violet-500/25"
+            className="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-teal-600 dark:hover:bg-teal-500 text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none"
           >
             <Send className="w-4 h-4" />
           </button>

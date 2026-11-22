@@ -1,6 +1,7 @@
 import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { GrowPage } from "../../../../src/frontend/components/grow/GrowPage";
 import { useAppStore } from "../../../../src/frontend/store/useAppStore";
@@ -70,7 +71,11 @@ describe("Grow Guided Flow & Results Seam", () => {
 
   it("walks through 3 wizard steps and renders summary pills when progressing", async () => {
     const user = userEvent.setup();
-    render(<GrowPage />);
+    render(
+      <MemoryRouter>
+        <GrowPage />
+      </MemoryRouter>
+    );
 
     // Step 1: Capital
     expect(screen.getByText("Fifty Thousand Only")).toBeInTheDocument();
@@ -98,7 +103,11 @@ describe("Grow Guided Flow & Results Seam", () => {
     });
     global.fetch = mockFetch;
 
-    render(<GrowPage />);
+    render(
+      <MemoryRouter>
+        <GrowPage />
+      </MemoryRouter>
+    );
 
     // Move Step 1 -> Step 2 -> Step 3
     await user.click(screen.getByRole("button", { name: /continue to horizon/i }));
@@ -142,7 +151,11 @@ describe("Grow Guided Flow & Results Seam", () => {
     });
 
     const user = userEvent.setup();
-    render(<GrowPage />);
+    render(
+      <MemoryRouter>
+        <GrowPage />
+      </MemoryRouter>
+    );
 
     // Results Overview is already active
     expect(await screen.findByText(/Your Optimized AI Basket/i)).toBeInTheDocument();
@@ -168,6 +181,6 @@ describe("Grow Guided Flow & Results Seam", () => {
     expect(screen.getByText(/NIFTY 50 Benchmark/i)).toBeInTheDocument();
 
     // Reviews
-    expect(screen.getByText(/Community Reviews & Legitimacy/i)).toBeInTheDocument();
+    expect(screen.getByText(/Community Reviews (and|&) Legitimacy/i)).toBeInTheDocument();
   });
 });

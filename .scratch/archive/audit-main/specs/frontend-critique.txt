@@ -1,0 +1,11 @@
+You are an independent adversarial reviewer, from a different model family than the original auditor. READ-ONLY: do NOT modify source. Report at .scratch/audit-main/frontend.md.
+
+Verify its top findings by reading the cited code and running targeted read-only checks:
+- Fake/hardcoded financial data shown as live (MarketPulse hardcoded NIFTY; PortfolioPage invented profit; ProToolsBacktester fake metrics + hardcoded SVG curve; Step5DeepDive fake testimonials; fallback turning 0% into +48.5%).
+- PortfolioPage stale-closure tick handler (~line 69) dropping new goals from state/localStorage; compounding POST refired every tick (~line 162).
+- ModalSheet fixed inset-0 rendered inside overflow-hidden/blurred GlassCard (LearningHub) -> clipped on Chrome/Android WebView.
+- div onClick (StockCard ~78, LearningHub ~156) -> not keyboard accessible; ModalSheet lacks focus trap/restore.
+- Contrast bug (PortfolioPage ~272 text-white on near-white) and user-scalable=no in index.html.
+Independently check each in the cited code. Flag false positives/overstatements and missed issues. Do not modify source and do not run the whole vitest suite.
+
+Output .scratch/audit-main/frontend-critique.md: per finding AGREE / TIGHTEN / CORRECT with the evidence you checked; then corrections the fix phase must account for. Report worker_done with the verdict.

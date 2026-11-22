@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 from app.ml.regime.features import (
+    calculate_garman_klass_volatility,
+    calculate_hurst_exponent,
     calculate_parkinson_volatility,
     calculate_realized_volatility,
     calculate_rolling_log_returns,
@@ -76,3 +78,19 @@ def test_extract_regime_features(sample_market_data):
     assert "vix_change_20d" in features.columns
     # Ensure no NaN rows after cleaning
     assert features.isna().sum().sum() == 0
+
+
+def test_calculate_garman_klass_volatility(sample_market_data):
+    index_df, _ = sample_market_data
+    gk_vol = calculate_garman_klass_volatility(
+        index_df["open"], index_df["high"], index_df["low"], index_df["close"], window=20
+    )
+    assert len(gk_vol) == len(index_df)
+    assert (gk_vol.dropna() > 0).all()
+
+
+def test_calculate_hurst_exponent(sample_market_data):
+    index_df, _ = sample_market_data
+    h = calculate_hurst_exponent(index_df["close"])
+    assert 0.05 <= h <= 0.95
+    assert isinstance(h, float)

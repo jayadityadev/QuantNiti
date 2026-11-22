@@ -149,8 +149,8 @@ export const CompetitorBenchmarkModal: React.FC<CompetitorBenchmarkModalProps> =
         <div className="p-4 rounded-2xl bg-violet-500/5 dark:bg-gradient-to-br dark:from-violet-950/40 dark:to-slate-900/60 border border-[var(--border-subtle)] space-y-3">
           <div className="flex items-center gap-2">
             <Calculator className="w-4 h-4 text-accent" />
-            <h4 className="text-xs font-bold text-[var(--text-main)] uppercase tracking-wider">
-              10-Year Mutual Fund Fee Drag Calculator
+            <h4 className="text-xs font-semibold text-[var(--text-main)]">
+              10-year mutual fund fee drag calculator
             </h4>
           </div>
 

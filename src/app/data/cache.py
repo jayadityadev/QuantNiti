@@ -26,10 +26,15 @@ class ParquetMarketCache:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
     def _get_file_path(self, symbol: str) -> Path:
-        """Derive safe file path for a symbol."""
+        """Derive safe file path for a symbol without directory traversal."""
+        import re
         canonical = normalize_symbol(symbol)
-        safe_sym = canonical.replace("^", "_").replace(":", "_").replace("/", "_")
-        return self.cache_dir / f"{safe_sym}.parquet"
+        safe_sym = re.sub(r"[^A-Za-z0-9_\-]", "_", canonical.replace("^", "_"))
+        target_path = (self.cache_dir / f"{safe_sym}.parquet").resolve()
+        cache_dir_resolved = self.cache_dir.resolve()
+        if not target_path.is_relative_to(cache_dir_resolved):
+            raise ValueError(f"Invalid symbol path traversal attempt: {symbol}")
+        return target_path
 
     def save_history(self, symbol: str, df: pd.DataFrame) -> Path:
         """Save OHLCV dataframe as a Parquet file."""

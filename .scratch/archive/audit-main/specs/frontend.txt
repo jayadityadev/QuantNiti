@@ -1,0 +1,13 @@
+You are a senior frontend + accessibility engineer and adversarial auditor. READ-ONLY: do NOT modify source. Write report to .scratch/audit-main/frontend.md. Use building-components + codebase-design discipline.
+
+PROJECT: React 18 + Vite + TS + Tailwind + Zustand + Framer Motion + Chart.js; PWA + Capacitor Android; mobile-first for Indian retail beginners. AUDIT src/frontend/**, index.html, vite.config.ts, tailwind config:
+1. Component architecture: deep vs shallow, duplication, prop drilling, giant components, dead code.
+2. Accessibility: keyboard nav, focus management, ARIA, contrast, SR labels, dialogs, reduced-motion.
+3. State (Zustand): race conditions, abort handling, stale closures, loading/error/empty states.
+4. API integration: fetch/SSE, retry/timeout, error surfacing, response validation, XSS (dangerouslySetInnerHTML), unsafe URLs.
+5. Performance: re-renders, memoization, bundle size, chart perf, PWA/service-worker/offline correctness.
+6. Mobile/UX: touch targets, breakpoints, safe areas, Android webview quirks.
+7. Test quality: behavior vs implementation, flakiness.
+EXECUTE `npm run build` and targeted `npx vitest run <file>` checks; capture real output. Do NOT run the whole vitest suite (baseline elsewhere).
+
+Output: MUST-FIX / SHOULD-FIX / NICE with file:line, concrete user case, smallest fix. Report worker_done when written, top 5 findings.

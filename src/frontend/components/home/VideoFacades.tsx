@@ -96,7 +96,7 @@ export const VideoFacades: React.FC<VideoFacadesProps> = ({ className = "" }) =>
           </div>
           <div>
             <h3 className="font-extrabold text-sm tracking-tight text-[var(--text-main)]">
-              Curated Video Masterclasses
+              Video Explainers & Masterclasses
             </h3>
             <span className="text-[10px] text-[var(--text-muted)] font-medium">
               Verified Educational Resources & Primary Source Lectures
@@ -116,11 +116,12 @@ export const VideoFacades: React.FC<VideoFacadesProps> = ({ className = "" }) =>
             <button
               key={v.id}
               type="button"
+              data-testid="video-facade-card"
               onClick={() => setSelectedVideo(v)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-colors cursor-pointer ${
                 isSelected
-                  ? "bg-violet-600 text-white shadow-sm"
-                  : "bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--text-main)] border border-[var(--border-subtle)]"
+                  ? "bg-slate-900 text-white dark:bg-teal-600 shadow-sm"
+                  : "bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-main)] border border-[var(--border-subtle)]"
               }`}
             >
               {v.category}
@@ -130,14 +131,14 @@ export const VideoFacades: React.FC<VideoFacadesProps> = ({ className = "" }) =>
       </div>
 
       {/* Active Video Resource Card */}
-      <div className="p-4 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] flex flex-col gap-3">
+      <div className="p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] flex flex-col gap-3">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-violet-500/10 text-violet-600 dark:text-violet-300">
+              <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-teal-500/10 text-teal-700 dark:text-teal-300">
                 {selectedVideo.category}
               </span>
-              <span className="text-[11px] text-[var(--text-muted)] flex items-center gap-1 font-mono">
+              <span className="text-xs text-[var(--text-muted)] flex items-center gap-1 font-mono">
                 <Clock className="w-3 h-3" />
                 {selectedVideo.duration}
               </span>
@@ -154,9 +155,9 @@ export const VideoFacades: React.FC<VideoFacadesProps> = ({ className = "" }) =>
 
         {/* Key Takeaways */}
         <div className="space-y-1.5 pt-1 border-t border-[var(--border-subtle)]">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-violet-500" />
-            Key Technical Takeaways
+          <span className="text-xs font-medium text-[var(--text-muted)] flex items-center gap-1">
+            <Sparkles className="w-3 h-3 text-teal-600 dark:text-teal-400" />
+            Key technical takeaways
           </span>
           <div className="space-y-1.5">
             {selectedVideo.keyTakeaways.map((takeaway, i) => (

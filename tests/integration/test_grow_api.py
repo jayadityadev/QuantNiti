@@ -5,6 +5,8 @@ from httpx import ASGITransport, AsyncClient
 
 from app.api.app import create_app
 from app.core.config import settings
+from app.data.cache import ParquetMarketCache
+from app.data.provider import MockDataProvider
 from app.data.service import MarketDataService
 from app.ml.forecasting.service import ExploreService
 from app.ml.portfolio.service import GrowService
@@ -12,9 +14,11 @@ from app.ml.regime.service import RegimeService
 
 
 @pytest.fixture
-def app_instance():
-    """Create FastAPI application with services attached."""
-    market_svc = MarketDataService()
+def app_instance(tmp_path):
+    """Create FastAPI application with services attached using MockDataProvider."""
+    cache = ParquetMarketCache(cache_dir=tmp_path / "cache")
+    provider = MockDataProvider()
+    market_svc = MarketDataService(provider=provider, cache=cache)
     regime_svc = RegimeService(market_service=market_svc)
     explore_svc = ExploreService(market_service=market_svc, regime_service=regime_svc)
     grow_svc = GrowService(

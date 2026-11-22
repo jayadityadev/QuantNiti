@@ -578,5 +578,475 @@
     "esg_social": 63.0,
     "esg_governance": 63.0,
     "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "LIQUIDBEES": {
+    "symbol": "LIQUIDBEES",
+    "name": "Nippon India ETF Liquid BeES",
+    "sector": "Fixed Income",
+    "esg_composite": 75.0,
+    "esg_environment": 80.0,
+    "esg_social": 72.0,
+    "esg_governance": 75.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "ZOMATO": {
+    "symbol": "ZOMATO",
+    "name": "Zomato Ltd.",
+    "sector": "Consumer Services",
+    "esg_composite": 62.0,
+    "esg_environment": 58.0,
+    "esg_social": 64.0,
+    "esg_governance": 65.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "JIOFIN": {
+    "symbol": "JIOFIN",
+    "name": "Jio Financial Services Ltd.",
+    "sector": "Financial Services",
+    "esg_composite": 68.0,
+    "esg_environment": 65.0,
+    "esg_social": 68.0,
+    "esg_governance": 72.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "DLF": {
+    "symbol": "DLF",
+    "name": "DLF Ltd.",
+    "sector": "Real Estate",
+    "esg_composite": 56.0,
+    "esg_environment": 52.0,
+    "esg_social": 58.0,
+    "esg_governance": 60.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "SIEMENS": {
+    "symbol": "SIEMENS",
+    "name": "Siemens Ltd.",
+    "sector": "Capital Goods",
+    "esg_composite": 78.0,
+    "esg_environment": 76.0,
+    "esg_social": 78.0,
+    "esg_governance": 81.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "VBL": {
+    "symbol": "VBL",
+    "name": "Varun Beverages Ltd.",
+    "sector": "Consumer Goods",
+    "esg_composite": 64.0,
+    "esg_environment": 60.0,
+    "esg_social": 66.0,
+    "esg_governance": 68.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "DMART": {
+    "symbol": "DMART",
+    "name": "Avenue Supermarts Ltd.",
+    "sector": "Consumer Retail",
+    "esg_composite": 66.0,
+    "esg_environment": 62.0,
+    "esg_social": 68.0,
+    "esg_governance": 70.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "AVANTIFEED": {
+    "symbol": "AVANTIFEED",
+    "name": "Avanti Feeds Ltd.",
+    "sector": "Consumer Goods",
+    "esg_composite": 58.0,
+    "esg_environment": 54.0,
+    "esg_social": 60.0,
+    "esg_governance": 62.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "CHOLAFIN": {
+    "symbol": "CHOLAFIN",
+    "name": "Cholamandalam Investment and Finance Company Ltd.",
+    "sector": "Financial Services",
+    "esg_composite": 67.0,
+    "esg_environment": 60.0,
+    "esg_social": 70.0,
+    "esg_governance": 72.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "BAJAJHLDNG": {
+    "symbol": "BAJAJHLDNG",
+    "name": "Bajaj Holdings & Investment Ltd.",
+    "sector": "Financial Services",
+    "esg_composite": 71.0,
+    "esg_environment": 66.0,
+    "esg_social": 72.0,
+    "esg_governance": 76.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "GAIL": {
+    "symbol": "GAIL",
+    "name": "GAIL (India) Ltd.",
+    "sector": "Energy & Utilities",
+    "esg_composite": 63.0,
+    "esg_environment": 58.0,
+    "esg_social": 65.0,
+    "esg_governance": 68.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "PNB": {
+    "symbol": "PNB",
+    "name": "Punjab National Bank",
+    "sector": "Financial Services",
+    "esg_composite": 61.0,
+    "esg_environment": 56.0,
+    "esg_social": 64.0,
+    "esg_governance": 65.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "BANKBARODA": {
+    "symbol": "BANKBARODA",
+    "name": "Bank of Baroda",
+    "sector": "Financial Services",
+    "esg_composite": 65.0,
+    "esg_environment": 60.0,
+    "esg_social": 68.0,
+    "esg_governance": 69.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "PIDILITIND": {
+    "symbol": "PIDILITIND",
+    "name": "Pidilite Industries Ltd.",
+    "sector": "Materials & Chemicals",
+    "esg_composite": 72.0,
+    "esg_environment": 68.0,
+    "esg_social": 74.0,
+    "esg_governance": 75.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "GODREJCP": {
+    "symbol": "GODREJCP",
+    "name": "Godrej Consumer Products Ltd.",
+    "sector": "Consumer Goods",
+    "esg_composite": 76.0,
+    "esg_environment": 74.0,
+    "esg_social": 76.0,
+    "esg_governance": 78.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "AMBUJACEM": {
+    "symbol": "AMBUJACEM",
+    "name": "Ambuja Cements Ltd.",
+    "sector": "Materials & Construction",
+    "esg_composite": 69.0,
+    "esg_environment": 65.0,
+    "esg_social": 71.0,
+    "esg_governance": 72.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "TORNTPHARM": {
+    "symbol": "TORNTPHARM",
+    "name": "Torrent Pharmaceuticals Ltd.",
+    "sector": "Healthcare",
+    "esg_composite": 70.0,
+    "esg_environment": 66.0,
+    "esg_social": 72.0,
+    "esg_governance": 73.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "LTIM": {
+    "symbol": "LTIM",
+    "name": "LTIMindtree Ltd.",
+    "sector": "Information Technology",
+    "esg_composite": 75.0,
+    "esg_environment": 72.0,
+    "esg_social": 76.0,
+    "esg_governance": 78.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "MOTHERSON": {
+    "symbol": "MOTHERSON",
+    "name": "Samvardhana Motherson International Ltd.",
+    "sector": "Automobile",
+    "esg_composite": 63.0,
+    "esg_environment": 58.0,
+    "esg_social": 65.0,
+    "esg_governance": 67.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "TVSMOTOR": {
+    "symbol": "TVSMOTOR",
+    "name": "TVS Motor Company Ltd.",
+    "sector": "Automobile",
+    "esg_composite": 71.0,
+    "esg_environment": 68.0,
+    "esg_social": 72.0,
+    "esg_governance": 74.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "BOSCHLTD": {
+    "symbol": "BOSCHLTD",
+    "name": "Bosch Ltd.",
+    "sector": "Automobile",
+    "esg_composite": 74.0,
+    "esg_environment": 72.0,
+    "esg_social": 74.0,
+    "esg_governance": 77.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "ICICIPRULI": {
+    "symbol": "ICICIPRULI",
+    "name": "ICICI Prudential Life Insurance Company Ltd.",
+    "sector": "Financial Services",
+    "esg_composite": 73.0,
+    "esg_environment": 68.0,
+    "esg_social": 75.0,
+    "esg_governance": 77.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "ICICIGI": {
+    "symbol": "ICICIGI",
+    "name": "ICICI Lombard General Insurance Company Ltd.",
+    "sector": "Financial Services",
+    "esg_composite": 72.0,
+    "esg_environment": 67.0,
+    "esg_social": 74.0,
+    "esg_governance": 76.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "INDIGO": {
+    "symbol": "INDIGO",
+    "name": "InterGlobe Aviation Ltd.",
+    "sector": "Services & Logistics",
+    "esg_composite": 59.0,
+    "esg_environment": 52.0,
+    "esg_social": 62.0,
+    "esg_governance": 65.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "SHREECEM": {
+    "symbol": "SHREECEM",
+    "name": "Shree Cement Ltd.",
+    "sector": "Materials & Construction",
+    "esg_composite": 68.0,
+    "esg_environment": 64.0,
+    "esg_social": 70.0,
+    "esg_governance": 71.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "HAVELLS": {
+    "symbol": "HAVELLS",
+    "name": "Havells India Ltd.",
+    "sector": "Consumer Goods",
+    "esg_composite": 73.0,
+    "esg_environment": 70.0,
+    "esg_social": 74.0,
+    "esg_governance": 76.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "ABB": {
+    "symbol": "ABB",
+    "name": "ABB India Ltd.",
+    "sector": "Capital Goods",
+    "esg_composite": 79.0,
+    "esg_environment": 78.0,
+    "esg_social": 78.0,
+    "esg_governance": 82.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "POLYCAB": {
+    "symbol": "POLYCAB",
+    "name": "Polycab India Ltd.",
+    "sector": "Capital Goods",
+    "esg_composite": 69.0,
+    "esg_environment": 65.0,
+    "esg_social": 70.0,
+    "esg_governance": 73.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "PERSISTENT": {
+    "symbol": "PERSISTENT",
+    "name": "Persistent Systems Ltd.",
+    "sector": "Information Technology",
+    "esg_composite": 76.0,
+    "esg_environment": 74.0,
+    "esg_social": 77.0,
+    "esg_governance": 78.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "COFORGE": {
+    "symbol": "COFORGE",
+    "name": "Coforge Ltd.",
+    "sector": "Information Technology",
+    "esg_composite": 74.0,
+    "esg_environment": 71.0,
+    "esg_social": 75.0,
+    "esg_governance": 77.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "FEDERALBNK": {
+    "symbol": "FEDERALBNK",
+    "name": "The Federal Bank Ltd.",
+    "sector": "Financial Services",
+    "esg_composite": 67.0,
+    "esg_environment": 62.0,
+    "esg_social": 69.0,
+    "esg_governance": 71.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "ASTRAL": {
+    "symbol": "ASTRAL",
+    "name": "Astral Ltd.",
+    "sector": "Building Materials",
+    "esg_composite": 68.0,
+    "esg_environment": 64.0,
+    "esg_social": 70.0,
+    "esg_governance": 71.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "AUROPHARMA": {
+    "symbol": "AUROPHARMA",
+    "name": "Aurobindo Pharma Ltd.",
+    "sector": "Healthcare",
+    "esg_composite": 65.0,
+    "esg_environment": 60.0,
+    "esg_social": 67.0,
+    "esg_governance": 69.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "ASHOKLEY": {
+    "symbol": "ASHOKLEY",
+    "name": "Ashok Leyland Ltd.",
+    "sector": "Automobile",
+    "esg_composite": 66.0,
+    "esg_environment": 62.0,
+    "esg_social": 68.0,
+    "esg_governance": 69.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "CUMMINSIND": {
+    "symbol": "CUMMINSIND",
+    "name": "Cummins India Ltd.",
+    "sector": "Capital Goods",
+    "esg_composite": 75.0,
+    "esg_environment": 72.0,
+    "esg_social": 75.0,
+    "esg_governance": 79.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "SUZLON": {
+    "symbol": "SUZLON",
+    "name": "Suzlon Energy Ltd.",
+    "sector": "Power & Energy",
+    "esg_composite": 64.0,
+    "esg_environment": 70.0,
+    "esg_social": 60.0,
+    "esg_governance": 62.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "BHARATFORG": {
+    "symbol": "BHARATFORG",
+    "name": "Bharat Forge Ltd.",
+    "sector": "Capital Goods",
+    "esg_composite": 67.0,
+    "esg_environment": 62.0,
+    "esg_social": 69.0,
+    "esg_governance": 71.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "IDFCFIRSTB": {
+    "symbol": "IDFCFIRSTB",
+    "name": "IDFC First Bank Ltd.",
+    "sector": "Financial Services",
+    "esg_composite": 70.0,
+    "esg_environment": 66.0,
+    "esg_social": 72.0,
+    "esg_governance": 73.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "TATAELXSI": {
+    "symbol": "TATAELXSI",
+    "name": "Tata Elxsi Ltd.",
+    "sector": "Information Technology",
+    "esg_composite": 77.0,
+    "esg_environment": 75.0,
+    "esg_social": 77.0,
+    "esg_governance": 80.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "DIXON": {
+    "symbol": "DIXON",
+    "name": "Dixon Technologies (India) Ltd.",
+    "sector": "Consumer Goods",
+    "esg_composite": 66.0,
+    "esg_environment": 61.0,
+    "esg_social": 68.0,
+    "esg_governance": 70.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "SUPREMEIND": {
+    "symbol": "SUPREMEIND",
+    "name": "Supreme Industries Ltd.",
+    "sector": "Materials",
+    "esg_composite": 65.0,
+    "esg_environment": 60.0,
+    "esg_social": 67.0,
+    "esg_governance": 69.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "ESCORTS": {
+    "symbol": "ESCORTS",
+    "name": "Escorts Kubota Ltd.",
+    "sector": "Automobile",
+    "esg_composite": 68.0,
+    "esg_environment": 64.0,
+    "esg_social": 70.0,
+    "esg_governance": 71.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "MAXHEALTH": {
+    "symbol": "MAXHEALTH",
+    "name": "Max Healthcare Institute Ltd.",
+    "sector": "Healthcare",
+    "esg_composite": 71.0,
+    "esg_environment": 67.0,
+    "esg_social": 73.0,
+    "esg_governance": 74.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "PRESTIGE": {
+    "symbol": "PRESTIGE",
+    "name": "Prestige Estates Projects Ltd.",
+    "sector": "Real Estate",
+    "esg_composite": 58.0,
+    "esg_environment": 54.0,
+    "esg_social": 60.0,
+    "esg_governance": 61.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "MPHASIS": {
+    "symbol": "MPHASIS",
+    "name": "MphasiS Ltd.",
+    "sector": "Information Technology",
+    "esg_composite": 75.0,
+    "esg_environment": 72.0,
+    "esg_social": 76.0,
+    "esg_governance": 78.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "KPITTECH": {
+    "symbol": "KPITTECH",
+    "name": "KPIT Technologies Ltd.",
+    "sector": "Information Technology",
+    "esg_composite": 74.0,
+    "esg_environment": 71.0,
+    "esg_social": 75.0,
+    "esg_governance": 77.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
+  },
+  "JUBLFOOD": {
+    "symbol": "JUBLFOOD",
+    "name": "Jubilant Foodworks Ltd.",
+    "sector": "Consumer Retail",
+    "esg_composite": 67.0,
+    "esg_environment": 62.0,
+    "esg_social": 69.0,
+    "esg_governance": 71.0,
+    "source": "BRSR / CRISIL ESG / NSE Sustainability"
   }
 }

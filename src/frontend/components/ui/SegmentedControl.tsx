@@ -54,7 +54,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
               <motion.div
                 layoutId={activeLayoutId}
                 transition={springTransition}
-                className="absolute inset-0 z-[-1] rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 shadow-sm shadow-violet-500/25"
+                className="absolute inset-0 z-[-1] rounded-xl bg-slate-900 dark:bg-teal-600 shadow-sm"
               />
             )}
             {option.icon}
