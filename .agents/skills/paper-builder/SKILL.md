@@ -27,7 +27,7 @@ Extract the paper's foundations directly from code reality using this triage hie
 
 1. **Agnostic Structure & Manifest Triage:**
    - Inspect build manifests and dependency files (`pyproject.toml`, `setup.py`, `package.json`, `Cargo.toml`, `go.mod`, `CMakeLists.txt`, `Makefile`, `Dockerfile`) to identify project name, dependencies, entry points, and module hierarchies.
-   - If a knowledge graph or community map exists (e.g. `graphify-out/`), query high-centrality "god nodes" and key concepts first to cut through repository noise.
+   - If a knowledge graph or community map exists, query high-centrality key concepts first to cut through repository noise.
    - If the repo is flat or cluttered, use pattern search across code extensions (`*.py`, `*.ts`, `*.cpp`, `*.rs`, `*.go`, `*.jl`, `*.ipynb`) to locate core logic, algorithms, and evaluation scripts.
 2. **Algorithmic Core Discovery:**
    - Locate and inspect production implementations wherever they live to uncover objective functions, loss formulations, statistical regularizations (e.g. shrinkage, Kalman filters, clustering, convex/discrete optimization), and constraints.

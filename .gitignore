@@ -37,8 +37,6 @@ coverage/
 src/app/static/dist/
 dist/
 
-# Graphify knowledge graph & artifacts
-graphify-out/
 
 # LaTeX build artifacts
 *.aux

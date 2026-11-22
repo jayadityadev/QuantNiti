@@ -16,7 +16,6 @@ android/.gradle
 dist
 .scratch
 .agents
-graphify-out
 tests
 *.log
 .env
