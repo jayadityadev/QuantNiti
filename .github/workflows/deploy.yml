@@ -28,11 +28,11 @@ jobs:
             # Ensure .env exists with production settings
             if [ ! -f .env ]; then
               cat << 'EOF' > .env
-            PORT=8000
-            HOST=0.0.0.0
-            QUANTNITI_USE_VITE=1
-            WEB_CONCURRENCY=1
-            EOF
+PORT=8000
+HOST=0.0.0.0
+QUANTNITI_USE_VITE=1
+WEB_CONCURRENCY=1
+EOF
             fi
 
             # Ensure GEMINI_API_KEY is present in .env
@@ -43,6 +43,21 @@ jobs:
             docker compose down
             docker compose up -d --build --remove-orphans
 
-            # Health check validation probe
-            sleep 15
-            curl --fail --retry 5 --retry-delay 3 http://localhost:8000/api/v1/health || exit 1
+            # Health check validation probe with retry loop and diagnostic dump on failure
+            echo "Waiting for services to become healthy..."
+            for i in $(seq 1 15); do
+              echo "Health probe attempt $i/15..."
+              if curl -s -f http://localhost:8000/api/v1/health; then
+                echo "Health check succeeded!"
+                exit 0
+              fi
+              sleep 5
+            done
+
+            echo "Health check failed after 75s! Diagnostic dump:"
+            docker compose ps
+            echo "=== quantniti-server logs ==="
+            docker logs quantniti-server --tail 100
+            echo "=== quantniti-proxy logs ==="
+            docker logs quantniti-proxy --tail 50
+            exit 1
