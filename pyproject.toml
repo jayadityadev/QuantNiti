@@ -12,6 +12,7 @@ dependencies = [
     "asyncpg>=0.32.0",
     "bcrypt>=5.0.0",
     "fastapi>=0.141.1",
+    "greenlet>=3.1.1",
     "httpx>=0.28.1",
     "lightgbm>=4.7.0",
     "matplotlib>=3.11.2",
@@ -22,7 +23,7 @@ dependencies = [
     "pyjwt>=2.15.1",
     "scikit-learn>=1.9.0",
     "scipy>=1.18.1",
-    "sqlalchemy>=2.0.52",
+    "sqlalchemy[asyncio]>=2.0.38",
     "uvicorn[standard]>=0.52.4",
     "yfinance>=1.6.0",
 ]
