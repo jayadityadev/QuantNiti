@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { PortfolioHolding } from "./demoPortfolioData";
+import { useMarketClock } from "../../hooks/useMarketClock";
 
 export interface RiskProvenanceMetrics {
   syncStatus?: string;
@@ -28,14 +29,16 @@ export const RiskProvenanceStatStrip: React.FC<RiskProvenanceStatStripProps> = (
   isDemo = false,
   className = "",
 }) => {
+  const marketClock = useMarketClock();
+
   const derived = useMemo(() => {
-    // 1. Data Freshness & Provenance
-    const isLive = metrics?.isLive !== undefined ? metrics.isLive : !isDemo;
+    // 1. Data Freshness & Provenance from centralized 5-state IST market session
+    const isLive = metrics?.isLive !== undefined ? metrics.isLive : marketClock.state === "LIVE";
     const syncStatus =
-      metrics?.syncStatus ?? (isLive ? "Live NSE Feed" : "Synced 15:30 IST");
+      metrics?.syncStatus ?? marketClock.statusText;
     const sourceTag =
       metrics?.sourceTag ??
-      (isDemo ? "NSE/BSE EOD + Tick Engine" : "NSE/BSE EOD + Tick Engine");
+      (marketClock.state === "LIVE" ? "Live NSE Feed" : marketClock.label);
 
     // 2. Beta vs NIFTY 50
     const beta = metrics?.beta ?? (isDemo ? 0.88 : 0.94);
@@ -135,7 +138,7 @@ export const RiskProvenanceStatStrip: React.FC<RiskProvenanceStatStripProps> = (
       targetDriftStatus,
       driftLabel,
     };
-  }, [metrics, holdings, isDemo]);
+  }, [metrics, holdings, isDemo, marketClock.state, marketClock.statusText, marketClock.label]);
 
   return (
     <div
@@ -213,14 +216,14 @@ export const RiskProvenanceStatStrip: React.FC<RiskProvenanceStatStripProps> = (
       />
 
       {/* 5. Target Drift */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 font-mono">
         <span className="text-[var(--text-muted)]">Target Drift:</span>
         <span
-          className={`font-semibold tabular-nums ${
+          className={`font-semibold tabular-nums px-1.5 py-0.5 rounded ${
             derived.targetDriftStatus === "in_bounds"
               ? "text-emerald-600 dark:text-emerald-400"
               : derived.targetDriftStatus === "warning"
-              ? "text-amber-600 dark:text-amber-400"
+              ? "text-[var(--color-warning)] bg-[var(--color-warning-subtle)] border border-[var(--color-warning)]/20"
               : "text-rose-600 dark:text-rose-400"
           }`}
         >
@@ -231,7 +234,7 @@ export const RiskProvenanceStatStrip: React.FC<RiskProvenanceStatStripProps> = (
             derived.targetDriftStatus === "in_bounds"
               ? "text-emerald-700 dark:text-emerald-400"
               : derived.targetDriftStatus === "warning"
-              ? "text-amber-700 dark:text-amber-400"
+              ? "text-[var(--color-warning)]"
               : "text-rose-700 dark:text-rose-400"
           }
         >

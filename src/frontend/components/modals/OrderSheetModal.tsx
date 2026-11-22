@@ -4,6 +4,7 @@ import { ModalSheet } from "../ui/ModalSheet";
 import { PrimaryButton } from "../ui/PrimaryButton";
 import { GhostButton } from "../ui/GhostButton";
 import { PortfolioData } from "../portfolio/demoPortfolioData";
+import { calculateIndianStatutoryFriction } from "../../utils/friction";
 
 interface OrderSheetModalProps {
   isOpen: boolean;
@@ -21,6 +22,17 @@ export const OrderSheetModal: React.FC<OrderSheetModalProps> = ({
   const [copyError, setCopyError] = useState<string | null>(null);
 
   if (!portfolio) return null;
+
+  // Calculate pre-trade statutory friction and impact breakdown
+  const friction = calculateIndianStatutoryFriction(
+    portfolio.holdings.map((h) => ({
+      symbol: h.symbol,
+      action: "BUY",
+      shares: h.shares,
+      price: h.current_price,
+      liquidityTier: "large",
+    }))
+  );
 
   // Generate copyable text
   const growwText = portfolio.holdings
@@ -116,6 +128,41 @@ export const OrderSheetModal: React.FC<OrderSheetModalProps> = ({
           <pre className="whitespace-pre-wrap leading-relaxed text-[11px]">
             {activeTab === "groww" ? growwText : zerodhaCsv}
           </pre>
+        </div>
+
+        {/* Pre-Trade Statutory Friction & Tax Breakdown */}
+        <div data-testid="statutory-friction-breakdown" className="p-3.5 rounded-2xl bg-[var(--bg-card-subtle)] border border-[var(--border-subtle)] space-y-2.5">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-[var(--text-main)] font-mono">
+              {friction.frictionSummary}
+            </span>
+            <span className="text-[11px] font-semibold text-[var(--color-warning)] font-mono">
+              {friction.frictionBps.toFixed(1)} bps drag
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono">
+            <div className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+              <span className="text-[var(--text-muted)] block text-[10px]">STT (0.1%)</span>
+              <span className="font-bold text-[var(--text-main)]">₹{Math.round(friction.stt).toLocaleString("en-IN")}</span>
+            </div>
+            <div className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+              <span className="text-[var(--text-muted)] block text-[10px]">Stamp (0.015%)</span>
+              <span className="font-bold text-[var(--text-main)]">₹{Math.round(friction.stampDuty).toLocaleString("en-IN")}</span>
+            </div>
+            <div className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+              <span className="text-[var(--text-muted)] block text-[10px]">GST (18%)</span>
+              <span className="font-bold text-[var(--text-main)]">₹{Math.round(friction.gst).toLocaleString("en-IN")}</span>
+            </div>
+            <div className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+              <span className="text-[var(--text-muted)] block text-[10px]">Slippage (5 bps)</span>
+              <span className="font-bold text-[var(--text-main)]">₹{Math.round(friction.slippage).toLocaleString("en-IN")}</span>
+            </div>
+          </div>
+
+          <p className="text-[11px] text-[var(--text-muted)] leading-tight">
+            Frequent rebalancing eats retail alpha through non-recoverable statutory drag.
+          </p>
         </div>
 
         {/* Action Buttons */}

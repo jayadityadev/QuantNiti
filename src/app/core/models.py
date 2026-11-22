@@ -64,6 +64,8 @@ class StockQuote(BaseModel):
     previous_close: Optional[float] = None
     week_52_high: Optional[float] = None
     week_52_low: Optional[float] = None
+    is_synthetic: bool = False
+    provenance: Optional[str] = "live"
 
 
 class MarketHistoryResponse(BaseModel):
@@ -74,6 +76,8 @@ class MarketHistoryResponse(BaseModel):
     start_date: str
     end_date: str
     data: List[OHLCVBar]
+    is_synthetic: bool = False
+    provenance: Optional[str] = "live"
 
 
 class ReturnsMatrixResponse(BaseModel):
@@ -759,6 +763,8 @@ class MarketTick(BaseModel):
     volume: float
     timestamp: str
     previous_close: Optional[float] = None
+    is_synthetic: bool = False
+    provenance: Optional[str] = "live"
 
 
 class SmartAlertType(str, Enum):

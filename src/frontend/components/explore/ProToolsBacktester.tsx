@@ -10,6 +10,7 @@ import {
 import { GlassCard } from "../ui/GlassCard";
 import { PrimaryButton } from "../ui/PrimaryButton";
 import { SegmentedControl } from "../ui/SegmentedControl";
+import { StrategyShootout } from "./StrategyShootout";
 import { apiUrl } from "../../config";
 
 const STRATEGIES = [
@@ -36,7 +37,7 @@ export const ProToolsBacktester: React.FC = () => {
   const [slippageBps, setSlippageBps] = useState<number>(5);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [backtestResult, setBacktestResult] = useState<any | null>(null);
-  const [activeView, setActiveView] = useState<"equity" | "regimes">("equity");
+  const [activeView, setActiveView] = useState<"equity" | "regimes" | "shootout">("equity");
 
   const handleRunBacktest = async () => {
     setIsLoading(true);
@@ -59,70 +60,8 @@ export const ProToolsBacktester: React.FC = () => {
       const data = await response.json();
       setBacktestResult(data);
     } catch (err) {
-      // Fallback result for offline / testing robustness
-      const fallbackResult = {
-        backtest_id: "bt-fb-" + Date.now(),
-        symbol: selectedSymbol,
-        name: ASSETS.find((a) => a.symbol === selectedSymbol)?.name || selectedSymbol,
-        strategy: selectedStrategy,
-        initial_capital: initialCapital,
-        metrics: {
-          initial_capital: initialCapital,
-          final_equity: initialCapital * 1.485,
-          total_return_pct: 48.5,
-          cagr: 16.2,
-          annualized_volatility: 14.8,
-          sharpe_ratio: 1.45,
-          sortino_ratio: 1.88,
-          max_drawdown_pct: -8.4,
-          calmar_ratio: 1.92,
-          win_rate_pct: 64.0,
-          profit_factor: 1.95,
-          total_trades: 28,
-          winning_trades: 18,
-          losing_trades: 10,
-          avg_trade_return_pct: 2.1,
-          benchmark_total_return_pct: 32.0,
-          benchmark_cagr: 11.4,
-        },
-        equity_curve: [
-          { date: "2024-01-01", close_price: 2500, signal: 1, strategy_equity: initialCapital, benchmark_equity: initialCapital, drawdown_pct: 0 },
-          { date: "2024-06-01", close_price: 2650, signal: 1, strategy_equity: initialCapital * 1.12, benchmark_equity: initialCapital * 1.08, drawdown_pct: -2.1 },
-          { date: "2024-12-01", close_price: 2800, signal: 1, strategy_equity: initialCapital * 1.25, benchmark_equity: initialCapital * 1.16, drawdown_pct: -1.5 },
-          { date: "2025-06-01", close_price: 2750, signal: 0, strategy_equity: initialCapital * 1.32, benchmark_equity: initialCapital * 1.22, drawdown_pct: -4.5 },
-          { date: "2026-01-01", close_price: 2980, signal: 1, strategy_equity: initialCapital * 1.485, benchmark_equity: initialCapital * 1.32, drawdown_pct: -2.8 },
-        ],
-        regime_breakdown: [
-          {
-            regime: "Bullish Momentum",
-            days_count: 140,
-            strategy_return_pct: 24.5,
-            benchmark_return_pct: 18.2,
-            sharpe_ratio: 1.82,
-            max_drawdown_pct: -4.1,
-            win_rate_pct: 72.0,
-          },
-          {
-            regime: "Range-Bound",
-            days_count: 85,
-            strategy_return_pct: 8.4,
-            benchmark_return_pct: 2.1,
-            sharpe_ratio: 1.15,
-            max_drawdown_pct: -3.8,
-            win_rate_pct: 58.0,
-          },
-          {
-            regime: "High Volatility",
-            days_count: 45,
-            strategy_return_pct: -2.1,
-            benchmark_return_pct: -7.5,
-            sharpe_ratio: 0.45,
-            max_drawdown_pct: -8.4,
-            win_rate_pct: 50.0,
-          },
-        ],
-      };
-      setBacktestResult(fallbackResult);
+      console.warn("Backtest simulation failed:", err);
+      setBacktestResult(null);
     } finally {
       setIsLoading(false);
     }
@@ -288,6 +227,17 @@ export const ProToolsBacktester: React.FC = () => {
                       >
                         Regime Attribution
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveView("shootout")}
+                        className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-colors ${
+                          activeView === "shootout"
+                            ? "bg-teal-600 text-white"
+                            : "bg-teal-500/10 text-[var(--text-muted)] hover:text-teal-600"
+                        }`}
+                      >
+                        Strategy Shootout
+                      </button>
                     </div>
                   </div>
 
@@ -298,10 +248,10 @@ export const ProToolsBacktester: React.FC = () => {
                         Total return
                       </span>
                       <div className="text-base font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 tabular-nums">
-                        +{backtestResult.metrics?.total_return_pct?.toFixed(1) || "48.5"}%
+                        +{backtestResult.metrics?.total_return_pct != null ? backtestResult.metrics.total_return_pct.toFixed(1) : "0.0"}%
                       </div>
                       <span className="text-xs text-[var(--text-muted)]">
-                        vs Bmk +{backtestResult.metrics?.benchmark_total_return_pct?.toFixed(1) || "32.0"}%
+                        vs Bmk +{backtestResult.metrics?.benchmark_total_return_pct != null ? backtestResult.metrics.benchmark_total_return_pct.toFixed(1) : "0.0"}%
                       </span>
                     </div>
 
@@ -310,7 +260,7 @@ export const ProToolsBacktester: React.FC = () => {
                         Sharpe ratio
                       </span>
                       <div className="text-base font-bold text-teal-600 dark:text-teal-400 mt-0.5 tabular-nums">
-                        {backtestResult.metrics?.sharpe_ratio?.toFixed(2) || "1.45"}
+                        {backtestResult.metrics?.sharpe_ratio != null ? backtestResult.metrics.sharpe_ratio.toFixed(2) : "0.00"}
                       </div>
                       <span className="text-xs text-[var(--text-muted)]">Risk-adjusted</span>
                     </div>
@@ -320,7 +270,7 @@ export const ProToolsBacktester: React.FC = () => {
                         Max drawdown
                       </span>
                       <div className="text-base font-bold text-rose-500 mt-0.5 tabular-nums">
-                        {backtestResult.metrics?.max_drawdown_pct?.toFixed(1) || "-8.4"}%
+                        {backtestResult.metrics?.max_drawdown_pct != null ? backtestResult.metrics.max_drawdown_pct.toFixed(1) : "0.0"}%
                       </div>
                       <span className="text-xs text-[var(--text-muted)]">Peak stress</span>
                     </div>
@@ -330,81 +280,105 @@ export const ProToolsBacktester: React.FC = () => {
                         Win rate
                       </span>
                       <div className="text-base font-bold text-[var(--text-main)] mt-0.5 tabular-nums">
-                        {backtestResult.metrics?.win_rate_pct?.toFixed(0) || "64"}%
+                        {backtestResult.metrics?.win_rate_pct != null ? backtestResult.metrics.win_rate_pct.toFixed(0) : "0"}%
                       </div>
                       <span className="text-xs text-[var(--text-muted)]">
-                        {backtestResult.metrics?.winning_trades || 18}W /{" "}
-                        {backtestResult.metrics?.losing_trades || 10}L
+                        {backtestResult.metrics?.winning_trades ?? 0}W /{" "}
+                        {backtestResult.metrics?.losing_trades ?? 0}L
                       </span>
                     </div>
                   </div>
 
                   {/* View 1: Interactive SVG Equity Curve */}
-                  {activeView === "equity" && (
-                    <div
-                      data-testid="backtest-equity-chart"
-                      className="p-4 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-subtle)]"
-                    >
-                      <div className="flex justify-between items-center text-xs text-[var(--text-muted)] mb-2 font-mono">
-                        <div className="flex items-center gap-3">
-                          <span className="flex items-center gap-1">
-                            <span className="w-2.5 h-2.5 rounded-full bg-violet-500 inline-block" />
-                            Strategy Equity (₹{backtestResult.metrics?.final_equity?.toLocaleString('en-IN') || "1,48,500"})
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <span className="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block" />
-                            Benchmark
+                  {activeView === "equity" && (() => {
+                    const curve = backtestResult.equity_curve || [];
+                    const allVals = curve.flatMap((p: any) => [p.strategy_equity, p.benchmark_equity]);
+                    const maxVal = allVals.length > 0 ? Math.max(...allVals) : 100000;
+                    const minVal = allVals.length > 0 ? Math.min(...allVals) : 100000;
+                    const range = maxVal - minVal || 1;
+
+                    const stratPts = curve.map((p: any, i: number) => {
+                      const x = 10 + (i / Math.max(1, curve.length - 1)) * 380;
+                      const y = 100 - ((p.strategy_equity - minVal) / range) * 80;
+                      return `${x.toFixed(1)},${y.toFixed(1)}`;
+                    });
+                    const bmkPts = curve.map((p: any, i: number) => {
+                      const x = 10 + (i / Math.max(1, curve.length - 1)) * 380;
+                      const y = 100 - ((p.benchmark_equity - minVal) / range) * 80;
+                      return `${x.toFixed(1)},${y.toFixed(1)}`;
+                    });
+
+                    const stratLine = stratPts.length > 1 ? `M ${stratPts.join(" L ")}` : "M 10 90 L 390 30";
+                    const bmkLine = bmkPts.length > 1 ? `M ${bmkPts.join(" L ")}` : "M 10 90 L 390 60";
+                    const fillPath = stratPts.length > 1 ? `M ${stratPts.join(" L ")} L 390 110 L 10 110 Z` : "M 10 90 L 390 30 L 390 110 L 10 110 Z";
+                    const lastPt = stratPts.length > 0 ? stratPts[stratPts.length - 1].split(",") : ["390", "30"];
+
+                    return (
+                      <div
+                        data-testid="backtest-equity-chart"
+                        className="p-4 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-subtle)]"
+                      >
+                        <div className="flex justify-between items-center text-xs text-[var(--text-muted)] mb-2 font-mono">
+                          <div className="flex items-center gap-3">
+                            <span className="flex items-center gap-1">
+                              <span className="w-2.5 h-2.5 rounded-full bg-violet-500 inline-block" />
+                              Strategy Equity (₹{backtestResult.metrics?.final_equity != null ? backtestResult.metrics.final_equity.toLocaleString('en-IN') : "0"})
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <span className="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block" />
+                              Benchmark
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-emerald-500 font-bold">
+                            Alpha: +{(
+                              (backtestResult.metrics?.cagr ?? 0) -
+                              (backtestResult.metrics?.benchmark_cagr ?? 0)
+                            ).toFixed(1)}%
                           </span>
                         </div>
-                        <span className="text-[10px] text-emerald-500 font-bold">
-                          Alpha: +{(
-                            (backtestResult.metrics?.cagr || 16.2) -
-                            (backtestResult.metrics?.benchmark_cagr || 11.4)
-                          ).toFixed(1)}%
-                        </span>
+
+                        {/* SVG Dynamic Chart */}
+                        <svg className="w-full h-36 overflow-visible" viewBox="0 0 400 120" aria-hidden="true">
+                          <defs>
+                            <linearGradient id="equityGrad" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stopColor="#0D9488" stopOpacity="0.3" />
+                              <stop offset="100%" stopColor="#0D9488" stopOpacity="0.0" />
+                            </linearGradient>
+                          </defs>
+                          {/* Grid lines */}
+                          <line x1="0" y1="30" x2="400" y2="30" stroke="currentColor" strokeOpacity="0.08" />
+                          <line x1="0" y1="60" x2="400" y2="60" stroke="currentColor" strokeOpacity="0.08" />
+                          <line x1="0" y1="90" x2="400" y2="90" stroke="currentColor" strokeOpacity="0.08" />
+
+                          {/* Benchmark curve (gray line) */}
+                          <path
+                            d={bmkLine}
+                            fill="none"
+                            stroke="#94a3b8"
+                            strokeWidth="2"
+                            strokeDasharray="4 3"
+                          />
+
+                          {/* Strategy fill */}
+                          <path
+                            d={fillPath}
+                            fill="url(#equityGrad)"
+                          />
+
+                          {/* Strategy dynamic curve */}
+                          <path
+                            d={stratLine}
+                            fill="none"
+                            stroke="#0D9488"
+                            strokeWidth="2.5"
+                          />
+
+                          {/* End marker dot */}
+                          <circle cx={lastPt[0]} cy={lastPt[1]} r="4" fill="#0D9488" />
+                        </svg>
                       </div>
-
-                      {/* SVG Mini Chart */}
-                      <svg className="w-full h-36 overflow-visible" viewBox="0 0 400 120" aria-hidden="true">
-                        <defs>
-                          <linearGradient id="equityGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#0D9488" stopOpacity="0.3" />
-                            <stop offset="100%" stopColor="#0D9488" stopOpacity="0.0" />
-                          </linearGradient>
-                        </defs>
-                        {/* Grid lines */}
-                        <line x1="0" y1="30" x2="400" y2="30" stroke="currentColor" strokeOpacity="0.08" />
-                        <line x1="0" y1="60" x2="400" y2="60" stroke="currentColor" strokeOpacity="0.08" />
-                        <line x1="0" y1="90" x2="400" y2="90" stroke="currentColor" strokeOpacity="0.08" />
-
-                        {/* Benchmark curve (gray line) */}
-                        <path
-                          d="M 10 100 Q 100 85 200 65 T 390 45"
-                          fill="none"
-                          stroke="#94a3b8"
-                          strokeWidth="2"
-                          strokeDasharray="4 3"
-                        />
-
-                        {/* Strategy fill */}
-                        <path
-                          d="M 10 100 Q 100 80 200 48 T 390 20 L 390 110 L 10 110 Z"
-                          fill="url(#equityGrad)"
-                        />
-
-                        {/* Strategy curve */}
-                        <path
-                          d="M 10 100 Q 100 80 200 48 T 390 20"
-                          fill="none"
-                          stroke="#0D9488"
-                          strokeWidth="2.5"
-                        />
-
-                        {/* End marker dot */}
-                        <circle cx="390" cy="20" r="4" fill="#0D9488" />
-                      </svg>
-                    </div>
-                  )}
+                    );
+                  })()}
 
                   {/* View 2: Regime Attribution Table */}
                   {activeView === "regimes" && (
@@ -435,6 +409,13 @@ export const ProToolsBacktester: React.FC = () => {
                           ))}
                         </tbody>
                       </table>
+                    </div>
+                  )}
+
+                  {/* View 3: Side-by-Side Multi-Strategy Shootout */}
+                  {activeView === "shootout" && (
+                    <div className="pt-2">
+                      <StrategyShootout symbol={selectedSymbol} />
                     </div>
                   )}
                 </div>

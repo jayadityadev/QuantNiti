@@ -1,3 +1,5 @@
+import { useAppStore } from "../store/useAppStore";
+
 export interface MarketTick {
   symbol: string;
   price: number;
@@ -38,6 +40,9 @@ export class MarketStreamClient {
       this.eventSource.onopen = () => {
         this.isConnected = true;
         this.reconnectAttempts = 0;
+        try {
+          useAppStore.getState().setIsResyncing(false);
+        } catch {}
       };
 
       this.eventSource.addEventListener("tick", (e: MessageEvent) => {
@@ -55,6 +60,9 @@ export class MarketStreamClient {
 
       this.eventSource.onerror = () => {
         this.isConnected = false;
+        try {
+          useAppStore.getState().setIsResyncing(true);
+        } catch {}
         if (this.eventSource) {
           this.eventSource.close();
           this.eventSource = null;
@@ -77,6 +85,10 @@ export class MarketStreamClient {
 
   handleTick(tick: any): void {
     if (!tick || !tick.symbol || typeof tick.price !== "number") return;
+    try {
+      useAppStore.getState().setLastTickTimestamp(Date.now());
+      useAppStore.getState().setIsResyncing(false);
+    } catch {}
     const sym = tick.symbol;
     const prevPrice = this.previousPrices.get(sym);
     this.previousPrices.set(sym, tick.price);

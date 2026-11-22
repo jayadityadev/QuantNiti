@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Sun, Moon, Bell, MoreVertical, Layers, Download, Maximize2 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { useAppStore } from "../../store/useAppStore";
+import { useMarketClock } from "../../hooks/useMarketClock";
 import { AnimatePresence, motion } from "framer-motion";
 import { promptPWAInstall } from "../../services/pwaService";
 
@@ -19,6 +20,7 @@ export function Header({
 }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const { activeRegime, openModal } = useAppStore();
+  const marketClock = useMarketClock();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -69,13 +71,57 @@ export function Header({
 
         {/* Center/Right Actions */}
         <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Centralized 5-State IST Market Session Clock */}
+          <div
+            data-testid="market-session-badge"
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold font-mono tracking-tight shadow-sm border transition-colors ${
+              marketClock.state === "LIVE"
+                ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400"
+                : marketClock.state === "SNAPSHOT"
+                ? "bg-teal-500/10 border-teal-500/20 text-teal-700 dark:text-teal-400"
+                : marketClock.state === "STALE"
+                ? "bg-[var(--color-warning-subtle)] border-[var(--color-warning)]/30 text-[var(--color-warning)]"
+                : marketClock.state === "RESYNCING"
+                ? "bg-sky-500/10 border-sky-500/20 text-sky-600 dark:text-sky-400 animate-pulse"
+                : "bg-[var(--color-warning-subtle)] border-[var(--color-warning)]/20 text-[var(--color-warning)]"
+            }`}
+            title={marketClock.statusText}
+          >
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                marketClock.state === "LIVE"
+                  ? "bg-emerald-500 animate-pulse"
+                  : marketClock.state === "SNAPSHOT"
+                  ? "bg-teal-500"
+                  : marketClock.state === "STALE" || marketClock.state === "CLOSED"
+                  ? "bg-[var(--color-warning)]"
+                  : "bg-sky-500 animate-ping"
+              }`}
+            />
+            <span className="truncate max-w-[80px] sm:max-w-[120px]">{marketClock.label}</span>
+          </div>
+
           {/* Market Regime Pill */}
           <div
             data-testid="regime-pill-badge"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-medium tracking-tight shadow-sm"
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-xs font-medium tracking-tight shadow-sm ${
+              regimeLabel.toLowerCase().includes("sideways") || regimeLabel.toLowerCase().includes("consolidation")
+                ? "bg-[var(--color-warning-subtle)] border-[var(--color-warning)]/20 text-[var(--color-warning)]"
+                : regimeLabel.toLowerCase().includes("bear")
+                ? "bg-rose-500/10 border-rose-500/20 text-rose-600 dark:text-rose-400"
+                : "bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400"
+            }`}
             title={`Active Market Regime: ${regimeLabel}`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                regimeLabel.toLowerCase().includes("sideways") || regimeLabel.toLowerCase().includes("consolidation")
+                  ? "bg-[var(--color-warning)]"
+                  : regimeLabel.toLowerCase().includes("bear")
+                  ? "bg-rose-500"
+                  : "bg-emerald-500"
+              }`}
+            />
             <span className="truncate max-w-[90px] sm:max-w-[120px]">{regimeLabel}</span>
           </div>
 

@@ -62,7 +62,7 @@ def compute_max_drawdown(series: pd.Series) -> float:
 def compute_stock_beta_and_alpha(
     stock_returns: pd.Series,
     benchmark_returns: pd.Series,
-    risk_free_rate: float = 0.055,  # 5.50% current RBI repo rate benchmark
+    risk_free_rate: float = 0.0718,  # 7.18% current Indian 10-Year G-Sec benchmark yield
 ) -> Tuple[float, float, float]:
     """Compute Capital Asset Pricing Model (CAPM) Beta, Annualized Alpha, and Correlation."""
     aligned = pd.concat([stock_returns, benchmark_returns], axis=1, sort=False).dropna()
@@ -102,12 +102,12 @@ def extract_stock_factors(
     if stock_df.empty:
         return {}
 
-    close = stock_df["close"]
+    close = stock_df["adj_close"] if "adj_close" in stock_df.columns else stock_df["close"]
     high = stock_df["high"]
     low = stock_df["low"]
     volume = stock_df["volume"]
 
-    # Daily returns
+    # Daily returns based on split-adjusted close
     stock_returns = close.pct_change().dropna()
 
     # 1. Momentum Returns across horizons (1M=21d, 3M=63d, 6M=126d, 12M=252d)
@@ -142,7 +142,8 @@ def extract_stock_factors(
 
     # 5. Market Beta & Alpha
     if index_df is not None and not index_df.empty:
-        idx_returns = index_df["close"].pct_change().dropna()
+        idx_close = index_df["adj_close"] if "adj_close" in index_df.columns else index_df["close"]
+        idx_returns = idx_close.pct_change().dropna()
         beta, alpha, corr = compute_stock_beta_and_alpha(stock_returns, idx_returns)
     else:
         beta, alpha, corr = 1.0, 0.0, 0.65

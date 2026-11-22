@@ -126,6 +126,48 @@ async def compare_strategies_post(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
 
 
+@router.get(
+    "/backtest/shootout",
+    summary="Multi-Strategy Shootout & Comparison View (Adapted from Belltalon)",
+    description="Compares 2-4 quantitative strategies side-by-side with synchronized equity curve overlay and best-in-class metrics matrix.",
+)
+async def strategy_shootout_get(
+    request: Request,
+    symbol: str = Query(default="RELIANCE", min_length=1, max_length=20, description="Asset symbol"),
+    initial_capital: float = Query(default=100000.0, ge=1000.0, le=100000000.0, description="Capital in INR"),
+    start_date: Optional[str] = Query(default=None, description="Start date (YYYY-MM-DD)"),
+    end_date: Optional[str] = Query(default=None, description="End date (YYYY-MM-DD)"),
+) -> Dict[str, Any]:
+    service = get_backtest_service(request)
+    try:
+        return service.run_strategy_shootout(
+            symbol=symbol,
+            initial_capital=initial_capital,
+            start_date=start_date,
+            end_date=end_date,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
+
+
+@router.post(
+    "/backtest/shootout",
+    summary="Multi-Strategy Shootout & Comparison View (POST)",
+)
+async def strategy_shootout_post(
+    payload: StrategyCompareRequest,
+    request: Request,
+) -> Dict[str, Any]:
+    service = get_backtest_service(request)
+    try:
+        return service.run_strategy_shootout(
+            symbol=payload.symbol,
+            initial_capital=payload.initial_capital,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
+
+
 @router.post(
     "/quant-lab/backtest",
     response_model=BacktestResponse,

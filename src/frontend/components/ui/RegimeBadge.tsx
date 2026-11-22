@@ -28,8 +28,8 @@ export const RegimeBadge: React.FC<RegimeBadgeProps> = ({
   } else if (normalized.includes("BEAR")) {
     colorClasses = "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/20";
     displayLabel = "Bear market";
-  } else if (normalized.includes("SIDEWAYS") || normalized.includes("NEUTRAL")) {
-    colorClasses = "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20";
+  } else if (normalized.includes("SIDEWAYS") || normalized.includes("NEUTRAL") || normalized.includes("CONSOLIDAT")) {
+    colorClasses = "bg-[var(--color-warning-subtle)] text-[var(--color-warning)] border-[var(--color-warning)]/20";
     displayLabel = "Sideways range";
   } else if (normalized.includes("VOLATIL")) {
     colorClasses = "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border-cyan-500/20";

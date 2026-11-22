@@ -11,6 +11,7 @@ import { LearningHub } from "../components/home/LearningHub";
 import { VideoFacades } from "../components/home/VideoFacades";
 import { GlassCard } from "../components/ui/GlassCard";
 import { PrimaryButton } from "../components/ui/PrimaryButton";
+import { StrategyShootout } from "../components/explore/StrategyShootout";
 import { apiUrl } from "../config";
 import { useNavigate } from "react-router-dom";
 
@@ -135,6 +136,11 @@ export const LearnPage: React.FC = () => {
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Multi-Strategy Shootout View with Synchronized Normalized Equity Curves */}
+        <div className="pt-2">
+          <StrategyShootout symbol={selectedSymbol.replace(".NS", "")} />
         </div>
 
         {/* Run / Loading State */}

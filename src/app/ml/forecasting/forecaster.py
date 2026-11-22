@@ -18,9 +18,13 @@ HORIZON_CONFIGS = [
 
 
 class MultiHorizonForecaster:
-    """Generates probabilistic return cones (10th, 50th, 90th percentiles) across multiple horizons."""
+    """Generates probabilistic return cones (10th, 50th, 90th percentiles) across multiple horizons.
+    
+    Strictly guarantees quantile monotonicity: q_10 <= q_50 <= q_90 across all projection horizons.
+    Default risk-free rate calibrated to real 10-Year Indian G-Sec yield (7.18%).
+    """
 
-    def __init__(self, risk_free_rate: float = 0.055, benchmark_market_return: float = 0.12):
+    def __init__(self, risk_free_rate: float = 0.0718, benchmark_market_return: float = 0.135):
         self.risk_free_rate = risk_free_rate
         self.benchmark_market_return = benchmark_market_return
         self.z_score_90 = 1.28155  # Standard normal 90th percentile
@@ -78,7 +82,7 @@ class MultiHorizonForecaster:
         if len(stock_df) < 30:
             return -self.z_score_90, self.z_score_90
 
-        close = stock_df["close"]
+        close = stock_df["adj_close"] if "adj_close" in stock_df.columns else stock_df["close"]
         daily_returns = np.log(close / close.shift(1)).dropna().values
         if len(daily_returns) < 20:
             return -self.z_score_90, self.z_score_90
@@ -106,7 +110,11 @@ class MultiHorizonForecaster:
         if stock_df.empty:
             raise ValueError("Empty stock DataFrame provided for growth forecasting")
 
-        p0 = current_price if current_price is not None else float(stock_df["close"].iloc[-1])
+        p0 = (
+            current_price
+            if current_price is not None
+            else float((stock_df["adj_close"] if "adj_close" in stock_df.columns else stock_df["close"]).iloc[-1])
+        )
         latest_date = (
             stock_df.index[-1].strftime("%Y-%m-%d")
             if hasattr(stock_df.index[-1], "strftime")
@@ -135,21 +143,23 @@ class MultiHorizonForecaster:
             # Conformal 90th percentile (Optimistic) - diffusion scales with sqrt(tau)
             q90 = float(np.exp(drift * tau + z90 * horizon_vol) - 1.0)
 
-            # Strict Monotonicity Projection (Isotonic sort guarantees Q10 <= Q50 <= Q90)
+            # Strict Monotonicity Projection: Isotonic sort strictly guarantees q10 <= q50 <= q90
             q10, q50, q90 = sorted([q10, q50, q90])
+            q50 = max(q10, q50)
+            q90 = max(q50, q90)
 
             pess_pct = round(q10 * 100.0, 2)
             base_pct = round(q50 * 100.0, 2)
             opt_pct = round(q90 * 100.0, 2)
 
-            # Post-rounding monotonicity guarantee
+            # Post-rounding monotonicity guarantee: pess_pct <= base_pct <= opt_pct
             base_pct = max(pess_pct, base_pct)
             opt_pct = max(base_pct, opt_pct)
 
-            # Target prices
-            p10 = round(max(0.01, p0 * (1.0 + q10)), 2)
-            p50 = round(max(0.01, p0 * (1.0 + q50)), 2)
-            p90 = round(max(0.01, p0 * (1.0 + q90)), 2)
+            # Target prices strictly mapped from rounded cumulative return percentages
+            p10 = round(max(0.01, p0 * (1.0 + pess_pct / 100.0)), 2)
+            p50 = round(max(0.01, p0 * (1.0 + base_pct / 100.0)), 2)
+            p90 = round(max(0.01, p0 * (1.0 + opt_pct / 100.0)), 2)
 
             p10, p50, p90 = sorted([p10, p50, p90])
             p50 = max(p10, p50)

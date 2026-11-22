@@ -141,6 +141,8 @@ class MarketTickGenerator:
                         volume=quote.volume,
                         timestamp=datetime.now(timezone.utc).isoformat(),
                         previous_close=quote.previous_close,
+                        is_synthetic=getattr(quote, "is_synthetic", False),
+                        provenance=getattr(quote, "provenance", "live_broker"),
                     )
             except Exception:
                 # Fall through to synthetic generation on broker network failure or off-market
@@ -187,6 +189,8 @@ class MarketTickGenerator:
             volume=new_vol,
             timestamp=datetime.now(timezone.utc).isoformat(),
             previous_close=prev_close,
+            is_synthetic=True,
+            provenance="synthetic_brownian_step",
         )
 
     def generate_batch(self, symbols: Optional[List[str]] = None) -> List[MarketTick]:

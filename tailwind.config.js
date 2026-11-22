@@ -24,6 +24,11 @@ export default {
           hover: "#DC2626",
           dim: "rgba(235, 91, 60, 0.12)",
         },
+        warning: {
+          DEFAULT: "var(--color-warning)",
+          dim: "var(--color-warning-subtle)",
+          subtle: "var(--color-warning-subtle)",
+        },
         surface: {
           light: "#FFFFFF",
           "light-subtle": "#F8FAFC",
@@ -35,6 +40,18 @@ export default {
         "squircle-sm": "16px",
         "squircle-md": "20px",
         "squircle-lg": "24px",
+      },
+      fontFamily: {
+        mono: [
+          'var(--font-mono)',
+          '"JetBrains Mono"',
+          '"Fira Code"',
+          '"Roboto Mono"',
+          'ui-monospace',
+          'SFMono-Regular',
+          'Menlo',
+          'monospace',
+        ],
       },
       transitionTimingFunction: {
         spring: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",

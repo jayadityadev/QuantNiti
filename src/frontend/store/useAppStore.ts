@@ -26,8 +26,13 @@ export interface AppStoreState {
   activeConceptKey: string | null;
   activeAsyncKeys: Set<string>;
   isOnboarded: boolean;
+  user: any | null;
+  token: string | null;
+  isAuthenticated: boolean;
   activeModal: string | null;
   modalPayload: any;
+  lastTickTimestamp: number | null;
+  isResyncing: boolean;
 
   // Actions
   setActiveTab: (tab: NavTab) => void;
@@ -36,6 +41,9 @@ export interface AppStoreState {
   setHorizon: (horizon: TimeHorizon) => void;
   setRiskPersona: (persona: RiskPersona) => void;
   setIsOnboarded: (onboarded: boolean) => void;
+  setUser: (user: any | null) => void;
+  setToken: (token: string | null) => void;
+  logout: () => void;
   setActiveRegime: (regime: any) => void;
   setCurrentBasket: (basket: any) => void;
   setActivePortfolioId: (id: string | null) => void;
@@ -53,6 +61,8 @@ export interface AppStoreState {
   addActiveAsyncKey: (key: string) => void;
   removeActiveAsyncKey: (key: string) => void;
   clearActiveAsyncKeys: () => void;
+  setLastTickTimestamp: (timestamp: number | null) => void;
+  setIsResyncing: (resyncing: boolean) => void;
 }
 
 const LEARNED_CONCEPTS_STORAGE_KEY = "quantniti_learned_concepts";
@@ -139,6 +149,9 @@ export const useAppStore = create<AppStoreState>((set) => ({
   horizon: "6M",
   riskPersona: loadRiskPersona(),
   isOnboarded: loadIsOnboarded(),
+  user: null,
+  token: null,
+  isAuthenticated: false,
   activeRegime: null,
   currentBasket: null,
   activePortfolioId: loadActivePortfolioId(),
@@ -156,6 +169,8 @@ export const useAppStore = create<AppStoreState>((set) => ({
   activeAsyncKeys: new Set(),
   activeModal: null,
   modalPayload: null,
+  lastTickTimestamp: null,
+  isResyncing: false,
 
   setActiveTab: (tab) => set({ activeTab: tab }),
   setTheme: (theme) => set({ theme }),
@@ -173,6 +188,9 @@ export const useAppStore = create<AppStoreState>((set) => ({
     }
     set({ isOnboarded });
   },
+  setUser: (user) => set({ user, isAuthenticated: !!user }),
+  setToken: (token) => set({ token, isAuthenticated: !!token }),
+  logout: () => set({ user: null, token: null, isAuthenticated: false }),
   setActiveRegime: (activeRegime) => set({ activeRegime }),
   setCurrentBasket: (currentBasket) => set({ currentBasket }),
   setActivePortfolioId: (activePortfolioId) => {
@@ -262,4 +280,7 @@ export const useAppStore = create<AppStoreState>((set) => ({
   closeModal: () => {
     set({ activeModal: null, modalPayload: null });
   },
+
+  setLastTickTimestamp: (lastTickTimestamp) => set({ lastTickTimestamp }),
+  setIsResyncing: (isResyncing) => set({ isResyncing }),
 }));

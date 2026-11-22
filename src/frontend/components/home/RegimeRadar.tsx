@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Radar, Sparkles, ChevronDown, ChevronUp, Clock } from "lucide-react";
 import { RegimeBadge } from "../ui";
 import { useAppStore } from "../../store/useAppStore";
-import { useAbortableRequest } from "../../hooks/useAbortableRequest";
 
 export interface RegimeRadarProps {
   className?: string;
@@ -11,49 +10,71 @@ export interface RegimeRadarProps {
 
 export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
   const { activeRegime, setActiveRegime } = useAppStore();
-  const { request } = useAbortableRequest();
   const [showMarkovDetails, setShowMarkovDetails] = useState<boolean>(false);
 
+  const [isLoading, setIsLoading] = useState<boolean>(!activeRegime);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
   useEffect(() => {
-    if (!activeRegime) {
-      const fetchRegime = async () => {
+    let isCancelled = false;
+    const fetchRegime = async () => {
+      if (activeRegime) return;
+      setIsLoading(true);
+      setFetchError(null);
+      try {
+        const response = await fetch("/api/regime/current");
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        if (!isCancelled && data) {
+          setActiveRegime(data);
+          setIsLoading(false);
+        }
+      } catch (err: any) {
+        if (isCancelled || err?.name === "AbortError") {
+          return;
+        }
+        // Try fallback to /api/v1/regime/current
         try {
-          const data = await request<any>("home-regime", "/api/regime/current");
-          if (data) {
-            setActiveRegime(data);
+          const respV1 = await fetch("/api/v1/regime/current");
+          if (respV1.ok) {
+            const dataV1 = await respV1.json();
+            if (!isCancelled && dataV1) {
+              setActiveRegime(dataV1);
+              setIsLoading(false);
+              return;
+            }
           }
         } catch {
-          try {
-            const dataV1 = await request<any>("home-regime-v1", "/api/v1/regime/current");
-            if (dataV1) {
-              setActiveRegime(dataV1);
-            }
-          } catch {
-            // Store default fallback
-            setActiveRegime({
-              regime: "BULL",
-              probabilities: { bull: 0.65, sideways: 0.25, bear: 0.1 },
-              confidence: 0.82,
-              description: "Macro momentum strong with sustained institutional buying.",
-            });
-          }
+          // Both failed
         }
-      };
-      fetchRegime();
-    }
-  }, [activeRegime, setActiveRegime, request]);
+        if (!isCancelled) {
+          setIsLoading(false);
+          setFetchError("Unable to load live regime");
+        }
+      }
+    };
+    fetchRegime();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [activeRegime, setActiveRegime]);
 
   const regimeName = activeRegime?.regime || "BULL";
   const probs: any = activeRegime?.probabilities || {};
-  const bullVal = typeof probs.bull === "number" ? probs.bull : (typeof probs.BULL === "number" ? probs.BULL : 0.65);
-  const sidewaysVal = typeof probs.sideways === "number" ? probs.sideways : (typeof probs.SIDEWAYS === "number" ? probs.SIDEWAYS : 0.25);
-  const bearVal = typeof probs.bear === "number" ? probs.bear : (typeof probs.BEAR === "number" ? probs.BEAR : 0.10);
+  const bullVal = typeof probs.bull === "number" ? probs.bull : (typeof probs.BULL === "number" ? probs.BULL : 0.0);
+  const sidewaysVal = typeof probs.sideways === "number" ? probs.sideways : (typeof probs.SIDEWAYS === "number" ? probs.SIDEWAYS : 0.0);
+  const bearVal = typeof probs.bear === "number" ? probs.bear : (typeof probs.BEAR === "number" ? probs.BEAR : 0.0);
   const bullPct = Math.round(bullVal * 100);
   const sidewaysPct = Math.round(sidewaysVal * 100);
   const bearPct = Math.round(bearVal * 100);
   const description =
     activeRegime?.description ||
-    "Algorithmic classifier identifies active expansion regime. High growth probability with controlled macro volatility.";
+    (isLoading
+      ? "Calibrating macroeconomic regime model against live market telemetry..."
+      : fetchError || "Market regime telemetry currently calibrating.");
 
   return (
     <div className={`p-5 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-sm flex flex-col gap-4 ${className}`}>
@@ -67,7 +88,7 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
               Market regime radar
             </h3>
             <span className="text-xs text-[var(--text-muted)] font-normal">
-              3-State Gaussian mixture model
+              3-State Economically Constrained Regime Model
             </span>
           </div>
         </div>
@@ -96,15 +117,15 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
         {/* Sideways Bar */}
         <div className="flex flex-col gap-1">
           <div className="flex justify-between text-xs font-medium">
-            <span className="text-amber-700 dark:text-amber-400">Sideways range</span>
-            <span className="font-mono text-amber-700 dark:text-amber-400 tabular-nums">{sidewaysPct}%</span>
+            <span className="text-[var(--color-warning)] font-semibold">Sideways range</span>
+            <span className="font-mono text-[var(--color-warning)] tabular-nums">{sidewaysPct}%</span>
           </div>
-          <div className="h-2 w-full rounded-full bg-amber-500/10 overflow-hidden">
+          <div className="h-2 w-full rounded-full bg-[var(--color-warning-subtle)] overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${sidewaysPct}%` }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-              className="h-full rounded-full bg-amber-500"
+              className="h-full rounded-full bg-[var(--color-warning)]"
             />
           </div>
         </div>
@@ -143,9 +164,16 @@ export const RegimeRadar: React.FC<RegimeRadarProps> = ({ className = "" }) => {
             <span className="text-xs text-[var(--text-muted)] flex items-center gap-1 font-normal">
               <Clock className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
               Duration:{" "}
-              {activeRegime?.markov_analysis?.expected_durations_days?.[regimeName]
-                ? `${activeRegime.markov_analysis.expected_durations_days[regimeName]}d`
-                : "16.7d"}
+              {(() => {
+                const durs = activeRegime?.markov_analysis?.expected_durations_days;
+                if (!durs) return "--";
+                if (durs[regimeName] != null) return `${durs[regimeName]}d`;
+                const matchedKey = Object.keys(durs).find((k) =>
+                  k.toLowerCase().includes(regimeName.toLowerCase()) ||
+                  regimeName.toLowerCase().includes(k.toLowerCase())
+                );
+                return matchedKey && durs[matchedKey] != null ? `${durs[matchedKey]}d` : `${Object.values(durs)[0]}d`;
+              })()}
             </span>
           </div>
 

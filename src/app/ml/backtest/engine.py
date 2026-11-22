@@ -185,10 +185,10 @@ class BacktestEngine:
         parameters: Optional[Dict[str, Any]] = None,
         benchmark_df: Optional[pd.DataFrame] = None,
         initial_capital: float = 100000.0,
-        cost_bps: float = 5.0,
-        slippage_bps: float = 5.0,
+        cost_bps: float = 15.0,  # Indian statutory friction: STT (10 bps) + NSE turnover/SEBI/GST (5 bps)
+        slippage_bps: float = 5.0,  # 0.05% market impact slippage
     ) -> BacktestResultData:
-        """Execute vectorized backtest simulation."""
+        """Execute vectorized backtest simulation with strict lookahead prevention and Indian market friction."""
         if df.empty or len(df) < 5:
             raise ValueError("Insufficient data points for backtesting (minimum 5 required).")
 
@@ -209,7 +209,7 @@ class BacktestEngine:
         # Total roundtrip cost rate per transaction
         cost_rate = (cost_bps + slippage_bps) / 10000.0
 
-        # Generate signals (desired position)
+        # Generate signals (desired position based on close price at time t)
         signals = self.generate_signals(
             df=df,
             strategy=strategy,
@@ -217,8 +217,13 @@ class BacktestEngine:
             benchmark_df=benchmark_df,
         )
 
-        # Shift position by 1 day to prevent lookahead bias (trade executes on next bar)
-        positions = signals.shift(1).fillna(signals.iloc[0])
+        # Shift position by 1 day to strictly prevent lookahead bias:
+        # A signal generated at close of day t can only be held/traded on day t+1.
+        # Day 0 active strategy position MUST be 0.0 to prevent unearned day-0 returns.
+        if strategy == StrategyType.BUY_AND_HOLD:
+            positions = signals.copy()
+        else:
+            positions = signals.shift(1).fillna(0.0)
 
         # Trade transaction cost calculation
         position_changes = positions.diff().abs().fillna(0.0)

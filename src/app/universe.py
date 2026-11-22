@@ -380,6 +380,8 @@ def normalize_symbol(symbol: str) -> str:
         return cleaned
     if cleaned.endswith(".NS") or cleaned.endswith(".BO"):
         cleaned = cleaned[:-3]
+    if cleaned == "M_M":
+        cleaned = "M&M"
     return cleaned
 
 
@@ -393,6 +395,8 @@ def denormalize_symbol(symbol: str, provider: str = "yahoo") -> str:
     if canonical in BENCHMARK_SYMBOLS:
         return canonical
     if provider == "yahoo":
+        if canonical in ("M&M", "M_M"):
+            return "M&M.NS"
         return f"{canonical}.NS"
     return canonical
 

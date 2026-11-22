@@ -18,15 +18,38 @@ from app.core.models import RiskPersona
 from app.universe import get_esg_score_for_symbol
 
 
+def compute_constant_correlation_target(cov: np.ndarray) -> np.ndarray:
+    """Compute constant-correlation shrinkage target matrix (Ledoit & Wolf 2004)."""
+    n = cov.shape[0]
+    var = np.diag(cov)
+    std = np.sqrt(np.maximum(var, 1e-8))
+    outer_std = np.outer(std, std)
+    corr = np.clip(cov / outer_std, -1.0, 1.0)
+    
+    # Average pairwise correlation across off-diagonal elements
+    if n > 1:
+        mean_corr = (np.sum(corr) - n) / (n * (n - 1))
+    else:
+        mean_corr = 0.0
+    mean_corr = float(np.clip(mean_corr, -0.99, 0.99))
+    
+    target = outer_std * mean_corr
+    np.fill_diagonal(target, var)
+    return target
+
+
 def compute_shrunk_covariance(
     returns_df: pd.DataFrame,
     use_shrinkage: bool = True,
+    condition_threshold: float = 1e5,
 ) -> Tuple[np.ndarray, float]:
-    """Compute regularized covariance matrix with Ledoit-Wolf shrinkage and automated fallback.
+    """Compute regularized covariance matrix with Ledoit-Wolf shrinkage, constant-correlation fallback,
+    and eigenvalue conditioning to strictly prevent singular or ill-conditioned matrices.
     
     Args:
         returns_df: DataFrame of asset return series (columns as symbols).
         use_shrinkage: Whether to apply Ledoit-Wolf shrinkage. Defaults to True.
+        condition_threshold: Maximum allowed condition number before adaptive shrinkage.
         
     Returns:
         Tuple of (covariance_matrix, shrinkage_intensity).
@@ -40,6 +63,9 @@ def compute_shrunk_covariance(
             var = 1e-4
         return np.array([[max(var, 1e-8)]]), 0.0
 
+    cov: Optional[np.ndarray] = None
+    shrinkage: float = 0.0
+
     if use_shrinkage and n_samples >= 2:
         try:
             X = returns_df.to_numpy(dtype=np.float64, copy=True)
@@ -48,38 +74,44 @@ def compute_shrunk_covariance(
                 lw.fit(X)
                 cov = lw.covariance_
                 shrinkage = float(lw.shrinkage_)
-                
-                # Verify symmetry, finiteness, non-negative shrinkage
-                if np.all(np.isfinite(cov)) and not np.isnan(shrinkage):
-                    cov = 0.5 * (cov + cov.T)
-                    # Add ridge regularization to guarantee strictly positive-definite conditioning
-                    cov += np.eye(n_features) * 1e-7
-                    # Enforce strict positive definiteness via spectral eigenvalue floor
-                    eigvals, eigvecs = np.linalg.eigh(cov)
-                    if np.any(eigvals < 1e-7):
-                        eigvals = np.maximum(eigvals, 1e-7)
-                        cov = eigvecs @ np.diag(eigvals) @ eigvecs.T
-                        cov = 0.5 * (cov + cov.T)
-                    return cov, float(np.clip(shrinkage, 0.0, 1.0))
+                if not np.all(np.isfinite(cov)) or np.isnan(shrinkage):
+                    cov = None
         except Exception:
-            # Automated fallback to empirical sample covariance
-            pass
+            cov = None
 
-    # Fallback: Empirical sample covariance with ridge regularization
-    try:
-        cov = returns_df.cov().to_numpy(dtype=np.float64, copy=True)
-        cov = np.nan_to_num(cov, nan=0.0, posinf=0.0, neginf=0.0)
-    except Exception:
-        cov = np.zeros((n_features, n_features))
+    if cov is None:
+        # Fallback to empirical sample covariance
+        try:
+            cov = returns_df.cov().to_numpy(dtype=np.float64, copy=True)
+            cov = np.nan_to_num(cov, nan=0.0, posinf=0.0, neginf=0.0)
+        except Exception:
+            cov = np.zeros((n_features, n_features))
+        shrinkage = 0.0
+
+    # Guarantee symmetry
+    cov = 0.5 * (cov + cov.T)
+    
+    # Check condition number kappa = lambda_max / lambda_min
+    eigvals, eigvecs = np.linalg.eigh(cov)
+    min_eig = float(np.min(eigvals))
+    max_eig = float(np.max(eigvals))
+
+    if min_eig <= 1e-7 or (min_eig > 0 and (max_eig / min_eig) > condition_threshold):
+        # Ill-conditioned or singular: shrink towards constant correlation target
+        target = compute_constant_correlation_target(cov)
+        delta = 0.25  # Adaptive shrinkage intensity towards structured target
+        cov = (1.0 - delta) * cov + delta * target
+        shrinkage = max(shrinkage, delta)
         
+        # Spectral eigenvalue floor at 1e-6
+        eigvals, eigvecs = np.linalg.eigh(0.5 * (cov + cov.T))
+        eigvals = np.maximum(eigvals, 1e-6)
+        cov = eigvecs @ np.diag(eigvals) @ eigvecs.T
+
+    # Final positive-definiteness ridge
     cov = 0.5 * (cov + cov.T)
     cov += np.eye(n_features) * 1e-7
-    eigvals, eigvecs = np.linalg.eigh(cov)
-    if np.any(eigvals < 1e-7):
-        eigvals = np.maximum(eigvals, 1e-7)
-        cov = eigvecs @ np.diag(eigvals) @ eigvecs.T
-        cov = 0.5 * (cov + cov.T)
-    return cov, 0.0
+    return cov, float(np.clip(shrinkage, 0.0, 1.0))
 
 
 def get_quasi_diag_order(link_matrix: np.ndarray) -> List[int]:
@@ -203,6 +235,7 @@ def apply_weight_caps(
             return {sym: share for sym in weights}
 
     # Final verification and zero-distortion normalization
+    weights = {sym: max(0.0, float(w)) for sym, w in weights.items()}
     total = sum(weights.values())
     if total > 0:
         weights = {sym: float(w / total) for sym, w in weights.items()}
@@ -211,7 +244,7 @@ def apply_weight_caps(
         if weights[sym] > effective_cap:
             weights[sym] = effective_cap
     final_total = sum(weights.values())
-    if final_total > 0 and abs(final_total - 1.0) > 1e-8:
+    if final_total > 0:
         weights = {sym: float(w / final_total) for sym, w in weights.items()}
     return weights
 
@@ -243,7 +276,7 @@ def compute_hrp_weights(
 
     # 3. Tree Clustering Linkage
     condensed_dist = squareform(dist_matrix, checks=False)
-    link_matrix = linkage(condensed_dist, method="single")
+    link_matrix = linkage(condensed_dist, method="average")
 
     # 4. Quasi-Diagonalization
     sort_order = get_quasi_diag_order(link_matrix)
@@ -260,8 +293,16 @@ def compute_hrp_weights(
     if max_cap is not None:
         weights_dict = apply_weight_caps(weights_dict, max_cap=max_cap)
     else:
+        weights_dict = {sym: max(0.0, float(w)) for sym, w in weights_dict.items()}
         total = sum(weights_dict.values())
-        weights_dict = {sym: float(w / total) for sym, w in weights_dict.items()}
+        if total > 0:
+            weights_dict = {sym: float(w / total) for sym, w in weights_dict.items()}
+
+    # Guarantee non-negative weights and exact unitary sum: sum(w_i) == 1.000000
+    weights_dict = {sym: max(0.0, float(w)) for sym, w in weights_dict.items()}
+    final_sum = sum(weights_dict.values())
+    if final_sum > 0:
+        weights_dict = {sym: float(w / final_sum) for sym, w in weights_dict.items()}
 
     return weights_dict
 

@@ -156,11 +156,11 @@ async def register(
     db.add(basket)
     await db.flush()  # populate basket.id
 
-    # Add standard default holdings
+    # Add standard default holdings (grounded in Indian equity & commodity universe)
     holdings = [
-        BasketHolding(basket_id=basket.id, symbol="AAPL", target_weight=0.35, actual_shares=10, avg_price=185.0),
-        BasketHolding(basket_id=basket.id, symbol="MSFT", target_weight=0.35, actual_shares=8, avg_price=420.0),
-        BasketHolding(basket_id=basket.id, symbol="NVDA", target_weight=0.30, actual_shares=15, avg_price=125.0),
+        BasketHolding(basket_id=basket.id, symbol="RELIANCE", target_weight=0.40, actual_shares=28, avg_price=1377.5),
+        BasketHolding(basket_id=basket.id, symbol="TCS", target_weight=0.35, actual_shares=14, avg_price=2376.2),
+        BasketHolding(basket_id=basket.id, symbol="GOLDBEES", target_weight=0.25, actual_shares=275, avg_price=102.2),
     ]
     db.add_all(holdings)
     await db.commit()

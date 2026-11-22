@@ -131,8 +131,8 @@ export const MarketPulse: React.FC<MarketPulseProps> = ({ className = "" }) => {
             <span>Market Open</span>
           </div>
         ) : (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-sm bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400">
-            <span className="w-2 h-2 rounded-full bg-amber-500" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-sm bg-[var(--color-warning-subtle)] border-[var(--color-warning)]/20 text-[var(--color-warning)]">
+            <span className="w-2 h-2 rounded-full bg-[var(--color-warning)]" />
             <span>Market Closed</span>
           </div>
         )}

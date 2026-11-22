@@ -52,7 +52,17 @@ describe("RiskProvenanceStatStrip", () => {
   });
 
   it("renders live feed pulse indicator and actual metrics when live", () => {
-    render(<RiskProvenanceStatStrip isDemo={false} holdings={DEMO_HOLDINGS} />);
+    render(
+      <RiskProvenanceStatStrip
+        isDemo={false}
+        holdings={DEMO_HOLDINGS}
+        metrics={{
+          syncStatus: "Live NSE Feed",
+          isLive: true,
+          sourceTag: "NSE/BSE EOD + Tick Engine",
+        }}
+      />
+    );
 
     expect(screen.getByText("Live NSE Feed")).toBeInTheDocument();
     expect(screen.getByText("NSE/BSE EOD + Tick Engine")).toBeInTheDocument();
@@ -60,6 +70,11 @@ describe("RiskProvenanceStatStrip", () => {
     expect(screen.getByText(/1D VaR \(95% Parametric\):/i)).toBeInTheDocument();
     expect(screen.getByText(/Max Sector Concentration:/i)).toBeInTheDocument();
     expect(screen.getByText(/Target Drift:/i)).toBeInTheDocument();
+  });
+
+  it("displays 5-state market clock provenance when metrics not explicitly overridden", () => {
+    render(<RiskProvenanceStatStrip isDemo={false} holdings={DEMO_HOLDINGS} />);
+    expect(screen.getByText(/NSE:/i)).toBeInTheDocument();
   });
 
   it("dynamically calculates top sector concentration from holdings if metrics are omitted", () => {

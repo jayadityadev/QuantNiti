@@ -1,6 +1,7 @@
 """Market Data Service layer coordinating Providers, Cleaner, and Local Cache."""
 
 import os
+import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Union
 import pandas as pd
@@ -36,6 +37,7 @@ class MarketDataService:
         self.provider = provider
         self.cache = cache or ParquetMarketCache()
         self.auto_cache = auto_cache
+        self._quote_cache: Dict[str, tuple] = {}
 
     def get_universe(
         self,
@@ -86,10 +88,15 @@ class MarketDataService:
             # Fallback to mock data if external provider is offline, rate-limited, or symbol delisted
             if (df is None or df.empty) and isinstance(self.provider, YahooFinanceProvider):
                 df = MockDataProvider().fetch_history(canonical, start_date=start_date, end_date=end_date)
+                if df is not None and not df.empty:
+                    df.attrs["is_synthetic"] = True
+                    df.attrs["provenance"] = "synthetic_fallback_rate_limited"
 
             if df is not None and not df.empty:
                 df = calculate_returns(df)
-                if self.auto_cache:
+                is_synthetic = bool(getattr(df, "attrs", {}).get("is_synthetic", False))
+                # Never poison persistent on-disk cache with synthetic fallback data unless testing with MockDataProvider
+                if self.auto_cache and (not is_synthetic or isinstance(self.provider, MockDataProvider)):
                     self.cache.save_history(canonical, df)
 
         if df is None or df.empty:
@@ -118,14 +125,25 @@ class MarketDataService:
             return pd.Series(dtype=float)
         return df["daily_return"]
 
-    def get_latest_quote(self, symbol: str) -> StockQuote:
-        """Retrieve latest real-time/EOD quote for a ticker."""
+    def get_latest_quote(self, symbol: str, ttl_seconds: float = 60.0) -> StockQuote:
+        """Retrieve latest real-time/EOD quote for a ticker with in-memory caching."""
         canonical = normalize_symbol(symbol)
+        now = time.time()
+        if canonical in self._quote_cache:
+            ts, cached_quote = self._quote_cache[canonical]
+            if (now - ts) < ttl_seconds:
+                return cached_quote
+
         try:
             quote_dict = self.provider.fetch_quote(canonical)
         except Exception:
             quote_dict = MockDataProvider().fetch_quote(canonical)
-        return StockQuote(**quote_dict)
+            quote_dict["is_synthetic"] = True
+            quote_dict["provenance"] = "synthetic_fallback_rate_limited"
+
+        quote = StockQuote(**quote_dict)
+        self._quote_cache[canonical] = (now, quote)
+        return quote
 
     def get_aligned_dataset(
         self,

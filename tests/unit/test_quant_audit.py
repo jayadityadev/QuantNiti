@@ -316,10 +316,10 @@ def test_gmm_deterministic_sorting_and_nan_resilience():
 # 3. MULTI-HORIZON PROBABILISTIC FORECASTER AUDIT
 # ============================================================================
 
-def test_forecaster_risk_free_rate_baseline_5_5_pct():
-    """Forecaster default risk-free rate must be 5.50% (0.055) aligned with RBI repo benchmark."""
+def test_forecaster_risk_free_rate_baseline_gsec_yield():
+    """Forecaster default risk-free rate is grounded to Indian 10-Year G-Sec benchmark yield (~7.18%)."""
     forecaster = MultiHorizonForecaster()
-    assert forecaster.risk_free_rate == 0.055
+    assert pytest.approx(forecaster.risk_free_rate, abs=0.005) == 0.0718
 
 
 def test_forecaster_strict_quantile_monotonicity_all_horizons():
@@ -486,3 +486,124 @@ def test_quant_engine_strict_determinism_across_evaluations():
     assert p1.regular_sip_summary.future_value == p2.regular_sip_summary.future_value
     assert p1.step_up_sip_summary.future_value == p2.step_up_sip_summary.future_value
     assert p1.alpha_vs_bank_fd == p2.alpha_vs_bank_fd
+
+
+# ============================================================================
+# 7. MARKET GROUND TRUTH & ECONOMIC REGIME AUDIT
+# ============================================================================
+
+def test_massive_rally_classified_as_bull_not_sideways():
+    """Verify that a massive post-Diwali rally (+12.8% 20d return) is classified as BULL, never SIDEWAYS."""
+    rng = np.random.default_rng(42)
+    n = 60
+    train_df = pd.DataFrame({
+        "log_return_20d": np.concatenate([rng.normal(0.04, 0.01, n), rng.normal(-0.06, 0.01, n), rng.normal(0.005, 0.005, n)]),
+        "realized_vol_20d": np.concatenate([rng.normal(0.12, 0.01, n), rng.normal(0.28, 0.02, n), rng.normal(0.14, 0.01, n)]),
+        "vix_level": np.concatenate([rng.normal(13.0, 1.0, n), rng.normal(26.0, 2.0, n), rng.normal(16.0, 1.0, n)]),
+    })
+
+    clf = MarketRegimeClassifier(random_state=42)
+    clf.fit(train_df)
+
+    # Live market ground truth point: NIFTY +12.8% monthly rally, VIX 17.32
+    rally_point = pd.DataFrame({
+        "log_return_20d": [0.128],
+        "realized_vol_20d": [0.15],
+        "vix_level": [17.32],
+    })
+
+    regime = clf.predict_single(rally_point)
+    assert regime == MarketRegimeType.LOW_VOLATILITY_BULL, f"Massive rally misclassified as {regime}"
+
+    probs = clf.predict_proba(rally_point)
+    bull_prob = float(probs.iloc[0][MarketRegimeType.LOW_VOLATILITY_BULL.value])
+    side_prob = float(probs.iloc[0][MarketRegimeType.SIDEWAYS_CONSOLIDATION.value])
+    assert bull_prob > side_prob, f"Bull probability {bull_prob} not higher than sideways {side_prob}"
+
+
+def test_dirichlet_regularization_eliminates_probability_collapse():
+    """Dirichlet prior regularization prevents 99.9% probability saturation collapse."""
+    rng = np.random.default_rng(42)
+    n = 60
+    train_df = pd.DataFrame({
+        "log_return_20d": np.concatenate([rng.normal(0.05, 0.01, n), rng.normal(-0.06, 0.01, n), rng.normal(0.005, 0.005, n)]),
+        "realized_vol_20d": np.concatenate([rng.normal(0.10, 0.01, n), rng.normal(0.28, 0.02, n), rng.normal(0.14, 0.01, n)]),
+        "vix_level": np.concatenate([rng.normal(12.0, 1.0, n), rng.normal(25.0, 2.0, n), rng.normal(15.0, 1.0, n)]),
+    })
+
+    clf = MarketRegimeClassifier(random_state=42)
+    clf.fit(train_df)
+
+    # An extreme bull point that would previously collapse to 99.99%
+    extreme_point = pd.DataFrame({
+        "log_return_20d": [0.25],
+        "realized_vol_20d": [0.08],
+        "vix_level": [10.0],
+    })
+
+    proba = clf.predict_proba(extreme_point)
+    row = proba.iloc[0]
+    # Max probability is regularized below 0.95 to account for realistic macroeconomic uncertainty
+    assert row.max() <= 0.95
+    # Minor regimes maintain non-zero probability (Dirichlet prior floor)
+    assert row.min() >= 0.01
+    assert pytest.approx(row.sum(), abs=1e-5) == 1.0
+
+
+def test_backtest_lookahead_bias_strict_day_zero_cash():
+    """Active backtest strategies must strictly have position=0 on day 0 (no lookahead return)."""
+    from app.ml.backtest.engine import BacktestEngine
+    from app.core.models import StrategyType
+
+    dates = pd.bdate_range("2024-01-01", periods=30)
+    prices = 100.0 + np.arange(30) * 1.5  # Constant uptrend
+    df = pd.DataFrame({"close": prices}, index=dates)
+
+    engine = BacktestEngine()
+    result = engine.run(df=df, strategy=StrategyType.MA_CROSSOVER, cost_bps=15.0, slippage_bps=5.0)
+
+    # Day 0 position must be 0.0
+    assert result.positions.iloc[0] == 0.0
+    # Day 0 strategy return must be 0.0 (no trade executed yet)
+    assert result.strategy_returns.iloc[0] == 0.0
+    # Initial equity on day 0 must equal initial capital
+    assert result.equity_series.iloc[0] == 100000.0
+
+
+def test_data_provenance_flags_exposed():
+    """Data models strictly expose is_synthetic and provenance flags."""
+    from app.core.models import StockQuote, MarketTick, MarketHistoryResponse, OHLCVBar
+
+    # Mock provider quote
+    quote = StockQuote(
+        symbol="RELIANCE",
+        name="Reliance Industries",
+        sector="Energy",
+        current_price=1285.0,
+        day_change=12.5,
+        day_change_pct=0.98,
+        day_high=1290.0,
+        day_low=1275.0,
+        volume=500000,
+        timestamp="2026-11-22T00:00:00Z",
+        is_synthetic=True,
+        provenance="synthetic_mock_quote",
+    )
+    assert quote.is_synthetic is True
+    assert quote.provenance == "synthetic_mock_quote"
+
+    # Streaming tick
+    tick = MarketTick(
+        symbol="^NSEI",
+        price=25800.60,
+        change=286.30,
+        change_pct=1.12,
+        high=25850.0,
+        low=25600.0,
+        volume=1200000,
+        timestamp="2026-11-22T00:00:00Z",
+        is_synthetic=False,
+        provenance="broker_live",
+    )
+    assert tick.is_synthetic is False
+    assert tick.provenance == "broker_live"

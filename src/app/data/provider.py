@@ -55,7 +55,7 @@ class YahooFinanceProvider(MarketDataProvider):
                     start=start_date,
                     end=end_date,
                     interval="1d",
-                    auto_adjust=False,
+                    auto_adjust=True,
                     timeout=self.timeout,
                 )
             else:
@@ -63,7 +63,7 @@ class YahooFinanceProvider(MarketDataProvider):
                 raw_df = ticker.history(
                     period=p,
                     interval="1d",
-                    auto_adjust=False,
+                    auto_adjust=True,
                     timeout=self.timeout,
                 )
 
@@ -71,6 +71,8 @@ class YahooFinanceProvider(MarketDataProvider):
                 return pd.DataFrame()
 
             cleaned = validate_ohlcv_dataframe(raw_df)
+            cleaned.attrs["is_synthetic"] = False
+            cleaned.attrs["provenance"] = "yahoo_finance_live"
             return cleaned
         except Exception:
             return pd.DataFrame()
@@ -108,6 +110,8 @@ class YahooFinanceProvider(MarketDataProvider):
                 "previous_close": round(prev_close, 2),
                 "week_52_high": round(float(fast.year_high), 2) if hasattr(fast, "year_high") and fast.year_high else None,
                 "week_52_low": round(float(fast.year_low), 2) if hasattr(fast, "year_low") and fast.year_low else None,
+                "is_synthetic": False,
+                "provenance": "yahoo_live",
             }
         except Exception:
             # Fallback to last row of 5d history
@@ -130,6 +134,8 @@ class YahooFinanceProvider(MarketDataProvider):
                     "volume": float(last_row["volume"]),
                     "timestamp": datetime.now(timezone.utc).isoformat(),
                     "previous_close": round(float(prev_row["close"]), 2),
+                    "is_synthetic": False,
+                    "provenance": "yahoo_eod_history",
                 }
 
             raise RuntimeError(f"Unable to fetch live quote for {symbol}")
@@ -158,11 +164,11 @@ class MockDataProvider(MarketDataProvider):
 
         # Base prices per asset class grounded to live Indian macro baseline
         if canonical == "^NSEI":
-            base_price = 25800.0
-            volatility = 0.010
-            drift = 0.0004
+            base_price = 25800.60
+            volatility = 0.009
+            drift = 0.00045
         elif canonical == "^INDIAVIX":
-            base_price = 16.80
+            base_price = 17.32
             volatility = 0.035
             drift = 0.0000
         else:
@@ -183,20 +189,47 @@ class MockDataProvider(MarketDataProvider):
         if n == 0:
             return pd.DataFrame()
 
-        # Geometric random walk with market correlation for stocks
-        if canonical not in ("^NSEI", "^INDIAVIX"):
+        # Generate realistic trajectory anchored to live market baseline
+        if canonical == "^INDIAVIX":
+            # Mean-reverting Ornstein-Uhlenbeck process for India VIX (not an unconstrained random walk)
+            # Grounded to live India VIX benchmark: 17.32, bounded in realistic bounds [10.5, 30.0]
+            long_term_mean = 15.5
+            theta = 0.08  # Mean reversion speed
+            sigma_vix = 0.70  # Daily shock
+            vix_vals = np.zeros(n, dtype=np.float64)
+            vix_vals[0] = 15.0
+            for t in range(1, n):
+                diff = theta * (long_term_mean - vix_vals[t - 1]) + rng.normal(0, sigma_vix)
+                vix_vals[t] = np.clip(vix_vals[t - 1] + diff, 10.5, 30.0)
+            # Smoothly align trailing window to live 17.32 closing level
+            if n > 20:
+                vix_vals[-20:] = np.clip(vix_vals[-20:] * (17.32 / vix_vals[-1]), 12.0, 24.0)
+            vix_vals[-1] = 17.32
+            price_series = vix_vals
+        elif canonical == "^NSEI":
+            # Grounded to live NSE NIFTY 50: 25,800.60 with post-Diwali November rally (+12.5% 20d return)
+            daily_returns = rng.normal(loc=0.00045, scale=0.009, size=n)
+            if n > 20:
+                daily_returns[-20:] = rng.normal(loc=0.0058, scale=0.006, size=20)
+            raw_series = np.exp(np.cumsum(daily_returns))
+            price_series = base_price * (raw_series / raw_series[-1])
+        elif canonical not in ("^NSEI", "^INDIAVIX"):
             mkt_rng = np.random.default_rng(self._get_symbol_seed("^NSEI"))
-            mkt_returns = mkt_rng.normal(loc=0.0004, scale=0.010, size=n)
+            mkt_returns = mkt_rng.normal(loc=0.00045, scale=0.009, size=n)
+            if n > 20:
+                mkt_returns[-20:] = mkt_rng.normal(loc=0.0058, scale=0.006, size=20)
             if "GOLD" in canonical or "SILVER" in canonical:
-                target_beta = float(rng.uniform(0.10, 0.30))
+                target_beta = float(rng.uniform(0.05, 0.20))
             else:
-                target_beta = float(rng.uniform(0.75, 1.35))
-            idio_returns = rng.normal(loc=drift, scale=volatility * 0.7, size=n)
+                target_beta = float(rng.uniform(0.85, 1.35))
+            idio_returns = rng.normal(loc=drift, scale=0.006, size=n)
             daily_returns = target_beta * mkt_returns + idio_returns
+            raw_series = np.exp(np.cumsum(daily_returns))
+            price_series = base_price * (raw_series / raw_series[-1])
         else:
             daily_returns = rng.normal(loc=drift, scale=volatility, size=n)
-
-        price_series = base_price * np.exp(np.cumsum(daily_returns))
+            raw_series = np.exp(np.cumsum(daily_returns))
+            price_series = base_price * (raw_series / raw_series[-1])
 
         # Generate realistic OHLC bars around close
         daily_noise = rng.uniform(0.002, 0.008, size=n)
@@ -218,7 +251,10 @@ class MockDataProvider(MarketDataProvider):
             index=bdate_range,
         )
 
-        return validate_ohlcv_dataframe(df)
+        cleaned = validate_ohlcv_dataframe(df)
+        cleaned.attrs["is_synthetic"] = True
+        cleaned.attrs["provenance"] = "synthetic_random_walk"
+        return cleaned
 
     def fetch_quote(self, symbol: str) -> Dict[str, Any]:
         """Generate synthetic latest quote."""
@@ -249,4 +285,6 @@ class MockDataProvider(MarketDataProvider):
             "previous_close": float(round(prev_row["close"], 2)),
             "week_52_high": float(round(last_row["close"] * 1.25, 2)),
             "week_52_low": float(round(last_row["close"] * 0.80, 2)),
+            "is_synthetic": True,
+            "provenance": "synthetic_mock_quote",
         }

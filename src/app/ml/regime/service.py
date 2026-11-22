@@ -101,13 +101,36 @@ class RegimeService:
             next_day_forecast=self.markov_model.predict_next_step(probs),
         )
 
+        # Reconcile Hurst Contradictions: Dynamically generate mathematical explanation
+        ret_20d = metrics.get("log_return_20d", 0.0) * 100.0
+        vix = metrics.get("vix_level", 16.0)
+        if memory_type == "Persistent Trend":
+            memory_desc = f"Persistent Trend (H={hurst:.2f}) indicates strong directional autocorrelation"
+        elif memory_type == "Mean-Reverting":
+            memory_desc = f"Mean-Reverting memory (H={hurst:.2f}) indicates cyclical oscillation around moving averages"
+        else:
+            memory_desc = f"Random Walk (H={hurst:.2f}) indicates balanced Brownian memory"
+
+        if pred_regime == MarketRegimeType.LOW_VOLATILITY_BULL:
+            dynamic_desc = f"Bullish expansion with positive momentum ({ret_20d:+.1f}% 20d return) and contained volatility (VIX {vix:.1f}). {memory_desc}."
+        elif pred_regime == MarketRegimeType.HIGH_VOLATILITY_BEAR:
+            drift_str = f"negative price drift ({ret_20d:+.1f}% 20d return)" if ret_20d < 0 else f"volatile rebound ({ret_20d:+.1f}% 20d return)"
+            dynamic_desc = f"Bearish contraction with {drift_str} and elevated volatility (VIX {vix:.1f}). {memory_desc}."
+        else:
+            if hurst > 0.55:
+                dynamic_desc = f"Consolidation with underlying directional persistence (H={hurst:.2f}, {ret_20d:+.1f}% 20d return, VIX {vix:.1f}). Trending pressure emerging from consolidation band."
+            elif hurst < 0.45:
+                dynamic_desc = f"Mean-reverting range-bound market (H={hurst:.2f}, {ret_20d:+.1f}% 20d return, VIX {vix:.1f}) oscillating within established support/resistance bounds."
+            else:
+                dynamic_desc = f"Range-bound consolidation with neutral drift ({ret_20d:+.1f}% 20d return, VIX {vix:.1f}). {memory_desc}."
+
         return CurrentRegimeResponse(
             regime=pred_regime,
             regime_id=regime_id_map[pred_regime],
             probabilities=probs,
             confidence=round(confidence, 4),
             metrics=metrics,
-            description=regime_meta.get("description", ""),
+            description=dynamic_desc,
             recommended_strategy=regime_meta.get("recommended_strategy", ""),
             as_of_date=latest_date,
             markov_analysis=markov_stats,

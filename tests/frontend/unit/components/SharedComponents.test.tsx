@@ -190,12 +190,12 @@ describe("Shared UI Component Library (Ticket 03)", () => {
       expect(badge.className).toContain("text-rose");
     });
 
-    it("renders amber styling for SIDEWAYS regime", () => {
+    it("renders amber/warning styling for SIDEWAYS regime", () => {
       render(<RegimeBadge regime="SIDEWAYS" />);
       const badge = screen.getByTestId("regime-badge");
       expect(badge).toBeInTheDocument();
       expect(badge.textContent).toMatch(/sideways/i);
-      expect(badge.className).toContain("text-amber");
+      expect(badge.className).toMatch(/color-warning|amber/);
     });
   });
 

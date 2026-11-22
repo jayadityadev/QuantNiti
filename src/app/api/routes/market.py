@@ -83,6 +83,9 @@ def get_history(
     start_str = bars[0].date if bars else (start_date or "")
     end_str = bars[-1].date if bars else (end_date or "")
 
+    is_synthetic = bool(df.attrs.get("is_synthetic", False))
+    provenance = str(df.attrs.get("provenance", "yahoo_finance_live"))
+
     return MarketHistoryResponse(
         symbol=canonical,
         name=meta.get("name", canonical),
@@ -91,6 +94,8 @@ def get_history(
         start_date=start_str,
         end_date=end_str,
         data=bars,
+        is_synthetic=is_synthetic,
+        provenance=provenance,
     )
 
 

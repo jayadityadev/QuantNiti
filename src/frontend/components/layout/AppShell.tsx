@@ -7,6 +7,7 @@ import { DesktopSidebar } from "./DesktopSidebar";
 import { useAppStore, NavTab } from "../../store/useAppStore";
 import { abortRegistry } from "../../services/abortRegistry";
 import { OnboardingHero } from "../onboarding/OnboardingHero";
+import { LandingPage } from "../landing/LandingPage";
 import { GrowPage } from "../grow/GrowPage";
 import { HomePage } from "../../pages/HomePage";
 import { LearnPage } from "../../pages/LearnPage";
@@ -61,7 +62,7 @@ export function AppShell() {
             initial={{ opacity: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 overflow-hidden bg-[var(--bg-primary)]"
+            className="fixed inset-0 z-50 overflow-hidden"
           >
             <OnboardingHero />
           </motion.div>
@@ -98,6 +99,7 @@ export function AppShell() {
                 <ErrorBoundary>
                   <Routes location={location}>
                     <Route path="/home" element={<HomePage />} />
+                    <Route path="/landing" element={<LandingPage />} />
                     <Route path="/learn" element={<LearnPage />} />
                     <Route path="/explore" element={<ExplorePage />} />
                     <Route path="/grow" element={<GrowPage />} />

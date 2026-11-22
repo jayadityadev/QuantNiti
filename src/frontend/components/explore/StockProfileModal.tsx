@@ -86,9 +86,8 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
           return; // Intentionally aborted due to rapid user tapping
         }
         if (activeSymbolRef.current === symbol) {
-          // Fallback mock profile for offline/testing robustness
-          const fallback = generateFallbackProfile(symbol);
-          setProfile(fallback);
+          console.warn(`Unable to fetch real-time intelligence for ${symbol}:`, err);
+          setProfile(null);
           setIsLoading(false);
         }
       });
@@ -97,76 +96,6 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
       controller.abort();
     };
   }, [symbol, isOpen]);
-
-  // Helper generator for fallback data
-  function generateFallbackProfile(sym: string) {
-    return {
-      symbol: sym,
-      name: sym.replace(".NS", ""),
-      sector: "Diversified",
-      current_price: 2450.0,
-      day_change: 22.5,
-      day_change_pct: 0.92,
-      day_high: 2480.0,
-      day_low: 2420.0,
-      week_52_high: 2800.0,
-      week_52_low: 1950.0,
-      volume: 8500000,
-      as_of_date: new Date().toISOString().split("T")[0],
-      forecast: {
-        symbol: sym,
-        current_price: 2450.0,
-        as_of_date: new Date().toISOString().split("T")[0],
-        m1: { horizon: "1M", days: 30, pessimistic_pct: 1.0, base_pct: 3.2, optimistic_pct: 5.8, pessimistic_price: 2474.5, base_price: 2528.4, optimistic_price: 2592.1 },
-        m3: { horizon: "3M", days: 90, pessimistic_pct: 2.5, base_pct: 6.8, optimistic_pct: 12.0, pessimistic_price: 2511.2, base_price: 2616.6, optimistic_price: 2744.0 },
-        m6: { horizon: "6M", days: 180, pessimistic_pct: 4.0, base_pct: 13.5, optimistic_pct: 21.0, pessimistic_price: 2548.0, base_price: 2780.7, optimistic_price: 2964.5 },
-        m12: { horizon: "12M", days: 365, pessimistic_pct: 7.5, base_pct: 22.0, optimistic_pct: 36.0, pessimistic_price: 2633.7, base_price: 2989.0, optimistic_price: 3332.0 },
-      },
-      suitability: {
-        score: 82.0,
-        badge: "Strong Buy",
-        primary_regime: "Bullish Momentum",
-        description: "High relative strength and strong factor score in the active regime.",
-      },
-      factors: {
-        rsi_14: 61.5,
-        macd: 14.2,
-        macd_hist: 3.1,
-        bollinger_pct_b: 0.72,
-        ema_20_50_spread: 2.1,
-        ema_50_200_spread: 6.8,
-        momentum_1m: 3.2,
-        momentum_3m: 6.8,
-        momentum_6m: 13.5,
-        momentum_12m: 22.0,
-        realized_vol_30d: 15.2,
-        realized_vol_90d: 17.1,
-        max_drawdown_1y: -10.2,
-        beta: 1.02,
-        alpha_annualized: 4.2,
-        market_correlation: 0.79,
-      },
-      benchmark_comparison: {
-        stock_3y_return: 58.2,
-        benchmark_3y_return: 42.1,
-        alpha: 4.5,
-        beta: 1.02,
-        correlation: 0.79,
-      },
-      peers: [],
-      esg: {
-        symbol: sym,
-        name: sym.replace(".NS", ""),
-        sector: "Diversified",
-        esg_composite: 76.0,
-        esg_environment: 72.0,
-        esg_social: 75.0,
-        esg_governance: 81.0,
-        badge: "Leader",
-        source: "BRSR / CRISIL ESG",
-      },
-    };
-  }
 
   const isPositive = (profile?.day_change_pct || 0) >= 0;
 
@@ -528,8 +457,13 @@ export const StockProfileModal: React.FC<StockProfileModalProps> = ({
             </div>
           </>
         ) : (
-          <div className="text-center py-8 text-sm text-[var(--text-muted)]">
-            Select a stock to view its intelligence profile.
+          <div className="text-center py-10 px-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-2">
+            <p className="text-sm font-bold text-[var(--text-main)]">
+              {symbol ? `Intelligence profile unavailable for ${symbol}` : "Select a stock to view profile"}
+            </p>
+            <p className="text-xs text-[var(--text-muted)] max-w-sm mx-auto">
+              Live market telemetry could not be verified for this asset. Please try again or explore other universe stocks.
+            </p>
           </div>
         )}
       </div>

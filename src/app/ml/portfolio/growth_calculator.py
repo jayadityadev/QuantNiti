@@ -235,7 +235,7 @@ def build_benchmark_comparisons(
         projected_return_pct=round(nifty_base_return_pct, 2),
         projected_value=nifty_val,
         projected_gain_rupees=nifty_gain,
-        drawdown_risk_label="Market Risk (~15%–20% Drawdown)",
+        drawdown_risk_label="Market Risk (~15% - 20% Drawdown)",
         summary=f"Unhedged market index performance tracking large-cap benchmark (+{nifty_base_return_pct:.1f}%).",
     )
 

@@ -24,14 +24,9 @@ export const TopRecommendations: React.FC<TopRecommendationsProps> = ({ classNam
           } else if (data && Array.isArray(data.stocks)) {
             setAllExploreStocks(data.stocks);
           }
-        } catch {
-          // Fallback initial sample picks
-          setAllExploreStocks([
-            { symbol: "RELIANCE", name: "Reliance Industries Ltd.", sector: "Energy & Oil", current_price: 2980.5, growth_6m_base_pct: 18.4 },
-            { symbol: "TCS", name: "Tata Consultancy Services Ltd.", sector: "Information Technology", current_price: 4120.0, growth_6m_base_pct: 15.2 },
-            { symbol: "HDFCBANK", name: "HDFC Bank Ltd.", sector: "Financial Services", current_price: 1680.0, growth_6m_base_pct: 12.8 },
-            { symbol: "BHARTIARTL", name: "Bharti Airtel Ltd.", sector: "Telecommunication", current_price: 1540.0, growth_6m_base_pct: 14.1 },
-          ]);
+        } catch (err) {
+          // Never inject fabricated prices into the shared store on fetch error
+          console.warn("Unable to fetch live explore stocks:", err);
         }
       };
       fetchStocks();
@@ -61,16 +56,21 @@ export const TopRecommendations: React.FC<TopRecommendationsProps> = ({ classNam
 
         <Link
           to="/explore"
-          aria-label="View All 50 Stocks"
+          aria-label="View all 50 universe stocks"
           className="text-xs font-bold text-accent hover:underline flex items-center gap-1"
         >
-          <span>View All 50</span>
+          <span>Explore All</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
 
       <div className="flex flex-col gap-2">
-        {topPicks.map((stock, index) => {
+        {topPicks.length === 0 ? (
+          <div className="p-4 text-center rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+            <span className="text-xs text-[var(--text-muted)]">Telemetry syncing with live NSE feeds...</span>
+          </div>
+        ) : (
+          topPicks.map((stock, index) => {
           const growth = stock.growth_6m_base_pct || 12.5;
 
           return (
@@ -111,7 +111,7 @@ export const TopRecommendations: React.FC<TopRecommendationsProps> = ({ classNam
               </Link>
             </motion.div>
           );
-        })}
+        }))}
       </div>
     </GlassCard>
   );

@@ -1,7 +1,8 @@
 """ExploreService facade providing 360-degree stock intelligence profiles and forecasts."""
 
 from datetime import datetime, timezone
-from typing import List, Optional
+import time
+from typing import List, Optional, Tuple
 import pandas as pd
 
 from app.core.models import (
@@ -44,6 +45,7 @@ class ExploreService:
         self.market_service = market_service
         self.regime_service = regime_service or RegimeService(market_service=market_service)
         self.forecaster = forecaster or MultiHorizonForecaster()
+        self._explore_cache: Optional[Tuple[float, List[ExploreStockSummary]]] = None
 
     def get_growth_forecast(self, symbol: str) -> MultiHorizonGrowthForecast:
         """Generate multi-horizon probabilistic return cones for a stock."""
@@ -197,27 +199,69 @@ class ExploreService:
         asset_class: Optional[str] = None,
     ) -> List[ExploreStockSummary]:
         """List all universe assets (equities, commodity ETFs, sectoral) with summary growth projections and regime suitability."""
-        all_meta = get_universe_metadata(include_benchmarks=False)
-        index_df = self.market_service.get_history("^NSEI")
-        current_regime = self.regime_service.get_current_regime().regime
+        now = time.time()
+        all_results: List[ExploreStockSummary]
 
+        if self._explore_cache is not None and (now - self._explore_cache[0]) < 60.0:
+            all_results = self._explore_cache[1]
+        else:
+            all_meta = get_universe_metadata(include_benchmarks=False)
+            index_df = self.market_service.get_history("^NSEI")
+            current_regime = self.regime_service.get_current_regime().regime
+
+            computed: List[ExploreStockSummary] = []
+            for item in all_meta:
+                sym = item["symbol"]
+                name = item["name"]
+                st_sector = item["sector"]
+                ac_raw = item.get("asset_class", "EQUITY")
+                st_asset_class = ac_raw.value if hasattr(ac_raw, "value") else str(ac_raw)
+
+                try:
+                    quote = self.market_service.get_latest_quote(sym)
+                    stock_df = self.market_service.get_history(sym)
+                    factors = extract_stock_factors(stock_df, index_df)
+                    suit = compute_regime_suitability(factors, active_regime=current_regime)
+                    forecast = self.forecaster.predict_growth_cones(stock_df, index_df, current_price=quote.current_price, symbol=sym)
+
+                    esg_score = get_esg_score_for_symbol(sym)
+                    esg_comp = esg_score.get("esg_composite") if esg_score else None
+                    esg_badge = esg_score.get("badge") if esg_score else None
+
+                    computed.append(
+                        ExploreStockSummary(
+                            symbol=sym,
+                            name=name,
+                            sector=st_sector,
+                            current_price=quote.current_price,
+                            day_change=quote.day_change,
+                            day_change_pct=quote.day_change_pct,
+                            growth_6m_base_pct=forecast.m6.base_pct,
+                            growth_6m_optimistic_pct=forecast.m6.optimistic_pct,
+                            growth_6m_pessimistic_pct=forecast.m6.pessimistic_pct,
+                            regime_suitability_score=suit.score,
+                            regime_badge=suit.badge,
+                            volume=quote.volume,
+                            asset_class=st_asset_class,
+                            esg_composite=esg_comp,
+                            esg_badge=esg_badge,
+                        )
+                    )
+                except Exception:
+                    pass
+
+            self._explore_cache = (now, computed)
+            all_results = computed
+
+        # Apply filtering on the unified list
         results: List[ExploreStockSummary] = []
-
-        for item in all_meta:
-            sym = item["symbol"]
-            name = item["name"]
-            st_sector = item["sector"]
-            ac_raw = item.get("asset_class", "EQUITY")
-            st_asset_class = ac_raw.value if hasattr(ac_raw, "value") else str(ac_raw)
-
-            # Filter by asset_class
-            if asset_class and st_asset_class.upper() != asset_class.strip().upper():
+        for stock in all_results:
+            if asset_class and stock.asset_class.upper() != asset_class.strip().upper():
                 continue
 
-            # Filter by sector / theme with normalized category mapping
             if sector:
                 s_lower = sector.strip().lower()
-                st_lower = st_sector.lower()
+                st_lower = stock.sector.lower()
                 matched = False
                 if s_lower in ("banking", "finance", "financial services"):
                     matched = "financial" in st_lower or "bank" in st_lower
@@ -234,7 +278,7 @@ class ExploreService:
                 elif s_lower in ("metals", "metal", "mining", "metals & mining"):
                     matched = "metal" in st_lower or "mining" in st_lower
                 elif s_lower in ("commodities", "commodity"):
-                    matched = "commodit" in st_lower or st_asset_class == "COMMODITY_ETF"
+                    matched = "commodit" in st_lower or stock.asset_class == "COMMODITY_ETF"
                 elif s_lower == "defense":
                     matched = "defense" in st_lower
                 else:
@@ -242,43 +286,13 @@ class ExploreService:
                 if not matched:
                     continue
 
-            # Filter by search
             if search:
                 q = search.strip().lower()
-                if q not in sym.lower() and q not in name.lower() and q not in st_sector.lower():
+                if q not in stock.symbol.lower() and q not in stock.name.lower() and q not in stock.sector.lower():
                     continue
 
-            try:
-                quote = self.market_service.get_latest_quote(sym)
-                stock_df = self.market_service.get_history(sym)
-                factors = extract_stock_factors(stock_df, index_df)
-                suit = compute_regime_suitability(factors, active_regime=current_regime)
-                forecast = self.forecaster.predict_growth_cones(stock_df, index_df, current_price=quote.current_price, symbol=sym)
+            results.append(stock)
 
-                esg_score = get_esg_score_for_symbol(sym)
-                esg_comp = esg_score.get("esg_composite") if esg_score else None
-                esg_badge = esg_score.get("badge") if esg_score else None
-
-                results.append(
-                    ExploreStockSummary(
-                        symbol=sym,
-                        name=name,
-                        sector=st_sector,
-                        current_price=quote.current_price,
-                        day_change=quote.day_change,
-                        day_change_pct=quote.day_change_pct,
-                        growth_6m_base_pct=forecast.m6.base_pct,
-                        growth_6m_optimistic_pct=forecast.m6.optimistic_pct,
-                        growth_6m_pessimistic_pct=forecast.m6.pessimistic_pct,
-                        regime_suitability_score=suit.score,
-                        regime_badge=suit.badge,
-                        volume=quote.volume,
-                        asset_class=st_asset_class,
-                        esg_composite=esg_comp,
-                        esg_badge=esg_badge,
-                    )
-                )
-            except Exception:
-                pass
+        return results
 
         return results

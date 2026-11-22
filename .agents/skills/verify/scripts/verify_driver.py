@@ -106,7 +106,7 @@ def drive_feature(feature: str, port: int, output_dir: Path) -> int:
 
         if feature == "market-regime-radar":
             page.goto(base_url)
-            page.wait_for_load_state("networkidle")
+            page.wait_for_load_state("domcontentloaded")
             time.sleep(1)
             # Set onboarded so we see the Home tab with Regime Radar
             page.evaluate("""() => {
@@ -114,7 +114,7 @@ def drive_feature(feature: str, port: int, output_dir: Path) -> int:
                 localStorage.setItem('quantniti_risk_persona', 'Balanced');
                 window.location.reload();
             }""")
-            page.wait_for_load_state("networkidle")
+            page.wait_for_load_state("domcontentloaded")
             time.sleep(2)
 
             snap_path = output_dir / "regime_radar_ui.png"
@@ -123,7 +123,7 @@ def drive_feature(feature: str, port: int, output_dir: Path) -> int:
 
             # Verify and save API contract state
             status, regime_json = http_get(f"{base_url}/api/regime/current")
-            assert status == 200, f"Regime API failed with status {status}"
+            assert status == 200, f"Regime API failed with status {status}, payload: {regime_json}"
             json_path = output_dir / "regime_radar_api.json"
             json_path.write_text(json.dumps(regime_json, indent=2), encoding="utf-8")
             print(f"  ✓ Saved API Evidence: {json_path}")
@@ -131,11 +131,11 @@ def drive_feature(feature: str, port: int, output_dir: Path) -> int:
 
         elif feature == "onboarding-quiz":
             page.goto(base_url)
-            page.wait_for_load_state("networkidle")
-            # Clear storage to ensure quiz is visible
+            page.wait_for_load_state("domcontentloaded")
+            # Clear storage to ensure landing/quiz is visible
             page.evaluate("() => localStorage.clear()")
             page.reload()
-            page.wait_for_load_state("networkidle")
+            page.wait_for_load_state("domcontentloaded")
             time.sleep(1.5)
 
             snap_path = output_dir / "onboarding_quiz_ui.png"
@@ -144,13 +144,13 @@ def drive_feature(feature: str, port: int, output_dir: Path) -> int:
 
         elif feature == "grow-ai-basket":
             page.goto(base_url)
-            page.wait_for_load_state("networkidle")
+            page.wait_for_load_state("domcontentloaded")
             page.evaluate("""() => {
                 localStorage.setItem('quantniti_onboarded', 'true');
                 localStorage.setItem('quantniti_risk_persona', 'Balanced');
                 window.location.reload();
             }""")
-            page.wait_for_load_state("networkidle")
+            page.wait_for_load_state("domcontentloaded")
             time.sleep(1)
 
             # Navigate to Grow tab

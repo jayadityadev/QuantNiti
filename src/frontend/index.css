@@ -10,12 +10,15 @@
   --bg-card-subtle: #F1F5F9;
   --text-main: #0F172A;
   --text-muted: #475569;
-  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-subtle: rgba(15, 23, 42, 0.12);
   --accent-primary: #0F766E;
   --accent-secondary: #0284C7;
   --color-profit: #059669;
   --color-loss: #E11D48;
+  --color-warning: #D97706;
+  --color-warning-subtle: rgba(217, 119, 6, 0.12);
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 [data-theme="dark"] {
@@ -30,6 +33,8 @@
   --accent-secondary: #38BDF8;
   --color-profit: #10B981;
   --color-loss: #F43F5E;
+  --color-warning: #F59E0B;
+  --color-warning-subtle: rgba(245, 158, 11, 0.12);
 }
 
 html {
