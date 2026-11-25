@@ -10,6 +10,8 @@ import {
   Moon,
   Shield,
   Activity,
+  Wrench,
+  GraduationCap,
 } from "lucide-react";
 import { useAppStore, NavTab } from "../../store/useAppStore";
 import { useTheme } from "../../context/ThemeContext";
@@ -55,6 +57,20 @@ const DESKTOP_NAV_ITEMS: NavItem[] = [
     icon: Briefcase,
     description: "Real-time tracking and rebalancing",
   },
+  {
+    id: "lab",
+    label: "Quant Lab",
+    path: "/lab",
+    icon: Wrench,
+    description: "Strategy backtesting & shootout",
+  },
+  {
+    id: "learn",
+    label: "Learning Academy",
+    path: "/learn",
+    icon: GraduationCap,
+    description: "Concept mastery & video lectures",
+  },
 ];
 
 export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
@@ -64,7 +80,7 @@ export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
   const { theme, toggleTheme } = useTheme();
   const { openModal, activeTab, setActiveTab, activeRegime, riskPersona } = useAppStore();
 
-  const regimeName = activeRegime?.current_regime || "Sideways / Range";
+  const regimeName = activeRegime?.regime || activeRegime?.current_regime || "Low-Volatility Bull";
 
   return (
     <aside

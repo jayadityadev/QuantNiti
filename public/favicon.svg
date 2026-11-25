@@ -1,41 +1,79 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
-    <linearGradient id="qn-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7C3AED" />
-      <stop offset="50%" stop-color="#6366F1" />
-      <stop offset="100%" stop-color="#06B6D4" />
+    <!-- Background Squircle Gradient -->
+    <linearGradient id="qn-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E1B4B" />
     </linearGradient>
-    <linearGradient id="qn-glow" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#A78BFA" />
-      <stop offset="100%" stop-color="#38BDF8" />
+
+    <!-- Vibrant Quantum Arc Gradient -->
+    <linearGradient id="qn-ring-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="50%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#10B981" />
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#4C1D95" flood-opacity="0.4" />
+
+    <!-- Alpha Arrow Glow Gradient -->
+    <linearGradient id="qn-arrow-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#34D399" />
+    </linearGradient>
+
+    <!-- Filter for Subtle Ambient Depth -->
+    <filter id="qn-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#6366F1" flood-opacity="0.35" />
     </filter>
   </defs>
 
-  <!-- Squircle App Container -->
-  <rect width="512" height="512" rx="118" fill="url(#qn-bg-grad)" filter="url(#shadow)" />
+  <!-- Squircle Base Container with Smooth Rounded Corners -->
+  <rect width="512" height="512" rx="128" fill="url(#qn-bg)" />
 
-  <!-- Background Subtle Grid / Quant Geometry -->
-  <path d="M96 256 H416 M256 96 V416" stroke="#ffffff" stroke-opacity="0.08" stroke-width="4" stroke-dasharray="8 8" />
-  <circle cx="256" cy="256" r="140" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="3" />
+  <!-- Subtle Precision Geometric Quant Grid Line -->
+  <circle cx="240" cy="240" r="148" fill="none" stroke="#6366F1" stroke-width="2" stroke-opacity="0.2" stroke-dasharray="6 6" />
 
-  <!-- Modern QuantNiti 'Q' & Alpha Trajectory -->
-  <!-- Outer Q-ring -->
-  <circle cx="240" cy="235" r="105" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="round" />
-  
-  <!-- Candlestick / Factor Trend Rising inside Q -->
-  <line x1="205" y1="210" x2="205" y2="280" stroke="#38BDF8" stroke-width="12" stroke-linecap="round" />
-  <rect x="197" y="225" width="16" height="35" rx="4" fill="#38BDF8" />
+  <!-- Main Q Ring: Dynamic Unbroken Precision Torus -->
+  <path
+    d="M 240 88
+       A 152 152 0 1 0 348 348
+       A 152 152 0 0 0 392 240
+       A 152 152 0 0 0 240 88 Z"
+    fill="none"
+    stroke="url(#qn-ring-grad)"
+    stroke-width="36"
+    stroke-linecap="round"
+    filter="url(#qn-glow)"
+  />
 
-  <line x1="240" y1="175" x2="240" y2="265" stroke="#A78BFA" stroke-width="12" stroke-linecap="round" />
-  <rect x="232" y="195" width="16" height="45" rx="4" fill="#A78BFA" />
+  <!-- Ascending Alpha Trend Vector (Q Tail + Outperformance Spear) -->
+  <path
+    d="M 285 285 L 430 430"
+    fill="none"
+    stroke="url(#qn-arrow-grad)"
+    stroke-width="38"
+    stroke-linecap="round"
+  />
 
-  <!-- Dynamic Q-tail as Breakthrough Growth Arrow -->
-  <path d="M295 295 L395 395 M395 330 L395 395 L330 395" 
-        fill="none" stroke="url(#qn-glow)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Precision Arrowhead pointing to Top-Right Outperformance -->
+  <path
+    d="M 360 430 L 430 430 L 430 360"
+    fill="none"
+    stroke="url(#qn-arrow-grad)"
+    stroke-width="34"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
 
-  <!-- Quantum Pulse Dot -->
-  <circle cx="395" cy="395" r="8" fill="#FFFFFF" />
+  <!-- Inner Quantum Spark / Core Regime Node -->
+  <circle cx="240" cy="240" r="28" fill="#10B981" />
+  <circle cx="240" cy="240" r="14" fill="#FFFFFF" />
+
+  <!-- Dynamic Factor Wave Arc Inside Q -->
+  <path
+    d="M 160 255 Q 200 210 240 240 T 320 225"
+    fill="none"
+    stroke="#A78BFA"
+    stroke-width="12"
+    stroke-linecap="round"
+    stroke-opacity="0.8"
+  />
 </svg>

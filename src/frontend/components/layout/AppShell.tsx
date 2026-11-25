@@ -12,6 +12,7 @@ import { GrowPage } from "../grow/GrowPage";
 import { HomePage } from "../../pages/HomePage";
 import { LearnPage } from "../../pages/LearnPage";
 import { ExplorePage } from "../../pages/ExplorePage";
+import { QuantLabPage } from "../../pages/QuantLabPage";
 import { PortfolioPage } from "../portfolio/PortfolioPage";
 import { ModalRoot } from "../modals/ModalRoot";
 import { IOSInstallBanner } from "../pwa/IOSInstallBanner";
@@ -29,7 +30,7 @@ export function AppShell() {
     clearActiveAsyncKeys?.();
 
     const rawPath = location.pathname.replace(/^\//, "").toLowerCase();
-    const validTabs: NavTab[] = ["home", "learn", "explore", "grow", "portfolio"];
+    const validTabs: NavTab[] = ["home", "learn", "explore", "grow", "portfolio", "lab"];
     if (validTabs.includes(rawPath as NavTab)) {
       setActiveTab(rawPath as NavTab);
     }
@@ -102,6 +103,7 @@ export function AppShell() {
                     <Route path="/landing" element={<LandingPage />} />
                     <Route path="/learn" element={<LearnPage />} />
                     <Route path="/explore" element={<ExplorePage />} />
+                    <Route path="/lab" element={<QuantLabPage />} />
                     <Route path="/grow" element={<GrowPage />} />
                     <Route path="/portfolio" element={<PortfolioPage />} />
                     <Route path="*" element={<Navigate to="/home" replace />} />

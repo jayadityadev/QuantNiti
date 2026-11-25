@@ -83,26 +83,26 @@ export const StockCard: React.FC<StockCardProps> = ({ stock, onSelect }) => {
       onClick={() => onSelect(stock)}
       className="cursor-pointer select-none"
     >
-      <GlassCard className="rounded-2xl p-4 flex flex-col justify-between h-full hover:border-violet-500/40 transition-colors duration-200 group">
+      <GlassCard className="rounded-2xl p-5 flex flex-col justify-between h-full hover:border-violet-500/40 transition-colors duration-200 group gap-4">
         {/* Top Row: Symbol, Sector, and Regime Suitability Badge */}
         <div className="flex items-start justify-between gap-2">
-          <div>
-            <div className="flex items-center gap-1.5">
+          <div className="flex-1 min-w-0 pr-2">
+            <div className="flex items-center gap-2">
               <span className="text-xs font-mono font-bold tracking-tight text-[var(--text-muted)] group-hover:text-accent transition-colors">
                 {stock.symbol}
               </span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-300 font-medium">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-300 font-medium truncate max-w-[140px]">
                 {stock.sector}
               </span>
             </div>
-            <h3 className="font-bold text-base text-[var(--text-main)] mt-0.5 leading-snug line-clamp-1">
+            <h3 className="font-bold text-base text-[var(--text-main)] mt-1 leading-snug truncate" title={stock.name}>
               {stock.name}
             </h3>
           </div>
 
           {/* Color-coded Regime Suitability Badge */}
           <div
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border shadow-sm ${badgeConfig.bgClass}`}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border shadow-sm shrink-0 ${badgeConfig.bgClass}`}
           >
             <BadgeIcon className="w-3.5 h-3.5 shrink-0" />
             <span>{badgeConfig.label}</span>
@@ -110,7 +110,7 @@ export const StockCard: React.FC<StockCardProps> = ({ stock, onSelect }) => {
         </div>
 
         {/* Middle Row: Price & Day Change */}
-        <div className="my-3 flex items-baseline justify-between">
+        <div className="my-1 flex items-baseline justify-between">
           <div className="flex items-baseline gap-1">
             <span className="text-xl font-black text-[var(--text-main)] tracking-tight">
               ₹<AnimatedNumber value={stock.current_price} formatter={(v) => v.toFixed(2)} />

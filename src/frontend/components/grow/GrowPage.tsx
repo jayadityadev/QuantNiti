@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Sparkles, Wand2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
 import { useAbortableRequest } from "../../hooks/useAbortableRequest";
 import { ProgressBar } from "../ui/ProgressBar";
-import { PrimaryButton } from "../ui/PrimaryButton";
 import { SummaryPills } from "./SummaryPills";
 import { Step1Capital } from "./Step1Capital";
 import { Step2Horizon } from "./Step2Horizon";
@@ -330,21 +329,6 @@ export function GrowPage() {
           </AnimatePresence>
         )}
       </div>
-
-      {/* Sticky Bottom "Generate AI Basket" CTA for Step 3 */}
-      {step === 3 && !isLoading && (
-        <div className="sticky bottom-0 inset-x-0 pt-3 pb-2 bg-[var(--bg-primary)]/80 backdrop-blur-md border-t border-violet-500/20 -mx-4 px-4 z-20">
-          <PrimaryButton
-            fullWidth
-            onClick={handleGenerateBasket}
-            disabled={isLoading}
-            loading={isLoading}
-            icon={<Wand2 className="w-4 h-4" />}
-          >
-            Generate AI Basket
-          </PrimaryButton>
-        </div>
-      )}
 
       {error && (
         <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs">

@@ -490,36 +490,8 @@ describe("ExplorePage Component Seam (Ticket 07)", () => {
     });
   });
 
-  it("Pro Tools toggle is collapsed by default and reveals Quant Lab Backtester on toggle", async () => {
+  it("delegates Pro Tools Backtester to dedicated Quant Lab page (/lab) per design spec", () => {
     render(<ExplorePage />);
-
-    // Pro tools header exists
-    const toggleButton = screen.getByRole("button", {
-      name: /pro tools: quant lab backtester/i,
-    });
-    expect(toggleButton).toBeDefined();
-
-    // Backtester controls not visible when collapsed
-    expect(screen.queryByTestId("backtester-controls")).toBeNull();
-
-    // Click toggle to expand
-    fireEvent.click(toggleButton);
-
-    // Now backtester controls and strategy selector are revealed
-    await waitFor(() => {
-      expect(screen.getByTestId("backtester-controls")).toBeDefined();
-      expect(screen.getByText(/strategy/i)).toBeDefined();
-      expect(screen.getByRole("button", { name: /run backtest/i })).toBeDefined();
-    });
-
-    // Run backtest
-    fireEvent.click(screen.getByRole("button", { name: /run backtest/i }));
-
-    // Backtest results metrics and equity curve rendered
-    await waitFor(() => {
-      expect(screen.getByText(/total return/i)).toBeDefined();
-      expect(screen.getByText(/sharpe ratio/i)).toBeDefined();
-      expect(screen.getByTestId("backtest-equity-chart")).toBeDefined();
-    });
+    expect(screen.queryByRole("button", { name: /pro tools: quant lab backtester/i })).toBeNull();
   });
 });

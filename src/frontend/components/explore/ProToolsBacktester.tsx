@@ -29,8 +29,14 @@ const ASSETS = [
   { symbol: "^NSEI", name: "NIFTY 50 Index" },
 ];
 
-export const ProToolsBacktester: React.FC = () => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+export interface ProToolsBacktesterProps {
+  defaultExpanded?: boolean;
+}
+
+export const ProToolsBacktester: React.FC<ProToolsBacktesterProps> = ({
+  defaultExpanded = false,
+}) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
   const [selectedStrategy, setSelectedStrategy] = useState<string>("MA_CROSSOVER");
   const [selectedSymbol, setSelectedSymbol] = useState<string>("RELIANCE.NS");
   const [initialCapital, setInitialCapital] = useState<number>(100000);

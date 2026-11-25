@@ -136,6 +136,7 @@ export const PortfolioPage: React.FC = () => {
             body: JSON.stringify({
               portfolio_id: activePortfolio.portfolio_id,
               initial_lump_sum: activePortfolio.current_value,
+              monthly_sip: 0,
               tenure_years: 10,
             }),
           }
@@ -181,8 +182,8 @@ export const PortfolioPage: React.FC = () => {
         current_value,
         unrealized_pnl: 0,
         unrealized_pnl_pct: 0,
-        pnl_1d: Math.round(invested_amount * 0.008),
-        pnl_1d_pct: 0.8,
+        pnl_1d: 0,
+        pnl_1d_pct: 0.0,
       };
     });
 
@@ -201,8 +202,8 @@ export const PortfolioPage: React.FC = () => {
       current_value: invested_capital + cash,
       total_pnl: 0,
       total_pnl_pct: 0,
-      pnl_1d: newHoldings.reduce((sum, h) => sum + h.pnl_1d, 0),
-      pnl_1d_pct: 0.8,
+      pnl_1d: 0,
+      pnl_1d_pct: 0.0,
       max_drawdown_pct: 0.0,
       holdings: newHoldings,
       benchmark_comparison: {

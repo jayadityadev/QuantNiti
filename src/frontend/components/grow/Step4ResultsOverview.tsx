@@ -109,12 +109,12 @@ export const Step4ResultsOverview: React.FC<Step4ResultsOverviewProps> = ({
         </div>
       </div>
 
-      {/* Asset Allocations List */}
+      {/* Asset Allocations List (Fully expanded without scrollbar) */}
       <div className="space-y-2">
         <h3 className="text-xs font-semibold text-[var(--text-main)]">
           Asset allocations ({allocations.length})
         </h3>
-        <div className="max-h-56 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+        <div className="space-y-2">
           {allocations.map((item: any, index: number) => {
             const weightPct = item.weight > 1 ? item.weight : item.weight * 100;
             const shares = item.shares || item.shares_approx || 0;

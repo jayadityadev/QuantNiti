@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, Check, Star, Sliders } from "lucide-react";
 import { TimeHorizon } from "../../store/useAppStore";
@@ -60,11 +60,16 @@ export const Step2Horizon: React.FC<Step2HorizonProps> = ({
   onBack,
 }) => {
   const isPreset = ["1M", "3M", "6M", "12M"].includes(horizon);
-  const initialCustomMonths = !isPreset
-    ? parseInt(horizon.replace(/\D/g, "") || "9", 10)
-    : 9;
+  const initialCustomMonths = parseInt(horizon.replace(/\D/g, "") || "6", 10);
   const [customMonths, setCustomMonths] = useState<number>(initialCustomMonths);
   const [isCustomMode, setIsCustomMode] = useState<boolean>(!isPreset);
+
+  useEffect(() => {
+    const parsed = parseInt(horizon.replace(/\D/g, "") || "6", 10);
+    if (!isNaN(parsed) && parsed > 0) {
+      setCustomMonths(parsed);
+    }
+  }, [horizon]);
 
   const handleCustomSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value, 10);
@@ -75,6 +80,8 @@ export const Step2Horizon: React.FC<Step2HorizonProps> = ({
 
   const handleSelectPreset = (id: TimeHorizon) => {
     setIsCustomMode(false);
+    const months = parseInt(id.replace(/\D/g, "") || "6", 10);
+    setCustomMonths(months);
     onHorizonChange(id);
   };
 

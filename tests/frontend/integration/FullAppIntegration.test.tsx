@@ -256,12 +256,8 @@ describe("QuantNiti Full Application Integration Suite (Ticket 11)", () => {
       await user.clear(searchInput);
       expect(screen.getByText("RELIANCE.NS")).toBeInTheDocument();
 
-      const proToolsToggle = await screen.findByTestId("pro-tools-toggle");
-      expect(proToolsToggle).toBeInTheDocument();
-      await user.click(proToolsToggle);
-
-      expect(await screen.findByTestId("backtester-controls")).toBeInTheDocument();
-      expect(screen.getByText(/Run Backtest/i)).toBeInTheDocument();
+      // Pro tools backtester removed from explore tab (delegated to /lab)
+      expect(screen.queryByTestId("pro-tools-toggle")).not.toBeInTheDocument();
     });
   });
 

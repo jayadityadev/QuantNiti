@@ -5,7 +5,6 @@ import { StockCard, ExploreStockItem } from "../components/explore/StockCard";
 import { StockProfileModal } from "../components/explore/StockProfileModal";
 import { useAppStore } from "../store/useAppStore";
 
-import { ProToolsBacktester } from "../components/explore/ProToolsBacktester";
 import { abortRegistry } from "../services/abortRegistry";
 import { ChipButton } from "../components/ui/ChipButton";
 import { apiUrl } from "../config";
@@ -350,7 +349,7 @@ export const ExplorePage: React.FC = () => {
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
         >
           {filteredStocks.map((stock) => (
             <StockCard
@@ -371,9 +370,6 @@ export const ExplorePage: React.FC = () => {
           </p>
         </div>
       )}
-
-      {/* Pro Tools: Strategy Backtester Toggle */}
-      <ProToolsBacktester />
 
       {/* 360 Stock Intelligence Profile Modal */}
       <StockProfileModal

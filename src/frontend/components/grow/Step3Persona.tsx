@@ -154,7 +154,7 @@ export const Step3Persona: React.FC<Step3PersonaProps> = ({
         </GhostButton>
 
         <PrimaryButton onClick={onNext} icon={<ArrowRight className="w-4 h-4" />}>
-          Review & Generate
+          Review & Generate AI Basket
         </PrimaryButton>
       </div>
     </div>

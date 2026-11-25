@@ -185,26 +185,33 @@ export const CompoundingTrajectoryChart: React.FC<CompoundingTrajectoryChartProp
     trajectory.yearly_trajectories[trajectory.yearly_trajectories.length - 1]
       ?.bank_fd_value ?? 0;
   const alphaVal = tenYearMedian - tenYearFd;
+  const isAlphaPositive = alphaVal >= 0;
 
   return (
     <GlassCard className="p-5 space-y-4">
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <TrendingUp className="w-4 h-4 text-accent" />
-            <h3 className="text-xs font-semibold text-[var(--text-main)]">
-              10-year compounding wealth trajectory
+            <h3 className="text-sm font-bold text-[var(--text-main)]">
+              10-Year Compounding Wealth Trajectory
             </h3>
           </div>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">
-            Geometric Brownian Motion (GBM) simulation vs 7% Bank FD Hurdle
+            10-Year Monte Carlo Geometric Brownian Motion (GBM) simulation vs 7% Bank Fixed Deposit Hurdle
           </p>
         </div>
 
-        <div className="text-right">
-          <span className="text-[10px] text-[var(--text-muted)] block">10Y Alpha vs FD</span>
-          <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-            +{formatRupees(alphaVal)}
+        <div className="text-right shrink-0">
+          <span className="text-[10px] text-[var(--text-muted)] block font-medium uppercase tracking-wider">
+            10Y Alpha vs FD
+          </span>
+          <span
+            className={`text-xs font-bold font-mono tabular-nums ${
+              isAlphaPositive ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
+            }`}
+          >
+            {isAlphaPositive ? "+" : ""}{formatRupees(alphaVal)}
           </span>
         </div>
       </div>

@@ -97,10 +97,19 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
     Governance: 78.4,
   };
 
+  const ESG_LABEL_MAP: Record<string, string> = {
+    esg_environment: "Environmental",
+    esg_social: "Social",
+    esg_governance: "Governance",
+    environmental: "Environmental",
+    social: "Social",
+    governance: "Governance",
+  };
+
   const benchmarks = basket?.benchmark_comparisons || [
-    { name: "Bank FD (7.0% p.a.)", return_pct: 3.5, label: "Low Risk Fixed" },
-    { name: "NIFTY 50 Benchmark", return_pct: 6.2, label: "Market Index" },
-    { name: "QuantNiti AI Basket", return_pct: 9.8, label: "Regime-Adaptive", highlight: true },
+    { name: "Bank FD (7.0% p.a.)", projected_return_pct: 3.5, label: "Low Risk Fixed" },
+    { name: "NIFTY 50 Benchmark", projected_return_pct: 6.2, label: "Market Index" },
+    { name: "QuantNiti AI Basket", projected_return_pct: 9.8, label: "Regime-Adaptive", highlight: true },
   ];
 
   const filteredReviews = SAMPLE_REVIEWS.filter(
@@ -143,12 +152,15 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
 
         {/* ESG Breakdown */}
         <div className="grid grid-cols-3 gap-2 pt-2 border-t border-teal-500/20">
-          {Object.entries(esgBreakdown).map(([key, val]: [string, any]) => (
-            <div key={key} className="text-center p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
-              <span className="text-xs text-[var(--text-muted)] font-medium capitalize block">{key}</span>
-              <span className="text-xs font-bold text-teal-600 dark:text-teal-200 mt-0.5 block">{Number(val).toFixed(0)}%</span>
-            </div>
-          ))}
+          {Object.entries(esgBreakdown).map(([key, val]: [string, any]) => {
+            const label = ESG_LABEL_MAP[key.toLowerCase()] || key.replace(/^esg_/, "");
+            return (
+              <div key={key} className="text-center p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+                <span className="text-xs text-[var(--text-muted)] font-medium capitalize block">{label}</span>
+                <span className="text-xs font-bold text-teal-600 dark:text-teal-200 mt-0.5 block">{Number(val).toFixed(0)}%</span>
+              </div>
+            );
+          })}
         </div>
       </GlassCard>
 
@@ -162,55 +174,61 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {/* Pillar 1 */}
+          {/* Pillar 1: Regime Suitability */}
           <div className="p-3.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-1">
             <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
               Pillar 1: Regime suitability
             </span>
             <p className="text-xs font-bold text-[var(--text-main)]">
-              {trustCard?.pillar_1_regime_suitability || `${basket?.active_regime || "Bull"} Adaptive`}
+              {trustCard?.regime_context?.regime || trustCard?.pillar_1_regime_suitability || `${basket?.active_regime || "Bull"} Adaptive`}
             </p>
             <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-              Factor tilts conditioned on macroeconomic volatility and price dispersion.
+              {trustCard?.regime_context?.summary || "Factor tilts conditioned on macroeconomic volatility and price dispersion."}
             </p>
           </div>
 
-          {/* Pillar 2 */}
+          {/* Pillar 2: Model Reliability */}
           <div className="p-3.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-1">
             <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
               Pillar 2: Directional hit rate
             </span>
             <p className="text-xs font-bold text-[var(--text-main)]">
-              {trustCard?.pillar_2_hit_rate || "68.4% Backtested Win Rate"}
+              {trustCard?.model_reliability?.backtested_hit_rate_pct
+                ? `${trustCard.model_reliability.backtested_hit_rate_pct}% Backtested Win Rate`
+                : (trustCard?.pillar_2_hit_rate || "74.8% Backtested Win Rate")}
             </p>
             <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-              Based on historical outperformance across identical market regimes.
+              {trustCard?.model_reliability?.summary || "Based on historical outperformance across identical market regimes."}
             </p>
           </div>
 
-          {/* Pillar 3 */}
+          {/* Pillar 3: Drawdown Guardrail */}
           <div className="p-3.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-1">
             <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
               Pillar 3: Stress drawdown limit
             </span>
             <p className="text-xs font-bold text-[var(--text-main)]">
-              {trustCard?.pillar_3_drawdown || "Capped at < 12% Drawdown"}
+              {trustCard?.drawdown_guardrail?.max_drawdown_limit_pct !== undefined
+                ? `Capped at < ${Math.abs(trustCard.drawdown_guardrail.max_drawdown_limit_pct).toFixed(1)}% Drawdown`
+                : (trustCard?.pillar_3_drawdown || "Capped at < 12% Drawdown")}
             </p>
             <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-              Strict HRP asset clustering prevents single-sector contagion risks.
+              {trustCard?.drawdown_guardrail?.summary || "Strict HRP asset clustering prevents single-sector contagion risks."}
             </p>
           </div>
 
-          {/* Pillar 4 */}
+          {/* Pillar 4: Cost Savings */}
           <div className="p-3.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] space-y-1">
             <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
               Pillar 4: Fee savings
             </span>
             <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-              {trustCard?.pillar_4_fee_savings || "Save ~₹3,200/yr vs Traditional PMS"}
+              {trustCard?.disintermediation_savings?.estimated_annual_savings_rupees
+                ? `Save ~₹${Math.round(trustCard.disintermediation_savings.estimated_annual_savings_rupees).toLocaleString("en-IN")}/yr vs Traditional PMS`
+                : (trustCard?.pillar_4_fee_savings || "Save ~₹3,200/yr vs Traditional PMS")}
             </p>
             <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-              Zero distributor commission drag using direct low-cost ETF instruments.
+              {trustCard?.disintermediation_savings?.summary || "Zero distributor commission drag using direct low-cost ETF instruments."}
             </p>
           </div>
         </div>
@@ -227,27 +245,37 @@ export const Step5DeepDive: React.FC<Step5DeepDiveProps> = ({
 
         <div className="space-y-2">
           {benchmarks.map((bm: any, i: number) => {
-            const isHighlight = bm.highlight || bm.name.includes("QuantNiti");
+            const isHighlight = bm.highlight || bm.name.includes("QuantNiti") || bm.name.includes("AI Optimized");
+            const returnPct = bm.projected_return_pct ?? bm.return_pct ?? 0;
+            const subtitle = bm.summary || bm.drawdown_risk_label || bm.label;
+
             return (
               <div
                 key={bm.name || i}
-                className={`flex items-center justify-between p-3 rounded-xl border ${
+                className={`flex items-center justify-between p-3.5 rounded-xl border ${
                   isHighlight
                     ? "bg-violet-500/15 border-violet-500/40 text-[var(--text-main)]"
                     : "bg-[var(--bg-card-subtle)] border-[var(--border-subtle)] text-[var(--text-main)]"
                 }`}
               >
-                <div>
-                  <p className="text-xs font-semibold">{bm.name}</p>
-                  <p className="text-[10px] text-[var(--text-muted)]">{bm.label}</p>
+                <div className="space-y-0.5 flex-1 pr-3">
+                  <p className="text-xs font-bold text-[var(--text-main)]">{bm.name}</p>
+                  {subtitle && (
+                    <p className="text-[11px] text-[var(--text-muted)] line-clamp-1">{subtitle}</p>
+                  )}
+                  {bm.projected_value && (
+                    <p className="text-[10px] text-teal-600 dark:text-teal-400 font-mono">
+                      Projected Capital: ₹{Math.round(bm.projected_value).toLocaleString("en-IN")}
+                    </p>
+                  )}
                 </div>
-                <div className="text-right">
+                <div className="text-right shrink-0">
                   <span
-                    className={`text-xs font-bold ${
-                      isHighlight ? "text-emerald-600 dark:text-emerald-400 text-sm" : "text-[var(--text-muted)]"
+                    className={`text-sm font-extrabold font-mono tabular-nums ${
+                      isHighlight ? "text-emerald-600 dark:text-emerald-400 text-base" : "text-[var(--text-main)]"
                     }`}
                   >
-                    +{bm.return_pct?.toFixed(1)}%
+                    {returnPct >= 0 ? "+" : ""}{returnPct.toFixed(1)}%
                   </span>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type NavTab = "home" | "learn" | "explore" | "grow" | "portfolio";
+export type NavTab = "home" | "learn" | "explore" | "grow" | "portfolio" | "lab";
 export type TimeHorizon = "1M" | "3M" | "6M" | "12M" | string;
 export type RiskPersona = "Conservative" | "Balanced" | "Aggressive" | "ESG-Conscious";
 

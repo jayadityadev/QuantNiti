@@ -91,11 +91,10 @@ describe("HomePage Component Seam (Ticket 06)", () => {
     expect(screen.getByRole("link", { name: /view all 50/i })).toBeInTheDocument();
   });
 
-  it("renders Learning Hub with progress and interactive concept cards", () => {
+  it("renders streamlined dashboard without redundant learning widgets (delegated to /learn)", () => {
     renderHomePage();
-    expect(screen.getByText(/Financial Learning Hub/i)).toBeInTheDocument();
-    expect(screen.getByText(/Market Regimes 101/i)).toBeInTheDocument();
-    expect(screen.getByText(/Understanding Sharpe/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Financial Learning Hub/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Video Explainers/i)).not.toBeInTheDocument();
   });
 
   it("renders Compounding Visualizer with interactive sliders and calculated output", () => {
@@ -107,9 +106,4 @@ describe("HomePage Component Seam (Ticket 06)", () => {
     expect(screen.getByTestId("compounding-future-value")).toBeInTheDocument();
   });
 
-  it("renders Video Facades section with lazy thumbnail cards", () => {
-    renderHomePage();
-    expect(screen.getByText(/Video Explainers/i)).toBeInTheDocument();
-    expect(screen.getAllByTestId("video-facade-card").length).toBeGreaterThanOrEqual(2);
-  });
 });

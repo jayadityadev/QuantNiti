@@ -191,7 +191,7 @@ export function evaluateMarketSession(
     return {
       state: "SNAPSHOT",
       label: "EOD Snapshot",
-      statusText: `Authoritative EOD 15:30 IST · Reopens ${nextDay.dayName} 09:15 IST`,
+      statusText: `NSE: Authoritative EOD 15:30 IST · Reopens ${nextDay.dayName} 09:15 IST`,
       istTimeStr: ist.istTimeStr,
       isTradingDay: true,
       isMarketHours: false,
@@ -203,7 +203,7 @@ export function evaluateMarketSession(
     return {
       state: "SNAPSHOT",
       label: "Pre-Market",
-      statusText: "Authoritative EOD Snapshot · Market Opens 09:15 IST",
+      statusText: "NSE: Authoritative EOD Snapshot · Market Opens 09:15 IST",
       istTimeStr: ist.istTimeStr,
       isTradingDay: true,
       isMarketHours: false,

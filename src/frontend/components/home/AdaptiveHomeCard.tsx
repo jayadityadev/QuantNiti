@@ -14,12 +14,12 @@ export const AdaptiveHomeCard: React.FC<AdaptiveHomeCardProps> = ({ className = 
   if (activePortfolio) {
     // Returning user with active portfolio -> PortfolioSnapshot
     const isOverallPositive = (activePortfolio.total_pnl ?? 0) >= 0;
-    const dayPnl = activePortfolio.day_pnl ?? 420.5;
+    const dayPnl = activePortfolio.day_pnl ?? activePortfolio.pnl_1d ?? 0;
     const isDayPositive = dayPnl >= 0;
     const dayPnlPct = activePortfolio.current_value > 0
       ? (dayPnl / activePortfolio.current_value) * 100
-      : 0.8;
-    const alpha = activePortfolio.benchmark_comparison?.alpha_vs_nifty ?? 2.8;
+      : (activePortfolio.pnl_1d_pct ?? 0);
+    const alpha = activePortfolio.benchmark_comparison?.alpha_vs_nifty ?? activePortfolio.alpha ?? 0;
     const isAlphaPositive = alpha >= 0;
 
     return (

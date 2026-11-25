@@ -46,6 +46,9 @@ def normalize_database_url(url: Optional[str]) -> str:
         parsed = urlparse(raw_url)
         if parsed.scheme.startswith("postgresql"):
             query_params = parse_qs(parsed.query, keep_blank_values=True)
+            # Remove parameters unsupported by asyncpg driver (e.g. Neon channel_binding)
+            query_params.pop("channel_binding", None)
+
             # asyncpg accepts ssl=require, not sslmode=require
             if "sslmode" in query_params:
                 ssl_val = query_params.pop("sslmode")

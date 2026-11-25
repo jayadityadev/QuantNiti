@@ -1,15 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { GraduationCap, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import { MarketPulse } from "../components/home/MarketPulse";
 import { RegimeRadar } from "../components/home/RegimeRadar";
 import { AdaptiveHomeCard } from "../components/home/AdaptiveHomeCard";
 import { TopRecommendations } from "../components/home/TopRecommendations";
 import { CompoundingVisualizer } from "../components/home/CompoundingVisualizer";
-import { LearningHub } from "../components/home/LearningHub";
-import { VideoFacades } from "../components/home/VideoFacades";
-import { GlassCard } from "../components/ui/GlassCard";
 
 const containerVariants = {
   initial: { opacity: 0 },
@@ -36,65 +31,33 @@ export const HomePage: React.FC = () => {
       variants={containerVariants}
       initial="initial"
       animate="animate"
-      className="flex flex-col gap-5 p-4"
+      className="flex flex-col gap-6 p-4 md:p-6 max-w-7xl mx-auto"
     >
-      <h1 className="sr-only">Home Page</h1>
+      <h1 className="sr-only">Home Page • QuantNiti Market Overview</h1>
 
       {/* Top Grid: Market Pulse & Regime Radar */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <motion.div variants={itemVariants}>
-          <MarketPulse />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch">
+        <motion.div variants={itemVariants} className="flex">
+          <MarketPulse className="w-full" />
         </motion.div>
-        <motion.div variants={itemVariants}>
-          <RegimeRadar />
+        <motion.div variants={itemVariants} className="flex">
+          <RegimeRadar className="w-full" />
         </motion.div>
       </div>
 
       {/* Middle Grid: Adaptive Snapshot & Compounding Visualizer */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <motion.div variants={itemVariants}>
-          <AdaptiveHomeCard />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch">
+        <motion.div variants={itemVariants} className="flex">
+          <AdaptiveHomeCard className="w-full" />
         </motion.div>
-        <motion.div variants={itemVariants}>
-          <CompoundingVisualizer />
+        <motion.div variants={itemVariants} className="flex">
+          <CompoundingVisualizer className="w-full" />
         </motion.div>
       </div>
 
-      {/* 4. Top Curated Recommendations */}
+      {/* 3. Top Curated Recommendations */}
       <motion.div variants={itemVariants}>
         <TopRecommendations />
-      </motion.div>
-
-      {/* Learning & Media Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <motion.div variants={itemVariants}>
-          <LearningHub />
-        </motion.div>
-        <motion.div variants={itemVariants}>
-          <VideoFacades />
-        </motion.div>
-      </div>
-
-      {/* 8. Quick Gateway to Quant Mastery Lab & Learn Tab */}
-      <motion.div variants={itemVariants}>
-        <Link to="/learn" className="block group">
-          <GlassCard className="p-4 flex items-center justify-between border-violet-500/20 group-hover:border-violet-500/50 transition-colors">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-violet-600/15 flex items-center justify-center text-violet-600 dark:text-violet-400 group-hover:scale-105 transition-transform">
-                <GraduationCap className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-[var(--text-main)] group-hover:text-accent transition-colors">
-                  Quant Mastery Lab
-                </h3>
-                <p className="text-[11px] text-[var(--text-muted)]">
-                  Compare 5 algorithmic trading strategies & watch masterclasses.
-                </p>
-              </div>
-            </div>
-            <ArrowRight className="w-4 h-4 text-violet-400 group-hover:translate-x-1 transition-transform" />
-          </GlassCard>
-        </Link>
       </motion.div>
     </motion.div>
   );
